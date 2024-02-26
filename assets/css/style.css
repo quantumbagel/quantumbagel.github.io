@@ -1224,7 +1224,11 @@ textarea.form-input::-webkit-resizer { display: none; }
 .form-btn:disabled:hover::before { background: var(--bg-gradient-jet); }
 
 
-
+ .colorlink {
+  color: var(--vegas-gold);
+  transition: color var(--dark-vegas-gold);
+  }
+.colorlink:hover { color: var(--dark-vegas-gold); } /* CSS link hover (green) */
 
 
 /*-----------------------------------*\
@@ -1873,8 +1877,8 @@ textarea.form-input::-webkit-resizer { display: none; }
 
   .social-list { justify-content: center; }
 
-  .colorlink {color: var(--vegas-gold); }
-  .colorlink:hover { color: var(--dark-vegas-gold); } /* CSS link hover (green) */
+
+
 
   /**
 	 * RESUME
