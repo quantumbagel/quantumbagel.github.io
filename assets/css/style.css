@@ -1874,7 +1874,7 @@ textarea.form-input::-webkit-resizer { display: none; }
   .social-list { justify-content: center; }
 
   .colorlink {color: var(--vegas-gold); }
-  .colorlink:hover { color: var(--vegas-gold); } /* CSS link hover (green) */
+  .colorlink:hover { color: var(--dark-vegas-gold); } /* CSS link hover (green) */
 
   /**
 	 * RESUME
