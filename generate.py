@@ -170,6 +170,7 @@ HTML_TEMPLATE = """
 <body>
   <main>
     <aside class="sidebar" data-sidebar>
+      put_back_to_home_link_here
       <div class="sidebar-info">
         <figure class="avatar-box">
           <img src="configuration.sidebar.image" alt="configuration.name" width="80">
@@ -355,8 +356,13 @@ def generate_html(variables):
         social_panels += (SOCIAL_TEMPLATE.replace("ICON", social["icon"])
                           .replace("URL", social["url"]))
 
+    back_to_home = ""
+    if variables["sidebar"]["back_to_home"]:
+        back_to_home = f'<a class="colorlink" href="https://{variables["username"]}.github.io">Back to home</a>'
+
     html = (html.replace("generated_articles", articles).replace("generated_navbar", navbar)
-            .replace("generated_info_panel", info_panels).replace("generated_social_panel", social_panels))
+            .replace("generated_info_panel", info_panels).replace("generated_social_panel", social_panels)
+            .replace("put_back_to_home_link_here", back_to_home))
     return html
 
 
@@ -364,8 +370,10 @@ import ruamel.yaml
 
 y = ruamel.yaml.YAML()
 
-data = y.load(open("generate.yaml"))
-f = open("index.html", "w")
+f_name = input("Enter input file: ")
+data = y.load(open(f_name))
+f_name = input("Enter output file: ")
+f = open(f_name, "w")
 f.truncate(0)
 f.write(generate_html(data))
 f.close()
