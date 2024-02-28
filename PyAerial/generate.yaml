@@ -1,5 +1,5 @@
 title: "PyAerial - @quantumbagel"
-favicon: "./assets/images/quantumbageltransparent_small.png"
+favicon: "../assets/images/quantumbageltransparent_small.png"
 name: "PyAerial"
 username: "quantumbagel"
 starting_page_index: 0
@@ -17,7 +17,7 @@ pages:
 
 sidebar:
   back_to_home: true
-  image: "./assets/images/quantumbageltransparent_small.png"
+  image: "../assets/images/quantumbageltransparent_small.png"
   title: "Advanced Plane Tracking"
   info_panels:
     - icon: "analytics"

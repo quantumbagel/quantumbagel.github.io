@@ -161,7 +161,7 @@ HTML_TEMPLATE = """
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>configuration.name - @configuration.username</title>
   <link rel="shortcut icon" href="configuration.favicon" type="image/x-icon">
-  <link rel="stylesheet" href="./assets/css/style.css">
+  <link rel="stylesheet" href="/assets/css/style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -204,7 +204,7 @@ HTML_TEMPLATE = """
 generated_articles
     </div>
   </main>
-  <script src="./assets/js/script.js"></script>
+  <script src="/assets/js/script.js"></script>
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
