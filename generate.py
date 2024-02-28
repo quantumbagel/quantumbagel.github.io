@@ -156,21 +156,15 @@ HTML_TEMPLATE = """
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-PBLN4JJD');</script>
-<!-- End Google Tag Manager -->
+
 <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-E318PG8LQ2"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=GTAG_IDENTIFICATION"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
-  gtag('config', 'G-E318PG8LQ2');
+  gtag('config', 'GTAG_IDENTIFICATION');
 </script>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -185,10 +179,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   <meta name="google-site-verification" content="gLWjWyzJC6D2D_6Pe9HWCRkaWL_rKtxRf05_Dhiu2is" />
 </head>
 <body>
-<!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PBLN4JJD"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
   <main>
     <aside class="sidebar" data-sidebar>
       <div class="sidebar-info">
@@ -385,7 +375,8 @@ def generate_html(variables):
 
     html = (html.replace("generated_articles", articles).replace("generated_navbar", navbar)
             .replace("generated_info_panel", info_panels).replace("generated_social_panel", social_panels)
-            .replace("put_back_to_home_link_here", back_to_home))
+            .replace("put_back_to_home_link_here", back_to_home).replace("GTAG_IDENTIFICATION",
+                                                                         variables["analytics"]["tag_manager_id"]))
     return html
 
 
