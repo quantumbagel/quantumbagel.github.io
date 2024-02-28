@@ -125,7 +125,7 @@ pages:
 
 sidebar:
   back_to_home: false
-  image: "/assets/images/pyaerial_logo.png"
+  image: "/assets/images/quantumbageltransparent_small.png"
   title: "Serial Developer"
   info_panels:
     - icon: "logo-discord"

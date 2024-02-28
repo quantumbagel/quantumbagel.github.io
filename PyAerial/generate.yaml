@@ -17,7 +17,7 @@ pages:
 
 sidebar:
   back_to_home: true
-  image: "../assets/images/quantumbageltransparent_small.png"
+  image: "/assets/images/pyaerial_logo.jpeg"
   title: "Advanced Plane Tracking"
   info_panels:
     - icon: "analytics"
