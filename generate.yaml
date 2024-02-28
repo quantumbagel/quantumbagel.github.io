@@ -1,0 +1,148 @@
+title: "Julian Reder - @quantumbagel"
+favicon: "./assets/images/quantumbageltransparent_small.png"
+name: "Julian Reder"
+username: "quantumbagel"
+starting_page_index: 0
+
+pages:
+  about:
+    name: "About"
+    elements:
+      - text:
+          text: "Hi! I'm **Julian Reder**! I'm a **dually-enrolled** programmer who spent a significant amount of time making this website that probably nobody will ever see (except for you, of course)! I'm currently spending my time making fun little bots, mods, projects in Python, C#, Java, and more! You can check out some of my [projects here!](https://github.com/quantumbagel)"
+  experience:
+    name: "Experience"
+    elements:
+      - timeline:
+          header:
+            name: "Education"
+            icon: "book-outline"
+          timeline:
+            - name: "Wake Tech"
+              time_period: "2023 - Present"
+              description: "I've started my dual-enrolling at Wake Tech. I'm looking to spend two years here, then apply to **NC State**."
+            - name: "Homeschooled"
+              time_period: "Since Preschool"
+              description: "I've been **homeschooled** since I was **5**!"
+      - skills:
+          header:
+            name: "Skills"
+            icon: "analytics-outline"
+          skills:
+            - name: "Python"
+              level: "80"
+            - name: "Java"
+              level: "80"
+            - name: "C#"
+              level: "90"
+            - name: "Wordpress"
+              level: "50"
+  projects:
+    name: "Projects"
+    elements:
+      - projects:
+          tags:
+            - "Discord Bots"
+            - "Internship Projects"
+            - "Other"
+            - "MC Plugins"
+            - "Abandoned Projects"
+          projects:
+            - name: "Triggered"
+              image: "./assets/images/triggered.png"
+              description: "IFTTT-esque discord bot"
+              link: "https://quantumbagel.github.io/Triggered"
+              tag: "Discord Bots"
+            - name: "PyAerial"
+              image: "./assets/images/pyaerial.png"
+              description: "Successor to airstrik.py"
+              link: "https://quantumbagel.github.io/PyAerial"
+              tag: "Internship Projects"
+            - name: "airstrik.py"
+              image: "./assets/images/pyaerial.png"
+              description: "Plane tracker for AERPAW"
+              link: "https://quantumbagel.github.io/airstrik.py"
+              tag: "Internship Projects"
+            - name: "Piranha"
+              image: "./assets/images/pyaerial.png"
+              description: "Chess-playing discord bot"
+              link: "https://quantumbagel.github.io/Piranha"
+              tag: "Discord Bots"
+            - name: "Statify"
+              image: "./assets/images/pyaerial.png"
+              description: "MC Server Stats done right (SpigotMC)"
+              link: "https://quantumbagel.github.io/Statify"
+              tag: "MC Plugins"
+            - name: "CameraDistance"
+              image: "./assets/images/pyaerial.png"
+              description: "Track drones with cameras!"
+              link: "https://quantumbagel.github.io/CameraDistance"
+              tag: "Internship Projects"
+            - name: "Molotov"
+              image: "./assets/images/pyaerial.png"
+              description: "An unfair bot for jklm.fun's Bomb Party"
+              link: "https://quantumbagel.github.io/Molotov"
+              tag: "Other Bots"
+            - name: "FiniteCraft"
+              image: "./assets/images/pyaerial.png"
+              description: "An unfair bot for jklm.fun's Bomb Party"
+              link: "https://quantumbagel.github.io/FiniteCraft"
+              tag: "Other Bots"
+            - name: "This website"
+              image: "./assets/images/pyaerial.png"
+              description: "A remake of vCard for @quantumbagel (me)"
+              link: "https://quantumbagel.github.io"
+              tag: "Other"
+            - name: "Hannibal"
+              image: "./assets/images/pyaerial.png"
+              description: "A from-scratch Selenium bot driver and AI for generals.io"
+              link: "https://github.com/quantumbagel/Hannibal"
+              tag: "Abandoned Projects"
+            - name: "BlokusCloud"
+              image: "./assets/images/pyaerial.png"
+              description: "A cloud Blokus remake"
+              link: "https://github.com/quantumbagel/BlokusCloud"
+              tag: "Abandoned Projects"
+            - name: "airtime.ino"
+              image: "./assets/images/pyaerial.png"
+              description: "A flight controller for Arduino Uno that doesn't work"
+              link: "https://github.com/quantumbagel/airtime"
+              tag: "Abandoned Projects"
+  contact:
+    name: "Contact"
+    elements:
+      - text:
+          text: "If you'd like to chat with me or just get more information than is contained on this website,
+           feel free to reach out using the contact form below:"
+      - contact:
+          header:
+            name: "Contact Form"
+            icon: "accessibility"
+          formspree_url: "https://formspree.io/f/moqgwdop"
+
+
+
+
+sidebar:
+  image: "./assets/images/quantumbageltransparent_small.png"
+  title: "Serial Developer"
+  info_panels:
+    - icon: "logo-discord"
+      title: "Discord"
+      value: "@NotQuantum_"
+    - icon: "calendar-outline"
+      title: "Birthday"
+      value: "March 13"
+    - icon: "location-outline"
+      title: "Location"
+      value: "North Carolina, USA"
+    - icon: "heart"
+      title: "Number of Cats"
+      value: "3"
+  social_panels:
+    - icon: "logo-github"
+      url: "https://github.com/quantumbagel"
+    - icon: "logo-linkedin"
+      url: "https://www.linkedin.com/in/julian-r-7909a1289/"
+
+
