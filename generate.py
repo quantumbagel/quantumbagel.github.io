@@ -171,8 +171,8 @@ HTML_TEMPLATE = """
 <body>
   <main>
     <aside class="sidebar" data-sidebar>
-      put_back_to_home_link_here
       <div class="sidebar-info">
+        put_back_to_home_link_here
         <figure class="avatar-box">
           <img src="configuration.sidebar.image" alt="configuration.name" width="80">
         </figure>
@@ -361,7 +361,7 @@ def generate_html(variables):
     back_to_home = ""
     if variables["sidebar"]["back_to_home"]:
         back_to_home = (f'<a class="colorlink" style="text-align: center"'
-                        f' href="https://{variables["username"]}.github.io">Back to home</a>')
+                        f' href="https://{variables["username"]}.github.io"><ion-icon name="home" size="large"></ion-icon></a>')
 
     html = (html.replace("generated_articles", articles).replace("generated_navbar", navbar)
             .replace("generated_info_panel", info_panels).replace("generated_social_panel", social_panels)
