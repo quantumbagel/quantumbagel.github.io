@@ -9,7 +9,7 @@ pages:
     name: "About"
     elements:
       - text:
-          text: "This is **PyAerial**, a simple and intuitive successor to [airstrik.py](https:/quantumbagel.github.io/airstrik.py)."
+          text: "This is **PyAerial**, a simple and intuitive successor to [airstrik.py](https://quantumbagel.github.io/airstrik.py)."
 
 
 
