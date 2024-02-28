@@ -159,6 +159,7 @@ HTML_TEMPLATE = """
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="configuration.description">
   <title>configuration.name - @configuration.username</title>
   <link rel="shortcut icon" href="configuration.favicon" type="image/x-icon">
   <link rel="stylesheet" href="/assets/css/style.css">
@@ -335,11 +336,12 @@ def generate_article(variables, is_first=True):
 
 
 def generate_html(variables):
-    html = HTML_TEMPLATE.replace("configuration.favicon", variables['favicon']).replace("configuration.name",
+    html = (HTML_TEMPLATE.replace("configuration.favicon", variables['favicon']).replace("configuration.name",
                                                                                         variables["name"]).replace(
         "configuration.username", variables["username"]).replace("configuration.sidebar.image",
                                                                  variables["sidebar"]["image"]).replace(
         "configuration.sidebar.title", variables["sidebar"]["title"])
+            .replace("configuration.description", variables["meta_description"]))
     articles = ""
     navbar = ""
     for i, article in enumerate(variables["pages"]):

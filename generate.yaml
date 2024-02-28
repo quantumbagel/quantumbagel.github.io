@@ -3,6 +3,7 @@ favicon: "/assets/images/quantumbageltransparent_small.png"
 name: "Julian Reder"
 username: "quantumbagel"
 starting_page_index: 0
+meta_description: "Hi! I'm Julian Reder (@quantumbagel)"
 
 pages:
   about:

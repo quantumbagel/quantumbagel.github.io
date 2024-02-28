@@ -2,7 +2,10 @@ title: "PyAerial - @quantumbagel"
 favicon: "../assets/images/quantumbageltransparent_small.png"
 name: "PyAerial"
 username: "quantumbagel"
+meta_description: "PyAerial - simple and intuitive plane tracking by @quantumbagel"
+
 starting_page_index: 0
+
 
 pages:
   about:
