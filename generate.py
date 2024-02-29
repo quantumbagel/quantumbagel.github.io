@@ -158,7 +158,7 @@ HTML_TEMPLATE = """
 <head>
 
 <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=GTAG_IDENTIFICATION"></script>
+<script defer src="https://www.googletagmanager.com/gtag/js?id=GTAG_IDENTIFICATION"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -184,7 +184,7 @@ HTML_TEMPLATE = """
       <div class="sidebar-info">
         put_back_to_home_link_here
         <figure class="avatar-box">
-          <img src="configuration.sidebar.image" alt="configuration.name">
+          <img src="configuration.sidebar.image" alt="configuration.name" width="80">
         </figure>
         <div class="info-content">
           <h1 class="name" title="configuration.name"><a class="colorlink" href="https://github.com/configuration.username"> configuration.name</a></h1>
@@ -215,9 +215,9 @@ HTML_TEMPLATE = """
 generated_articles
     </div>
   </main>
-  <script src="/assets/js/script.js"></script>
-  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <script defer src="/assets/js/script.js"></script>
+  <script defer type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script defer nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
 </html>"""
 
