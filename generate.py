@@ -362,7 +362,7 @@ def generate_html(variables):
     for info in variables["sidebar"]["info_panels"]:
         info_panels += (INFO_TEMPLATE.replace("ICON", info["icon"])
                         .replace("NAME", info["title"])
-                        .replace("VALUE", info["value"]))
+                        .replace("VALUE", markdown_text_parsing(info["value"])))
     social_panels = ""
     for social in variables["sidebar"]["social_panels"]:
         social_panels += (SOCIAL_TEMPLATE.replace("ICON", social["icon"])

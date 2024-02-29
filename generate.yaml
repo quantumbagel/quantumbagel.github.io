@@ -149,6 +149,9 @@ sidebar:
     - icon: "heart"
       title: "Number of Cats"
       value: "3"
+    - icon: "hammer"
+      title: "Website Status"
+      value: "[![pages-build-deployment](https://github.com/quantumbagel/quantumbagel.github.io/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/quantumbagel/quantumbagel.github.io/actions/workflows/pages/pages-build-deployment)"
   social_panels:
     - icon: "logo-github"
       url: "https://github.com/quantumbagel"
