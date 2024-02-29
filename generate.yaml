@@ -47,9 +47,9 @@ pages:
           tags:
             - "Discord Bots"
             - "Internship Projects"
-            - "Other"
             - "MC Plugins"
             - "Abandoned Projects"
+            - "Other Bots"
           projects:
             - name: "Triggered"
               image: "/assets/images/placeholder_project.jpg"
@@ -94,7 +94,7 @@ pages:
             - name: "This website"
               image: "/assets/images/placeholder_project.jpg"
               description: "A remake of vCard for @quantumbagel (me)"
-              link: "https://quantumbagel.github.io"
+              link: "https://github.com/quantumbagel/quantumbagel.github.io"
               tag: "Other"
             - name: "Hannibal"
               image: "/assets/images/placeholder_project.jpg"
@@ -111,6 +111,11 @@ pages:
               description: "A flight controller for Arduino Uno that doesn't work"
               link: "https://github.com/quantumbagel/airtime"
               tag: "Abandoned Projects"
+            - name: "Chess-Challenge"
+              image: "/assets/images/placeholder_project.jpg"
+              link: "https://quantumbagel.github.io/Chess-Challenge"
+              tag: "Other Bots"
+
   contact:
     name: "Contact"
     elements:
