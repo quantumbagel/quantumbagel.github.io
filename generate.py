@@ -184,7 +184,7 @@ HTML_TEMPLATE = """
       <div class="sidebar-info">
         put_back_to_home_link_here
         <figure class="avatar-box">
-          <img src="configuration.sidebar.image" alt="configuration.name" width="80">
+          <img src="configuration.sidebar.image" alt="configuration.name">
         </figure>
         <div class="info-content">
           <h1 class="name" title="configuration.name"><a class="colorlink" href="https://github.com/configuration.username"> configuration.name</a></h1>
