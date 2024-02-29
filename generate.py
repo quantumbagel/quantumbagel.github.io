@@ -1,4 +1,5 @@
 import markdown
+import datetime
 
 INFO_TEMPLATE = """
 <li class="contact-item">
@@ -241,6 +242,21 @@ SELECT_ITEM_TEMPLATE = """
   <button data-filter-btn>CATEGORY</button>
 </li>
 """
+tz = datetime.timezone.utc
+ft = "%Y-%m-%dT%H:%M:%S%z"
+t = datetime.datetime.now(tz=tz).strftime(ft)
+SITEMAP_ITEM_TEMPLATE = f"""<url>
+    <loc>PAGE</loc>
+    <lastmod>{t}</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+</url>
+"""
+
+SITEMAP_TEMPLATE = """<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+SITEMAP
+</urlset>"""
+
 
 def markdown_text_parsing(txt):
     o = markdown.markdown(txt)[3:][:-4]
@@ -379,17 +395,37 @@ def generate_html(variables):
                                                                          variables["analytics"]["tag_manager_id"]))
     return html
 
+def generate_sitemap(links):
+    sitemap = ''
+    for link in links:
+        sitemap += SITEMAP_ITEM_TEMPLATE.replace("PAGE", link)
+    return SITEMAP_TEMPLATE.replace("SITEMAP", sitemap)
+
+
+
 
 import ruamel.yaml
 
 y = ruamel.yaml.YAML()
-
 jobs = y.load(open("generate_execute.yaml"))["jobs"]
+links = []
 for job_key in jobs.keys():
     job = jobs[job_key]
     data = y.load(open(job["in"]))
+    for lk in data["pages"]:
+        url = f"https://{data['username']}.github.io/{data['path']}/{lk}"
+        url = url.replace("//", "/")
+        links.append(url)
+    url = f"https://{data['username']}.github.io/{data['path']}"
+    links.append(url)
     f = open(job["out"], "w")
     f.truncate(0)
     f.write(generate_html(data))
     f.close()
+
 print(f"Regenerated {len(jobs)} jobs.")
+
+f = open("sitemap.xml", "w")
+f.truncate(0)
+f.write(generate_sitemap(links))
+f.close()

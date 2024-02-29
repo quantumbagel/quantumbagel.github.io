@@ -3,6 +3,7 @@ favicon: "/assets/images/quantumbagel_favicon.webp"
 name: "PyAerial"
 username: "quantumbagel"
 meta_description: "PyAerial - simple and intuitive plane tracking by @quantumbagel"
+path: "PyAerial"
 
 starting_page_index: 0
 analytics:
