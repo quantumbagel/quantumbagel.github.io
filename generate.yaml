@@ -150,8 +150,8 @@ sidebar:
       title: "Number of Cats"
       value: "3"
     - icon: "hammer"
-      title: "Website Status"
-      value: "[![pages-build-deployment](https://github.com/quantumbagel/quantumbagel.github.io/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/quantumbagel/quantumbagel.github.io/actions/workflows/pages/pages-build-deployment)"
+      title: "Build Status"
+      value: "![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/quantumbagel/quantumbagel.github.io/static.yml?style=flat-square&label=Website%20)"
   social_panels:
     - icon: "logo-github"
       url: "https://github.com/quantumbagel"
