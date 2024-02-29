@@ -113,6 +113,7 @@ pages:
               tag: "Abandoned Projects"
             - name: "Chess-Challenge"
               image: "/assets/images/placeholder_project.jpg"
+              description: "@Pixelz22 and me made a chess bot for SebLague's Chess Challenge!"
               link: "https://quantumbagel.github.io/Chess-Challenge"
               tag: "Other Bots"
 
