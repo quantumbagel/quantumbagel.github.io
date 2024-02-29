@@ -384,10 +384,12 @@ import ruamel.yaml
 
 y = ruamel.yaml.YAML()
 
-f_name = input("Enter input file: ")
-data = y.load(open(f_name))
-f_name = input("Enter output file: ")
-f = open(f_name, "w")
-f.truncate(0)
-f.write(generate_html(data))
-f.close()
+jobs = y.load(open("generate_execute.yaml"))["jobs"]
+for job_key in jobs.keys():
+    job = jobs[job_key]
+    data = y.load(open(job["in"]))
+    f = open(job["out"], "w")
+    f.truncate(0)
+    f.write(generate_html(data))
+    f.close()
+print(f"Regenerated {len(jobs)} jobs.")

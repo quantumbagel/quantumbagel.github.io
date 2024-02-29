@@ -1,0 +1,7 @@
+jobs:
+  main_page:
+    in: "generate.yaml"
+    out: "index.html"
+  pyaerial:
+    in: "PyAerial/generate.yaml"
+    out: "PyAerial/index.html"

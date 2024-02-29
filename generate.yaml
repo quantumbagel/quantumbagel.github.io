@@ -1,5 +1,5 @@
 title: "Julian Reder - @quantumbagel"
-favicon: "/assets/images/quantumbageltransparent_small.png"
+favicon: "/assets/images/quantumbageltransparent_small.webp"
 name: "Julian Reder"
 username: "quantumbagel"
 starting_page_index: 0
@@ -128,7 +128,7 @@ pages:
 
 sidebar:
   back_to_home: false
-  image: "/assets/images/quantumbageltransparent_small.png"
+  image: "/assets/images/quantumbageltransparent_small.webp"
   title: "Serial Developer"
   info_panels:
     - icon: "logo-discord"
