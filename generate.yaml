@@ -1,9 +1,9 @@
 title: "Julian Reder - @quantumbagel"
-favicon: "/assets/images/quantumbageltransparent_small.webp"
+favicon: "/assets/images/quantumbagel_favicon.webp"
 name: "Julian Reder"
 username: "quantumbagel"
 starting_page_index: 0
-meta_description: "Hi! I'm Julian Reder (@quantumbagel)"
+meta_description: "Hi! I'm Julian Reder (@quantumbagel), a dually-enrolled programmer at Wake Tech"
 analytics:
   tag_manager_id: "G-FQY8Y114PS"
 
@@ -147,6 +147,6 @@ sidebar:
     - icon: "logo-github"
       url: "https://github.com/quantumbagel"
     - icon: "logo-linkedin"
-      url: "https://www.linkedin.com/in/julian-r-7909a1289/"
+      url: "https://www.linkedin.com/in/julian-reder-nc/"
 
 
