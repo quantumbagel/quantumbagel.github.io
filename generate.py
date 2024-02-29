@@ -243,7 +243,7 @@ SELECT_ITEM_TEMPLATE = """
 </li>
 """
 tz = datetime.timezone.utc
-ft = "%Y-%m-%dT%H:%M:%S%z"
+ft = "%Y-%m-%dT%H:%M:%SZ"
 t = datetime.datetime.now(tz=tz).strftime(ft)
 SITEMAP_ITEM_TEMPLATE = f"""<url>
     <loc>PAGE</loc>
