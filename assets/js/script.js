@@ -156,6 +156,14 @@ window.onhashchange = function () {
       }
     }
 };
+
+if (location.hash === "") { // Website homepage
+  for (let i = 0; i < pages.length; i++) {
+      if (pages[i].classList.contains("active")) {
+        location.hash = "#" + pages[i].dataset.page;
+      }
+    }
+}
 // add event to all nav link
 for (let i = 0; i < navigationLinks.length; i++) {
   navigationLinks[i].addEventListener("click", function () {
