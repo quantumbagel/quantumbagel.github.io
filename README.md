@@ -1,6 +1,6 @@
 # quantumbagel.github.io
 
-*powered by vCard*
+*my website - powered by vCard*
 
 ![GitHub repo size](https://img.shields.io/github/repo-size/quantumbagel/quantumbagel.github.io)
 ![GitHub stars](https://img.shields.io/github/stars/quantumbagel/quantumbagel.github.io?style=social)
@@ -9,6 +9,7 @@
 
 
 - Static website generator / YAML configuration file
+- automatic hashtag links
 - Optimizations/bugfixes
 - Changed coloring (removed red from contact form, softened some colors, added colored links)
 
