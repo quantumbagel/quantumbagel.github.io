@@ -146,7 +146,7 @@ const pages = document.querySelectorAll("[data-page]");
 window.onhashchange = function () {
     console.log(location.hash, pages[0].dataset);
     for (let i = 0; i < pages.length; i++) {
-      if (location.hash.slice(1) === pages[i].dataset.page) {
+      if (decodeURI(location.hash.slice(1)) === pages[i].dataset.page) {
         pages[i].classList.add("active");
         navigationLinks[i].classList.add("active");
         window.scrollTo(0, 0);
