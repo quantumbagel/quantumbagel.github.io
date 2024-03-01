@@ -150,11 +150,11 @@ let defaultPage = "";
         }
       }
 window.onhashchange = function () {
-
+     location.hash = location.hash.toLowerCase();
     let foundNew = false;
     for (let i = 0; i < pages.length; i++) {
       if (decodeURI(location.hash.slice(1).toLowerCase()) === pages[i].dataset.page) {
-        pages[i].classList.add("active");
+          pages[i].classList.add("active");
         navigationLinks[i].classList.add("active");
         window.scrollTo(0, 0);
         foundNew = true;
