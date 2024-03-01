@@ -216,7 +216,7 @@ HTML_TEMPLATE = """
 generated_articles
     </div>
   </main>
-  <script defer src="/assets/js/script.js"></script>
+  <script defer src="/assets/js/minified_script.js"></script>
   <script defer type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script defer nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
@@ -403,6 +403,15 @@ def generate_sitemap(links):
 
 
 
+
+import requests
+js = open("assets/js/script.js")
+resp = requests.post("https://www.toptal.com/developers/javascript-minifier/api/raw", data={"input": js.read()})
+minified = open("assets/js/minified_script.js", "w")
+minified.truncate(0)
+minified.write(resp.text)
+minified.close()
+js.close()
 
 import ruamel.yaml
 
