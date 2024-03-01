@@ -1,3 +1,3 @@
-if (document.URL !== document.URL.toLowerCase()) {
-    document.URL = document.URL.toLowerCase();
+if (location.href !== document.URL.toLowerCase()) {
+    location.href = document.URL.toLowerCase();
 }
