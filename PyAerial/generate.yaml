@@ -4,7 +4,7 @@ name: "PyAerial"
 username: "quantumbagel"
 meta_description: "PyAerial - simple and intuitive plane tracking by @quantumbagel"
 path: "PyAerial"
-
+use_sitemap: true
 starting_page_index: 0
 analytics:
   tag_manager_id: "G-FQY8Y114PS"

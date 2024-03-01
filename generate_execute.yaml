@@ -5,3 +5,6 @@ jobs:
   pyaerial:
     in: "PyAerial/generate.yaml"
     out: "PyAerial/index.html"
+  404:
+    in: "404.yaml"
+    out: "404.html"

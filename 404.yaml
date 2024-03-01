@@ -1,0 +1,51 @@
+title: "Julian Reder - @quantumbagel"
+favicon: "/assets/images/quantumbagel_favicon.webp"
+name: "Julian Reder"
+username: "quantumbagel"
+starting_page_index: 0
+meta_description: "Hi! I'm Julian Reder (@quantumbagel), a dually-enrolled programmer at Wake Tech"
+use_sitemap: false
+path: ""
+analytics:
+  tag_manager_id: "G-FQY8Y114PS"
+
+pages:
+  404:
+    name: "404"
+    elements:
+      - text:
+          text: "It looks like you're lost! You can go back to the [homepage](/) if you want. 
+                 You can also check out this cool [video](https://www.youtube.com/watch?v=dQw4w9WgXcQ)"
+
+
+
+
+
+
+sidebar:
+  back_to_home: true
+  image: "/assets/images/quantumbageltransparent_small.webp"
+  title: "Serial Developer"
+  info_panels:
+    - icon: "logo-discord"
+      title: "Discord"
+      value: "@NotQuantum_"
+    - icon: "calendar-outline"
+      title: "Birthday"
+      value: "March 13"
+    - icon: "location-outline"
+      title: "Location"
+      value: "North Carolina, USA"
+    - icon: "heart"
+      title: "Number of Cats"
+      value: "3"
+    - icon: "hammer"
+      title: "Build Status"
+      value: "![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/quantumbagel/quantumbagel.github.io/static.yml?style=flat-square&label=Website%20)"
+  social_panels:
+    - icon: "logo-github"
+      url: "https://github.com/quantumbagel"
+    - icon: "logo-linkedin"
+      url: "https://www.linkedin.com/in/julian-reder-nc/"
+
+

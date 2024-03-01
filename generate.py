@@ -412,13 +412,14 @@ links = []
 for job_key in jobs.keys():
     job = jobs[job_key]
     data = y.load(open(job["in"]))
-    for lk in data["pages"]:
-        if data['path']:
-            url = f"https://{data['username']}.github.io/{data['path']}#{lk}"
-        else:
-            url = f"https://{data['username']}.github.io#{lk}"
-        url = url.replace("//", "/")
-        links.append(url)
+    if data["use_sitemap"]:
+        for lk in data["pages"]:
+            if data['path']:
+                url = f"https://{data['username']}.github.io/{data['path']}#{lk}"
+            else:
+                url = f"https://{data['username']}.github.io#{lk}"
+            url = url.replace("//", "/")
+            links.append(url)
     f = open(job["out"], "w")
     f.truncate(0)
     f.write(generate_html(data))

@@ -5,6 +5,7 @@ username: "quantumbagel"
 starting_page_index: 0
 meta_description: "Hi! I'm Julian Reder (@quantumbagel), a dually-enrolled programmer at Wake Tech"
 path: ""
+use_sitemap: true
 analytics:
   tag_manager_id: "G-FQY8Y114PS"
 
