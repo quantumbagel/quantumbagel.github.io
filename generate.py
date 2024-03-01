@@ -157,7 +157,7 @@ HTML_TEMPLATE = """
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script src="/assets/js/redirect.js"></script>
+<script></script>
 <!-- Google tag (gtag.js) -->
 <script defer src="https://www.googletagmanager.com/gtag/js?id=GTAG_IDENTIFICATION"></script>
 <script>
@@ -414,6 +414,7 @@ minified.close()
 js.close()
 
 import ruamel.yaml
+import minify_html
 
 y = ruamel.yaml.YAML()
 jobs = y.load(open("generate_execute.yaml"))["jobs"]
@@ -432,7 +433,7 @@ for job_key in jobs.keys():
             links.append(url)
     f = open(job["out"], "w")
     f.truncate(0)
-    f.write(generate_html(data))
+    f.write(minify_html.minify(generate_html(data), minify_js=True, remove_processing_instructions=True))
     f.close()
 
 print(f"Regenerated {len(jobs)} jobs.")
