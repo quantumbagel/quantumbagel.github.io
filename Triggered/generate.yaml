@@ -23,7 +23,7 @@ pages:
 sidebar:
   back_to_home: true
   image: "/assets/images/pyaerial_logo.jpeg"
-  title: "Advanced Plane Tracking"
+  title: "IFTTT Discord Bot"
   info_panels:
     - icon: "analytics"
       title: "Project Status"
