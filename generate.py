@@ -157,7 +157,7 @@ HTML_TEMPLATE = """
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script src="/assets/js/redirect.js></script>
+<script src="/assets/js/redirect.js"></script>
 <!-- Google tag (gtag.js) -->
 <script defer src="https://www.googletagmanager.com/gtag/js?id=GTAG_IDENTIFICATION"></script>
 <script>
