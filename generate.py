@@ -413,7 +413,10 @@ for job_key in jobs.keys():
     job = jobs[job_key]
     data = y.load(open(job["in"]))
     for lk in data["pages"]:
-        url = f"https://{data['username']}.github.io/{data['path']}/{lk}"
+        if data['path']:
+            url = f"https://{data['username']}.github.io/{data['path']}#{lk}"
+        else:
+            url = f"https://{data['username']}.github.io#{lk}"
         url = url.replace("//", "/")
         links.append(url)
     url = f"https://{data['username']}.github.io/{data['path']}"
