@@ -176,7 +176,7 @@ HTML_TEMPLATE = """
   <link rel="stylesheet" href="/assets/css/style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <meta name="google-site-verification" content="gLWjWyzJC6D2D_6Pe9HWCRkaWL_rKtxRf05_Dhiu2is" />
 </head>
 <body>
