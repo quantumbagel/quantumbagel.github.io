@@ -142,19 +142,31 @@ for (let i = 0; i < formInputs.length; i++) {
 // page navigation variables
 const navigationLinks = document.querySelectorAll("[data-nav-link]");
 const pages = document.querySelectorAll("[data-page]");
+let defaultPage = "";
 
+ for (let i = 0; i < pages.length; i++) {
+        if (pages[i].classList.contains("active")) {
+           defaultPage = pages[i];
+        }
+      }
 window.onhashchange = function () {
-    console.log(location.hash, pages[0].dataset);
+
+    let foundNew = false;
     for (let i = 0; i < pages.length; i++) {
       if (decodeURI(location.hash.slice(1)) === pages[i].dataset.page) {
         pages[i].classList.add("active");
         navigationLinks[i].classList.add("active");
         window.scrollTo(0, 0);
+        foundNew = true;
       } else {
         pages[i].classList.remove("active");
         navigationLinks[i].classList.remove("active");
       }
     }
+    if (!foundNew) {
+        location.hash = "#" + defaultPage.dataset.page;
+        defaultPage.classList.add("active");
+      }
 };
 
 if (location.hash === "") { // Website homepage
