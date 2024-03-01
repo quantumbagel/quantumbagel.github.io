@@ -419,8 +419,6 @@ for job_key in jobs.keys():
             url = f"https://{data['username']}.github.io#{lk}"
         url = url.replace("//", "/")
         links.append(url)
-    url = f"https://{data['username']}.github.io/{data['path']}"
-    links.append(url)
     f = open(job["out"], "w")
     f.truncate(0)
     f.write(generate_html(data))
