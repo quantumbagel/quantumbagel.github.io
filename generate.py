@@ -419,6 +419,7 @@ for job_key in jobs.keys():
             else:
                 url = f"https://{data['username']}.github.io#{lk}"
             url = url.replace("//", "/")
+            url = url.replace("https:/", "https://")
             links.append(url)
     f = open(job["out"], "w")
     f.truncate(0)
