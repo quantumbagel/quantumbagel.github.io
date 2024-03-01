@@ -9,6 +9,7 @@
 
 
 - Static website generator / YAML configuration file
+- automatic hashtag links
 - Optimizations/bugfixes
 - Changed coloring (removed red from contact form, softened some colors, added colored links)
 
