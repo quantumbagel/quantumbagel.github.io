@@ -1,6 +1,6 @@
 # quantumbagel.github.io
 
-*powered by vCard*
+*my website - powered by vCard*
 
 ![GitHub repo size](https://img.shields.io/github/repo-size/quantumbagel/quantumbagel.github.io)
 ![GitHub stars](https://img.shields.io/github/stars/quantumbagel/quantumbagel.github.io?style=social)
