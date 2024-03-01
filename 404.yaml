@@ -1,4 +1,4 @@
-title: "Julian Reder - @quantumbagel"
+title: "404 - Page Not Found"
 favicon: "/assets/images/quantumbagel_favicon.webp"
 name: "Julian Reder"
 username: "quantumbagel"
@@ -11,11 +11,11 @@ analytics:
 
 pages:
   404:
-    name: "404"
+    name: "404 - Page Not Found"
     elements:
       - text:
           text: "It looks like you're lost! You can go back to the [homepage](/) if you want. 
-                 You can also check out this cool [video](https://www.youtube.com/watch?v=dQw4w9WgXcQ)"
+                 You can also check out this cool [video](https://www.youtube.com/watch?v=dQw4w9WgXcQ) that's really cool."
 
 
 
