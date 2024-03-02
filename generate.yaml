@@ -89,7 +89,7 @@ pages:
               link: "Molotov"
               tag: "Other Bots"
             - name: "FiniteCraft"
-              image: "/assets/images/finitecraft_logo.jpg"
+              image: "/assets/images/finitecraft_logo.png"
               description: "A web scraper and craft finder for Neal Agarwal's Infinite Craft."
               link: "FiniteCraft"
               tag: "Other Bots"
