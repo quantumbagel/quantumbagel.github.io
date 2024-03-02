@@ -26,6 +26,9 @@ jobs:
   chess-challenge:
     in: "chess-challenge/generate.yaml"
     out: "chess-challenge/index.html"
+  airstrik.py:
+    in: "airstrik.py/generate.yaml"
+    out: "airstrik.py/index.html"
   404:
     in: "404.yaml"
     out: "404.html"
