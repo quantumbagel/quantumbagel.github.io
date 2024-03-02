@@ -1,9 +1,10 @@
-title: "Triggered - @quantumbagel"
+title: "airstrik.py - @quantumbagel"
 favicon: "/assets/images/quantumbagel_favicon.webp"
-name: "Triggered"
+name: "airstrik.py"
 username: "quantumbagel"
-meta_description: "Triggered -  an IFTTT Discord bot with infinite potential."
-path: "Triggered"
+meta_description: "airstrik.py, the precursor to PyAerial,
+ is a ADS-B plane tracking solution that tried to do too much not efficiently enough."
+path: "airstrik.py"
 use_sitemap: true
 starting_page_index: 0
 analytics:
@@ -14,29 +15,28 @@ pages:
     name: "About"
     elements:
       - text:
-          text: "This is **Triggered**, an IFTTT Discord bot where the only limitation is your own mind."
-
+          text: "This is **airstrik.py**, the precursor to [PyAerial](pyaerial)."
 
 
 
 
 sidebar:
   back_to_home: true
-  image: "/assets/images/pyaerial_logo.jpeg"
-  title: "IFTTT Discord Bot"
+  image: "/assets/images/airstrik_logo.png"
+  title: "Overcomplicated Plane Tracking"
   info_panels:
     - icon: "analytics"
       title: "Project Status"
-      value: "Release Candidacy"
+      value: "Completed - to be replaced by PyAerial"
     - icon: "calendar-outline"
-      title: "Estimated release v1.0"
-      value: "Summer 2024"
+      title: "Development Finished"
+      value: "Fall 2023"
     - icon: "heart"
       title: "Made by"
       value: "@quantumbagel"
   social_panels:
     - icon: "logo-github"
-      url: "https://github.com/quantumbagel/Triggered"
+      url: "https://github.com/quantumbagel/PyAerial"
 
 
 
