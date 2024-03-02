@@ -1,0 +1,42 @@
+title: "Triggered - @quantumbagel"
+favicon: "/assets/images/quantumbagel_favicon.webp"
+name: "Triggered"
+username: "quantumbagel"
+meta_description: "Triggered -  an IFTTT Discord bot with infinite potential."
+path: "Triggered"
+use_sitemap: true
+starting_page_index: 0
+analytics:
+  tag_manager_id: "G-FQY8Y114PS"
+
+pages:
+  about:
+    name: "About"
+    elements:
+      - text:
+          text: "This is **Triggered**, an IFTTT Discord bot where the only limitation is your own mind."
+
+
+
+
+
+sidebar:
+  back_to_home: true
+  image: "/assets/images/pyaerial_logo.jpeg"
+  title: "IFTTT Discord Bot"
+  info_panels:
+    - icon: "analytics"
+      title: "Project Status"
+      value: "Release Candidacy"
+    - icon: "calendar-outline"
+      title: "Estimated release v1.0"
+      value: "Summer 2024"
+    - icon: "heart"
+      title: "Made by"
+      value: "@quantumbagel"
+  social_panels:
+    - icon: "logo-github"
+      url: "https://github.com/quantumbagel/Triggered"
+
+
+
