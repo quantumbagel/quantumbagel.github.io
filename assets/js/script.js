@@ -148,10 +148,11 @@ let defaultPage = "";
         if (pages[i].classList.contains("active")) {
            defaultPage = pages[i];
         }
-      }
+ }
 window.onhashchange = function () {
      location.hash = location.hash.toLowerCase();
     let foundNew = false;
+    console.log(location.hash);
     for (let i = 0; i < pages.length; i++) {
       if (decodeURI(location.hash.slice(1).toLowerCase()) === pages[i].dataset.page) {
           pages[i].classList.add("active");
@@ -169,13 +170,8 @@ window.onhashchange = function () {
       }
 };
 
-if (location.hash === "") { // Website homepage
-  for (let i = 0; i < pages.length; i++) {
-      if (pages[i].classList.contains("active")) {
-        location.hash = "#" + pages[i].dataset.page;
-      }
-    }
-}
+window.onhashchange(undefined);
+
 // add event to all nav link
 for (let i = 0; i < navigationLinks.length; i++) {
   navigationLinks[i].addEventListener("click", function () {
