@@ -499,7 +499,7 @@ main {
 
 }
 .about-text * li {
-  list-style-type: circle;
+  list-style-type: disc;
   margin-left: 20px;
 
 }
