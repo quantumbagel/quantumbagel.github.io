@@ -500,8 +500,7 @@ main {
 }
 .about-text * li {
   list-style-type: circle;
-  padding-left: 12em;
-  /*margin-left: 20px;*/
+  margin-left: 20px;
 
 }
 
