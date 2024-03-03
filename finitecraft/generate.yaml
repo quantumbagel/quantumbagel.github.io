@@ -14,7 +14,23 @@ pages:
     name: "About"
     elements:
       - text:
-          text: "This is **Triggered**, an IFTTT Discord bot where the only limitation is your own mind."
+          text: |
+                **FiniteCraft** is my and @Pixelz22's project to make a great autocrafter for Neal Agarwal's Infinite Craft.
+            
+                We plan for it to include:
+            
+                - Proxy selection algorithm (in progress)
+            
+                - An proxy-based crafter (completed)
+            
+                - A craft tree (not started)
+            
+                - A frontend website (not started)
+                
+                This project is in an extremely early stage, so the linked GitHub may not work yet!
+                This page will be updated every-so-often to reflect updates, but please use the GitHub link for the most up-to-date information.
+             
+                
 
 
 
@@ -22,12 +38,12 @@ pages:
 
 sidebar:
   back_to_home: true
-  image: "/assets/images/pyaerial_logo.jpeg"
-  title: "IFTTT Discord Bot"
+  image: "/assets/images/finitecraft_logo.png"
+  title: "Infinite Craft Breaker"
   info_panels:
     - icon: "analytics"
       title: "Project Status"
-      value: "Release Candidacy"
+      value: "In Development"
     - icon: "calendar-outline"
       title: "Estimated release v1.0"
       value: "Summer 2024"
@@ -36,7 +52,7 @@ sidebar:
       value: "@quantumbagel"
   social_panels:
     - icon: "logo-github"
-      url: "https://github.com/quantumbagel/Triggered"
+      url: "https://github.com/FiniteCraft/FiniteCraft"
 
 
 

@@ -14,7 +14,7 @@ pages:
     name: "About"
     elements:
       - text:
-          text: "This is **Triggered**, an IFTTT Discord bot where the only limitation is your own mind."
+          text: "This is **Statify**, a beautifully customizable SpigotMC plugin that can display custom stats and real ones in leaderboard/ranking format."
 
 
 
@@ -22,21 +22,23 @@ pages:
 
 sidebar:
   back_to_home: true
-  image: "/assets/images/pyaerial_logo.jpeg"
-  title: "IFTTT Discord Bot"
+  image: "/assets/images/statify_logo.png"
+  title: "Minecraft Stats Made Easy"
   info_panels:
     - icon: "analytics"
       title: "Project Status"
-      value: "Release Candidacy"
+      value: "Beta Released (abandoned)"
     - icon: "calendar-outline"
-      title: "Estimated release v1.0"
-      value: "Summer 2024"
+      title: "Development Finished"
+      value: "Winter 2023"
     - icon: "heart"
       title: "Made by"
       value: "@quantumbagel"
   social_panels:
     - icon: "logo-github"
-      url: "https://github.com/quantumbagel/Triggered"
+      url: "https://github.com/quantumbagel/Statify"
+    - icon: "earth"
+      url: "https://modrinth.com/plugin/statify"
 
 
 

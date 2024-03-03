@@ -494,6 +494,19 @@ main {
   font-weight: var(--fw-300);
   line-height: 1.6;
 }
+.about-text * ul {
+  list-style-position: inside;
+  padding-left: 12em;
+  margin-left: 12em;
+
+}
+.about-text * li {
+  list-style-type: circle;
+   padding-left: 12em;
+  margin-left: 12em;
+
+}
+
 .about-text p {
   margin-bottom: 15px;
 }

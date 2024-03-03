@@ -226,7 +226,7 @@ generated_articles
 
 TEXT_TEMPLATE = """
 <section class="about-text">
-          <p>TEXT</p>
+          TEXT
 </section>
 """
 
@@ -261,7 +261,8 @@ SITEMAP
 
 
 def markdown_text_parsing(txt):
-    o = markdown.markdown(txt)[3:][:-4]
+    o = markdown.markdown(txt)
+    # print(o)
     return o.replace('href', "style=\"display: inline\" class=\"colorlink\" href")
 
 
@@ -280,8 +281,10 @@ def generate_skills_item(variables):
 
 
 def generate_text(variables):
-    return TEXT_TEMPLATE.replace("TEXT", markdown_text_parsing(variables["text"]["text"]))
 
+    ret = TEXT_TEMPLATE.replace("TEXT", markdown_text_parsing(variables["text"]["text"]).replace("\n", ""))
+    # print(ret)
+    return ret
 
 def generate_header(variables):
     return OPTIONAL_HEADER_TEMPLATE.replace("NAME", markdown_text_parsing(variables["name"])).replace("ICON",

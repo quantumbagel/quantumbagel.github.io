@@ -14,7 +14,24 @@ pages:
     name: "About"
     elements:
       - text:
-          text: "This is **Triggered**, an IFTTT Discord bot where the only limitation is your own mind."
+          text: |
+                **CameraDistance** is a drone-following script for NC State's AERPAW drones.
+                      
+                It controls AXIS cameras supporting VAPIX to track MavLink/ArduPilot drones and record video of the drones.
+                
+                Its features include
+                
+                - Customizable recording triggers
+            
+                - Can zoom to fit drone in view or with a certain amount of space around it
+            
+                - Can handle drone software crashes or disconnects and quickly recover
+            
+                - Can support as many drones as you need via config
+            
+                - Works with any AXIS PTZ camera supporting VAPIX or any ArduPilot/MavLink based drone and many more!
+                
+                **Disclaimer: this program has not been extensively tested. Use at your own risk**
 
 
 
@@ -23,20 +40,20 @@ pages:
 sidebar:
   back_to_home: true
   image: "/assets/images/pyaerial_logo.jpeg"
-  title: "IFTTT Discord Bot"
+  title: "Camera Drone Tracking"
   info_panels:
     - icon: "analytics"
       title: "Project Status"
-      value: "Release Candidacy"
+      value: "Completed"
     - icon: "calendar-outline"
-      title: "Estimated release v1.0"
-      value: "Summer 2024"
+      title: "Development finished"
+      value: "Fall 2023"
     - icon: "heart"
       title: "Made by"
       value: "@quantumbagel"
   social_panels:
     - icon: "logo-github"
-      url: "https://github.com/quantumbagel/Triggered"
+      url: "https://github.com/quantumbagel/CameraDistance"
 
 
 

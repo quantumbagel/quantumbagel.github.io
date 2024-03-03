@@ -22,7 +22,7 @@ pages:
 
 sidebar:
   back_to_home: true
-  image: "/assets/images/pyaerial_logo.jpeg"
+  image: "/assets/images/triggered_logo.png"
   title: "IFTTT Discord Bot"
   info_panels:
     - icon: "analytics"
