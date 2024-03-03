@@ -1,9 +1,9 @@
-title: "Triggered - @quantumbagel"
+title: "Statify - @quantumbagel"
 favicon: "/assets/images/quantumbagel_favicon.webp"
-name: "Triggered"
+name: "Statify"
 username: "quantumbagel"
-meta_description: "Triggered -  an IFTTT Discord bot with infinite potential."
-path: "Triggered"
+meta_description: "Statify - a lightweight, efficient, and beautiful SpigotMC statistics plugin."
+path: "statify"
 use_sitemap: true
 starting_page_index: 0
 analytics:

@@ -1,9 +1,9 @@
-title: "Triggered - @quantumbagel"
+title: "Molotov - @quantumbagel"
 favicon: "/assets/images/quantumbagel_favicon.webp"
-name: "Triggered"
+name: "Molotov"
 username: "quantumbagel"
-meta_description: "Triggered -  an IFTTT Discord bot with infinite potential."
-path: "Triggered"
+meta_description: "Molotov - a Selenium-based bot for jklm.fun's Bomb Party."
+path: "molotov"
 use_sitemap: true
 starting_page_index: 0
 analytics:

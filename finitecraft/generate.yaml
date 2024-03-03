@@ -1,9 +1,9 @@
-title: "Triggered - @quantumbagel"
+title: "FiniteCraft - @quantumbagel"
 favicon: "/assets/images/quantumbagel_favicon.webp"
-name: "Triggered"
+name: "FiniteCraft"
 username: "quantumbagel"
-meta_description: "Triggered -  an IFTTT Discord bot with infinite potential."
-path: "Triggered"
+meta_description: "FiniteCraft -  A collection of tools to find and craft all elements in Infinite Craft by Neal Agarwal."
+path: "finitecraft"
 use_sitemap: true
 starting_page_index: 0
 analytics:
