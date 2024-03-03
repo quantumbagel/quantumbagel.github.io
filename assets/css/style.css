@@ -496,8 +496,7 @@ main {
 }
 .about-text * ul {
   list-style-position: inside;
-  /*padding-left: 12em;*/
-  margin-left: 20px;
+  padding-left: 20px;
 
 }
 .about-text * li {
