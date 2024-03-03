@@ -34,6 +34,9 @@ sidebar:
     - icon: "heart"
       title: "Made by"
       value: "@quantumbagel"
+    - icon: ""
+      title: "Downloads"
+      value: "![Modrinth Downloads](https://img.shields.io/modrinth/dt/statify?style=flat-square&label=Downloads)"
   social_panels:
     - icon: "logo-github"
       url: "https://github.com/quantumbagel/Statify"
