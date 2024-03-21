@@ -288,7 +288,7 @@ def generate_text(variables):
 
 
 def generate_header(variables):
-    return OPTIONAL_HEADER_TEMPLATE.replace("NAME", markdown_text_parsing(variables["name"])).replace("ICON",
+    return OPTIONAL_HEADER_TEMPLATE.replace("NAME", markdown_text_parsing(variables["name"]).replace("<p>", "")).replace("ICON",
                                                                                                       variables["icon"])
 
 
