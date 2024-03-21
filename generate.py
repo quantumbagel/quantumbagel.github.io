@@ -1,6 +1,11 @@
-import markdown
 import datetime
+import time
+import ruamel.yaml
+import minify_html
+import markdown
+import requests
 
+print("Loading...")
 INFO_TEMPLATE = """
 <li class="contact-item">
             <div class="icon-box">
@@ -230,9 +235,6 @@ TEXT_TEMPLATE = """
 </section>
 """
 
-
-
-
 FILTER_ITEM_TEMPLATE = """
             <li class="filter-item">
               <button data-filter-btn>CATEGORY</button>
@@ -267,24 +269,23 @@ def markdown_text_parsing(txt):
 
 
 def generate_timeline_item(variables):
-    for item in variables:
-        variables[item] = markdown_text_parsing(variables[item])
+    # for item in variables:
+    #     if item != "TIME_PERIOD":
+    variables["description"] = markdown_text_parsing(variables["description"]).replace("<p>", "").replace("</p>", "")
     return TIMELINE_ITEM_TEMPLATE.replace("NAME", variables['name']).replace("TIME_PERIOD",
                                                                              variables['time_period']).replace(
         "DESCRIPTION", variables['description'])
 
 
 def generate_skills_item(variables):
-    for item in variables:
-        variables[item] = markdown_text_parsing(variables[item])
     return SKILLS_ITEM_TEMPLATE.replace("NAME", variables['name']).replace("AMOUNT", variables['level'])
 
 
 def generate_text(variables):
-
     ret = TEXT_TEMPLATE.replace("TEXT", markdown_text_parsing(variables["text"]["text"]).replace("\n", ""))
     # print(ret)
     return ret
+
 
 def generate_header(variables):
     return OPTIONAL_HEADER_TEMPLATE.replace("NAME", markdown_text_parsing(variables["name"])).replace("ICON",
@@ -327,7 +328,6 @@ def generate_project_item(variables):
             .replace("CATEGORY", variables["tag"].lower()))
 
 
-
 def generate_projects(variables):
     variables = variables['projects']
     projects_internal = ''
@@ -368,7 +368,7 @@ def generate_article(variables, is_first=True):
 
 def generate_html(variables):
     html = (HTML_TEMPLATE.replace("configuration.favicon", variables['favicon']).replace("configuration.name",
-                                                                                        variables["name"]).replace(
+                                                                                         variables["name"]).replace(
         "configuration.username", variables["username"]).replace("configuration.sidebar.image",
                                                                  variables["sidebar"]["image"]).replace(
         "configuration.sidebar.title", variables["sidebar"]["title"])
@@ -400,6 +400,7 @@ def generate_html(variables):
                                                                          variables["analytics"]["tag_manager_id"]))
     return html
 
+
 def generate_sitemap(links):
     sitemap = ''
     for link in links:
@@ -408,8 +409,6 @@ def generate_sitemap(links):
 
 
 
-
-import requests
 js = open("assets/js/script.js")
 resp = requests.post("https://www.toptal.com/developers/javascript-minifier/api/raw", data={"input": js.read()})
 minified = open("assets/js/minified_script.js", "w")
@@ -418,9 +417,10 @@ minified.write(resp.text)
 minified.close()
 js.close()
 
-import ruamel.yaml
-import minify_html
 
+
+print("Starting...")
+start_time = time.time()
 y = ruamel.yaml.YAML()
 jobs = y.load(open("generate_execute.yaml"))["jobs"]
 links = []
@@ -441,7 +441,7 @@ for job_key in jobs.keys():
     f.write(minify_html.minify(generate_html(data), minify_js=True, remove_processing_instructions=True))
     f.close()
 
-print(f"Regenerated {len(jobs)} jobs.")
+print(f"Completed {len(jobs)} jobs in {round((time.time() - start_time) * 100, 2)}ms.")
 
 f = open("sitemap.xml", "w")
 f.truncate(0)

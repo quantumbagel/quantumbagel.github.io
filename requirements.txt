@@ -1,3 +1,4 @@
 minify-html
 ruamel.yaml
 requests
+markdown
