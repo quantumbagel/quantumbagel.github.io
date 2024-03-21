@@ -35,13 +35,19 @@ pages:
             icon: "analytics-outline"
           skills:
             - name: "Python"
-              level: "80"
+              level: "100"
+            - name: "Selenium / Web Scraping"
+              level: "90"
             - name: "Java"
               level: "80"
             - name: "C#"
               level: "90"
-            - name: "Wordpress"
-              level: "50"
+            - name: "HTML/CSS (Web)"
+              level: "90"
+            - name: "Wordpress / Website Design"
+              level: "70"
+            - name: "AI Usage"
+              level: "0"
   projects:
     name: "Projects"
     elements:
