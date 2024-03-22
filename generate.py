@@ -293,7 +293,7 @@ def generate_header(variables):
 
 
 def generate_contact(variables):
-    return CONTACT_FORM_TEMPLATE.replace("FORMSPREE_URL", markdown_text_parsing(variables["contact"]["formspree_url"]))
+    return CONTACT_FORM_TEMPLATE.replace("FORMSPREE_URL", variables["contact"]["formspree_url"])
 
 
 def generate_navbar_item(variables, is_first=True):
