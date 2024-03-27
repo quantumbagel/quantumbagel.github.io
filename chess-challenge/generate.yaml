@@ -14,7 +14,7 @@ pages:
     name: "About"
     elements:
       - text:
-          text: "This is **Triggered**, an IFTTT Discord bot where the only limitation is your own mind."
+          text: "This is our submission for Sebastian Lague's Chess Challenge held in Fall 2023. It is 1500 ELO and can beat (at least) me."
 
 
 
@@ -22,21 +22,24 @@ pages:
 
 sidebar:
   back_to_home: true
-  image: "/assets/images/pyaerial_logo.jpeg"
-  title: "IFTTT Discord Bot"
+  image: "/assets/images/sebastian.png"
+  title: "Kinda Good Chess Bot"
   info_panels:
     - icon: "analytics"
       title: "Project Status"
-      value: "Release Candidacy"
+      value: "Completed"
+    - icon: "bulb"
+      title: "ELO"
+      value: "~1500"
     - icon: "calendar-outline"
-      title: "Estimated release v1.0"
-      value: "Summer 2024"
+      title: "Released"
+      value: "Winter 2023"
     - icon: "heart"
       title: "Made by"
-      value: "@quantumbagel"
+      value: "@quantumbagel and @Pixelz22"
   social_panels:
     - icon: "logo-github"
-      url: "https://github.com/quantumbagel/Triggered"
+      url: "https://github.com/quantumbagel/Chess-Challenge"
 
 
 
