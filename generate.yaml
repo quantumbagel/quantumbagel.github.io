@@ -19,11 +19,15 @@ pages:
           header:
             name: "This Website"
             icon: "globe-outline"
-          text: "This website has CSS from vCard's excellent [portfolio template](https://github.com/codewithsadee/vcard-personal-portfolio) with many tweaks & changes that I've made. This website contains 
-                 * a portfolio
-                 * a contact form
-                 * sub-websites for each project
-                 * sidebars"
+          text: "This [website](https://github.com/quantumbagel/quantumbagel.github.io) has CSS from vCard's excellent [portfolio template](https://github.com/codewithsadee/vcard-personal-portfolio) with many tweaks & changes that I've made. This website contains 
+                 
+                 - a portfolio
+                 
+                 - a contact form
+                 
+                 - sub-websites for each project
+                 
+                 - sidebars"
   experience:
     name: "Experience"
     elements:
