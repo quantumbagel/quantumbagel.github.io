@@ -5,7 +5,7 @@ import minify_html
 import markdown
 import requests
 
-print("Loading...")
+print("Minifying JS...")
 INFO_TEMPLATE = """
 <li class="contact-item">
             <div class="icon-box">
@@ -424,7 +424,8 @@ start_time = time.time()
 y = ruamel.yaml.YAML()
 jobs = y.load(open("generate_execute.yaml"))["jobs"]
 links = []
-for job_key in jobs.keys():
+for i, job_key in enumerate(jobs.keys()):
+    print("executing job", job_key, f"({i+1}/{len(jobs)})")
     job = jobs[job_key]
     data = y.load(open(job["in"]))
     if data["use_sitemap"]:
@@ -443,7 +444,10 @@ for job_key in jobs.keys():
 
 print(f"Completed {len(jobs)} jobs in {round((time.time() - start_time) * 100, 2)}ms.")
 
+print("Writing sitemap...")
 f = open("sitemap.xml", "w")
 f.truncate(0)
 f.write(generate_sitemap(links))
 f.close()
+
+print("All tasks complete. :)")
