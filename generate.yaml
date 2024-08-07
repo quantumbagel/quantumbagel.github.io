@@ -16,18 +16,7 @@ pages:
       - text:
           text: "Hi! I'm **Julian Reder**! I'm a **dually-enrolled** programmer who spent a significant amount of time making this website that probably nobody will ever see (except for you, of course)! I'm currently spending my time making fun little bots, mods, projects in Python, C#, Java, and more! You can check out some of my [projects here!](https://github.com/quantumbagel)"
       - text:
-          header:
-            name: "This Website"
-            icon: "globe-outline"
-          text: "This [website](https://github.com/quantumbagel/quantumbagel.github.io) has CSS from vCard's excellent [portfolio template](https://github.com/codewithsadee/vcard-personal-portfolio) with many tweaks & changes that I've made. This website contains 
-                 
-                 - a portfolio
-                 
-                 - a contact form
-                 
-                 - sub-websites for each project
-                 
-                 - sidebars"
+          text: "This [website](https://github.com/quantumbagel/quantumbagel.github.io) has CSS from vCard's excellent [portfolio template](https://github.com/codewithsadee/vcard-personal-portfolio) with many tweaks & changes that I've made. This website contains a (portfolio)[#projects], a (contact form)[#contact], sub-websites for each project, and sidebars. It is powered by a python-based generator that compiles this website statically from a YAML file."
   experience:
     name: "Experience"
     elements:
@@ -36,6 +25,9 @@ pages:
             name: "Education"
             icon: "book-outline"
           timeline:
+            - name: "Applying for college"
+              time_period: "Fall 2024"
+              description: "I'm currently applying to NC State two years early for admission this fall. Go Pack!"
             - name: "Wake Tech"
               time_period: "2023 - Present"
               description: "I've started my dual-enrolling at Wake Tech. I'm looking to spend two years here, then apply to **NC State**."
@@ -51,10 +43,12 @@ pages:
               level: "100"
             - name: "Selenium / Web Scraping"
               level: "90"
-            - name: "Java"
-              level: "80"
             - name: "C#"
               level: "90"
+            - name: "Solidworks / 3D CAD"
+              level: "90"
+            - name: "Java"
+              level: "80"
             - name: "HTML/CSS (Web)"
               level: "90"
             - name: "Wordpress / Website Design"
@@ -84,7 +78,7 @@ pages:
               tag: "Internship Projects"
             - name: "airstrik.py"
               image: "/assets/images/airstrik_logo.png"
-              description: "Plane tracker for AERPAW"
+              description: "Plane tracker for AERPAW (replaced by PyAerial)"
               link: "airstrik.py"
               tag: "Internship Projects"
             - name: "Piranha"
@@ -97,10 +91,10 @@ pages:
               description: "MC Server Stats done right (SpigotMC)"
               link: "Statify"
               tag: "MC Plugins"
-            - name: "CameraDistance"
+            - name: "DroneTracker"
               image: "/assets/images/placeholder_project.jpg"
               description: "Track drones with cameras!"
-              link: "CameraDistance"
+              link: "DroneTracker"
               tag: "Internship Projects"
             - name: "Molotov"
               image: "/assets/images/placeholder_project.jpg"
@@ -124,12 +118,12 @@ pages:
               tag: "Abandoned Projects"
             - name: "BlokusCloud"
               image: "/assets/images/placeholder_project.jpg"
-              description: "A cloud Blokus remake"
+              description: "A cloud Blokus remake (abandoned)"
               link: "https://github.com/quantumbagel/BlokusCloud"
               tag: "Abandoned Projects"
             - name: "airtime.ino"
               image: "/assets/images/placeholder_project.jpg"
-              description: "A flight controller for Arduino Uno that doesn't work"
+              description: "A flight controller for Arduino Uno that doesn't work (abandoned)"
               link: "https://github.com/quantumbagel/airtime"
               tag: "Abandoned Projects"
             - name: "Chess-Challenge"

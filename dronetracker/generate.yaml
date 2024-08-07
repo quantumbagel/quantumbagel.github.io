@@ -1,9 +1,9 @@
-title: "CameraDistance - @quantumbagel"
+title: "DroneTracker - @quantumbagel"
 favicon: "/assets/images/quantumbagel_favicon.webp"
-name: "CameraDistance"
+name: "DroneTracker"
 username: "quantumbagel"
 meta_description: "CameraDistance - an AXIS camera using VISCA/ONVIF to track MAVLINK drones."
-path: "cameradistance"
+path: "dronetracker"
 use_sitemap: true
 starting_page_index: 0
 analytics:
@@ -15,24 +15,23 @@ pages:
     elements:
       - text:
           text: |
-                **CameraDistance** is a drone-following script for NC State's AERPAW drones.
+                **DroneTracker** is a drone-following script for NC State's AERPAW drones.
                       
                 It controls AXIS cameras supporting VAPIX to track MavLink/ArduPilot drones and record video of the drones.
                 
                 Its features include
                 
-                - Customizable recording triggers
+                - Tailored for AERPAW's need
             
                 - Can zoom to fit drone in view or with a certain amount of space around it
             
                 - Can handle drone software crashes or disconnects and quickly recover
             
-                - Can support as many drones as you need via config
+                - Integrates perfectly with Kafka for detailed telemetry and information.
             
-                - Works with any AXIS PTZ camera supporting VAPIX or any ArduPilot/MavLink based drone and many more!
+                - Works with **any** AXIS PTZ camera supporting VAPIX!
                 
-                **Disclaimer: this program has not been extensively tested. Use at your own risk**
-
+                **This project is currently in active use and is supported**
 
 
 
@@ -46,8 +45,8 @@ sidebar:
       title: "Project Status"
       value: "Completed"
     - icon: "calendar-outline"
-      title: "Development finished"
-      value: "Fall 2023"
+      title: "Development"
+      value: "In Progress"
     - icon: "heart"
       title: "Made by"
       value: "@quantumbagel"

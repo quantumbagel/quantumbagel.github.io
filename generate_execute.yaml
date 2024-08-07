@@ -14,9 +14,9 @@ jobs:
   statify:
     in: "statify/generate.yaml"
     out: "statify/index.html"
-  cameradistance:
-    in: "cameradistance/generate.yaml"
-    out: "cameradistance/index.html"
+  dronetracker:
+    in: "dronetracker/generate.yaml"
+    out: "dronetracker/index.html"
   molotov:
     in: "molotov/generate.yaml"
     out: "molotov/index.html"
