@@ -18,7 +18,9 @@ pages:
       - text:
           text: "This [website](https://github.com/quantumbagel/quantumbagel.github.io) has CSS from vCard's excellent [portfolio template](https://github.com/codewithsadee/vcard-personal-portfolio) with many tweaks & changes that I've made. It contains a [portfolio](#projects), a [contact form](#contact), sub-websites for each project, and sidebars. It is powered by a python-based generator that compiles this website statically from a YAML file."
       - text:
-          text: "I have designed many different projects "
+          text: |
+                I have designed many different projects intended for a wide variety of uses, and I hope that this page is able to help you find a solution to your problem or, at least, provide a cool distraction :) 
+                - Julian Reder, August 21, 2024
   experience:
     name: "Experience"
     elements:
