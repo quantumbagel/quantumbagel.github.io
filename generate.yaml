@@ -16,7 +16,9 @@ pages:
       - text:
           text: "Hi! I'm **Julian Reder**! I'm a **dually-enrolled** programmer who spent a significant amount of time making this website that probably nobody will ever see (except for you, of course)! I'm currently spending my time making fun little bots, mods, projects in Python, C#, Java, and more! You can check out some of my [projects here!](https://github.com/quantumbagel)"
       - text:
-          text: "This [website](https://github.com/quantumbagel/quantumbagel.github.io) has CSS from vCard's excellent [portfolio template](https://github.com/codewithsadee/vcard-personal-portfolio) with many tweaks & changes that I've made. This website contains a [portfolio](#projects), a [contact form](#contact), sub-websites for each project, and sidebars. It is powered by a python-based generator that compiles this website statically from a YAML file."
+          text: "This [website](https://github.com/quantumbagel/quantumbagel.github.io) has CSS from vCard's excellent [portfolio template](https://github.com/codewithsadee/vcard-personal-portfolio) with many tweaks & changes that I've made. It contains a [portfolio](#projects), a [contact form](#contact), sub-websites for each project, and sidebars. It is powered by a python-based generator that compiles this website statically from a YAML file."
+      - text:
+          text: "I have designed many different projects "
   experience:
     name: "Experience"
     elements:

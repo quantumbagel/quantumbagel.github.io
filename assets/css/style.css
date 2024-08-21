@@ -1225,9 +1225,9 @@ textarea.form-input::-webkit-resizer {
     font-size: var(--fs-8);
     display: block;
   }
-  .info_more-btn ion-icon {
-    display: none;
-  }
+  /*.info_more-btn ion-icon {*/
+  /*  display: none;*/
+  /*}*/
   .separator {
     margin: 32px 0;
   }
