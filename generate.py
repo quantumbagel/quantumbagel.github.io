@@ -1,6 +1,6 @@
 import datetime
 import time
-import ruamel.yaml
+from ruamel.yaml import YAML
 import minify_html
 import markdown
 import requests
@@ -421,7 +421,7 @@ js.close()
 
 print("Starting...")
 start_time = time.time()
-y = ruamel.yaml.YAML()
+y = YAML()
 jobs = y.load(open("generate_execute.yaml"))["jobs"]
 links = []
 for i, job_key in enumerate(jobs.keys()):

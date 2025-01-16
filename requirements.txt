@@ -1,4 +1,4 @@
 minify-html
-ruamel.yaml
+ruamel.yaml<0.18.0  # PEP 625
 requests
 markdown
