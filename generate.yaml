@@ -3,7 +3,7 @@ favicon: "/assets/images/quantumbagel_favicon.webp"
 name: "Julian Reder"
 username: "quantumbagel"
 starting_page_index: 0
-meta_description: "Hi! I'm Julian Reder (@quantumbagel), a dually-enrolled programmer at Wake Tech"
+meta_description: "Hi! I'm Julian Reder (@quantumbagel), a programmer at North Carolina State University"
 path: ""
 use_sitemap: true
 analytics:
@@ -14,13 +14,13 @@ pages:
     name: "About"
     elements:
       - text:
-          text: "Hi! I'm **Julian Reder**! I'm a **dually-enrolled** programmer who spent a significant amount of time making this website that probably nobody will ever see (except for you, of course)! I'm currently spending my time making fun little bots, mods, projects in Python, C#, Java, and more! You can check out some of my [projects here!](https://github.com/quantumbagel)"
+          text: "Hi! I'm **Julian Reder**! I'm a college programmer who spent a significant amount of time making this website that probably nobody will ever see (except for you, of course)! I'm currently spending my time making fun little bots, mods, projects in Python, C#, Java, and more! You can check out some of my [projects here!](https://github.com/quantumbagel)"
       - text:
           text: "This [website](https://github.com/quantumbagel/quantumbagel.github.io) has CSS from vCard's excellent [portfolio template](https://github.com/codewithsadee/vcard-personal-portfolio) with many tweaks & changes that I've made. It contains a [portfolio](#projects), a [contact form](#contact), sub-websites for each project, and sidebars. It is powered by a python-based generator that compiles this website statically from a YAML file."
       - text:
           text: |
                 I have designed many different projects intended for a wide variety of uses, and I hope that this page is able to help you find a solution to your problem or, at least, provide a cool distraction :) 
-                - Julian Reder, August 21, 2024
+                - Julian Reder, June 23, 2025
   experience:
     name: "Experience"
     elements:
@@ -29,21 +29,21 @@ pages:
             name: "Education"
             icon: "book-outline"
           timeline:
-            - name: "NCSU Student"
+            - name: "North Carolina State University"
               time_period: "Fall 2025"
               description: "I've been accepted to NC State's Engineering program for a Electrical & Computer Engineering program"
             - name: "Wake Tech"
               time_period: "2023 - Spring 2025"
-              description: "I am dual-enrolling at Wake Tech. I'm looking to spend two years here, then apply to **NC State**."
+              description: "I dually enrolled at Wake Tech and got an Associate's in Engineering degree."
             - name: "Homeschooled"
               time_period: "Since Preschool"
-              description: "I've been **homeschooled** since I was **5**!"
+              description: "I've been **homeschooled** since I was **5**! yayy i have no social skills"
       - timeline:
           header:
             name: "Achievements"
             icon: "flash-outline"
           timeline:
-            - name: "Member of AERPAW"
+            - name: "AERPAW Developer"
               time_period: "2023 - Present"
               description: "I'm an active, contributing member to NC State's AERPAW program. I have seen 3 different projects to completion, all of which are operating in production on their servers."
             - name: "15000+ lines of open source"
@@ -51,7 +51,7 @@ pages:
               description: "I've contributed dozens of projects to open source (and dozens more to private repositories) since 2022. I've made plane trackers, chess players, Discord bots, and even a high altitude balloon flight controller."
             - name: "SAT Score of 1550"
               time_period: "9th grade (June 2024)"
-              description: "I scored an 800 on math and 750 on verbal, equivalent to >99th percentile and 98th percentile, respectively."
+              description: "I scored an 800 on math and 750 on verbal, equivalent to >99th percentile and 98th percentile, respectively. Honestly, that's my worst test I've taken in my *life* :("
             - name: "CLT10 Score of 115"
               time_period: "8th grade (April 2023)"
               description: "The CLT (Classic Learning Test) is a test comparable to the SAT. More info [here](https://www.cltexam.com/). My score qualified for the [National Award](https://www.cltexam.com/student-awards/), but I was two years too young to receive the award :/"
