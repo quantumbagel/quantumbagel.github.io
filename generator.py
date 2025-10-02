@@ -138,7 +138,7 @@ PROJECTS = [
     },
     {
         "category": "other",
-        "image": "https://placehold.co/400x250/E74C3C/FFFFFF?text=Portfolio v1",
+        "image": "https://placehold.co/400x250/E74C3C/FFFFFF?text=Portfolio v2",
         "title": "Portfolio Website (v2)",
         "description": "A new portfolio website for me from the ground up. Made in three days.",
         "link": "https://github.com/quantumbagel/quantumbagel.github.io",
