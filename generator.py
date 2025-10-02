@@ -263,6 +263,24 @@ def create_html_structure():
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale-1.0">
     <title>{PERSONAL_INFO['name']} - Developer Portfolio</title>
+    <meta name="description" content="Personal portfolio for Julian Reder (@quantumbageL), a Computer Engineering student at NCSU showcasing software development projects in Python, C++, Docker, and more.">
+    <meta name="author" content="Julian Reder">
+    <meta name="keywords" content="Julian Reder, portfolio, developer, computer engineering, programmer, NCSU, North Carolina State University, Python, C++, Docker, Tailwind CSS, projects">
+
+    <meta property="og:title" content="Julian Reder - Developer Portfolio">
+    <meta property="og:description" content="A Computer Engineering student at NCSU showcasing software development projects.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://quantumbagel.github.io/"> <meta property="og:image" content="https://quantumbagel.github.io/social-preview.png"> <meta property="og:site_name" content="Julian Reder's Portfolio">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Julian Reder - Developer Portfolio">
+    <meta name="twitter:description" content="A Computer Engineering student at NCSU showcasing software development projects.">
+    <meta name="twitter:image" content="https://quantumbagel.github.io"> 
+    <meta name="twitter:creator" content="@quantumbagel">
+
+    <link rel="icon" type="image/png" href="https://avatars.githubusercontent.com/u/58365715?v=4">
+
+    <link rel="apple-touch-icon" href="https://avatars.githubusercontent.com/u/58365715?v=4">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
