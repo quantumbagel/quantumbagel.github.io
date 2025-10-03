@@ -10,7 +10,7 @@ import os
 PERSONAL_INFO = {
     "name": "Julian Reder",
     "title": "Computer Engineering Student @ NCSU",
-    "profile_image": "https://placehold.co/128x128/3B82F6/FFFFFF?text=JR",
+    "profile_image": "https://avatars.githubusercontent.com/u/58365715?v=4",
     "social_links": {
         "github": "https://github.com/quantumbagel",
         "linkedin": "https://www.linkedin.com/in/julian-reder-nc/",
