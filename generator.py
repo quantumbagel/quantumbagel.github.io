@@ -87,7 +87,6 @@ PROJECTS = [
         "description": "A better plane tracker for AERPAW, successor to airstrik.py.",
         "link": "https://github.com/quantumbagel/PyAerial",
         "skills": ["Python", "MavSDK", "Docker", "MongoDB", "ADS-B"],
-        "hover_image": "https://quantumbagel.github.io/PyAerial/social-preview.png"
     },
 {
         "category": "internship",
