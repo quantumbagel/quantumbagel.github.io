@@ -47,7 +47,7 @@ EXPERIENCES = [
         "icon": "code-slash-outline",
         "title": "AERPAW Developer",
         "date": "2023 - Present",
-        "description": "I have had the pleasure to work with Aerial Experimentation and Research Platform for Advanced Wireless at North Carolina State University for a couple of years now."
+        "description": "I have had the pleasure to work with Dr. Mihail Sichitiu at the Aerial Experimentation and Research Platform for Advanced Wireless at North Carolina State University for a couple of years now."
                        "I have built several interesting projects including a plane tracker and a drone flight recorder."
     },
     {
