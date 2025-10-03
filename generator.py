@@ -340,16 +340,16 @@ def create_html_structure():
                 <p class="text-blue-500 dark:text-blue-400 mt-1">{PERSONAL_INFO['title']}</p>
 
                 <div class="flex justify-center space-x-4 mt-6">
-                    <a href="{PERSONAL_INFO['social_links']['github']}" class="text-gray-500 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 transition-colors duration-300">
+                    <a href="{PERSONAL_INFO['social_links']['github']}"  aria-label="GitHub" class="text-gray-500 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 transition-colors duration-300">
                         <ion-icon name="logo-github" class="text-3xl"></ion-icon>
                     </a>
-                    <a href="{PERSONAL_INFO['social_links']['linkedin']}" class="text-gray-500 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 transition-colors duration-300">
+                    <a href="{PERSONAL_INFO['social_links']['linkedin']}" aria-label="LinkedIn" class="text-gray-500 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 transition-colors duration-300">
                         <ion-icon name="logo-linkedin" class="text-3xl"></ion-icon>
                     </a>
-                    <a href="{PERSONAL_INFO['social_links']['discord']}" class="text-gray-500 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 transition-colors duration-300">
+                    <a href="{PERSONAL_INFO['social_links']['discord']}" aria-label="Discord" class="text-gray-500 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 transition-colors duration-300">
                         <ion-icon name="logo-discord" class="text-3xl"></ion-icon>
                     </a>
-                    <a href="{PERSONAL_INFO['social_links']['resume']}" class="text-gray-500 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 transition-colors duration-300">
+                    <a href="{PERSONAL_INFO['social_links']['resume']}" aria-label="Resume" class="text-gray-500 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 transition-colors duration-300">
                         <ion-icon name="document" class="text-3xl"></ion-icon>
                     </a>
                 </div>
