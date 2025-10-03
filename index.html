@@ -42,9 +42,6 @@
             color: #000000 !important;
             background-color: #EFF6FF;
         }
-        .skill-bar-fill {
-            transition: width 0.8s ease-in-out;
-        }
     </style>
 </head>
 <body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
@@ -383,149 +380,270 @@
 
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="project-grid">
                         
-                        <div class="project-card internship">
-                            <div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg overflow-hidden group transform hover:scale-105 transition-transform duration-300 shadow-md hover:shadow-2xl flex flex-col h-full">
-                                <img src="https://placehold.co/400x250/3498DB/FFFFFF?text=PyAerial" class="w-full h-48 object-cover" alt="PyAerial Project">
-                                <div class="p-6 flex flex-col flex-grow">
-                                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">PyAerial</h3>
-                                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-4 flex-grow">A better plane tracker for AERPAW, successor to airstrik.py.</p>
-                                    <div class="mt-auto">
-                                        <div class="flex flex-wrap mt-4"><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">Python</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">MavSDK</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">Docker</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">MongoDB</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">ADS-B</span></div>
-                                        <a href="https://github.com/quantumbagel/PyAerial" class="text-blue-500 font-semibold hover:underline mt-4 inline-block">View Project &rarr;</a>"
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="project-card internship">
-                            <div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg overflow-hidden group transform hover:scale-105 transition-transform duration-300 shadow-md hover:shadow-2xl flex flex-col h-full">
-                                <img src="https://placehold.co/400x250/E74C3C/FFFFFF?text=airstrik.py" class="w-full h-48 object-cover" alt="airstrik.py Project">
-                                <div class="p-6 flex flex-col flex-grow">
-                                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">airstrik.py</h3>
-                                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-4 flex-grow">A pure-python ADS-B plane tracker for AERPAW.</p>
-                                    <div class="mt-auto">
-                                        <div class="flex flex-wrap mt-4"><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">Python</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">MavSDK</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">Docker</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">MongoDB</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">ADS-B</span></div>
-                                        <a href="https://github.com/quantumbagel/airstrik.py" class="text-blue-500 font-semibold hover:underline mt-4 inline-block">View Project &rarr;</a>"
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="project-card discord-bots">
-                            <div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg overflow-hidden group transform hover:scale-105 transition-transform duration-300 shadow-md hover:shadow-2xl flex flex-col h-full">
-                                <img src="https://placehold.co/400x250/2ECC71/FFFFFF?text=Piranha" class="w-full h-48 object-cover" alt="Piranha Project">
-                                <div class="p-6 flex flex-col flex-grow">
-                                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Piranha</h3>
-                                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-4 flex-grow">A chess-playing Discord bot with various features.</p>
-                                    <div class="mt-auto">
-                                        <div class="flex flex-wrap mt-4"><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">Python</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">Stockfish</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">Docker</span></div>
-                                        
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="project-card other">
-                            <div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg overflow-hidden group transform hover:scale-105 transition-transform duration-300 shadow-md hover:shadow-2xl flex flex-col h-full">
-                                <img src="https://placehold.co/400x250/E74C3C/FFFFFF?text=finiteCraft" class="w-full h-48 object-cover" alt="finiteCraft Project">
-                                <div class="p-6 flex flex-col flex-grow">
-                                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">finiteCraft</h3>
-                                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-4 flex-grow">A web scraper and craft finder for Neal Agarwal's Infinite Craft.</p>
-                                    <div class="mt-auto">
-                                        <div class="flex flex-wrap mt-4"><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">Python</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">Selenium</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">Web Scraping</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">Proxies</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">Automation</span></div>
-                                        <a href="https://github.com/finiteCraft/finiteCraft" class="text-blue-500 font-semibold hover:underline mt-4 inline-block">View Project &rarr;</a>"
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="project-card internship">
-                            <div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg overflow-hidden group transform hover:scale-105 transition-transform duration-300 shadow-md hover:shadow-2xl flex flex-col h-full">
-                                <img src="https://placehold.co/400x250/9B59B6/FFFFFF?text=DroneTracker" class="w-full h-48 object-cover" alt="DroneTracker Project">
-                                <div class="p-6 flex flex-col flex-grow">
-                                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">DroneTracker</h3>
-                                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-4 flex-grow">Track drones with cameras! Another AERPAW project.</p>
-                                    <div class="mt-auto">
-                                        <div class="flex flex-wrap mt-4"><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">Python</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">VAPIX</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">Docker</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">MavSDK</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">netcat</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">Linux</span></div>
-                                        <a href="https://github.com/quantumbagel/DroneTracker" class="text-blue-500 font-semibold hover:underline mt-4 inline-block">View Project &rarr;</a>"
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="project-card discord-bots">
-                            <div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg overflow-hidden group transform hover:scale-105 transition-transform duration-300 shadow-md hover:shadow-2xl flex flex-col h-full">
-                                <img src="https://placehold.co/400x250/F1C40F/FFFFFF?text=Triggered" class="w-full h-48 object-cover" alt="Triggered Project">
-                                <div class="p-6 flex flex-col flex-grow">
-                                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Triggered</h3>
-                                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-4 flex-grow">An if-this-than-that Discord bot for automation and fun.</p>
-                                    <div class="mt-auto">
-                                        <div class="flex flex-wrap mt-4"><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">Python</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">discord.py</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">MySQL</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">Programmable API</span></div>
-                                        <a href="https://github.com/quantumbagel/Triggered" class="text-blue-500 font-semibold hover:underline mt-4 inline-block">View Project &rarr;</a>"
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="project-card other">
-                            <div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg overflow-hidden group transform hover:scale-105 transition-transform duration-300 shadow-md hover:shadow-2xl flex flex-col h-full">
-                                <img src="https://placehold.co/400x250/1ABC9C/FFFFFF?text=Portfolio v1" class="w-full h-48 object-cover" alt="Portfolio Website (v1) Project">
-                                <div class="p-6 flex flex-col flex-grow">
-                                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Portfolio Website (v1)</h3>
-                                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-4 flex-grow">A remake of the vCard portfolio website.</p>
-                                    <div class="mt-auto">
-                                        <div class="flex flex-wrap mt-4"><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">Python</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">HTML</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">CSS</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">JS</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">Ion-Icons</span></div>
-                                        <a href="https://github.com/quantumbagel/quantumbagel.github.io/tree/d76d5fac008ab10e3a32b2550b36a8dd0a06b835" class="text-blue-500 font-semibold hover:underline mt-4 inline-block">View Project &rarr;</a>"
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="project-card other">
-                            <div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg overflow-hidden group transform hover:scale-105 transition-transform duration-300 shadow-md hover:shadow-2xl flex flex-col h-full">
-                                <img src="https://placehold.co/400x250/E74C3C/FFFFFF?text=Portfolio v2" class="w-full h-48 object-cover" alt="Portfolio Website (v2) Project">
-                                <div class="p-6 flex flex-col flex-grow">
-                                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Portfolio Website (v2)</h3>
-                                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-4 flex-grow">A new portfolio website for me from the ground up. Made in three days.</p>
-                                    <div class="mt-auto">
-                                        <div class="flex flex-wrap mt-4"><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">Python</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">HTML</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">CSS</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">JS</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">TailwindCSS</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">Ion-Icons</span></div>
-                                        <a href="https://github.com/quantumbagel/quantumbagel.github.io" class="text-blue-500 font-semibold hover:underline mt-4 inline-block">View Project &rarr;</a>"
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="project-card discord-bots">
-                            <div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg overflow-hidden group transform hover:scale-105 transition-transform duration-300 shadow-md hover:shadow-2xl flex flex-col h-full">
-                                <img src="https://placehold.co/400x250/F1C40F/FFFFFF?text=PlayCord" class="w-full h-48 object-cover" alt="PlayCord Project">
-                                <div class="p-6 flex flex-col flex-grow">
-                                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">PlayCord</h3>
-                                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-4 flex-grow">A Discord bot for paper and pencil games with fully functional local and global leaderboards, and dynamic loading of games.</p>
-                                    <div class="mt-auto">
-                                        <div class="flex flex-wrap mt-4"><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">Python</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">discord.py</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">MySQL</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">Programmable API</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full"></span></div>
-                                        <a href="https://github.com/PlayCord/bot" class="text-blue-500 font-semibold hover:underline mt-4 inline-block">View Project &rarr;</a>"
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="project-card other">
-                            <div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg overflow-hidden group transform hover:scale-105 transition-transform duration-300 shadow-md hover:shadow-2xl flex flex-col h-full">
-                                <img src="https://placehold.co/400x250/3498DB/FFFFFF?text=Statify" class="w-full h-48 object-cover" alt="Statify Project">
-                                <div class="p-6 flex flex-col flex-grow">
-                                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Statify</h3>
-                                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-4 flex-grow">A SpigotMC plugin for statistics aggregation and leaderboards</p>
-                                    <div class="mt-auto">
-                                        <div class="flex flex-wrap mt-4"><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">Java</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">SpigotMC</span></div>
-                                        <a href="https://github.com/quantumbagel/Statify" class="text-blue-500 font-semibold hover:underline mt-4 inline-block">View Project &rarr;</a>"
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="project-card other">
-                            <div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg overflow-hidden group transform hover:scale-105 transition-transform duration-300 shadow-md hover:shadow-2xl flex flex-col h-full">
-                                <img src="https://placehold.co/400x250/2ECC71/FFFFFF?text=Molotov" class="w-full h-48 object-cover" alt="Molotov Project">
-                                <div class="p-6 flex flex-col flex-grow">
-                                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Molotov</h3>
-                                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-4 flex-grow">A Selenium-based bot for the game Bomb Party (jklm.fun)</p>
-                                    <div class="mt-auto">
-                                        <div class="flex flex-wrap mt-4"><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">Python</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">Selenium</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">JavaScript</span></div>
-                                        <a href="https://github.com/quantumbagel/Statify" class="text-blue-500 font-semibold hover:underline mt-4 inline-block">View Project &rarr;</a>"
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+<div class="project-card internship group relative hover:z-10">
+    <div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg overflow-hidden transform group-hover:scale-110 transition-transform duration-300 shadow-md hover:shadow-2xl flex flex-col h-full">
+
+        <div class="relative h-48 transition-all duration-300 overflow-hidden bg-gray-100 dark:bg-gray-800">
+            <img src="https://placehold.co/400x250/3498DB/FFFFFF?text=PyAerial" 
+                 class="absolute w-full h-full object-cover transition-transform duration-300 group-hover:scale-110 flex items-center justify-center text-gray-500 dark:text-gray-400" 
+                 alt="PyAerial Project">
+
+            <img src="https://quantumbagel.github.io/PyAerial/social-preview.png" 
+                 class="absolute w-full h-full object-cover opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:scale-110 flex items-center justify-center text-gray-500 dark:text-gray-400" 
+                 alt="PyAerial Preview">
+        </div>
+
+        <div class="p-6 flex flex-col flex-grow">
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">PyAerial</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400 mb-4 flex-grow">A better plane tracker for AERPAW, successor to airstrik.py.</p>
+            <div class="mt-auto">
+                <div class="flex flex-wrap mt-4"><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">Python</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">MavSDK</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">Docker</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">MongoDB</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">ADS-B</span></div>
+                <a href="https://github.com/quantumbagel/PyAerial" class="text-blue-500 font-semibold hover:underline mt-4 inline-block">View Project &rarr;</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="project-card internship group relative hover:z-10">
+    <div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg overflow-hidden transform group-hover:scale-110 transition-transform duration-300 shadow-md hover:shadow-2xl flex flex-col h-full">
+
+        <div class="relative h-48 transition-all duration-300 overflow-hidden bg-gray-100 dark:bg-gray-800">
+            <img src="https://placehold.co/400x250/E74C3C/FFFFFF?text=airstrik.py" 
+                 class="absolute w-full h-full object-cover transition-transform duration-300 group-hover:scale-110 flex items-center justify-center text-gray-500 dark:text-gray-400" 
+                 alt="airstrik.py Project">
+
+            <img src="https://placehold.co/400x250/E74C3C/FFFFFF?text=airstrik.py" 
+                 class="absolute w-full h-full object-cover opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:scale-110 flex items-center justify-center text-gray-500 dark:text-gray-400" 
+                 alt="airstrik.py Preview">
+        </div>
+
+        <div class="p-6 flex flex-col flex-grow">
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">airstrik.py</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400 mb-4 flex-grow">A pure-python ADS-B plane tracker for AERPAW.</p>
+            <div class="mt-auto">
+                <div class="flex flex-wrap mt-4"><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">Python</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">MavSDK</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">Docker</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">MongoDB</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">ADS-B</span></div>
+                <a href="https://github.com/quantumbagel/airstrik.py" class="text-blue-500 font-semibold hover:underline mt-4 inline-block">View Project &rarr;</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="project-card discord-bots group relative hover:z-10">
+    <div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg overflow-hidden transform group-hover:scale-110 transition-transform duration-300 shadow-md hover:shadow-2xl flex flex-col h-full">
+
+        <div class="relative h-48 transition-all duration-300 overflow-hidden bg-gray-100 dark:bg-gray-800">
+            <img src="https://placehold.co/400x250/2ECC71/FFFFFF?text=Piranha" 
+                 class="absolute w-full h-full object-cover transition-transform duration-300 group-hover:scale-110 flex items-center justify-center text-gray-500 dark:text-gray-400" 
+                 alt="Piranha Project">
+
+            <img src="https://placehold.co/400x250/2ECC71/FFFFFF?text=Piranha" 
+                 class="absolute w-full h-full object-cover opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:scale-110 flex items-center justify-center text-gray-500 dark:text-gray-400" 
+                 alt="Piranha Preview">
+        </div>
+
+        <div class="p-6 flex flex-col flex-grow">
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Piranha</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400 mb-4 flex-grow">A chess-playing Discord bot with various features.</p>
+            <div class="mt-auto">
+                <div class="flex flex-wrap mt-4"><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">Python</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">Stockfish</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">Docker</span></div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="project-card other group relative hover:z-10">
+    <div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg overflow-hidden transform group-hover:scale-110 transition-transform duration-300 shadow-md hover:shadow-2xl flex flex-col h-full">
+
+        <div class="relative h-48 transition-all duration-300 overflow-hidden bg-gray-100 dark:bg-gray-800">
+            <img src="https://placehold.co/400x250/E74C3C/FFFFFF?text=finiteCraft" 
+                 class="absolute w-full h-full object-cover transition-transform duration-300 group-hover:scale-110 flex items-center justify-center text-gray-500 dark:text-gray-400" 
+                 alt="finiteCraft Project">
+
+            <img src="https://placehold.co/400x250/E74C3C/FFFFFF?text=finiteCraft" 
+                 class="absolute w-full h-full object-cover opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:scale-110 flex items-center justify-center text-gray-500 dark:text-gray-400" 
+                 alt="finiteCraft Preview">
+        </div>
+
+        <div class="p-6 flex flex-col flex-grow">
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">finiteCraft</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400 mb-4 flex-grow">A web scraper and craft finder for Neal Agarwal's Infinite Craft.</p>
+            <div class="mt-auto">
+                <div class="flex flex-wrap mt-4"><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">Python</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">Selenium</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">Web Scraping</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">Proxies</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">Automation</span></div>
+                <a href="https://github.com/finiteCraft/finiteCraft" class="text-blue-500 font-semibold hover:underline mt-4 inline-block">View Project &rarr;</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="project-card internship group relative hover:z-10">
+    <div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg overflow-hidden transform group-hover:scale-110 transition-transform duration-300 shadow-md hover:shadow-2xl flex flex-col h-full">
+
+        <div class="relative h-48 transition-all duration-300 overflow-hidden bg-gray-100 dark:bg-gray-800">
+            <img src="https://placehold.co/400x250/9B59B6/FFFFFF?text=DroneTracker" 
+                 class="absolute w-full h-full object-cover transition-transform duration-300 group-hover:scale-110 flex items-center justify-center text-gray-500 dark:text-gray-400" 
+                 alt="DroneTracker Project">
+
+            <img src="https://placehold.co/400x250/9B59B6/FFFFFF?text=DroneTracker" 
+                 class="absolute w-full h-full object-cover opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:scale-110 flex items-center justify-center text-gray-500 dark:text-gray-400" 
+                 alt="DroneTracker Preview">
+        </div>
+
+        <div class="p-6 flex flex-col flex-grow">
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">DroneTracker</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400 mb-4 flex-grow">Track drones with cameras! Another AERPAW project.</p>
+            <div class="mt-auto">
+                <div class="flex flex-wrap mt-4"><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">Python</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">VAPIX</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">Docker</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">MavSDK</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">netcat</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">Linux</span></div>
+                <a href="https://github.com/quantumbagel/DroneTracker" class="text-blue-500 font-semibold hover:underline mt-4 inline-block">View Project &rarr;</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="project-card discord-bots group relative hover:z-10">
+    <div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg overflow-hidden transform group-hover:scale-110 transition-transform duration-300 shadow-md hover:shadow-2xl flex flex-col h-full">
+
+        <div class="relative h-48 transition-all duration-300 overflow-hidden bg-gray-100 dark:bg-gray-800">
+            <img src="https://placehold.co/400x250/F1C40F/FFFFFF?text=Triggered" 
+                 class="absolute w-full h-full object-cover transition-transform duration-300 group-hover:scale-110 flex items-center justify-center text-gray-500 dark:text-gray-400" 
+                 alt="Triggered Project">
+
+            <img src="https://placehold.co/400x250/F1C40F/FFFFFF?text=Triggered" 
+                 class="absolute w-full h-full object-cover opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:scale-110 flex items-center justify-center text-gray-500 dark:text-gray-400" 
+                 alt="Triggered Preview">
+        </div>
+
+        <div class="p-6 flex flex-col flex-grow">
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Triggered</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400 mb-4 flex-grow">An if-this-than-that Discord bot for automation and fun.</p>
+            <div class="mt-auto">
+                <div class="flex flex-wrap mt-4"><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">Python</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">discord.py</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">MySQL</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">Programmable API</span></div>
+                <a href="https://github.com/quantumbagel/Triggered" class="text-blue-500 font-semibold hover:underline mt-4 inline-block">View Project &rarr;</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="project-card other group relative hover:z-10">
+    <div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg overflow-hidden transform group-hover:scale-110 transition-transform duration-300 shadow-md hover:shadow-2xl flex flex-col h-full">
+
+        <div class="relative h-48 transition-all duration-300 overflow-hidden bg-gray-100 dark:bg-gray-800">
+            <img src="https://placehold.co/400x250/1ABC9C/FFFFFF?text=Portfolio v1" 
+                 class="absolute w-full h-full object-cover transition-transform duration-300 group-hover:scale-110 flex items-center justify-center text-gray-500 dark:text-gray-400" 
+                 alt="Portfolio Website (v1) Project">
+
+            <img src="https://placehold.co/400x250/1ABC9C/FFFFFF?text=Portfolio v1" 
+                 class="absolute w-full h-full object-cover opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:scale-110 flex items-center justify-center text-gray-500 dark:text-gray-400" 
+                 alt="Portfolio Website (v1) Preview">
+        </div>
+
+        <div class="p-6 flex flex-col flex-grow">
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Portfolio Website (v1)</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400 mb-4 flex-grow">A remake of the vCard portfolio website.</p>
+            <div class="mt-auto">
+                <div class="flex flex-wrap mt-4"><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">Python</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">HTML</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">CSS</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">JS</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">Ion-Icons</span></div>
+                <a href="https://github.com/quantumbagel/quantumbagel.github.io/tree/d76d5fac008ab10e3a32b2550b36a8dd0a06b835" class="text-blue-500 font-semibold hover:underline mt-4 inline-block">View Project &rarr;</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="project-card other group relative hover:z-10">
+    <div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg overflow-hidden transform group-hover:scale-110 transition-transform duration-300 shadow-md hover:shadow-2xl flex flex-col h-full">
+
+        <div class="relative h-48 transition-all duration-300 overflow-hidden bg-gray-100 dark:bg-gray-800">
+            <img src="https://placehold.co/400x250/E74C3C/FFFFFF?text=Portfolio v2" 
+                 class="absolute w-full h-full object-cover transition-transform duration-300 group-hover:scale-110 flex items-center justify-center text-gray-500 dark:text-gray-400" 
+                 alt="Portfolio Website (v2) Project">
+
+            <img src="https://placehold.co/400x250/E74C3C/FFFFFF?text=Portfolio v2" 
+                 class="absolute w-full h-full object-cover opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:scale-110 flex items-center justify-center text-gray-500 dark:text-gray-400" 
+                 alt="Portfolio Website (v2) Preview">
+        </div>
+
+        <div class="p-6 flex flex-col flex-grow">
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Portfolio Website (v2)</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400 mb-4 flex-grow">A new portfolio website for me from the ground up. Made in three days.</p>
+            <div class="mt-auto">
+                <div class="flex flex-wrap mt-4"><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">Python</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">HTML</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">CSS</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">JS</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">TailwindCSS</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">Ion-Icons</span></div>
+                <a href="https://github.com/quantumbagel/quantumbagel.github.io" class="text-blue-500 font-semibold hover:underline mt-4 inline-block">View Project &rarr;</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="project-card discord-bots group relative hover:z-10">
+    <div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg overflow-hidden transform group-hover:scale-110 transition-transform duration-300 shadow-md hover:shadow-2xl flex flex-col h-full">
+
+        <div class="relative h-48 transition-all duration-300 overflow-hidden bg-gray-100 dark:bg-gray-800">
+            <img src="https://placehold.co/400x250/F1C40F/FFFFFF?text=PlayCord" 
+                 class="absolute w-full h-full object-cover transition-transform duration-300 group-hover:scale-110 flex items-center justify-center text-gray-500 dark:text-gray-400" 
+                 alt="PlayCord Project">
+
+            <img src="https://placehold.co/400x250/F1C40F/FFFFFF?text=PlayCord" 
+                 class="absolute w-full h-full object-cover opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:scale-110 flex items-center justify-center text-gray-500 dark:text-gray-400" 
+                 alt="PlayCord Preview">
+        </div>
+
+        <div class="p-6 flex flex-col flex-grow">
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">PlayCord</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400 mb-4 flex-grow">A Discord bot for paper and pencil games with fully functional local and global leaderboards, and dynamic loading of games.</p>
+            <div class="mt-auto">
+                <div class="flex flex-wrap mt-4"><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">Python</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">discord.py</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">MySQL</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">Programmable API</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full"></span></div>
+                <a href="https://github.com/PlayCord/bot" class="text-blue-500 font-semibold hover:underline mt-4 inline-block">View Project &rarr;</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="project-card other group relative hover:z-10">
+    <div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg overflow-hidden transform group-hover:scale-110 transition-transform duration-300 shadow-md hover:shadow-2xl flex flex-col h-full">
+
+        <div class="relative h-48 transition-all duration-300 overflow-hidden bg-gray-100 dark:bg-gray-800">
+            <img src="https://placehold.co/400x250/3498DB/FFFFFF?text=Statify" 
+                 class="absolute w-full h-full object-cover transition-transform duration-300 group-hover:scale-110 flex items-center justify-center text-gray-500 dark:text-gray-400" 
+                 alt="Statify Project">
+
+            <img src="https://placehold.co/400x250/3498DB/FFFFFF?text=Statify" 
+                 class="absolute w-full h-full object-cover opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:scale-110 flex items-center justify-center text-gray-500 dark:text-gray-400" 
+                 alt="Statify Preview">
+        </div>
+
+        <div class="p-6 flex flex-col flex-grow">
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Statify</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400 mb-4 flex-grow">A SpigotMC plugin for statistics aggregation and leaderboards</p>
+            <div class="mt-auto">
+                <div class="flex flex-wrap mt-4"><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">Java</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">SpigotMC</span></div>
+                <a href="https://github.com/quantumbagel/Statify" class="text-blue-500 font-semibold hover:underline mt-4 inline-block">View Project &rarr;</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="project-card other group relative hover:z-10">
+    <div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg overflow-hidden transform group-hover:scale-110 transition-transform duration-300 shadow-md hover:shadow-2xl flex flex-col h-full">
+
+        <div class="relative h-48 transition-all duration-300 overflow-hidden bg-gray-100 dark:bg-gray-800">
+            <img src="https://placehold.co/400x250/2ECC71/FFFFFF?text=Molotov" 
+                 class="absolute w-full h-full object-cover transition-transform duration-300 group-hover:scale-110 flex items-center justify-center text-gray-500 dark:text-gray-400" 
+                 alt="Molotov Project">
+
+            <img src="https://placehold.co/400x250/2ECC71/FFFFFF?text=Molotov" 
+                 class="absolute w-full h-full object-cover opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:scale-110 flex items-center justify-center text-gray-500 dark:text-gray-400" 
+                 alt="Molotov Preview">
+        </div>
+
+        <div class="p-6 flex flex-col flex-grow">
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Molotov</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400 mb-4 flex-grow">A Selenium-based bot for the game Bomb Party (jklm.fun)</p>
+            <div class="mt-auto">
+                <div class="flex flex-wrap mt-4"><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">Python</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">Selenium</span><span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">JavaScript</span></div>
+                <a href="https://github.com/quantumbagel/Statify" class="text-blue-500 font-semibold hover:underline mt-4 inline-block">View Project &rarr;</a>
+            </div>
+        </div>
+    </div>
+</div>
+
                     </div>
                 </div>
             </section>
@@ -609,21 +727,6 @@
             
             window.addEventListener('scroll', handleEdgeCases);
             handleEdgeCases(); // Run once on load to set the correct initial state
-
-            // Animate skill bars on scroll (This part remains the same)
-            const skillsSection = document.getElementById('skills');
-            const skillBars = document.querySelectorAll('.skill-bar-fill');
-            const skillObserver = new IntersectionObserver((entries) => {                entries.forEach(entry => {                    if (entry.isIntersecting) {                        skillBars.forEach(bar => {                            const width = bar.style.width;
-                            bar.style.width = '0%';
-                            setTimeout(() => {                                bar.style.width = width;
-                            }, 100);
-                        });
-                        skillObserver.unobserve(skillsSection);
-                    }
-                });
-            }, { threshold: 0.5 });
-            if (skillsSection) {                 skillObserver.observe(skillsSection);
-            }
         });
     </script>
 </body>

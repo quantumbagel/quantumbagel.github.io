@@ -86,7 +86,8 @@ PROJECTS = [
         "title": "PyAerial",
         "description": "A better plane tracker for AERPAW, successor to airstrik.py.",
         "link": "https://github.com/quantumbagel/PyAerial",
-        "skills": ["Python", "MavSDK", "Docker", "MongoDB", "ADS-B"]
+        "skills": ["Python", "MavSDK", "Docker", "MongoDB", "ADS-B"],
+        "hover_image": "https://quantumbagel.github.io/PyAerial/social-preview.png"
     },
 {
         "category": "internship",
@@ -206,30 +207,56 @@ def generate_skill_bar(skill):
 
 
 def generate_project_card(project):
-    """Generates a single project card."""
-    # Generate skill pills
+    """
+    Generates a single project card with advanced hover effects.
+
+    Expects a project dictionary with keys: 'category', 'image',
+    'hover_image', 'title', 'description', 'skills', and 'link'.
+    """
+    # Gracefully handle projects that may not have a hover image
+    # It will use the main image as a fallback to prevent errors
+    hover_image_src = project.get('hover_image', project.get('image'))
+
+    # Generate HTML for skill pills if they exist
     skills_html = ""
     if project.get("skills"):
         pills_html = "".join([
-                                 f'<span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">{skill}</span>'
-                                 for skill in project['skills']])
+            f'<span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">{skill}</span>'
+            for skill in project['skills']
+        ])
         skills_html = f'<div class="flex flex-wrap mt-4">{pills_html}</div>'
 
-    return f"""
-                        <div class="project-card {project['category']}">
-                            <div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg overflow-hidden group transform hover:scale-105 transition-transform duration-300 shadow-md hover:shadow-2xl flex flex-col h-full">
-                                <img src="{project['image']}" class="w-full h-48 object-cover" alt="{project['title']} Project">
-                                <div class="p-6 flex flex-col flex-grow">
-                                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">{project['title']}</h3>
-                                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-4 flex-grow">{project['description']}</p>
-                                    <div class="mt-auto">
-                                        {skills_html}
-                                        {'<a href="' + project['link'] + '" class="text-blue-500 font-semibold hover:underline mt-4 inline-block">View Project &rarr;</a>"' if project['link'] is not None else ""}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>"""
+    # Generate HTML for the link if it exists
+    link_html = ""
+    if project.get("link"):
+        link_html = f'<a href="{project["link"]}" class="text-blue-500 font-semibold hover:underline mt-4 inline-block">View Project &rarr;</a>'
 
+    # Return the complete card HTML using an f-string
+    return f"""
+<div class="project-card {project.get('category', 'other')} group relative hover:z-10">
+    <div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg overflow-hidden transform group-hover:scale-110 transition-transform duration-300 shadow-md hover:shadow-2xl flex flex-col h-full">
+
+        <div class="relative h-48 transition-all duration-300 overflow-hidden bg-gray-100 dark:bg-gray-800">
+            <img src="{project.get('image')}" 
+                 class="absolute w-full h-full object-cover transition-transform duration-300 group-hover:scale-110 flex items-center justify-center text-gray-500 dark:text-gray-400" 
+                 alt="{project.get('title')} Project">
+
+            <img src="{hover_image_src}" 
+                 class="absolute w-full h-full object-cover opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:scale-110 flex items-center justify-center text-gray-500 dark:text-gray-400" 
+                 alt="{project.get('title')} Preview">
+        </div>
+
+        <div class="p-6 flex flex-col flex-grow">
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">{project.get('title')}</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400 mb-4 flex-grow">{project.get('description')}</p>
+            <div class="mt-auto">
+                {skills_html}
+                {link_html}
+            </div>
+        </div>
+    </div>
+</div>
+"""
 
 def create_html_structure():
     """Builds the final HTML file content by assembling all components."""
@@ -299,9 +326,6 @@ def create_html_structure():
         .active-nav {{
             color: #000000 !important;
             background-color: #EFF6FF;
-        }}
-        .skill-bar-fill {{
-            transition: width 0.8s ease-in-out;
         }}
     </style>
 </head>
@@ -502,21 +526,6 @@ def create_html_structure():
             
             window.addEventListener('scroll', handleEdgeCases);
             handleEdgeCases(); // Run once on load to set the correct initial state
-
-            // Animate skill bars on scroll (This part remains the same)
-            const skillsSection = document.getElementById('skills');
-            const skillBars = document.querySelectorAll('.skill-bar-fill');
-            const skillObserver = new IntersectionObserver((entries) => {{                entries.forEach(entry => {{                    if (entry.isIntersecting) {{                        skillBars.forEach(bar => {{                            const width = bar.style.width;
-                            bar.style.width = '0%';
-                            setTimeout(() => {{                                bar.style.width = width;
-                            }}, 100);
-                        }});
-                        skillObserver.unobserve(skillsSection);
-                    }}
-                }});
-            }}, {{ threshold: 0.5 }});
-            if (skillsSection) {{                 skillObserver.observe(skillsSection);
-            }}
         }});
     </script>
 </body>
