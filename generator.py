@@ -414,7 +414,6 @@ def create_html_structure():
                         <button class="filter-btn active-filter-btn bg-blue-500 text-white px-4 py-2 rounded-full text-sm font-medium" data-filter="all">All</button>
                         <button class="filter-btn bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 px-4 py-2 rounded-full text-sm font-medium" data-filter="discord-bots">Discord Bots</button>
                         <button class="filter-btn bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 px-4 py-2 rounded-full text-sm font-medium" data-filter="internship">Internship</button>
-                        <button class="filter-btn bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 px-4 py-2 rounded-full text-sm font-medium" data-filter="web-scraping">Web Scraping</button>
                         <button class="filter-btn bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 px-4 py-2 rounded-full text-sm font-medium" data-filter="other">Other</button>
                     </div>
 
