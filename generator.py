@@ -11,7 +11,7 @@ import htmlmin
 PERSONAL_INFO = {
     "name": "Julian Reder",
     "title": "Computer Engineering Student @ NCSU",
-    "profile_image": "https://avatars.githubusercontent.com/u/58365715?v=4",
+    "profile_image": "https://avatars.githubusercontent.com/u/58365715?v=4&s=256",
     "social_links": {
         "github": "https://github.com/quantumbagel",
         "linkedin": "https://www.linkedin.com/in/julian-reder-nc/",
