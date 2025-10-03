@@ -1,4 +1,5 @@
 import os
+import htmlmin
 
 # ==============================================================================
 # PORTFOLIO DATA
@@ -541,10 +542,12 @@ def main():
     # Generate the HTML content
     html_output = create_html_structure()
 
+    minified = htmlmin.minify(html_output, remove_empty_space=True)
+
     # Write the content to the portfolio.html file
     file_path = os.path.join("index.html")
     with open(file_path, "w", encoding="utf-8") as f:
-        f.write(html_output)
+        f.write(minified)
 
     print(f"Successfully generated portfolio website!")
     print(f"File saved to: {os.path.abspath(file_path)}")
