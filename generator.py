@@ -11,7 +11,7 @@ import htmlmin
 PERSONAL_INFO = {
     "name": "Julian Reder",
     "title": "Computer Engineering Student @ NCSU",
-    "profile_image": "https://avatars.githubusercontent.com/u/58365715?v=4&s=256",
+    "profile_image": "pfp.webp",
     "social_links": {
         "github": "https://github.com/quantumbagel",
         "linkedin": "https://www.linkedin.com/in/julian-reder-nc/",
@@ -290,7 +290,7 @@ def create_html_structure():
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale-1.0">
     <title>{PERSONAL_INFO['name']} - Developer Portfolio</title>
-    <meta name="description" content="Personal portfolio for Julian Reder (@quantumbageL), a Computer Engineering student at NCSU showcasing software development projects in Python, C++, Docker, and more.">
+    <meta name="description" content="Personal portfolio for Julian Reder (@quantumbagel), a Computer Engineering student at NCSU showcasing software development projects in Python, C++, Docker, and more.">
     <meta name="author" content="Julian Reder">
     <meta name="keywords" content="Julian Reder, portfolio, developer, computer engineering, programmer, NCSU, North Carolina State University, Python, C++, Docker, Tailwind CSS, projects">
 
@@ -317,11 +317,11 @@ def create_html_structure():
             font-family: 'Inter', sans-serif;
         }}
         .sidebar {{
-            -ms-overflow-style: none;  /* Internet Explorer 10+ */
-            scrollbar-width: none;  /* Firefox */
+            -ms-overflow-style: none;
+            scrollbar-width: none;  
         }}
         .sidebar::-webkit-scrollbar {{ 
-            display: none;  /* Safari and Chrome */
+            display: none; 
         }}
         .active-nav {{
             color: #000000 !important;
