@@ -471,9 +471,9 @@ def create_html_structure():
         </aside>
 
         <!-- Main Content -->
-        <main class="w-full lg:ml-[24rem] p-4 sm:p-8 lg:p-12">
+        <main class="w-full lg:ml-[24rem] p-4 sm:p-8 lg:p-12 lg:pt-24">
             <!-- Navigation -->
-            <nav class="bg-white dark:bg-gray-800/80 backdrop-blur-sm p-4 rounded-xl shadow-lg sticky top-0 z-50 mb-8 hidden lg:block">
+            <nav class="bg-white dark:bg-gray-800/80 backdrop-blur-sm p-4 rounded-xl shadow-lg fixed top-4 left-4 right-4 lg:left-[25rem] lg:right-8 z-50 hidden lg:block">
                  <ul class="flex justify-center items-center space-x-2">
                     <li><a href="#about" class="nav-link px-4 py-2 rounded-md font-medium text-gray-600 dark:text-gray-300 hover:text-blue-500 hover:bg-blue-50 dark:hover:bg-gray-700 transition-colors duration-300">About</a></li>
                     <li><a href="#experience" class="nav-link px-4 py-2 rounded-md font-medium text-gray-600 dark:text-gray-300 hover:text-blue-500 hover:bg-blue-50 dark:hover:bg-gray-700 transition-colors duration-300">Experience</a></li>
