@@ -350,7 +350,7 @@ def create_html_structure():
             visibility: visible;
         }}
         .project-modal-content {{
-            background: white;
+            background: #f9fafb;
             border-radius: 1rem;
             max-width: 600px;
             width: 90%;
@@ -545,15 +545,13 @@ def create_html_structure():
     <!-- Project Modal -->
     <div id="project-modal" class="project-modal">
         <div class="project-modal-content shadow-2xl">
-            <div class="relative">
-                <div id="modal-image" class="h-48 bg-gray-200 dark:bg-gray-700 rounded-t-xl"></div>
-                <button id="modal-close" class="absolute top-4 right-4 w-8 h-8 bg-white dark:bg-gray-800 rounded-full flex items-center justify-center shadow-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
-                    <ion-icon name="close-outline" class="text-xl text-gray-700 dark:text-gray-300"></ion-icon>
-                </button>
-            </div>
-            <div class="p-6">
+            <button id="modal-close" class="sticky top-4 float-right mr-4 mt-4 w-8 h-8 bg-white dark:bg-gray-800 rounded-full flex items-center justify-center shadow-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors z-10">
+                <ion-icon name="close-outline" class="text-xl text-gray-700 dark:text-gray-300"></ion-icon>
+            </button>
+            <div id="modal-image" class="h-48 bg-blue-100 dark:bg-gray-700 rounded-t-xl -mt-12"></div>
+            <div class="p-6 bg-white dark:bg-gray-800 rounded-b-xl">
                 <h3 id="modal-title" class="text-2xl font-bold text-gray-900 dark:text-white mb-2"></h3>
-                <p id="modal-category" class="text-sm text-blue-500 mb-4"></p>
+                <p id="modal-category" class="text-sm text-blue-500 dark:text-blue-400 mb-4"></p>
                 <p id="modal-description" class="text-gray-600 dark:text-gray-300 mb-4"></p>
                 <div id="modal-details" class="text-gray-600 dark:text-gray-400 text-sm mb-4 space-y-2"></div>
                 <div id="modal-tags" class="flex flex-wrap gap-2 mb-6"></div>
