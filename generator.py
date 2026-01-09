@@ -22,7 +22,7 @@ PERSONAL_INFO = {
         {"icon": "calendar-outline", "label": "Birthday", "value": "March 13"},
         {"icon": "location-outline", "label": "Location", "value": "North Carolina, USA"},
         {"icon": "paw-outline", "label": "Number of Cats", "value": "3"},
-        {"icon": "school-outline", "label": "Credits", "value": "63"},
+        {"icon": "school-outline", "label": "Credits", "value": "75"},
         {"icon": "logo-github", "label": "GitHub", "value": "@quantumbagel"},
         {"icon": "logo-linkedin", "label": "LinkedIn", "value": "@julian-reder-nc"},
         {"icon": "logo-discord", "label": "Discord", "value": "@thequantumbagel"}
