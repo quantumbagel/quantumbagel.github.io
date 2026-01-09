@@ -166,8 +166,40 @@ PROJECTS = [
         "image": "https://placehold.co/400x250/2ECC71/FFFFFF?text=Molotov",
         "title": "Molotov",
         "description": "A Selenium-based bot for the game Bomb Party (jklm.fun)",
-        "link": "https://github.com/quantumbagel/Statify",
+        "link": "https://github.com/quantumbagel/Molotov",
         "skills": ["Python", "Selenium", "JavaScript"]
+    },
+    {
+        "category": "discord-bots",
+        "image": "https://placehold.co/400x250/9B59B6/FFFFFF?text=discord.py+template",
+        "title": "discord.py-template",
+        "description": "A simple, modern, and clean discord.py 2.0+ template.",
+        "link": "https://github.com/quantumbagel/discord.py-template",
+        "skills": ["Python", "discord.py"]
+    },
+    {
+        "category": "other",
+        "image": "https://placehold.co/400x250/1ABC9C/FFFFFF?text=Chess-Challenge",
+        "title": "Chess-Challenge",
+        "description": "A mini-chess bot for Sebastian Lague's chess bot challenge.",
+        "link": "https://github.com/quantumbagel/Chess-Challenge",
+        "skills": ["C#", "Chess", "AI"]
+    },
+    {
+        "category": "other",
+        "image": "https://placehold.co/400x250/E74C3C/FFFFFF?text=Hannibal",
+        "title": "Hannibal",
+        "description": "A generals.io bot and backend.",
+        "link": "https://github.com/quantumbagel/Hannibal",
+        "skills": ["Python", "Selenium", "Game AI"]
+    },
+    {
+        "category": "internship",
+        "image": "https://placehold.co/400x250/F1C40F/FFFFFF?text=aerpawlib",
+        "title": "aerpawlib",
+        "description": "A MAVLink/MAVSDK abstraction layer for experimenters under the AERPAW platform.",
+        "link": "https://github.com/quantumbagel/aerpawlib",
+        "skills": ["Python", "MAVLink", "MAVSDK", "Drones"]
     },
 ]
 
