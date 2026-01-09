@@ -686,6 +686,38 @@ def create_html_structure():
                     features: ['Selenium automation', 'Optimized word lookup', 'Configurable response timing', 'JavaScript injection for speed'],
                     image: 'https://placehold.co/600x300/2ECC71/FFFFFF?text=Molotov',
                     link: 'https://github.com/quantumbagel/Molotov'
+                }},
+                'discord.py-template': {{
+                    category: 'Discord Bot',
+                    description: 'A simple, modern, and clean discord.py 2.0+ template.',
+                    details: 'A well-structured template for building Discord bots using discord.py 2.0+. Designed to be easy to understand and extend for beginners and experienced developers alike.',
+                    features: ['Clean project structure', 'Modern discord.py 2.0+ syntax', 'Slash command support', 'Easy to customize and extend'],
+                    image: 'https://placehold.co/600x300/9B59B6/FFFFFF?text=discord.py+template',
+                    link: 'https://github.com/quantumbagel/discord.py-template'
+                }},
+                'Chess-Challenge': {{
+                    category: 'Other Project',
+                    description: "A mini-chess bot for Sebastian Lague's chess bot challenge.",
+                    details: "An entry for Sebastian Lague's Tiny Chess Bot Challenge. The goal was to create the strongest chess AI possible within strict code size limitations.",
+                    features: ['Minimax algorithm with alpha-beta pruning', 'Compact code optimization', 'Custom evaluation function', 'Competitive performance under constraints'],
+                    image: 'https://placehold.co/600x300/1ABC9C/FFFFFF?text=Chess-Challenge',
+                    link: 'https://github.com/quantumbagel/Chess-Challenge'
+                }},
+                'Hannibal': {{
+                    category: 'Other Project',
+                    description: 'A generals.io bot and backend.',
+                    details: 'Hannibal is an AI bot for the online strategy game generals.io. It includes both the bot logic and a backend system for game analysis and strategy development.',
+                    features: ['Automated gameplay', 'Strategic decision making', 'Game state analysis', 'Selenium-based game interaction'],
+                    image: 'https://placehold.co/600x300/E74C3C/FFFFFF?text=Hannibal',
+                    link: 'https://github.com/quantumbagel/Hannibal'
+                }},
+                'aerpawlib': {{
+                    category: 'Internship Project',
+                    description: 'A MAVLink/MAVSDK abstraction layer for experimenters under the AERPAW platform.',
+                    details: 'aerpawlib provides a high-level Python interface for controlling drones on the AERPAW testbed. It abstracts away the complexity of MAVLink/MAVSDK for easier experiment development.',
+                    features: ['High-level drone control API', 'MAVLink/MAVSDK abstraction', 'Simplified experiment development', 'AERPAW platform integration'],
+                    image: 'https://placehold.co/600x300/F1C40F/FFFFFF?text=aerpawlib',
+                    link: 'https://github.com/quantumbagel/aerpawlib'
                 }}
             }};
 
