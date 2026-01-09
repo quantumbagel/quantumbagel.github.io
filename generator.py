@@ -186,14 +186,6 @@ PROJECTS = [
         "skills": ["C#", "Chess", "AI"]
     },
     {
-        "category": "other",
-        "image": "https://placehold.co/400x250/E74C3C/FFFFFF?text=Hannibal",
-        "title": "Hannibal",
-        "description": "A generals.io bot and backend.",
-        "link": "https://github.com/quantumbagel/Hannibal",
-        "skills": ["Python", "Selenium", "Game AI"]
-    },
-    {
         "category": "internship",
         "image": "https://placehold.co/400x250/F1C40F/FFFFFF?text=aerpawlib",
         "title": "aerpawlib",
@@ -702,14 +694,6 @@ def create_html_structure():
                     features: ['Minimax algorithm with alpha-beta pruning', 'Compact code optimization', 'Custom evaluation function', 'Competitive performance under constraints'],
                     image: 'https://placehold.co/600x300/1ABC9C/FFFFFF?text=Chess-Challenge',
                     link: 'https://github.com/quantumbagel/Chess-Challenge'
-                }},
-                'Hannibal': {{
-                    category: 'Other Project',
-                    description: 'A generals.io bot and backend.',
-                    details: 'Hannibal is an AI bot for the online strategy game generals.io. It includes both the bot logic and a backend system for game analysis and strategy development.',
-                    features: ['Automated gameplay', 'Strategic decision making', 'Game state analysis', 'Selenium-based game interaction'],
-                    image: 'https://placehold.co/600x300/E74C3C/FFFFFF?text=Hannibal',
-                    link: 'https://github.com/quantumbagel/Hannibal'
                 }},
                 'aerpawlib': {{
                     category: 'Internship Project',
