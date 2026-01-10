@@ -41,12 +41,12 @@ EXPERIENCES = [
         "icon": "school-outline",
         "title": "North Carolina State University",
         "date": "Fall 2025 - Present",
-        "description": "I am currently enrolled in the Computer Engineering program at North Carolina State University. I am also considering pursuing a Bachelor's degree in Statistics and a Master's of Computer Science"
+        "description": "I am currently enrolled in the Computer Engineering program at North Carolina State University. I am pursuing a Bachelor's in Statistics and Computer Engineering and a Master's of Computer Science"
     },
     {
         "icon": "code-slash-outline",
         "title": "AERPAW Developer",
-        "date": "2023 - Present",
+        "date": "Summer 2023 - Present",
         "description": "I have had the pleasure to work with Dr. Mihail Sichitiu at the Aerial Experimentation and Research Platform for Advanced Wireless at North Carolina State University for a couple of years now."
                        "I have built several interesting projects including a plane tracker and a drone flight recorder."
     },
@@ -54,7 +54,7 @@ EXPERIENCES = [
         "icon": "school-outline",
         "title": "Wake Tech Community College",
         "date": "Fall 2023 - Spring 2025",
-        "description": "This was my first experience taking college coursework. I graduated with multiple appearances on the Dean's List, membership in the Phi Theta Kappa chapter, and an Associates in Engineering degree."
+        "description": "This was my first experience taking college coursework. I graduated with multiple appearances on the Dean's List, membership in the Phi Theta Kappa chapter, and an Associate in Engineering degree."
     }
 ]
 
