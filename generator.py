@@ -355,6 +355,16 @@ def create_html_structure():
             color: #000000 !important;
             background-color: #EFF6FF;
         }}
+        .active-nav:hover {{
+            background-color: #DBEAFE !important;
+        }}
+        .dark .active-nav {{
+            color: #FFFFFF !important;
+            background-color: #1E40AF;
+        }}
+        .dark .active-nav:hover {{
+            background-color: #1D4ED8 !important;
+        }}
         /* Project Modal Styles */
         .project-modal {{
             position: fixed;
