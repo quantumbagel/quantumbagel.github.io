@@ -31,9 +31,9 @@ PERSONAL_INFO = {
 }
 
 ABOUT_ME = [
-    "Hello! I'm <strong class=\"text-gray-800 dark:text-white\">Julian Reder</strong>, a programmer and student at North Carolina State University. This is version 2 of my portfolio website, with this one being entirely coded from scratch using Tailwind because I'm lazy.",
+    "Hello! I'm <strong class=\"text-gray-800 dark:text-white\">Julian Reder</strong>, a programmer and student at North Carolina State University. This is version 2 of my portfolio website, with this one being entirely coded from scratch using Tailwind CSS for styling and layout.",
     "This website serves as mostly just a list of the projects I've made. Feel free to look at my <a href=\"#projects\" class=\"text-blue-500 hover:underline\">projects</a> or learn more about my <a href=\"#experience\" class=\"text-blue-500 hover:underline\">experience</a>.",
-    "I just really like making stuff that comes to my mind and thought it would be cool to share here."
+    "Hopefully you find something interesting here! If you want to get in touch, feel free to reach out via the <a href=\"#contact\" class=\"text-blue-500 hover:underline\">contact form</a> at the bottom of the page."
 ]
 
 EXPERIENCES = [
