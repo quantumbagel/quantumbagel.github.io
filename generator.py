@@ -41,7 +41,7 @@ EXPERIENCES = [
         "icon": "school-outline",
         "title": "North Carolina State University",
         "date": "Fall 2025 - Present",
-        "description": "I am currently enrolled in the Computer Engineering program at North Carolina State University. I am pursuing a Bachelor's in Statistics and Computer Engineering and a Master's of Computer Science"
+        "description": "I am currently enrolled in the Computer Engineering program at North Carolina State University. I am pursuing a Bachelor's in Statistics and Computer Engineering and a Master's of Computer Science."
     },
     {
         "icon": "code-slash-outline",
