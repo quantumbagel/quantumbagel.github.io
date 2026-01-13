@@ -54,7 +54,7 @@ EXPERIENCES = [
         "icon": "school-outline",
         "title": "Wake Tech Community College",
         "date": "Fall 2023 - Spring 2025",
-        "description": "This was my first experience taking college coursework. I graduated with multiple appearances on the Dean's List, membership in the Phi Theta Kappa chapter, and an Associate in Engineering degree."
+        "description": "This was my first experience taking college coursework. I graduated with multiple appearances on the Dean's List, membership in the Phi Theta Kappa chapter, and an Associate in Science degree."
     }
 ]
 
