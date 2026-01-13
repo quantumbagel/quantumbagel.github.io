@@ -150,7 +150,7 @@ PROJECTS = [
         "title": "PlayCord",
         "description": "A Discord bot for paper and pencil games with fully functional local and global leaderboards, and dynamic loading of games.",
         "link": "https://github.com/PlayCord/bot",
-        "skills": ["Python", "discord.py", "MySQL", "Programmable API", ""]
+        "skills": ["Python", "discord.py", "MySQL", "Programmable API"]
     },
     {
         "category": "other",
