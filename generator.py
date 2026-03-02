@@ -189,7 +189,7 @@ PROJECTS = [
         "image": "https://placehold.co/400x250/F1C40F/FFFFFF?text=aerpawlib",
         "title": "aerpawlib",
         "description": "A MAVLink/MAVSDK abstraction layer for experimenters under the AERPAW platform.",
-        "link": "https://github.com/quantumbagel/aerpawlib",
+        "link": "https://github.com/aerpaw/aerpawlib",
         "skills": ["Python", "MAVLink", "MAVSDK", "Drones"]
     },
 ]
