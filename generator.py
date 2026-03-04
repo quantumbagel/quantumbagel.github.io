@@ -876,6 +876,26 @@ def create_html_structure():
     return html_content
 
 
+def generate_redirect_page(url):
+    """Generates a minimal HTML redirect page."""
+    return f"""<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Redirecting...</title>
+    <meta http-equiv="refresh" content="0; url={url}">
+    <link rel="canonical" href="{url}">
+    <script type="text/javascript">
+        window.location.href = "{url}";
+    </script>
+</head>
+<body>
+    If you are not redirected, <a href="{url}">click here</a>.
+</body>
+</html>
+"""
+
+
 def main():
     """Main function to generate and save the HTML file."""
     # Ensure the output directory exists
@@ -893,6 +913,21 @@ def main():
 
     print(f"Successfully generated portfolio website!")
     print(f"File saved to: {os.path.abspath(file_path)}")
+
+    # Handle resume redirect
+    resume_url = PERSONAL_INFO.get("social_links", {}).get("resume")
+    if resume_url:
+        resume_dir = "resume"
+        if not os.path.exists(resume_dir):
+            os.makedirs(resume_dir)
+
+        redirect_html = generate_redirect_page(resume_url)
+        redirect_file_path = os.path.join(resume_dir, "index.html")
+        with open(redirect_file_path, "w", encoding="utf-8") as f:
+            f.write(redirect_html)
+
+        print(f"Successfully generated resume redirect!")
+        print(f"File saved to: {os.path.abspath(redirect_file_path)}")
 
 
 if __name__ == "__main__":
