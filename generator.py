@@ -890,14 +890,12 @@ def generate_redirect_page(url, title="Redirecting...", description="View my res
     <meta property="og:url" content="https://quantumbagel.github.io/resume">
     <meta property="og:title" content="{title}">
     <meta property="og:description" content="{description}">
-    <meta property="og:image" content="{image}">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://quantumbagel.github.io/resume">
     <meta property="twitter:title" content="{title}">
     <meta property="twitter:description" content="{description}">
-    <meta property="twitter:image" content="{image}">
 
     <meta http-equiv="refresh" content="0; url={url}">
     <link rel="canonical" href="{url}">
