@@ -347,11 +347,11 @@ def generate_skill_bar(skill):
     return f"""
                             <div class="mb-4 skill-item group">
                                 <div class="flex justify-between mb-1 cursor-pointer items-center skill-header p-1 rounded hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-colors">
-                                    <div class="flex items-center">
+                                    <div class="flex items-center pointer-events-none">
                                         <span class="text-base font-medium text-gray-700 dark:text-gray-300">{skill['name']}</span>
                                         <ion-icon name="chevron-down-outline" class="ml-2 text-gray-400 group-hover:text-blue-500 transition-transform duration-300 skill-chevron"></ion-icon>
                                     </div>
-                                    <span class="text-sm font-medium text-blue-700 dark:text-blue-400">{skill['level']}</span>
+                                    <span class="text-sm font-medium text-blue-700 dark:text-blue-400 pointer-events-none">{skill['level']}</span>
                                 </div>
                                 <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700 overflow-hidden">
                                     <div class="bg-blue-500 h-2.5 rounded-full skill-bar-fill transition-all duration-1000" style="width: {skill['percentage']}%"></div>
@@ -528,6 +528,12 @@ def create_html_structure():
             opacity: 1;
             visibility: visible;
         }}
+
+        /* Ensure icon doesn't block clicks in the button */
+        #modal-close ion-icon {{
+            pointer-events: none;
+        }}
+
         .project-modal-content {{
             background: #f9fafb;
             border-radius: 1rem;
@@ -839,7 +845,7 @@ def create_html_structure():
 
             // Skill expansion logic
             document.querySelectorAll('.skill-header').forEach(header => {{
-                header.addEventListener('click', () => {{
+                header.addEventListener('click', (e) => {{
                     const skillItem = header.closest('.skill-item');
                     const details = skillItem.querySelector('.skill-details');
                     const chevron = skillItem.querySelector('.skill-chevron');
@@ -858,10 +864,10 @@ def create_html_structure():
 
                     if (isHidden) {{
                         details.classList.remove('hidden');
-                        chevron.style.transform = 'rotate(180deg)';
+                        if (chevron) chevron.style.transform = 'rotate(180deg)';
                     }} else {{
                         details.classList.add('hidden');
-                        chevron.style.transform = 'rotate(0deg)';
+                        if (chevron) chevron.style.transform = 'rotate(0deg)';
                     }}
                 }});
             }});
