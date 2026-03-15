@@ -1,5 +1,6 @@
 import os
 import htmlmin
+import json
 
 # ==============================================================================
 # PORTFOLIO DATA
@@ -59,23 +60,113 @@ EXPERIENCES = [
 
 SKILLS = {
     "Programming Languages": [
-        {"name": "Python", "level": "Expert", "percentage": 100},
-        {"name": "C/C++", "level": "Advanced", "percentage": 90},
-        {"name": "JavaScript", "level": "Advanced", "percentage": 85},
-        {"name": "Java", "level": "Competent", "percentage": 80},
-        {"name": "C#", "level": "Competent", "percentage": 75},
-        {"name": "Bash", "level": "Competent", "percentage": 70},
+        {
+            "name": "Python", 
+            "level": "Expert", 
+            "percentage": 100,
+            "details": "My primary language for 5+ years. Used for web scraping, automation, data science, and mission-critical drone software.",
+            "projects": ["PyAerial", "airstrik.py", "DroneTracker", "finiteCraft", "Triggered"]
+        },
+        {
+            "name": "C/C++", 
+            "level": "Advanced", 
+            "percentage": 90,
+            "details": "Highly proficient in C/C++ for systems programming and performance-critical applications. Used in various academic and personal projects.",
+            "projects": ["Embedded Systems", "Data Structures"]
+        },
+        {
+            "name": "JavaScript", 
+            "level": "Advanced", 
+            "percentage": 85,
+            "details": "Used extensively for front-end development (Tailwind, React) and specialized automation tools.",
+            "projects": ["Portfolio Website (v2)", "Molotov", "finiteCraft"]
+        },
+        {
+            "name": "Java", 
+            "level": "Competent", 
+            "percentage": 80,
+            "details": "Solid understanding of OOP principles. Experience building Minecraft plugins and enterprise-style applications.",
+            "projects": ["Statify"]
+        },
+        {
+            "name": "C#", 
+            "level": "Competent", 
+            "percentage": 75,
+            "details": "Experience with .NET and game development. Most recently used for a high-performance chess engine challenge.",
+            "projects": ["Chess-Challenge"]
+        },
+        {
+            "name": "Bash", 
+            "level": "Competent", 
+            "percentage": 70,
+            "details": "Proficient in writing scripts for automation, CI/CD pipelines, and Linux system administration.",
+            "projects": ["Server Automation", "Docker setup scripts"]
+        },
     ],
     "Technologies & Frameworks": [
-        {"name": "Linux/Unix", "level": "Expert", "percentage": 100},
-        {"name": "Docker", "level": "Expert", "percentage": 100},
-        {"name": "JetBrains Suite", "level": "Expert", "percentage": 100},
-        {"name": "Git", "level": "Advanced", "percentage": 90},
-        {"name": "Selenium / Web Scraping", "level": "Advanced", "percentage": 90},
-        {"name": "OpenAPI", "level": "Advanced", "percentage": 90},
-        {"name": "SQL/MySQL/Postgres", "level": "Advanced", "percentage": 90},
-        {"name": "MongoDB", "level": "Advanced", "percentage": 90},
-        {"name": "Solidworks / CAD", "level": "Competent", "percentage": 80},
+        {
+            "name": "Linux/Unix", 
+            "level": "Expert", 
+            "percentage": 100,
+            "details": "Heavy user of Linux for development and server management. Comfortable with advanced kernel tuning and shell scripting.",
+            "projects": ["Server Management", "Drone Command Center"]
+        },
+        {
+            "name": "Docker", 
+            "level": "Expert", 
+            "percentage": 100,
+            "details": "Expert in containerization. All my major projects are deployed using Docker for reproducibility and scale.",
+            "projects": ["PyAerial", "airstrik.py", "DroneTracker", "Piranha"]
+        },
+        {
+            "name": "JetBrains Suite", 
+            "level": "Expert", 
+            "percentage": 100,
+            "details": "Advanced user of PyCharm, CLion, and IntelliJ. Highly efficient with IDE-driven development workflows.",
+            "projects": ["All Projects"]
+        },
+        {
+            "name": "Git", 
+            "level": "Advanced", 
+            "percentage": 90,
+            "details": "Deep understanding of Git workflows, branching strategies, and repository management.",
+            "projects": ["All Projects"]
+        },
+        {
+            "name": "Selenium / Web Scraping", 
+            "level": "Advanced", 
+            "percentage": 90,
+            "details": "Specialized in high-speed, distributed web scraping and browser automation.",
+            "projects": ["finiteCraft", "Molotov"]
+        },
+        {
+            "name": "OpenAPI", 
+            "level": "Advanced", 
+            "percentage": 90,
+            "details": "Experience designing and documenting RESTful APIs for complex data systems.",
+            "projects": ["PyAerial", "Triggered"]
+        },
+        {
+            "name": "SQL/MySQL/Postgres", 
+            "level": "Advanced", 
+            "percentage": 90,
+            "details": "Relational database design, optimization, and management for high-concurrency applications.",
+            "projects": ["PlayCord", "Triggered", "Statify"]
+        },
+        {
+            "name": "MongoDB", 
+            "level": "Advanced", 
+            "percentage": 90,
+            "details": "NoSQL database implementation for real-time tracking data and large-scale JSON storage.",
+            "projects": ["PyAerial", "airstrik.py"]
+        },
+        {
+            "name": "Solidworks / CAD", 
+            "level": "Competent", 
+            "percentage": 80,
+            "details": "Proficient in 3D modeling and mechanical design for engineering projects.",
+            "projects": ["Mechanical Design Projects"]
+        },
     ]
 }
 
@@ -85,14 +176,18 @@ PROJECTS = [
         "image": "https://placehold.co/400x250/3498DB/FFFFFF?text=PyAerial",
         "title": "PyAerial",
         "description": "A better plane tracker for AERPAW, successor to airstrik.py.",
+        "details": "PyAerial is a comprehensive ADS-B tracking solution developed for the AERPAW research platform at NC State. It provides real-time aircraft position tracking, historical data storage, and visualization capabilities.",
+        "features": ["Real-time ADS-B decoding", "MongoDB integration for data persistence", "Docker containerized deployment", "RESTful API for data access"],
         "link": "https://github.com/quantumbagel/PyAerial",
         "skills": ["Python", "MavSDK", "Docker", "MongoDB", "ADS-B"],
     },
-{
+    {
         "category": "internship",
         "image": "https://placehold.co/400x250/E74C3C/FFFFFF?text=airstrik.py",
         "title": "airstrik.py",
         "description": "A pure-python ADS-B plane tracker for AERPAW.",
+        "details": "The original pure-Python implementation of an ADS-B tracker for drone airspace monitoring. This project laid the groundwork for PyAerial.",
+        "features": ["Pure Python implementation", "ADS-B signal processing", "Integration with MavSDK for drone communication"],
         "link": "https://github.com/quantumbagel/airstrik.py",
         "skills": ["Python", "MavSDK", "Docker", "MongoDB", "ADS-B"]
     },
@@ -101,6 +196,8 @@ PROJECTS = [
         "image": "https://placehold.co/400x250/2ECC71/FFFFFF?text=Piranha",
         "title": "Piranha",
         "description": "A chess-playing Discord bot with various features.",
+        "details": "Piranha is a feature-rich Discord bot that allows users to play chess directly within Discord. It integrates with the Stockfish chess engine for AI opponents.",
+        "features": ["Play chess against AI or friends", "Multiple difficulty levels via Stockfish", "Game history and statistics", "Docker deployment support"],
         "link": None,
         "skills": ["Python", "Stockfish", "Docker"]
     },
@@ -109,6 +206,8 @@ PROJECTS = [
         "image": "https://placehold.co/400x250/E74C3C/FFFFFF?text=finiteCraft",
         "title": "finiteCraft",
         "description": "A web scraper and craft finder for Neal Agarwal's Infinite Craft.",
+        "details": "finiteCraft is an automation tool that scrapes and discovers all possible crafting combinations in the game Infinite Craft. Uses distributed proxy networks for efficient scraping.",
+        "features": ["Selenium-based automation", "Proxy rotation support", "Crafting recipe database", "Pathfinding algorithms for recipe discovery"],
         "link": "https://github.com/finiteCraft/finiteCraft",
         "skills": ["Python", "Selenium", "Web Scraping", "Proxies", "Automation"]
     },
@@ -117,6 +216,8 @@ PROJECTS = [
         "image": "https://placehold.co/400x250/9B59B6/FFFFFF?text=DroneTracker",
         "title": "DroneTracker",
         "description": "Track drones with cameras! Another AERPAW project.",
+        "details": "DroneTracker is a computer vision system that uses PTZ cameras to track drones in real-time. It integrates with AXIS cameras via VAPIX protocol.",
+        "features": ["PTZ camera control via VAPIX", "Real-time drone position estimation", "MavSDK integration for telemetry", "Containerized deployment"],
         "link": "https://github.com/quantumbagel/DroneTracker",
         "skills": ["Python", "VAPIX", "Docker", "MavSDK", "netcat", "Linux"]
     },
@@ -125,6 +226,8 @@ PROJECTS = [
         "image": "https://placehold.co/400x250/F1C40F/FFFFFF?text=Triggered",
         "title": "Triggered",
         "description": "An if-this-than-that Discord bot for automation and fun.",
+        "details": "Triggered allows Discord server administrators to create custom automation rules based on triggers and actions, similar to IFTTT.",
+        "features": ["Custom trigger/action system", "Programmable API", "MySQL database for persistence", "Extensive customization options"],
         "link": "https://github.com/quantumbagel/Triggered",
         "skills": ["Python", "discord.py", "MySQL", "Programmable API"]
     },
@@ -133,6 +236,8 @@ PROJECTS = [
         "image": "https://placehold.co/400x250/1ABC9C/FFFFFF?text=Portfolio v1",
         "title": "Portfolio Website (v1)",
         "description": "A remake of the vCard portfolio website.",
+        "details": "The first version of my portfolio website, built as a customized version of the vCard template with personal modifications.",
+        "features": ["Responsive design", "Custom styling", "Ion-Icons integration"],
         "link": "https://github.com/quantumbagel/quantumbagel.github.io/tree/d76d5fac008ab10e3a32b2550b36a8dd0a06b835",
         "skills": ["Python", "HTML", "CSS", "JS", "Ion-Icons"]
     },
@@ -141,6 +246,8 @@ PROJECTS = [
         "image": "https://placehold.co/400x250/E74C3C/FFFFFF?text=Portfolio v2",
         "title": "Portfolio Website (v2)",
         "description": "A new portfolio website for me from the ground up. Made in three days.",
+        "details": "The current portfolio website you're viewing! Built from scratch using TailwindCSS for a modern, responsive design.",
+        "features": ["TailwindCSS styling", "Dark mode support", "Smooth scrolling navigation", "Project filtering system"],
         "link": "https://github.com/quantumbagel/quantumbagel.github.io",
         "skills": ["Python", "HTML", "CSS", "JS", "TailwindCSS", "Ion-Icons"]
     },
@@ -149,6 +256,8 @@ PROJECTS = [
         "image": "https://placehold.co/400x250/F1C40F/FFFFFF?text=PlayCord",
         "title": "PlayCord",
         "description": "A Discord bot for paper and pencil games with fully functional local and global leaderboards, and dynamic loading of games.",
+        "details": "PlayCord brings classic paper and pencil games to Discord with a competitive twist. Features global and server-specific leaderboards.",
+        "features": ["Multiple game modes", "Global and local leaderboards", "Dynamic game loading system", "MySQL persistence"],
         "link": "https://github.com/PlayCord/bot",
         "skills": ["Python", "discord.py", "MySQL", "Programmable API"]
     },
@@ -157,6 +266,8 @@ PROJECTS = [
         "image": "https://placehold.co/400x250/3498DB/FFFFFF?text=Statify",
         "title": "Statify",
         "description": "A SpigotMC plugin for statistics aggregation and leaderboards",
+        "details": "Statify is a Minecraft server plugin that tracks player statistics and generates leaderboards for competitive servers.",
+        "features": ["Comprehensive stat tracking", "Customizable leaderboards", "SpigotMC API integration"],
         "link": "https://github.com/quantumbagel/Statify",
         "skills": ["Java", "SpigotMC"]
     },
@@ -165,6 +276,8 @@ PROJECTS = [
         "image": "https://placehold.co/400x250/2ECC71/FFFFFF?text=Molotov",
         "title": "Molotov",
         "description": "A Selenium-based bot for the game Bomb Party (jklm.fun)",
+        "details": "Molotov is an automation bot for the word game Bomb Party. It uses Selenium to interact with the game and an optimized word database for fast responses.",
+        "features": ["Selenium automation", "Optimized word lookup", "Configurable response timing", "JavaScript injection for speed"],
         "link": "https://github.com/quantumbagel/Molotov",
         "skills": ["Python", "Selenium", "JavaScript"]
     },
@@ -173,6 +286,8 @@ PROJECTS = [
         "image": "https://placehold.co/400x250/9B59B6/FFFFFF?text=discord.py+template",
         "title": "discord.py-template",
         "description": "A simple, modern, and clean discord.py 2.0+ template.",
+        "details": "A well-structured template for building Discord bots using discord.py 2.0+. Designed to be easy to understand and extend for beginners and experienced developers alike.",
+        "features": ["Clean project structure", "Modern discord.py 2.0+ syntax", "Slash command support", "Easy to customize and extend"],
         "link": "https://github.com/quantumbagel/discord.py-template",
         "skills": ["Python", "discord.py"]
     },
@@ -181,6 +296,8 @@ PROJECTS = [
         "image": "https://placehold.co/400x250/1ABC9C/FFFFFF?text=Chess-Challenge",
         "title": "Chess-Challenge",
         "description": "A mini-chess bot for Sebastian Lague's chess bot challenge.",
+        "details": "An entry for Sebastian Lague's Tiny Chess Bot Challenge. The goal was to create the strongest chess AI possible within strict code size limitations.",
+        "features": ["Minimax algorithm with alpha-beta pruning", "Compact code optimization", "Custom evaluation function", "Competitive performance under constraints"],
         "link": "https://github.com/quantumbagel/Chess-Challenge",
         "skills": ["C#", "Chess", "AI"]
     },
@@ -189,6 +306,8 @@ PROJECTS = [
         "image": "https://placehold.co/400x250/F1C40F/FFFFFF?text=aerpawlib",
         "title": "aerpawlib",
         "description": "A MAVLink/MAVSDK abstraction layer for experimenters under the AERPAW platform.",
+        "details": "aerpawlib provides a high-level Python interface for controlling drones on the AERPAW testbed. It abstracts away the complexity of MAVLink/MAVSDK for easier experiment development.",
+        "features": ["High-level drone control API", "MAVLink/MAVSDK abstraction", "Simplified experiment development", "AERPAW platform integration"],
         "link": "https://github.com/aerpaw/aerpawlib",
         "skills": ["Python", "MAVLink", "MAVSDK", "Drones"]
     },
@@ -216,15 +335,30 @@ def generate_timeline_item(item):
 
 
 def generate_skill_bar(skill):
-    """Generates a single skill bar."""
+    """Generates a single skill bar with expandable details."""
+    projects_html = ""
+    if skill.get("projects"):
+        project_pills = "".join([
+            f'<span class="inline-block bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-xs px-2 py-0.5 rounded border border-blue-100 dark:border-blue-800">{p}</span>'
+            for p in skill['projects']
+        ])
+        projects_html = f'<div class="flex flex-wrap gap-2 mt-2">{project_pills}</div>'
+
     return f"""
-                            <div class="mb-4">
-                                <div class="flex justify-between mb-1">
-                                    <span class="text-base font-medium text-gray-700 dark:text-gray-300">{skill['name']}</span>
+                            <div class="mb-4 skill-item group">
+                                <div class="flex justify-between mb-1 cursor-pointer items-center skill-header p-1 rounded hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-colors">
+                                    <div class="flex items-center">
+                                        <span class="text-base font-medium text-gray-700 dark:text-gray-300">{skill['name']}</span>
+                                        <ion-icon name="chevron-down-outline" class="ml-2 text-gray-400 group-hover:text-blue-500 transition-transform duration-300 skill-chevron"></ion-icon>
+                                    </div>
                                     <span class="text-sm font-medium text-blue-700 dark:text-blue-400">{skill['level']}</span>
                                 </div>
-                                <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
-                                    <div class="bg-blue-500 h-2.5 rounded-full skill-bar-fill" style="width: {skill['percentage']}%"></div>
+                                <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700 overflow-hidden">
+                                    <div class="bg-blue-500 h-2.5 rounded-full skill-bar-fill transition-all duration-1000" style="width: {skill['percentage']}%"></div>
+                                </div>
+                                <div class="skill-details hidden overflow-hidden mt-3 p-3 bg-gray-50 dark:bg-gray-800/50 rounded-lg border border-gray-100 dark:border-gray-700 text-sm">
+                                    <p class="text-gray-600 dark:text-gray-400 leading-relaxed">{skill.get('details', '')}</p>
+                                    {projects_html}
                                 </div>
                             </div>"""
 
@@ -239,6 +373,18 @@ def generate_project_card(project):
     # Gracefully handle projects that may not have a hover image
     # It will use the main image as a fallback to prevent errors
     hover_image_src = project.get('hover_image', project.get('image'))
+
+    # Encode project data for JavaScript
+    project_json = json.dumps({
+        "title": project.get("title"),
+        "category": project.get("category", "other").replace("-", " ").title(),
+        "description": project.get("description"),
+        "details": project.get("details"),
+        "features": project.get("features", []),
+        "image": project.get("image"),
+        "link": project.get("link"),
+        "skills": project.get("skills", [])
+    })
 
     # Generate HTML for skill pills if they exist
     skills_html = ""
@@ -256,7 +402,7 @@ def generate_project_card(project):
 
     # Return the complete card HTML using an f-string
     return f"""
-<div class="project-card {project.get('category', 'other')} group relative hover:z-10">
+<div class="project-card {project.get('category', 'other')} group relative hover:z-10" data-project='{project_json}'>
     <div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg overflow-hidden transition-all duration-300 shadow-md hover:shadow-xl flex flex-col h-full">
 
         <div class="relative h-48 transition-all duration-300 overflow-hidden bg-gray-100 dark:bg-gray-800">
@@ -598,122 +744,6 @@ def create_html_structure():
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {{
-            // Project data with extended information
-            const projectData = {{
-                'PyAerial': {{
-                    category: 'Internship Project',
-                    description: 'A better plane tracker for AERPAW, successor to airstrik.py.',
-                    details: 'PyAerial is a comprehensive ADS-B tracking solution developed for the AERPAW research platform at NC State. It provides real-time aircraft position tracking, historical data storage, and visualization capabilities.',
-                    features: ['Real-time ADS-B decoding', 'MongoDB integration for data persistence', 'Docker containerized deployment', 'RESTful API for data access'],
-                    image: 'https://placehold.co/600x300/3498DB/FFFFFF?text=PyAerial',
-                    link: 'https://github.com/quantumbagel/PyAerial'
-                }},
-                'airstrik.py': {{
-                    category: 'Internship Project',
-                    description: 'A pure-python ADS-B plane tracker for AERPAW.',
-                    details: 'The original pure-Python implementation of an ADS-B tracker for drone airspace monitoring. This project laid the groundwork for PyAerial.',
-                    features: ['Pure Python implementation', 'ADS-B signal processing', 'Integration with MavSDK for drone communication'],
-                    image: 'https://placehold.co/600x300/E74C3C/FFFFFF?text=airstrik.py',
-                    link: 'https://github.com/quantumbagel/airstrik.py'
-                }},
-                'Piranha': {{
-                    category: 'Discord Bot',
-                    description: 'A chess-playing Discord bot with various features.',
-                    details: 'Piranha is a feature-rich Discord bot that allows users to play chess directly within Discord. It integrates with the Stockfish chess engine for AI opponents.',
-                    features: ['Play chess against AI or friends', 'Multiple difficulty levels via Stockfish', 'Game history and statistics', 'Docker deployment support'],
-                    image: 'https://placehold.co/600x300/2ECC71/FFFFFF?text=Piranha',
-                    link: ''
-                }},
-                'finiteCraft': {{
-                    category: 'Other Project',
-                    description: "A web scraper and craft finder for Neal Agarwal's Infinite Craft.",
-                    details: 'finiteCraft is an automation tool that scrapes and discovers all possible crafting combinations in the game Infinite Craft. Uses distributed proxy networks for efficient scraping.',
-                    features: ['Selenium-based automation', 'Proxy rotation support', 'Crafting recipe database', 'Pathfinding algorithms for recipe discovery'],
-                    image: 'https://placehold.co/600x300/E74C3C/FFFFFF?text=finiteCraft',
-                    link: 'https://github.com/finiteCraft/finiteCraft'
-                }},
-                'DroneTracker': {{
-                    category: 'Internship Project',
-                    description: 'Track drones with cameras! Another AERPAW project.',
-                    details: 'DroneTracker is a computer vision system that uses PTZ cameras to track drones in real-time. It integrates with AXIS cameras via VAPIX protocol.',
-                    features: ['PTZ camera control via VAPIX', 'Real-time drone position estimation', 'MavSDK integration for telemetry', 'Containerized deployment'],
-                    image: 'https://placehold.co/600x300/9B59B6/FFFFFF?text=DroneTracker',
-                    link: 'https://github.com/quantumbagel/DroneTracker'
-                }},
-                'Triggered': {{
-                    category: 'Discord Bot',
-                    description: 'An if-this-than-that Discord bot for automation and fun.',
-                    details: 'Triggered allows Discord server administrators to create custom automation rules based on triggers and actions, similar to IFTTT.',
-                    features: ['Custom trigger/action system', 'Programmable API', 'MySQL database for persistence', 'Extensive customization options'],
-                    image: 'https://placehold.co/600x300/F1C40F/FFFFFF?text=Triggered',
-                    link: 'https://github.com/quantumbagel/Triggered'
-                }},
-                'Portfolio Website (v1)': {{
-                    category: 'Other Project',
-                    description: 'A remake of the vCard portfolio website.',
-                    details: 'The first version of my portfolio website, built as a customized version of the vCard template with personal modifications.',
-                    features: ['Responsive design', 'Custom styling', 'Ion-Icons integration'],
-                    image: 'https://placehold.co/600x300/1ABC9C/FFFFFF?text=Portfolio+v1',
-                    link: 'https://github.com/quantumbagel/quantumbagel.github.io/tree/d76d5fac008ab10e3a32b2550b36a8dd0a06b835'
-                }},
-                'Portfolio Website (v2)': {{
-                    category: 'Other Project',
-                    description: 'A new portfolio website for me from the ground up. Made in three days.',
-                    details: "The current portfolio website you're viewing! Built from scratch using TailwindCSS for a modern, responsive design.",
-                    features: ['TailwindCSS styling', 'Dark mode support', 'Smooth scrolling navigation', 'Project filtering system'],
-                    image: 'https://placehold.co/600x300/E74C3C/FFFFFF?text=Portfolio+v2',
-                    link: 'https://github.com/quantumbagel/quantumbagel.github.io'
-                }},
-                'PlayCord': {{
-                    category: 'Discord Bot',
-                    description: 'A Discord bot for paper and pencil games with fully functional local and global leaderboards, and dynamic loading of games.',
-                    details: 'PlayCord brings classic paper and pencil games to Discord with a competitive twist. Features global and server-specific leaderboards.',
-                    features: ['Multiple game modes', 'Global and local leaderboards', 'Dynamic game loading system', 'MySQL persistence'],
-                    image: 'https://placehold.co/600x300/F1C40F/FFFFFF?text=PlayCord',
-                    link: 'https://github.com/PlayCord/bot'
-                }},
-                'Statify': {{
-                    category: 'Other Project',
-                    description: 'A SpigotMC plugin for statistics aggregation and leaderboards',
-                    details: 'Statify is a Minecraft server plugin that tracks player statistics and generates leaderboards for competitive servers.',
-                    features: ['Comprehensive stat tracking', 'Customizable leaderboards', 'SpigotMC API integration'],
-                    image: 'https://placehold.co/600x300/3498DB/FFFFFF?text=Statify',
-                    link: 'https://github.com/quantumbagel/Statify'
-                }},
-                'Molotov': {{
-                    category: 'Other Project',
-                    description: 'A Selenium-based bot for the game Bomb Party (jklm.fun)',
-                    details: 'Molotov is an automation bot for the word game Bomb Party. It uses Selenium to interact with the game and an optimized word database for fast responses.',
-                    features: ['Selenium automation', 'Optimized word lookup', 'Configurable response timing', 'JavaScript injection for speed'],
-                    image: 'https://placehold.co/600x300/2ECC71/FFFFFF?text=Molotov',
-                    link: 'https://github.com/quantumbagel/Molotov'
-                }},
-                'discord.py-template': {{
-                    category: 'Discord Bot',
-                    description: 'A simple, modern, and clean discord.py 2.0+ template.',
-                    details: 'A well-structured template for building Discord bots using discord.py 2.0+. Designed to be easy to understand and extend for beginners and experienced developers alike.',
-                    features: ['Clean project structure', 'Modern discord.py 2.0+ syntax', 'Slash command support', 'Easy to customize and extend'],
-                    image: 'https://placehold.co/600x300/9B59B6/FFFFFF?text=discord.py+template',
-                    link: 'https://github.com/quantumbagel/discord.py-template'
-                }},
-                'Chess-Challenge': {{
-                    category: 'Other Project',
-                    description: "A mini-chess bot for Sebastian Lague's chess bot challenge.",
-                    details: "An entry for Sebastian Lague's Tiny Chess Bot Challenge. The goal was to create the strongest chess AI possible within strict code size limitations.",
-                    features: ['Minimax algorithm with alpha-beta pruning', 'Compact code optimization', 'Custom evaluation function', 'Competitive performance under constraints'],
-                    image: 'https://placehold.co/600x300/1ABC9C/FFFFFF?text=Chess-Challenge',
-                    link: 'https://github.com/quantumbagel/Chess-Challenge'
-                }},
-                'aerpawlib': {{
-                    category: 'Internship Project',
-                    description: 'A MAVLink/MAVSDK abstraction layer for experimenters under the AERPAW platform.',
-                    details: 'aerpawlib provides a high-level Python interface for controlling drones on the AERPAW testbed. It abstracts away the complexity of MAVLink/MAVSDK for easier experiment development.',
-                    features: ['High-level drone control API', 'MAVLink/MAVSDK abstraction', 'Simplified experiment development', 'AERPAW platform integration'],
-                    image: 'https://placehold.co/600x300/F1C40F/FFFFFF?text=aerpawlib',
-                    link: 'https://github.com/quantumbagel/aerpawlib'
-                }}
-            }};
-
             // Modal elements
             const modal = document.getElementById('project-modal');
             const modalClose = document.getElementById('modal-close');
@@ -726,14 +756,13 @@ def create_html_structure():
             const modalLink = document.getElementById('modal-link');
 
             // Open modal function
-            function openModal(projectName, tags) {{
-                const data = projectData[projectName];
+            function openModal(data) {{
                 if (!data) return;
 
                 modalImage.style.backgroundImage = `url('${{data.image}}')`;
                 modalImage.style.backgroundSize = 'cover';
                 modalImage.style.backgroundPosition = 'center';
-                modalTitle.textContent = projectName;
+                modalTitle.textContent = data.title;
                 modalCategory.textContent = data.category;
                 modalDescription.textContent = data.details || data.description;
 
@@ -746,9 +775,13 @@ def create_html_structure():
                 }}
 
                 // Add tags
-                modalTags.innerHTML = tags.map(tag =>
-                    `<span class="inline-block bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 text-xs font-medium px-3 py-1 rounded-full">${{tag}}</span>`
-                ).join('');
+                if (data.skills && data.skills.length > 0) {{
+                    modalTags.innerHTML = data.skills.map(tag =>
+                        `<span class="inline-block bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 text-xs font-medium px-3 py-1 rounded-full">${{tag}}</span>`
+                    ).join('');
+                }} else {{
+                    modalTags.innerHTML = '';
+                }}
 
                 // Set link
                 if (data.link) {{
@@ -772,13 +805,10 @@ def create_html_structure():
             document.querySelectorAll('.project-card').forEach(card => {{
                 card.style.cursor = 'pointer';
 
-                // Get project name and tags from the card
-                const titleEl = card.querySelector('h3');
-                const tagEls = card.querySelectorAll('.flex.flex-wrap span');
-
-                if (titleEl) {{
-                    const projectName = titleEl.textContent.trim();
-                    const tags = Array.from(tagEls).map(el => el.textContent.trim()).filter(t => t);
+                // Get project data from the data attribute
+                const projectDataStr = card.getAttribute('data-project');
+                if (projectDataStr) {{
+                    const projectData = JSON.parse(projectDataStr);
 
                     // Add click indicator icon
                     const indicator = document.createElement('div');
@@ -793,7 +823,7 @@ def create_html_structure():
                     card.addEventListener('click', (e) => {{
                         // Don't open modal if clicking the link
                         if (e.target.closest('a')) return;
-                        openModal(projectName, tags);
+                        openModal(projectData);
                     }});
                 }}
             }});
@@ -805,6 +835,35 @@ def create_html_structure():
             }});
             document.addEventListener('keydown', (e) => {{
                 if (e.key === 'Escape') closeModal();
+            }});
+
+            // Skill expansion logic
+            document.querySelectorAll('.skill-header').forEach(header => {{
+                header.addEventListener('click', () => {{
+                    const skillItem = header.closest('.skill-item');
+                    const details = skillItem.querySelector('.skill-details');
+                    const chevron = skillItem.querySelector('.skill-chevron');
+                    
+                    const isHidden = details.classList.contains('hidden');
+                    
+                    // Close all other skill details in the same section for an accordion effect
+                    const section = skillItem.parentElement;
+                    section.querySelectorAll('.skill-details').forEach(otherDetails => {{
+                        if (otherDetails !== details) {{
+                            otherDetails.classList.add('hidden');
+                            const otherIcon = otherDetails.parentElement.querySelector('.skill-chevron');
+                            if (otherIcon) otherIcon.style.transform = 'rotate(0deg)';
+                        }}
+                    }});
+
+                    if (isHidden) {{
+                        details.classList.remove('hidden');
+                        chevron.style.transform = 'rotate(180deg)';
+                    }} else {{
+                        details.classList.add('hidden');
+                        chevron.style.transform = 'rotate(0deg)';
+                    }}
+                }});
             }});
 
             // Project filtering
