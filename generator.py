@@ -1,4 +1,5 @@
 import os
+import html
 import htmlmin
 import json
 
@@ -347,11 +348,11 @@ def generate_skill_bar(skill):
     return f"""
                             <div class="mb-4 skill-item group">
                                 <div class="flex justify-between mb-1 cursor-pointer items-center skill-header p-1 rounded hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-colors">
-                                    <div class="flex items-center pointer-events-none">
+                                    <div class="flex items-center">
                                         <span class="text-base font-medium text-gray-700 dark:text-gray-300">{skill['name']}</span>
                                         <ion-icon name="chevron-down-outline" class="ml-2 text-gray-400 group-hover:text-blue-500 transition-transform duration-300 skill-chevron"></ion-icon>
                                     </div>
-                                    <span class="text-sm font-medium text-blue-700 dark:text-blue-400 pointer-events-none">{skill['level']}</span>
+                                    <span class="text-sm font-medium text-blue-700 dark:text-blue-400">{skill['level']}</span>
                                 </div>
                                 <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700 overflow-hidden">
                                     <div class="bg-blue-500 h-2.5 rounded-full skill-bar-fill transition-all duration-1000" style="width: {skill['percentage']}%"></div>
@@ -385,6 +386,8 @@ def generate_project_card(project):
         "link": project.get("link"),
         "skills": project.get("skills", [])
     })
+    # Escape JSON for safe embedding in an HTML attribute.
+    project_json_attr = html.escape(project_json, quote=True)
 
     # Generate HTML for skill pills if they exist
     skills_html = ""
@@ -402,7 +405,7 @@ def generate_project_card(project):
 
     # Return the complete card HTML using an f-string
     return f"""
-<div class="project-card {project.get('category', 'other')} group relative hover:z-10" data-project='{project_json}'>
+<div class="project-card {project.get('category', 'other')} group relative hover:z-10" data-project="{project_json_attr}">
     <div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg overflow-hidden transition-all duration-300 shadow-md hover:shadow-xl flex flex-col h-full">
 
         <div class="relative h-48 transition-all duration-300 overflow-hidden bg-gray-100 dark:bg-gray-800">
@@ -528,12 +531,6 @@ def create_html_structure():
             opacity: 1;
             visibility: visible;
         }}
-
-        /* Ensure icon doesn't block clicks in the button */
-        #modal-close ion-icon {{
-            pointer-events: none;
-        }}
-
         .project-modal-content {{
             background: #f9fafb;
             border-radius: 1rem;
@@ -814,7 +811,13 @@ def create_html_structure():
                 // Get project data from the data attribute
                 const projectDataStr = card.getAttribute('data-project');
                 if (projectDataStr) {{
-                    const projectData = JSON.parse(projectDataStr);
+                    let projectData;
+                    try {{
+                        projectData = JSON.parse(projectDataStr);
+                    }} catch (err) {{
+                        console.error('Invalid project data for card:', card, err);
+                        return;
+                    }}
 
                     // Add click indicator icon
                     const indicator = document.createElement('div');
@@ -845,7 +848,7 @@ def create_html_structure():
 
             // Skill expansion logic
             document.querySelectorAll('.skill-header').forEach(header => {{
-                header.addEventListener('click', (e) => {{
+                header.addEventListener('click', () => {{
                     const skillItem = header.closest('.skill-item');
                     const details = skillItem.querySelector('.skill-details');
                     const chevron = skillItem.querySelector('.skill-chevron');
@@ -864,10 +867,10 @@ def create_html_structure():
 
                     if (isHidden) {{
                         details.classList.remove('hidden');
-                        if (chevron) chevron.style.transform = 'rotate(180deg)';
+                        chevron.style.transform = 'rotate(180deg)';
                     }} else {{
                         details.classList.add('hidden');
-                        if (chevron) chevron.style.transform = 'rotate(0deg)';
+                        chevron.style.transform = 'rotate(0deg)';
                     }}
                 }});
             }});
