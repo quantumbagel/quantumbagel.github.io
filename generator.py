@@ -65,15 +65,15 @@ SKILLS = {
             "name": "Python", 
             "level": "Expert", 
             "percentage": 100,
-            "details": "My primary language for 5+ years. Used for web scraping, automation, data science, and mission-critical drone software.",
+            "details": "My primary language for most of my programming career. Used for web scraping, automation, data science, and drone software.",
             "projects": ["PyAerial", "airstrik.py", "DroneTracker", "finiteCraft", "Triggered"]
         },
         {
             "name": "C/C++", 
             "level": "Advanced", 
             "percentage": 90,
-            "details": "Highly proficient in C/C++ for systems programming and performance-critical applications. Used in various academic and personal projects.",
-            "projects": ["Embedded Systems", "Data Structures"]
+            "details": "Proficient in C/C++ for systems programming and performance-critical applications. Used in various academic and personal projects.",
+            "projects": ["Embedded Systems via Arduino", "Python compiler extensions for aerpaw", "JIT compilation for performance-critical Python code"]
         },
         {
             "name": "JavaScript", 
@@ -86,14 +86,14 @@ SKILLS = {
             "name": "Java", 
             "level": "Competent", 
             "percentage": 80,
-            "details": "Solid understanding of OOP principles. Experience building Minecraft plugins and enterprise-style applications.",
+            "details": "Really good understanding of OOP principles. Experience mostly in the context of building Minecraft plugins.",
             "projects": ["Statify"]
         },
         {
             "name": "C#", 
             "level": "Competent", 
             "percentage": 75,
-            "details": "Experience with .NET and game development. Most recently used for a high-performance chess engine challenge.",
+            "details": "Experience with .NET and game development. Most recently used for Sebastian Lague's Chess Challenge.",
             "projects": ["Chess-Challenge"]
         },
         {
@@ -101,7 +101,7 @@ SKILLS = {
             "level": "Competent", 
             "percentage": 70,
             "details": "Proficient in writing scripts for automation, CI/CD pipelines, and Linux system administration.",
-            "projects": ["Server Automation", "Docker setup scripts"]
+            "projects": ["All projects", "Docker setup scripts"]
         },
     ],
     "Technologies & Frameworks": [
@@ -109,35 +109,35 @@ SKILLS = {
             "name": "Linux/Unix", 
             "level": "Expert", 
             "percentage": 100,
-            "details": "Heavy user of Linux for development and server management. Comfortable with advanced kernel tuning and shell scripting.",
-            "projects": ["Server Management", "Drone Command Center"]
+            "details": "Heavy user of Linux for development and server management, as well as a daily driver of Cosmic.",
+            "projects": ["Server Management", "All Projects"]
         },
         {
             "name": "Docker", 
             "level": "Expert", 
             "percentage": 100,
-            "details": "Expert in containerization. All my major projects are deployed using Docker for reproducibility and scale.",
+            "details": "All my major projects are deployed using Docker for reproducibility and scale.",
             "projects": ["PyAerial", "airstrik.py", "DroneTracker", "Piranha"]
         },
         {
             "name": "JetBrains Suite", 
             "level": "Expert", 
             "percentage": 100,
-            "details": "Advanced user of PyCharm, CLion, and IntelliJ. Highly efficient with IDE-driven development workflows.",
+            "details": "Advanced user of PyCharm, CLion, and IntelliJ. I use these IDEs for all my development work and am proficient with their advanced features.",
             "projects": ["All Projects"]
         },
         {
             "name": "Git", 
             "level": "Advanced", 
             "percentage": 90,
-            "details": "Deep understanding of Git workflows, branching strategies, and repository management.",
+            "details": "Great understanding of Git workflows, branching strategies, and repository management.",
             "projects": ["All Projects"]
         },
         {
             "name": "Selenium / Web Scraping", 
             "level": "Advanced", 
             "percentage": 90,
-            "details": "Specialized in high-speed, distributed web scraping and browser automation.",
+            "details": "Really good at web scraping and browser automation.",
             "projects": ["finiteCraft", "Molotov"]
         },
         {
@@ -158,15 +158,8 @@ SKILLS = {
             "name": "MongoDB", 
             "level": "Advanced", 
             "percentage": 90,
-            "details": "NoSQL database implementation for real-time tracking data and large-scale JSON storage.",
+            "details": "NoSQL database implementations for drone tracking data",
             "projects": ["PyAerial", "airstrik.py"]
-        },
-        {
-            "name": "Solidworks / CAD", 
-            "level": "Competent", 
-            "percentage": 80,
-            "details": "Proficient in 3D modeling and mechanical design for engineering projects.",
-            "projects": ["Mechanical Design Projects"]
         },
     ]
 }
