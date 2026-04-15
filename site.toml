@@ -2,7 +2,7 @@
 lang = "en"
 
 [meta]
-description = "Portfolio of Julian Reder, Computer Engineering Student @ NCSU."
+description = "Julian Reder, Computer Engineering Student @ NCSU."
 favicon = "pfp.webp"
 
 [user]
@@ -45,7 +45,7 @@ taglines = [
   "is an open source enthusiast",
   "has three cats :3",
   "is always learning",
-  "would like a job"
+  "would like a job 🥺"
 ]
 
 [[experiences]]
@@ -67,7 +67,7 @@ description = "This was my first experience taking college coursework. I graduat
 name = "Python"
 icon = "logo-python"
 level = "Expert"
-duration = "5+ years"
+duration = "over 5 years"
 details = "My primary language for most of my programming career. Used for web scraping, automation, data science, and drone software."
 projects = ["PyAerial", "airstrik.py", "DroneTracker", "finiteCraft", "Triggered"]
 
@@ -75,7 +75,7 @@ projects = ["PyAerial", "airstrik.py", "DroneTracker", "finiteCraft", "Triggered
 name = "C/C++"
 icon = "code-slash-outline"
 level = "Advanced"
-duration = "3+ years"
+duration = "over 3 years"
 details = "Proficient in C/C++ for systems programming and performance-critical applications. Used in various academic and personal projects."
 projects = ["Embedded Systems via Arduino", "Python compiler extensions for aerpaw", "JIT compilation for performance-critical Python code"]
 
@@ -83,7 +83,7 @@ projects = ["Embedded Systems via Arduino", "Python compiler extensions for aerp
 name = "JavaScript"
 icon = "logo-javascript"
 level = "Advanced"
-duration = "3+ years"
+duration = "over 3 years"
 details = "Used extensively for front-end development (Tailwind, React) and specialized automation tools."
 projects = ["Portfolio Website (v2)", "Molotov", "finiteCraft"]
 
@@ -91,7 +91,7 @@ projects = ["Portfolio Website (v2)", "Molotov", "finiteCraft"]
 name = "Java"
 icon = "cafe-outline"
 level = "Competent"
-duration = "4+ years"
+duration = "over 4 years"
 details = "Really good understanding of OOP principles. Experience mostly in the context of building Minecraft plugins."
 projects = ["Statify"]
 
@@ -99,7 +99,7 @@ projects = ["Statify"]
 name = "C#"
 icon = "code-outline"
 level = "Competent"
-duration = "2+ years"
+duration = "over 2 years"
 details = "Experience with .NET and game development. Most recently used for Sebastian Lague's Chess Challenge."
 projects = ["Chess-Challenge"]
 
@@ -107,7 +107,7 @@ projects = ["Chess-Challenge"]
 name = "Bash"
 icon = "terminal-outline"
 level = "Competent"
-duration = "4+ years"
+duration = "over 4 years"
 details = "Proficient in writing scripts for automation, CI/CD pipelines, and Linux system administration."
 projects = ["All projects", "Docker setup scripts"]
 
@@ -115,7 +115,7 @@ projects = ["All projects", "Docker setup scripts"]
 name = "Linux/Unix"
 icon = "desktop-outline"
 level = "Expert"
-duration = "5+ years"
+duration = "over 5 years"
 details = "Heavy user of Linux for development and server management."
 projects = ["Server Management", "All Projects"]
 
@@ -123,7 +123,7 @@ projects = ["Server Management", "All Projects"]
 name = "Docker"
 icon = "logo-docker"
 level = "Expert"
-duration = "3+ years"
+duration = "over 3 years"
 details = "All my major projects are deployed using Docker for reproducibility and scale."
 projects = ["PyAerial", "airstrik.py", "DroneTracker", "Piranha"]
 
@@ -131,7 +131,7 @@ projects = ["PyAerial", "airstrik.py", "DroneTracker", "Piranha"]
 name = "JetBrains Suite"
 icon = "bulb-outline"
 level = "Expert"
-duration = "5+ years"
+duration = "over 5 years"
 details = "Advanced user of PyCharm, CLion, and IntelliJ."
 projects = ["All Projects"]
 
@@ -139,7 +139,7 @@ projects = ["All Projects"]
 name = "Git"
 icon = "logo-github"
 level = "Advanced"
-duration = "4+ years"
+duration = "over 4 years"
 details = "Strong understanding of Git workflows, branching strategies, and repository management."
 projects = ["All Projects"]
 
@@ -147,7 +147,7 @@ projects = ["All Projects"]
 name = "Selenium / Web Scraping"
 icon = "globe-outline"
 level = "Advanced"
-duration = "2+ years"
+duration = "over 2 years"
 details = "Strong experience with web scraping and browser automation."
 projects = ["finiteCraft", "Molotov"]
 
@@ -155,7 +155,7 @@ projects = ["finiteCraft", "Molotov"]
 name = "OpenAPI"
 icon = "server-outline"
 level = "Advanced"
-duration = "2+ years"
+duration = "over 2 years"
 details = "Experience designing and documenting REST APIs for complex data systems."
 projects = ["PyAerial", "Triggered"]
 
@@ -163,7 +163,7 @@ projects = ["PyAerial", "Triggered"]
 name = "SQL/MySQL/Postgres"
 icon = "server-outline"
 level = "Advanced"
-duration = "4+ years"
+duration = "over 4 years"
 details = "Relational database design, optimization, and management for high-concurrency applications."
 projects = ["PlayCord", "Triggered", "Statify"]
 
@@ -171,7 +171,7 @@ projects = ["PlayCord", "Triggered", "Statify"]
 name = "MongoDB"
 icon = "leaf-outline"
 level = "Advanced"
-duration = "2+ years"
+duration = "over 2 years"
 details = "NoSQL database implementations for drone tracking data."
 projects = ["PyAerial", "airstrik.py"]
 
@@ -248,7 +248,7 @@ date = "2025 - Present"
 description = "A Discord bot for paper and pencil games with local and global leaderboards."
 details = "PlayCord brings classic paper and pencil games to Discord with a competitive twist. Features global and server-specific leaderboards."
 features = ["Multiple game modes", "Global and local leaderboards", "Dynamic game loading system", "MySQL persistence"]
-link = "https://github.com/PlayCord/bot"
+link = "https://github.com/quantumbagel/PlayCord"
 skills = ["Python", "discord.py", "MySQL", "Programmable API"]
 
 [[projects]]
