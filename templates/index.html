@@ -10,6 +10,27 @@
     <link href="font.css" rel="stylesheet">
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js" defer></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js" defer></script>
+    <style>
+        .filter-btn[aria-pressed="true"] {
+            background-color: rgb(24 24 27);
+            color: rgb(255 255 255);
+        }
+
+        .filter-btn[aria-pressed="true"]:hover {
+            background-color: rgb(39 39 42);
+            color: rgb(244 244 245);
+        }
+
+        .dark .filter-btn[aria-pressed="true"] {
+            background-color: rgb(244 244 245);
+            color: rgb(24 24 27);
+        }
+
+        .dark .filter-btn[aria-pressed="true"]:hover {
+            background-color: rgb(228 228 231);
+            color: rgb(9 9 11);
+        }
+    </style>
 </head>
 <body class="bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 min-h-screen selection:bg-zinc-700 dark:selection:bg-zinc-300 selection:text-white dark:selection:text-zinc-950 relative overflow-x-hidden">
     <canvas id="matrix-bg" class="fixed inset-0 pointer-events-none z-0 opacity-20" aria-hidden="true"></canvas>
@@ -165,22 +186,17 @@
             });
         });
 
-        const filterBtns = document.querySelectorAll(".filter-btn");
+        const projectFilters = document.getElementById("project-filters");
+        const filterBtns = projectFilters ? Array.from(projectFilters.querySelectorAll(".filter-btn")) : [];
         const projectCards = document.querySelectorAll(".project-card");
         const projectJumpLinks = document.querySelectorAll(".project-jump");
-        const activeClasses = ["bg-zinc-900", "text-white", "dark:bg-zinc-100", "dark:text-zinc-900"];
-        const inactiveClasses = ["bg-zinc-200", "text-zinc-700", "dark:bg-zinc-800", "dark:text-zinc-300"];
-        const allFilterBtn = document.querySelector('.filter-btn[data-filter="all"]');
+        const allFilterBtn = projectFilters ? projectFilters.querySelector('.filter-btn[data-filter="all"]') : null;
 
-        const setActiveFilter = (activeBtn) => {
+        const setActiveFilter = (filterValue) => {
             filterBtns.forEach((btn) => {
-                btn.classList.remove(...activeClasses);
-                btn.classList.add(...inactiveClasses);
-                btn.setAttribute("aria-pressed", "false");
+                const isActive = btn.getAttribute("data-filter") === filterValue;
+                btn.setAttribute("aria-pressed", isActive ? "true" : "false");
             });
-            activeBtn.classList.remove(...inactiveClasses);
-            activeBtn.classList.add(...activeClasses);
-            activeBtn.setAttribute("aria-pressed", "true");
         };
 
         const applyFilter = (filterValue) => {
@@ -190,21 +206,38 @@
             });
         };
 
-        filterBtns.forEach((btn) => {
-            btn.addEventListener("click", () => {
-                setActiveFilter(btn);
-                applyFilter(btn.getAttribute("data-filter"));
+        const selectFilter = (filterValue) => {
+            setActiveFilter(filterValue);
+            applyFilter(filterValue);
+        };
+
+        if (projectFilters) {
+            projectFilters.addEventListener("click", (event) => {
+                const filterBtn = event.target.closest(".filter-btn");
+                if (!filterBtn) {
+                    return;
+                }
+
+                selectFilter(filterBtn.getAttribute("data-filter") || "all");
             });
-        });
+        }
 
         projectJumpLinks.forEach((link) => {
             link.addEventListener("click", () => {
                 if (allFilterBtn) {
-                    setActiveFilter(allFilterBtn);
-                    applyFilter("all");
+                    selectFilter(allFilterBtn.getAttribute("data-filter") || "all");
                 }
             });
         });
+
+        if (filterBtns.length > 0) {
+            const initialFilter =
+                filterBtns.find((btn) => btn.getAttribute("aria-pressed") === "true")?.getAttribute("data-filter")
+                || allFilterBtn?.getAttribute("data-filter")
+                || filterBtns[0].getAttribute("data-filter")
+                || "all";
+            selectFilter(initialFilter);
+        }
 
         const detailsBtns = document.querySelectorAll(".project-details-btn");
         const closeBtns = document.querySelectorAll(".modal-close-btn");
@@ -258,6 +291,22 @@
                 navigator.clipboard.writeText(url).then(() => {
                     const originalIcon = btn.innerHTML;
                     btn.innerHTML = '<ion-icon name="checkmark" class="text-lg"></ion-icon>';
+                    setTimeout(() => {
+                        btn.innerHTML = originalIcon;
+                    }, 2000);
+                });
+            });
+        });
+
+        const experienceCopyLinkBtns = document.querySelectorAll(".experience-copy-link");
+        experienceCopyLinkBtns.forEach((btn) => {
+            btn.addEventListener("click", (event) => {
+                event.preventDefault();
+                event.stopPropagation();
+                const link = btn.getAttribute("data-link");
+                navigator.clipboard.writeText(link).then(() => {
+                    const originalIcon = btn.innerHTML;
+                    btn.innerHTML = '<ion-icon name="checkmark" class="text-sm"></ion-icon>';
                     setTimeout(() => {
                         btn.innerHTML = originalIcon;
                     }, 2000);
@@ -359,7 +408,11 @@
 
                     const randomDuration = 2000 + Math.random() * 2000;
                     const randomDelay = i * 100;
+                    const randomRotationSpeed = 180 + Math.random() * 360;
+                    const randomStartRotation = Math.random() * 360;
                     pfp.style.animation = `pfpFall ${randomDuration}ms linear ${randomDelay}ms forwards`;
+                    pfp.style.setProperty('--rotation-speed', `${randomRotationSpeed}deg`);
+                    pfp.style.setProperty('--start-rotation', `${randomStartRotation}deg`);
                     document.body.appendChild(pfp);
 
                     setTimeout(() => {
@@ -373,7 +426,7 @@
         style.textContent = `
             @keyframes pfpFall {
                 to {
-                    transform: translateY(100vh) rotate(360deg);
+                    transform: translateY(100vh) rotate(calc(var(--start-rotation, 0deg) + var(--rotation-speed, 360deg)));
                     opacity: 0;
                 }
             }

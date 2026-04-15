@@ -10,6 +10,27 @@
     <link href="font.css" rel="stylesheet">
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js" defer></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js" defer></script>
+    <style>
+        .filter-btn[aria-pressed="true"] {
+            background-color: rgb(24 24 27);
+            color: rgb(255 255 255);
+        }
+
+        .filter-btn[aria-pressed="true"]:hover {
+            background-color: rgb(39 39 42);
+            color: rgb(244 244 245);
+        }
+
+        .dark .filter-btn[aria-pressed="true"] {
+            background-color: rgb(244 244 245);
+            color: rgb(24 24 27);
+        }
+
+        .dark .filter-btn[aria-pressed="true"]:hover {
+            background-color: rgb(228 228 231);
+            color: rgb(9 9 11);
+        }
+    </style>
 </head>
 <body class="bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 min-h-screen selection:bg-zinc-700 dark:selection:bg-zinc-300 selection:text-white dark:selection:text-zinc-950 relative overflow-x-hidden">
     <canvas id="matrix-bg" class="fixed inset-0 pointer-events-none z-0 opacity-20" aria-hidden="true"></canvas>
@@ -51,20 +72,20 @@
                 <h2 class="text-lg font-semibold tracking-tight text-zinc-900 dark:text-zinc-100 mb-6">Experience</h2>
                 <div>
                     <div class="relative pl-8 mb-8 border-l border-zinc-200 dark:border-zinc-800 last:mb-0">
-    <div class="absolute w-3 h-3 bg-zinc-200 dark:bg-zinc-800 rounded-full -left-[6.5px] top-1.5 border-2 border-white dark:border-zinc-950"></div>
-    <h3 class="text-base font-medium text-zinc-900 dark:text-zinc-100">North Carolina State University</h3>
+    <div class="absolute w-3 h-3 bg-zinc-400 dark:bg-zinc-600 rounded-full -left-[6.5px] top-1.5 border-2 border-white dark:border-zinc-950"></div>
+    <div class="flex items-center gap-2 group"><h3 class="text-base font-medium text-zinc-900 dark:text-zinc-100">North Carolina State University</h3></div>
     <div class="text-sm text-zinc-500 dark:text-zinc-400 mb-2">Fall 2025 - Present</div>
     <p class="text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed">I am currently enrolled in the Computer Engineering program at North Carolina State University. I am pursuing a Bachelor's in Statistics and Computer Engineering and a Master's of Computer Science.</p>
 </div>
 <div class="relative pl-8 mb-8 border-l border-zinc-200 dark:border-zinc-800 last:mb-0">
-    <div class="absolute w-3 h-3 bg-zinc-200 dark:bg-zinc-800 rounded-full -left-[6.5px] top-1.5 border-2 border-white dark:border-zinc-950"></div>
-    <h3 class="text-base font-medium text-zinc-900 dark:text-zinc-100">AERPAW Developer</h3>
+    <div class="absolute w-3 h-3 bg-zinc-400 dark:bg-zinc-600 rounded-full -left-[6.5px] top-1.5 border-2 border-white dark:border-zinc-950"></div>
+    <div class="flex items-center gap-2 group"><h3 class="text-base font-medium text-zinc-900 dark:text-zinc-100 cursor-pointer hover:text-blue-600 dark:hover:text-blue-400 transition-colors" onclick="window.location.href='https://aerpaw.org'">AERPAW Developer</h3><button class="experience-copy-link hidden group-hover:block text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors" data-link="https://aerpaw.org" title="Copy link"><ion-icon name="link" class="text-sm"></ion-icon></button></div>
     <div class="text-sm text-zinc-500 dark:text-zinc-400 mb-2">Summer 2023 - Present</div>
     <p class="text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed">I have had the pleasure to work with Dr. Mihail Sichitiu at the Aerial Experimentation and Research Platform for Advanced Wireless at North Carolina State University for a couple of years now. I have built several interesting projects including a plane tracker and a drone flight recorder.</p>
 </div>
 <div class="relative pl-8 mb-8 border-l border-zinc-200 dark:border-zinc-800 last:mb-0">
-    <div class="absolute w-3 h-3 bg-zinc-200 dark:bg-zinc-800 rounded-full -left-[6.5px] top-1.5 border-2 border-white dark:border-zinc-950"></div>
-    <h3 class="text-base font-medium text-zinc-900 dark:text-zinc-100">Wake Tech Community College</h3>
+    <div class="absolute w-3 h-3 bg-zinc-400 dark:bg-zinc-600 rounded-full -left-[6.5px] top-1.5 border-2 border-white dark:border-zinc-950"></div>
+    <div class="flex items-center gap-2 group"><h3 class="text-base font-medium text-zinc-900 dark:text-zinc-100">Wake Tech Community College</h3></div>
     <div class="text-sm text-zinc-500 dark:text-zinc-400 mb-2">Fall 2023 - Spring 2025</div>
     <p class="text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed">This was my first experience taking college coursework. I graduated with multiple appearances on the Dean's List, membership in the Phi Theta Kappa chapter, and an Associate in Science degree.</p>
 </div>
@@ -75,7 +96,7 @@
             <section id="projects">
                 <h2 class="text-lg font-semibold tracking-tight text-zinc-900 dark:text-zinc-100 mb-6">Projects</h2>
                 <div class="flex flex-wrap gap-2 mb-6" id="project-filters">
-                    <button type="button" aria-pressed="true" class="px-3 py-1 text-sm rounded-full bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900 filter-btn active hover:bg-zinc-800 dark:hover:bg-zinc-200" data-filter="all">
+                    <button type="button" aria-pressed="true" class="px-3 py-1 text-sm rounded-full bg-zinc-200 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300 hover:bg-zinc-300 dark:hover:bg-zinc-700 filter-btn transition-colors" data-filter="all">
     All
 </button>
 <button type="button" aria-pressed="false" class="px-3 py-1 text-sm rounded-full bg-zinc-200 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300 hover:bg-zinc-300 dark:hover:bg-zinc-700 filter-btn transition-colors" data-filter="internship">
@@ -104,7 +125,7 @@
         <div>
             <div class="flex flex-wrap mt-3"><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-zinc-100 dark:bg-zinc-800/60 text-zinc-600 dark:text-zinc-400 mr-1.5 mb-1.5">Python</span><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-zinc-100 dark:bg-zinc-800/60 text-zinc-600 dark:text-zinc-400 mr-1.5 mb-1.5">MAVSDK</span><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-zinc-100 dark:bg-zinc-800/60 text-zinc-600 dark:text-zinc-400 mr-1.5 mb-1.5">Docker</span><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-zinc-100 dark:bg-zinc-800/60 text-zinc-600 dark:text-zinc-400 mr-1.5 mb-1.5">MongoDB</span><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-zinc-100 dark:bg-zinc-800/60 text-zinc-600 dark:text-zinc-400 mr-1.5 mb-1.5">ADS-B</span></div>
             <a href="https://github.com/quantumbagel/PyAerial" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-zinc-900 dark:text-zinc-100 hover:text-blue-600 dark:hover:text-blue-400 transition-colors mt-3">View Project <span class="ml-1 text-xs">↗</span></a>
-            <button class="project-details-btn text-sm text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors mt-3" data-modal-id="modal-project-pyaerial">More Info →</button>
+            <button class="project-details-btn text-sm text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors mt-3 ml-3" data-modal-id="modal-project-pyaerial">More Info →</button>
         </div>
     </div>
 </div>
@@ -122,7 +143,7 @@
         <div>
             <div class="flex flex-wrap mt-3"><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-zinc-100 dark:bg-zinc-800/60 text-zinc-600 dark:text-zinc-400 mr-1.5 mb-1.5">Python</span><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-zinc-100 dark:bg-zinc-800/60 text-zinc-600 dark:text-zinc-400 mr-1.5 mb-1.5">MAVSDK</span><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-zinc-100 dark:bg-zinc-800/60 text-zinc-600 dark:text-zinc-400 mr-1.5 mb-1.5">Docker</span><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-zinc-100 dark:bg-zinc-800/60 text-zinc-600 dark:text-zinc-400 mr-1.5 mb-1.5">MongoDB</span><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-zinc-100 dark:bg-zinc-800/60 text-zinc-600 dark:text-zinc-400 mr-1.5 mb-1.5">ADS-B</span></div>
             <a href="https://github.com/quantumbagel/airstrik.py" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-zinc-900 dark:text-zinc-100 hover:text-blue-600 dark:hover:text-blue-400 transition-colors mt-3">View Project <span class="ml-1 text-xs">↗</span></a>
-            <button class="project-details-btn text-sm text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors mt-3" data-modal-id="modal-project-airstrik-py">More Info →</button>
+            <button class="project-details-btn text-sm text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors mt-3 ml-3" data-modal-id="modal-project-airstrik-py">More Info →</button>
         </div>
     </div>
 </div>
@@ -140,7 +161,7 @@
         <div>
             <div class="flex flex-wrap mt-3"><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-zinc-100 dark:bg-zinc-800/60 text-zinc-600 dark:text-zinc-400 mr-1.5 mb-1.5">Python</span><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-zinc-100 dark:bg-zinc-800/60 text-zinc-600 dark:text-zinc-400 mr-1.5 mb-1.5">Stockfish</span><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-zinc-100 dark:bg-zinc-800/60 text-zinc-600 dark:text-zinc-400 mr-1.5 mb-1.5">Docker</span></div>
             
-            <button class="project-details-btn text-sm text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors mt-3" data-modal-id="modal-project-piranha">More Info →</button>
+            <button class="project-details-btn text-sm text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors mt-3 " data-modal-id="modal-project-piranha">More Info →</button>
         </div>
     </div>
 </div>
@@ -158,7 +179,7 @@
         <div>
             <div class="flex flex-wrap mt-3"><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-zinc-100 dark:bg-zinc-800/60 text-zinc-600 dark:text-zinc-400 mr-1.5 mb-1.5">Python</span><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-zinc-100 dark:bg-zinc-800/60 text-zinc-600 dark:text-zinc-400 mr-1.5 mb-1.5">Selenium</span><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-zinc-100 dark:bg-zinc-800/60 text-zinc-600 dark:text-zinc-400 mr-1.5 mb-1.5">Web Scraping</span><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-zinc-100 dark:bg-zinc-800/60 text-zinc-600 dark:text-zinc-400 mr-1.5 mb-1.5">Proxies</span><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-zinc-100 dark:bg-zinc-800/60 text-zinc-600 dark:text-zinc-400 mr-1.5 mb-1.5">Automation</span></div>
             <a href="https://github.com/finiteCraft/finiteCraft" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-zinc-900 dark:text-zinc-100 hover:text-blue-600 dark:hover:text-blue-400 transition-colors mt-3">View Project <span class="ml-1 text-xs">↗</span></a>
-            <button class="project-details-btn text-sm text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors mt-3" data-modal-id="modal-project-finitecraft">More Info →</button>
+            <button class="project-details-btn text-sm text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors mt-3 ml-3" data-modal-id="modal-project-finitecraft">More Info →</button>
         </div>
     </div>
 </div>
@@ -176,7 +197,7 @@
         <div>
             <div class="flex flex-wrap mt-3"><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-zinc-100 dark:bg-zinc-800/60 text-zinc-600 dark:text-zinc-400 mr-1.5 mb-1.5">Python</span><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-zinc-100 dark:bg-zinc-800/60 text-zinc-600 dark:text-zinc-400 mr-1.5 mb-1.5">VAPIX</span><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-zinc-100 dark:bg-zinc-800/60 text-zinc-600 dark:text-zinc-400 mr-1.5 mb-1.5">Docker</span><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-zinc-100 dark:bg-zinc-800/60 text-zinc-600 dark:text-zinc-400 mr-1.5 mb-1.5">MAVSDK</span><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-zinc-100 dark:bg-zinc-800/60 text-zinc-600 dark:text-zinc-400 mr-1.5 mb-1.5">netcat</span><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-zinc-100 dark:bg-zinc-800/60 text-zinc-600 dark:text-zinc-400 mr-1.5 mb-1.5">Linux</span></div>
             <a href="https://github.com/quantumbagel/DroneTracker" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-zinc-900 dark:text-zinc-100 hover:text-blue-600 dark:hover:text-blue-400 transition-colors mt-3">View Project <span class="ml-1 text-xs">↗</span></a>
-            <button class="project-details-btn text-sm text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors mt-3" data-modal-id="modal-project-dronetracker">More Info →</button>
+            <button class="project-details-btn text-sm text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors mt-3 ml-3" data-modal-id="modal-project-dronetracker">More Info →</button>
         </div>
     </div>
 </div>
@@ -194,7 +215,7 @@
         <div>
             <div class="flex flex-wrap mt-3"><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-zinc-100 dark:bg-zinc-800/60 text-zinc-600 dark:text-zinc-400 mr-1.5 mb-1.5">Python</span><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-zinc-100 dark:bg-zinc-800/60 text-zinc-600 dark:text-zinc-400 mr-1.5 mb-1.5">discord.py</span><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-zinc-100 dark:bg-zinc-800/60 text-zinc-600 dark:text-zinc-400 mr-1.5 mb-1.5">MySQL</span><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-zinc-100 dark:bg-zinc-800/60 text-zinc-600 dark:text-zinc-400 mr-1.5 mb-1.5">Programmable API</span></div>
             <a href="https://github.com/quantumbagel/Triggered" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-zinc-900 dark:text-zinc-100 hover:text-blue-600 dark:hover:text-blue-400 transition-colors mt-3">View Project <span class="ml-1 text-xs">↗</span></a>
-            <button class="project-details-btn text-sm text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors mt-3" data-modal-id="modal-project-triggered">More Info →</button>
+            <button class="project-details-btn text-sm text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors mt-3 ml-3" data-modal-id="modal-project-triggered">More Info →</button>
         </div>
     </div>
 </div>
@@ -212,7 +233,7 @@
         <div>
             <div class="flex flex-wrap mt-3"><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-zinc-100 dark:bg-zinc-800/60 text-zinc-600 dark:text-zinc-400 mr-1.5 mb-1.5">Python</span><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-zinc-100 dark:bg-zinc-800/60 text-zinc-600 dark:text-zinc-400 mr-1.5 mb-1.5">discord.py</span><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-zinc-100 dark:bg-zinc-800/60 text-zinc-600 dark:text-zinc-400 mr-1.5 mb-1.5">MySQL</span><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-zinc-100 dark:bg-zinc-800/60 text-zinc-600 dark:text-zinc-400 mr-1.5 mb-1.5">Programmable API</span></div>
             <a href="https://github.com/quantumbagel/PlayCord" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-zinc-900 dark:text-zinc-100 hover:text-blue-600 dark:hover:text-blue-400 transition-colors mt-3">View Project <span class="ml-1 text-xs">↗</span></a>
-            <button class="project-details-btn text-sm text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors mt-3" data-modal-id="modal-project-playcord">More Info →</button>
+            <button class="project-details-btn text-sm text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors mt-3 ml-3" data-modal-id="modal-project-playcord">More Info →</button>
         </div>
     </div>
 </div>
@@ -230,7 +251,7 @@
         <div>
             <div class="flex flex-wrap mt-3"><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-zinc-100 dark:bg-zinc-800/60 text-zinc-600 dark:text-zinc-400 mr-1.5 mb-1.5">Java</span><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-zinc-100 dark:bg-zinc-800/60 text-zinc-600 dark:text-zinc-400 mr-1.5 mb-1.5">SpigotMC</span></div>
             <a href="https://github.com/quantumbagel/Statify" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-zinc-900 dark:text-zinc-100 hover:text-blue-600 dark:hover:text-blue-400 transition-colors mt-3">View Project <span class="ml-1 text-xs">↗</span></a>
-            <button class="project-details-btn text-sm text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors mt-3" data-modal-id="modal-project-statify">More Info →</button>
+            <button class="project-details-btn text-sm text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors mt-3 ml-3" data-modal-id="modal-project-statify">More Info →</button>
         </div>
     </div>
 </div>
@@ -248,7 +269,7 @@
         <div>
             <div class="flex flex-wrap mt-3"><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-zinc-100 dark:bg-zinc-800/60 text-zinc-600 dark:text-zinc-400 mr-1.5 mb-1.5">Python</span><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-zinc-100 dark:bg-zinc-800/60 text-zinc-600 dark:text-zinc-400 mr-1.5 mb-1.5">Selenium</span><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-zinc-100 dark:bg-zinc-800/60 text-zinc-600 dark:text-zinc-400 mr-1.5 mb-1.5">JavaScript</span></div>
             <a href="https://github.com/quantumbagel/Molotov" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-zinc-900 dark:text-zinc-100 hover:text-blue-600 dark:hover:text-blue-400 transition-colors mt-3">View Project <span class="ml-1 text-xs">↗</span></a>
-            <button class="project-details-btn text-sm text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors mt-3" data-modal-id="modal-project-molotov">More Info →</button>
+            <button class="project-details-btn text-sm text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors mt-3 ml-3" data-modal-id="modal-project-molotov">More Info →</button>
         </div>
     </div>
 </div>
@@ -266,7 +287,7 @@
         <div>
             <div class="flex flex-wrap mt-3"><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-zinc-100 dark:bg-zinc-800/60 text-zinc-600 dark:text-zinc-400 mr-1.5 mb-1.5">Python</span><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-zinc-100 dark:bg-zinc-800/60 text-zinc-600 dark:text-zinc-400 mr-1.5 mb-1.5">discord.py</span></div>
             <a href="https://github.com/quantumbagel/discord.py-template" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-zinc-900 dark:text-zinc-100 hover:text-blue-600 dark:hover:text-blue-400 transition-colors mt-3">View Project <span class="ml-1 text-xs">↗</span></a>
-            <button class="project-details-btn text-sm text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors mt-3" data-modal-id="modal-project-discord-py-template">More Info →</button>
+            <button class="project-details-btn text-sm text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors mt-3 ml-3" data-modal-id="modal-project-discord-py-template">More Info →</button>
         </div>
     </div>
 </div>
@@ -284,7 +305,7 @@
         <div>
             <div class="flex flex-wrap mt-3"><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-zinc-100 dark:bg-zinc-800/60 text-zinc-600 dark:text-zinc-400 mr-1.5 mb-1.5">C#</span><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-zinc-100 dark:bg-zinc-800/60 text-zinc-600 dark:text-zinc-400 mr-1.5 mb-1.5">Chess</span><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-zinc-100 dark:bg-zinc-800/60 text-zinc-600 dark:text-zinc-400 mr-1.5 mb-1.5">AI</span></div>
             <a href="https://github.com/quantumbagel/Chess-Challenge" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-zinc-900 dark:text-zinc-100 hover:text-blue-600 dark:hover:text-blue-400 transition-colors mt-3">View Project <span class="ml-1 text-xs">↗</span></a>
-            <button class="project-details-btn text-sm text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors mt-3" data-modal-id="modal-project-chess-challenge">More Info →</button>
+            <button class="project-details-btn text-sm text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors mt-3 ml-3" data-modal-id="modal-project-chess-challenge">More Info →</button>
         </div>
     </div>
 </div>
@@ -302,7 +323,7 @@
         <div>
             <div class="flex flex-wrap mt-3"><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-zinc-100 dark:bg-zinc-800/60 text-zinc-600 dark:text-zinc-400 mr-1.5 mb-1.5">Python</span><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-zinc-100 dark:bg-zinc-800/60 text-zinc-600 dark:text-zinc-400 mr-1.5 mb-1.5">MAVLink</span><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-zinc-100 dark:bg-zinc-800/60 text-zinc-600 dark:text-zinc-400 mr-1.5 mb-1.5">MAVSDK</span><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-zinc-100 dark:bg-zinc-800/60 text-zinc-600 dark:text-zinc-400 mr-1.5 mb-1.5">Drones</span></div>
             <a href="https://github.com/aerpaw/aerpawlib" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-zinc-900 dark:text-zinc-100 hover:text-blue-600 dark:hover:text-blue-400 transition-colors mt-3">View Project <span class="ml-1 text-xs">↗</span></a>
-            <button class="project-details-btn text-sm text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors mt-3" data-modal-id="modal-project-aerpawlib">More Info →</button>
+            <button class="project-details-btn text-sm text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors mt-3 ml-3" data-modal-id="modal-project-aerpawlib">More Info →</button>
         </div>
     </div>
 </div>
@@ -574,6 +595,7 @@
                 <button class="modal-close-btn text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100" data-modal-id="modal-project-pyaerial">✕</button>
             </div>
             <p class="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed mb-4">PyAerial is a comprehensive ADS-B tracking solution developed for the AERPAW research platform at NC State. It provides real-time aircraft position tracking, historical data storage, and visualization capabilities.</p>
+            
             <div class="mt-4"><h4 class="font-semibold text-zinc-900 dark:text-zinc-100 mb-2">Features</h4><ul class="space-y-1"><li class="text-sm text-zinc-600 dark:text-zinc-400 flex items-start"><span class="mr-3">•</span><span>Real-time ADS-B decoding</span></li><li class="text-sm text-zinc-600 dark:text-zinc-400 flex items-start"><span class="mr-3">•</span><span>MongoDB integration for data persistence</span></li><li class="text-sm text-zinc-600 dark:text-zinc-400 flex items-start"><span class="mr-3">•</span><span>Docker containerized deployment</span></li><li class="text-sm text-zinc-600 dark:text-zinc-400 flex items-start"><span class="mr-3">•</span><span>REST API for data access</span></li></ul></div>
             <div class="mt-6 flex gap-3">
                 <a href="https://github.com/quantumbagel/PyAerial" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-4 py-2 bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 font-medium rounded-lg hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors">View on GitHub <span class="ml-2">↗</span></a>
@@ -589,6 +611,7 @@
                 <button class="modal-close-btn text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100" data-modal-id="modal-project-airstrik-py">✕</button>
             </div>
             <p class="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed mb-4">The original pure-Python implementation of an ADS-B tracker for drone airspace monitoring. This project laid the groundwork for PyAerial.</p>
+            
             <div class="mt-4"><h4 class="font-semibold text-zinc-900 dark:text-zinc-100 mb-2">Features</h4><ul class="space-y-1"><li class="text-sm text-zinc-600 dark:text-zinc-400 flex items-start"><span class="mr-3">•</span><span>Pure Python implementation</span></li><li class="text-sm text-zinc-600 dark:text-zinc-400 flex items-start"><span class="mr-3">•</span><span>ADS-B signal processing</span></li><li class="text-sm text-zinc-600 dark:text-zinc-400 flex items-start"><span class="mr-3">•</span><span>Integration with MAVSDK for drone communication</span></li></ul></div>
             <div class="mt-6 flex gap-3">
                 <a href="https://github.com/quantumbagel/airstrik.py" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-4 py-2 bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 font-medium rounded-lg hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors">View on GitHub <span class="ml-2">↗</span></a>
@@ -604,6 +627,7 @@
                 <button class="modal-close-btn text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100" data-modal-id="modal-project-piranha">✕</button>
             </div>
             <p class="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed mb-4">Piranha is a feature-rich Discord bot that allows users to play chess directly within Discord. It integrates with the Stockfish chess engine for AI opponents.</p>
+            
             <div class="mt-4"><h4 class="font-semibold text-zinc-900 dark:text-zinc-100 mb-2">Features</h4><ul class="space-y-1"><li class="text-sm text-zinc-600 dark:text-zinc-400 flex items-start"><span class="mr-3">•</span><span>Play chess against AI or friends</span></li><li class="text-sm text-zinc-600 dark:text-zinc-400 flex items-start"><span class="mr-3">•</span><span>Multiple difficulty levels via Stockfish</span></li><li class="text-sm text-zinc-600 dark:text-zinc-400 flex items-start"><span class="mr-3">•</span><span>Game history and statistics</span></li><li class="text-sm text-zinc-600 dark:text-zinc-400 flex items-start"><span class="mr-3">•</span><span>Docker deployment support</span></li></ul></div>
             <div class="mt-6 flex gap-3">
                 
@@ -619,6 +643,7 @@
                 <button class="modal-close-btn text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100" data-modal-id="modal-project-finitecraft">✕</button>
             </div>
             <p class="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed mb-4">finiteCraft is an automation tool that scrapes and discovers all possible crafting combinations in the game Infinite Craft. Uses distributed proxy networks for efficient scraping.</p>
+            
             <div class="mt-4"><h4 class="font-semibold text-zinc-900 dark:text-zinc-100 mb-2">Features</h4><ul class="space-y-1"><li class="text-sm text-zinc-600 dark:text-zinc-400 flex items-start"><span class="mr-3">•</span><span>Selenium-based automation</span></li><li class="text-sm text-zinc-600 dark:text-zinc-400 flex items-start"><span class="mr-3">•</span><span>Proxy rotation support</span></li><li class="text-sm text-zinc-600 dark:text-zinc-400 flex items-start"><span class="mr-3">•</span><span>Crafting recipe database</span></li><li class="text-sm text-zinc-600 dark:text-zinc-400 flex items-start"><span class="mr-3">•</span><span>Pathfinding algorithms for recipe discovery</span></li></ul></div>
             <div class="mt-6 flex gap-3">
                 <a href="https://github.com/finiteCraft/finiteCraft" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-4 py-2 bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 font-medium rounded-lg hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors">View on GitHub <span class="ml-2">↗</span></a>
@@ -634,6 +659,7 @@
                 <button class="modal-close-btn text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100" data-modal-id="modal-project-dronetracker">✕</button>
             </div>
             <p class="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed mb-4">DroneTracker is a computer vision system that uses PTZ cameras to track drones in real-time. It integrates with AXIS cameras via VAPIX protocol.</p>
+            
             <div class="mt-4"><h4 class="font-semibold text-zinc-900 dark:text-zinc-100 mb-2">Features</h4><ul class="space-y-1"><li class="text-sm text-zinc-600 dark:text-zinc-400 flex items-start"><span class="mr-3">•</span><span>PTZ camera control via VAPIX</span></li><li class="text-sm text-zinc-600 dark:text-zinc-400 flex items-start"><span class="mr-3">•</span><span>Real-time drone position estimation</span></li><li class="text-sm text-zinc-600 dark:text-zinc-400 flex items-start"><span class="mr-3">•</span><span>MAVSDK integration for telemetry</span></li><li class="text-sm text-zinc-600 dark:text-zinc-400 flex items-start"><span class="mr-3">•</span><span>Containerized deployment</span></li></ul></div>
             <div class="mt-6 flex gap-3">
                 <a href="https://github.com/quantumbagel/DroneTracker" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-4 py-2 bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 font-medium rounded-lg hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors">View on GitHub <span class="ml-2">↗</span></a>
@@ -649,6 +675,7 @@
                 <button class="modal-close-btn text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100" data-modal-id="modal-project-triggered">✕</button>
             </div>
             <p class="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed mb-4">Triggered allows Discord server administrators to create custom automation rules based on triggers and actions, similar to IFTTT.</p>
+            
             <div class="mt-4"><h4 class="font-semibold text-zinc-900 dark:text-zinc-100 mb-2">Features</h4><ul class="space-y-1"><li class="text-sm text-zinc-600 dark:text-zinc-400 flex items-start"><span class="mr-3">•</span><span>Custom trigger/action system</span></li><li class="text-sm text-zinc-600 dark:text-zinc-400 flex items-start"><span class="mr-3">•</span><span>Programmable API</span></li><li class="text-sm text-zinc-600 dark:text-zinc-400 flex items-start"><span class="mr-3">•</span><span>MySQL database for persistence</span></li><li class="text-sm text-zinc-600 dark:text-zinc-400 flex items-start"><span class="mr-3">•</span><span>Extensive customization options</span></li></ul></div>
             <div class="mt-6 flex gap-3">
                 <a href="https://github.com/quantumbagel/Triggered" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-4 py-2 bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 font-medium rounded-lg hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors">View on GitHub <span class="ml-2">↗</span></a>
@@ -664,6 +691,7 @@
                 <button class="modal-close-btn text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100" data-modal-id="modal-project-playcord">✕</button>
             </div>
             <p class="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed mb-4">PlayCord brings classic paper and pencil games to Discord with a competitive twist. Features global and server-specific leaderboards.</p>
+            
             <div class="mt-4"><h4 class="font-semibold text-zinc-900 dark:text-zinc-100 mb-2">Features</h4><ul class="space-y-1"><li class="text-sm text-zinc-600 dark:text-zinc-400 flex items-start"><span class="mr-3">•</span><span>Multiple game modes</span></li><li class="text-sm text-zinc-600 dark:text-zinc-400 flex items-start"><span class="mr-3">•</span><span>Global and local leaderboards</span></li><li class="text-sm text-zinc-600 dark:text-zinc-400 flex items-start"><span class="mr-3">•</span><span>Dynamic game loading system</span></li><li class="text-sm text-zinc-600 dark:text-zinc-400 flex items-start"><span class="mr-3">•</span><span>MySQL persistence</span></li></ul></div>
             <div class="mt-6 flex gap-3">
                 <a href="https://github.com/quantumbagel/PlayCord" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-4 py-2 bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 font-medium rounded-lg hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors">View on GitHub <span class="ml-2">↗</span></a>
@@ -679,6 +707,7 @@
                 <button class="modal-close-btn text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100" data-modal-id="modal-project-statify">✕</button>
             </div>
             <p class="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed mb-4">Statify is a Minecraft server plugin that tracks player statistics and generates leaderboards for competitive servers.</p>
+            
             <div class="mt-4"><h4 class="font-semibold text-zinc-900 dark:text-zinc-100 mb-2">Features</h4><ul class="space-y-1"><li class="text-sm text-zinc-600 dark:text-zinc-400 flex items-start"><span class="mr-3">•</span><span>Comprehensive stat tracking</span></li><li class="text-sm text-zinc-600 dark:text-zinc-400 flex items-start"><span class="mr-3">•</span><span>Customizable leaderboards</span></li><li class="text-sm text-zinc-600 dark:text-zinc-400 flex items-start"><span class="mr-3">•</span><span>SpigotMC API integration</span></li></ul></div>
             <div class="mt-6 flex gap-3">
                 <a href="https://github.com/quantumbagel/Statify" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-4 py-2 bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 font-medium rounded-lg hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors">View on GitHub <span class="ml-2">↗</span></a>
@@ -694,6 +723,7 @@
                 <button class="modal-close-btn text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100" data-modal-id="modal-project-molotov">✕</button>
             </div>
             <p class="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed mb-4">Molotov is an automation bot for the word game Bomb Party. It uses Selenium to interact with the game and an optimized word database for fast responses.</p>
+            
             <div class="mt-4"><h4 class="font-semibold text-zinc-900 dark:text-zinc-100 mb-2">Features</h4><ul class="space-y-1"><li class="text-sm text-zinc-600 dark:text-zinc-400 flex items-start"><span class="mr-3">•</span><span>Selenium automation</span></li><li class="text-sm text-zinc-600 dark:text-zinc-400 flex items-start"><span class="mr-3">•</span><span>Optimized word lookup</span></li><li class="text-sm text-zinc-600 dark:text-zinc-400 flex items-start"><span class="mr-3">•</span><span>Configurable response timing</span></li><li class="text-sm text-zinc-600 dark:text-zinc-400 flex items-start"><span class="mr-3">•</span><span>JavaScript injection for speed</span></li></ul></div>
             <div class="mt-6 flex gap-3">
                 <a href="https://github.com/quantumbagel/Molotov" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-4 py-2 bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 font-medium rounded-lg hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors">View on GitHub <span class="ml-2">↗</span></a>
@@ -709,6 +739,7 @@
                 <button class="modal-close-btn text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100" data-modal-id="modal-project-discord-py-template">✕</button>
             </div>
             <p class="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed mb-4">A well-structured template for building Discord bots using discord.py 2.0+. Designed to be easy to understand and extend for beginners and experienced developers alike.</p>
+            
             <div class="mt-4"><h4 class="font-semibold text-zinc-900 dark:text-zinc-100 mb-2">Features</h4><ul class="space-y-1"><li class="text-sm text-zinc-600 dark:text-zinc-400 flex items-start"><span class="mr-3">•</span><span>Clean project structure</span></li><li class="text-sm text-zinc-600 dark:text-zinc-400 flex items-start"><span class="mr-3">•</span><span>Modern discord.py 2.0+ syntax</span></li><li class="text-sm text-zinc-600 dark:text-zinc-400 flex items-start"><span class="mr-3">•</span><span>Slash command support</span></li><li class="text-sm text-zinc-600 dark:text-zinc-400 flex items-start"><span class="mr-3">•</span><span>Easy to customize and extend</span></li></ul></div>
             <div class="mt-6 flex gap-3">
                 <a href="https://github.com/quantumbagel/discord.py-template" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-4 py-2 bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 font-medium rounded-lg hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors">View on GitHub <span class="ml-2">↗</span></a>
@@ -724,6 +755,7 @@
                 <button class="modal-close-btn text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100" data-modal-id="modal-project-chess-challenge">✕</button>
             </div>
             <p class="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed mb-4">An entry for Sebastian Lague's Tiny Chess Bot Challenge. The goal was to create the strongest chess AI possible within strict code size limitations.</p>
+            
             <div class="mt-4"><h4 class="font-semibold text-zinc-900 dark:text-zinc-100 mb-2">Features</h4><ul class="space-y-1"><li class="text-sm text-zinc-600 dark:text-zinc-400 flex items-start"><span class="mr-3">•</span><span>Minimax algorithm with alpha-beta pruning</span></li><li class="text-sm text-zinc-600 dark:text-zinc-400 flex items-start"><span class="mr-3">•</span><span>Compact code optimization</span></li><li class="text-sm text-zinc-600 dark:text-zinc-400 flex items-start"><span class="mr-3">•</span><span>Custom evaluation function</span></li><li class="text-sm text-zinc-600 dark:text-zinc-400 flex items-start"><span class="mr-3">•</span><span>Competitive performance under constraints</span></li></ul></div>
             <div class="mt-6 flex gap-3">
                 <a href="https://github.com/quantumbagel/Chess-Challenge" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-4 py-2 bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 font-medium rounded-lg hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors">View on GitHub <span class="ml-2">↗</span></a>
@@ -739,6 +771,7 @@
                 <button class="modal-close-btn text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100" data-modal-id="modal-project-aerpawlib">✕</button>
             </div>
             <p class="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed mb-4">aerpawlib provides a high-level Python interface for controlling drones on the AERPAW testbed. It abstracts away the complexity of MAVLink/MAVSDK for easier experiment development.</p>
+            
             <div class="mt-4"><h4 class="font-semibold text-zinc-900 dark:text-zinc-100 mb-2">Features</h4><ul class="space-y-1"><li class="text-sm text-zinc-600 dark:text-zinc-400 flex items-start"><span class="mr-3">•</span><span>High-level drone control API</span></li><li class="text-sm text-zinc-600 dark:text-zinc-400 flex items-start"><span class="mr-3">•</span><span>MAVLink/MAVSDK abstraction</span></li><li class="text-sm text-zinc-600 dark:text-zinc-400 flex items-start"><span class="mr-3">•</span><span>Simplified experiment development</span></li><li class="text-sm text-zinc-600 dark:text-zinc-400 flex items-start"><span class="mr-3">•</span><span>AERPAW platform integration</span></li></ul></div>
             <div class="mt-6 flex gap-3">
                 <a href="https://github.com/aerpaw/aerpawlib" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-4 py-2 bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 font-medium rounded-lg hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors">View on GitHub <span class="ml-2">↗</span></a>
@@ -750,7 +783,7 @@
 
     <script>
     document.addEventListener("DOMContentLoaded", () => {
-        const taglines = ["is a Computer Engineering and Statistics student @ NCSU", "is a full-stack developer", "likes drones :D", "is an open source enthusiast", "has three cats :3", "is always learning", "would like a job \ud83e\udd7a"];
+        const taglines = ["is a Computer Engineering and Statistics student @ NCSU", "is a full-stack developer", "likes drones :D", "is an open source enthusiast", "has three cats :3", "is always learning", "would like a job \ud83e\udd7a", "plays Factorio"];
         const taglineEl = document.getElementById("tagline");
         let currentIndex = 0;
 
@@ -801,22 +834,17 @@
             });
         });
 
-        const filterBtns = document.querySelectorAll(".filter-btn");
+        const projectFilters = document.getElementById("project-filters");
+        const filterBtns = projectFilters ? Array.from(projectFilters.querySelectorAll(".filter-btn")) : [];
         const projectCards = document.querySelectorAll(".project-card");
         const projectJumpLinks = document.querySelectorAll(".project-jump");
-        const activeClasses = ["bg-zinc-900", "text-white", "dark:bg-zinc-100", "dark:text-zinc-900"];
-        const inactiveClasses = ["bg-zinc-200", "text-zinc-700", "dark:bg-zinc-800", "dark:text-zinc-300"];
-        const allFilterBtn = document.querySelector('.filter-btn[data-filter="all"]');
+        const allFilterBtn = projectFilters ? projectFilters.querySelector('.filter-btn[data-filter="all"]') : null;
 
-        const setActiveFilter = (activeBtn) => {
+        const setActiveFilter = (filterValue) => {
             filterBtns.forEach((btn) => {
-                btn.classList.remove(...activeClasses);
-                btn.classList.add(...inactiveClasses);
-                btn.setAttribute("aria-pressed", "false");
+                const isActive = btn.getAttribute("data-filter") === filterValue;
+                btn.setAttribute("aria-pressed", isActive ? "true" : "false");
             });
-            activeBtn.classList.remove(...inactiveClasses);
-            activeBtn.classList.add(...activeClasses);
-            activeBtn.setAttribute("aria-pressed", "true");
         };
 
         const applyFilter = (filterValue) => {
@@ -826,21 +854,38 @@
             });
         };
 
-        filterBtns.forEach((btn) => {
-            btn.addEventListener("click", () => {
-                setActiveFilter(btn);
-                applyFilter(btn.getAttribute("data-filter"));
+        const selectFilter = (filterValue) => {
+            setActiveFilter(filterValue);
+            applyFilter(filterValue);
+        };
+
+        if (projectFilters) {
+            projectFilters.addEventListener("click", (event) => {
+                const filterBtn = event.target.closest(".filter-btn");
+                if (!filterBtn) {
+                    return;
+                }
+
+                selectFilter(filterBtn.getAttribute("data-filter") || "all");
             });
-        });
+        }
 
         projectJumpLinks.forEach((link) => {
             link.addEventListener("click", () => {
                 if (allFilterBtn) {
-                    setActiveFilter(allFilterBtn);
-                    applyFilter("all");
+                    selectFilter(allFilterBtn.getAttribute("data-filter") || "all");
                 }
             });
         });
+
+        if (filterBtns.length > 0) {
+            const initialFilter =
+                filterBtns.find((btn) => btn.getAttribute("aria-pressed") === "true")?.getAttribute("data-filter")
+                || allFilterBtn?.getAttribute("data-filter")
+                || filterBtns[0].getAttribute("data-filter")
+                || "all";
+            selectFilter(initialFilter);
+        }
 
         const detailsBtns = document.querySelectorAll(".project-details-btn");
         const closeBtns = document.querySelectorAll(".modal-close-btn");
@@ -894,6 +939,22 @@
                 navigator.clipboard.writeText(url).then(() => {
                     const originalIcon = btn.innerHTML;
                     btn.innerHTML = '<ion-icon name="checkmark" class="text-lg"></ion-icon>';
+                    setTimeout(() => {
+                        btn.innerHTML = originalIcon;
+                    }, 2000);
+                });
+            });
+        });
+
+        const experienceCopyLinkBtns = document.querySelectorAll(".experience-copy-link");
+        experienceCopyLinkBtns.forEach((btn) => {
+            btn.addEventListener("click", (event) => {
+                event.preventDefault();
+                event.stopPropagation();
+                const link = btn.getAttribute("data-link");
+                navigator.clipboard.writeText(link).then(() => {
+                    const originalIcon = btn.innerHTML;
+                    btn.innerHTML = '<ion-icon name="checkmark" class="text-sm"></ion-icon>';
                     setTimeout(() => {
                         btn.innerHTML = originalIcon;
                     }, 2000);
@@ -995,7 +1056,11 @@
 
                     const randomDuration = 2000 + Math.random() * 2000;
                     const randomDelay = i * 100;
+                    const randomRotationSpeed = 180 + Math.random() * 360;
+                    const randomStartRotation = Math.random() * 360;
                     pfp.style.animation = `pfpFall ${randomDuration}ms linear ${randomDelay}ms forwards`;
+                    pfp.style.setProperty('--rotation-speed', `${randomRotationSpeed}deg`);
+                    pfp.style.setProperty('--start-rotation', `${randomStartRotation}deg`);
                     document.body.appendChild(pfp);
 
                     setTimeout(() => {
@@ -1009,7 +1074,7 @@
         style.textContent = `
             @keyframes pfpFall {
                 to {
-                    transform: translateY(100vh) rotate(360deg);
+                    transform: translateY(100vh) rotate(calc(var(--start-rotation, 0deg) + var(--rotation-speed, 360deg)));
                     opacity: 0;
                 }
             }

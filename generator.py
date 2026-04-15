@@ -76,7 +76,17 @@ def render_about(paragraphs: list[str]) -> str:
 
 
 def render_experience_item(item: dict[str, Any]) -> str:
-    return render_template("partials/experience_item.html", {"item": item})
+    title_html = f'<h3 class="text-base font-medium text-zinc-900 dark:text-zinc-100'
+    
+    if item.get("link"):
+        title_html += ' cursor-pointer hover:text-blue-600 dark:hover:text-blue-400 transition-colors"'
+        title_html += f' onclick="window.location.href=\'{item["link"]}\'">{item["title"]}</h3>'
+        title_html += f'<button class="experience-copy-link hidden group-hover:block text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors" data-link="{item["link"]}" title="Copy link"><ion-icon name="link" class="text-sm"></ion-icon></button>'
+    else:
+        title_html += '">' + item["title"] + '</h3>'
+    
+    context_item = {**item, "title_html": title_html}
+    return render_template("partials/experience_item.html", {"item": context_item})
 
 
 def render_skill_item(skill: dict[str, Any], project_ids: dict[str, str]) -> str:
@@ -163,9 +173,10 @@ def render_project_card(project: dict[str, Any]) -> str:
 
     details_button_html = ""
     if project.get("details") or project.get("features"):
+        margin_class = "ml-3" if project.get("link") else ""
         details_button_html = (
             f'<button class="project-details-btn text-sm text-zinc-500 hover:text-zinc-900 '
-            f'dark:hover:text-zinc-100 transition-colors mt-3" data-modal-id="{modal_id}">'
+            f'dark:hover:text-zinc-100 transition-colors mt-3 {margin_class}" data-modal-id="{modal_id}">'
             "More Info →</button>"
         )
 
@@ -198,6 +209,20 @@ def render_project_modal(project: dict[str, Any]) -> str:
             f'{project["details"]}</p>'
         )
 
+    gallery_html = ""
+    project_gallery = project.get("gallery", [])
+    if project_gallery:
+        gallery_items = "".join(
+            f'<img src="{image}" alt="Gallery image" loading="lazy" decoding="async" '
+            f'class="w-full h-64 object-cover rounded-lg cursor-pointer hover:opacity-90 transition-opacity gallery-image" '
+            f'data-modal-id="{modal_id}">'
+            for image in project_gallery
+        )
+        gallery_html = (
+            '<div class="mt-4"><h4 class="font-semibold text-zinc-900 dark:text-zinc-100 mb-2">Gallery</h4>'
+            f'<div class="grid grid-cols-1 sm:grid-cols-2 gap-2">{gallery_items}</div></div>'
+        )
+
     features_html = ""
     project_features = project.get("features", [])
     if project_features:
@@ -224,6 +249,7 @@ def render_project_modal(project: dict[str, Any]) -> str:
             "modal_id": modal_id,
             "title": project_title,
             "details_html": details_html,
+            "gallery_html": gallery_html,
             "features_html": features_html,
             "link_button_html": link_button_html,
         }
@@ -232,11 +258,7 @@ def render_project_modal(project: dict[str, Any]) -> str:
 
 
 def render_filter_buttons(filters: list[dict[str, str]]) -> str:
-    active_classes = (
-        "px-3 py-1 text-sm rounded-full bg-zinc-900 text-white dark:bg-zinc-100 "
-        "dark:text-zinc-900 filter-btn active hover:bg-zinc-800 dark:hover:bg-zinc-200"
-    )
-    inactive_classes = (
+    button_classes = (
         "px-3 py-1 text-sm rounded-full bg-zinc-200 text-zinc-700 dark:bg-zinc-800 "
         "dark:text-zinc-300 hover:bg-zinc-300 dark:hover:bg-zinc-700 filter-btn transition-colors"
     )
@@ -248,7 +270,7 @@ def render_filter_buttons(filters: list[dict[str, str]]) -> str:
                 "key": filter_item["key"],
                 "label": filter_item["label"],
                 "aria_pressed": "true" if index == 0 else "false",
-                "button_classes": active_classes if index == 0 else inactive_classes,
+                "button_classes": button_classes,
             }
         }
         buttons.append(render_template("partials/project_filter_button.html", context))
