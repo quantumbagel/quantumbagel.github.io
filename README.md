@@ -61,3 +61,10 @@ Generate the site:
 ```bash
 python3 generator.py
 ```
+
+Viewing the live site
+
+Visit the live site at: https://quantumbagel.github.io
+
+The resume redirect is available at: https://quantumbagel.github.io/resume (or visit /resume/index.html).
+

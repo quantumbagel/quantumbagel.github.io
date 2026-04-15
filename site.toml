@@ -34,7 +34,7 @@ text = "Made with <3 by @quantumbagel"
 
 [content]
 about = [
-  "Hello! I'm <strong class='text-gray-800 dark:text-white'>Julian Reder</strong>, a programmer and student at North Carolina State University. This website has a brief overview of my projects and skillset, as well as a contact form.",
+  "Hello! I'm <strong class='text-gray-800 dark:text-white'>Julian Reder</strong>, a programmer and student at North Carolina State University. This website has a brief overview of my projects and skillset, as well as a contact form. It's also a template, see the project on GitHub to see how to use it yourself :D ",
   "Hopefully you find something interesting here! Feel free to reach out if you want to chat about anything or have questions about my projects or experience."
 ]
 
