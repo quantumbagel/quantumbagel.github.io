@@ -28,9 +28,18 @@ PERSONAL_INFO = {
 }
 
 ABOUT_ME = [
-    "Hello! I'm <strong class=\"text-gray-800 dark:text-white\">Julian Reder</strong>, a programmer and student at North Carolina State University. This is version 2 of my portfolio website, with this one being entirely coded from scratch using Tailwind CSS for styling and layout.",
-    "This website serves as mostly just a list of the projects I've made. Feel free to look at my <a href=\"#projects\" class=\"text-blue-500 hover:underline\">projects</a> or learn more about my <a href=\"#experience\" class=\"text-blue-500 hover:underline\">experience</a>.",
-    "Hopefully you find something interesting here! If you want to get in touch, feel free to reach out via the <a href=\"#contact\" class=\"text-blue-500 hover:underline\">contact form</a> at the bottom of the page."
+    "Hello! I'm <strong class=\"text-gray-800 dark:text-white\">Julian Reder</strong>, a programmer and student at North Carolina State University. This website has a brief overview of my projects and skillset, as well as a contact form.",
+    "Hopefully you find something interesting here! Feel free to reach out if you want to chat about anything or have any questions about my projects or experience.",
+]
+
+TAGLINES = [
+    "is a Computer Engineering and Statistics student @ NCSU",
+    "is a full-stack developer",
+    "likes drones :D",
+    "is a open source enthusiast",
+    "has three cats :3",
+    "is always learning",
+    "would like a job 🥺",
 ]
 
 EXPERIENCES = [
@@ -44,7 +53,7 @@ EXPERIENCES = [
         "icon": "code-slash-outline",
         "title": "AERPAW Developer",
         "date": "Summer 2023 - Present",
-        "description": "I have had the pleasure to work with Dr. Mihail Sichitiu at the Aerial Experimentation and Research Platform for Advanced Wireless at North Carolina State University for a couple of years now."
+        "description": "I have had the pleasure to work with Dr. Mihail Sichitiu at the Aerial Experimentation and Research Platform for Advanced Wireless at North Carolina State University for a couple of years now. "
                        "I have built several interesting projects including a plane tracker and a drone flight recorder."
     },
     {
@@ -343,6 +352,8 @@ def generate_timeline_item(item):
         </div>'''
 
 def generate_skill_bar(skill):
+    skill_id = skill['name'].lower().replace('/', '-').replace('+', 'plus').replace(' ', '-')
+    
     projects_html = ""
     if skill.get("projects"):
         project_ids = {
@@ -362,25 +373,31 @@ def generate_skill_bar(skill):
         )
         projects_html = f'<div class="mt-2 flex flex-wrap">{project_pills}</div>'
         
-    icon_html = f'<ion-icon name="{skill["icon"]}" class="text-xl mr-2"></ion-icon>' if skill.get("icon") else ''
-    duration_html = f'<span class="text-xs text-zinc-500 dark:text-zinc-400 ml-2 bg-zinc-100 dark:bg-zinc-800 px-2 py-0.5 rounded">{skill["duration"]}</span>' if skill.get("duration") else ''
+    icon_html = f'<ion-icon name="{skill["icon"]}" class="text-lg mr-2"></ion-icon>' if skill.get("icon") else ''
+    duration_html = f'<span class="text-xs text-zinc-500 dark:text-zinc-400">{skill["duration"]}</span>' if skill.get("duration") else ''
+    details_section = f'<p class="text-sm text-zinc-600 dark:text-zinc-400 mb-3 mt-2">{skill.get("details", "")}</p>' if skill.get("details") else ''
 
     return f'''
-        <div class="mb-6 p-4 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl shadow-sm">
-            <div class="flex items-center mb-2">
-                {icon_html}
-                <span class="text-base font-semibold text-zinc-900 dark:text-zinc-100">{skill['name']}</span>
-                {duration_html}
+        <div class="skill-item group mb-3 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 overflow-hidden transition-all">
+            <button class="skill-toggle w-full px-4 py-3 flex items-center justify-between hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors text-left" data-skill-id="{skill_id}">
+                <div class="flex items-center gap-2 flex-1">
+                    {icon_html}
+                    <span class="text-sm font-semibold text-zinc-900 dark:text-zinc-100">{skill['name']}</span>
+                    {duration_html}
+                </div>
+                <ion-icon name="chevron-down-outline" class="skill-toggle-icon text-zinc-500 dark:text-zinc-400 transition-transform"></ion-icon>
+            </button>
+            <div class="skill-content hidden px-4 pb-4 border-t border-zinc-200 dark:border-zinc-800 skill-rollout">
+                <div class="text-xs text-zinc-600 dark:text-zinc-400 font-medium mb-4 pt-2">{skill.get("level", "")}</div>
+                {details_section}
+                {projects_html}
             </div>
-            <div class="mb-2">
-                <span class="text-xs text-zinc-500 dark:text-zinc-400">{skill['level']}</span>
-            </div>
-            <p class="text-sm text-zinc-600 dark:text-zinc-400 mb-3">{skill.get('details', '')}</p>
-            {projects_html}
         </div>'''
 
 def generate_project_card(project):
     project_id = project_anchor_id(project.get("title", "project"))
+    modal_id = f"modal-{project_id}"
+    
     skills_html = ""
     if project.get("skills"):
         pills_html = "".join([
@@ -401,16 +418,63 @@ def generate_project_card(project):
     if project.get("date"):
         date_html = f'<span class="text-xs font-medium text-zinc-500 dark:text-zinc-400 mb-2 block flex items-center"><ion-icon name="time-outline" class="mr-1"></ion-icon>{project["date"]}</span>'
 
+    details_button = ""
+    if project.get("details") or project.get("features"):
+        details_button = f'<button class="project-details-btn text-sm text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors mt-3" data-modal-id="{modal_id}">More Info →</button>'
+
     return f'''
         <div id="{project_id}" class="project-card group relative flex flex-col bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl hover:border-zinc-300 dark:hover:border-zinc-700 transition-colors shadow-sm overflow-hidden" data-category="{project.get('category', 'other')}">
             {image_html}
             <div class="p-5 flex flex-col flex-grow">
-                <h3 class="text-base font-semibold text-zinc-900 dark:text-zinc-100 mb-1">{project.get('title')}</h3>
+                <div class="flex items-start justify-between">
+                    <h3 class="text-base font-semibold text-zinc-900 dark:text-zinc-100 mb-1 flex-1">{project.get('title')}</h3>
+                    <button class="copy-link-btn ml-2 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors" data-project-id="{project_id}" title="Copy link to project">
+                        <ion-icon name="link" class="text-lg"></ion-icon>
+                    </button>
+                </div>
                 {date_html}
                 <p class="text-sm text-zinc-600 dark:text-zinc-400 mb-4 flex-grow leading-relaxed">{project.get('description')}</p>
                 <div>
                     {skills_html}
                     {link_html}
+                    {details_button}
+                </div>
+            </div>
+        </div>'''
+
+def generate_project_modal(project):
+    project_id = project_anchor_id(project.get("title", "project"))
+    modal_id = f"modal-{project_id}"
+    
+    features_html = ""
+    if project.get("features"):
+        features_list = "".join([
+            f'<li class="text-sm text-zinc-600 dark:text-zinc-400 flex items-start"><span class="mr-3">•</span><span>{feature}</span></li>'
+            for feature in project['features']
+        ])
+        features_html = f'<div class="mt-4"><h4 class="font-semibold text-zinc-900 dark:text-zinc-100 mb-2">Features</h4><ul class="space-y-1">{features_list}</ul></div>'
+
+    details_html = ""
+    if project.get("details"):
+        details_html = f'<p class="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed mb-4">{project["details"]}</p>'
+
+    link_button = ""
+    if project.get("link"):
+        link_button = f'<a href="{project["link"]}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-4 py-2 bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 font-medium rounded-lg hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors">View on GitHub <span class="ml-2">↗</span></a>'
+
+    return f'''
+        <div id="{modal_id}" class="fixed inset-0 z-50 hidden overflow-y-auto bg-black/50 flex items-center justify-center p-4">
+            <div class="bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-lg">
+                <div class="p-6">
+                    <div class="flex items-start justify-between mb-4">
+                        <h2 class="text-2xl font-bold text-zinc-900 dark:text-zinc-100">{project.get('title')}</h2>
+                        <button class="modal-close-btn text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100" data-modal-id="{modal_id}">✕</button>
+                    </div>
+                    {details_html}
+                    {features_html}
+                    <div class="mt-6 flex gap-3">
+                        {link_button}
+                    </div>
                 </div>
             </div>
         </div>'''
@@ -420,7 +484,9 @@ def create_html_structure():
     programming_skills_html = "".join([generate_skill_bar(skill) for skill in SKILLS['Programming Languages']])
     tech_skills_html = "".join([generate_skill_bar(skill) for skill in SKILLS['Technologies & Frameworks']])
     project_cards_html = "".join([generate_project_card(project) for project in PROJECTS])
+    project_modals_html = "".join([generate_project_modal(project) for project in PROJECTS])
     about_me_html = "".join([f"<p class='mb-4 last:mb-0'>{paragraph}</p>" for paragraph in ABOUT_ME])
+    taglines_json = str(TAGLINES).replace("'", '"')
 
     return f'''<!DOCTYPE html>
 <html lang="en" class="antialiased scroll-smooth">
@@ -435,8 +501,9 @@ def create_html_structure():
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js" defer></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js" defer></script>
 </head>
-<body class="bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 min-h-screen selection:bg-zinc-200 dark:selection:bg-zinc-800 selection:text-zinc-900 dark:selection:text-zinc-100">
-    <div class="max-w-3xl mx-auto px-6 py-12 md:py-20">
+<body class="bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 min-h-screen selection:bg-zinc-700 dark:selection:bg-zinc-300 selection:text-white dark:selection:text-zinc-950 relative overflow-x-hidden">
+    <canvas id="matrix-bg" class="fixed inset-0 pointer-events-none z-0 opacity-20" aria-hidden="true"></canvas>
+    <div class="relative z-10 max-w-3xl mx-auto px-6 py-12 md:py-20">
         
         <!-- Header -->
         <header class="mb-16">
@@ -444,19 +511,22 @@ def create_html_structure():
                 <img src="{PERSONAL_INFO['profile_image']}" alt="{PERSONAL_INFO['name']}" class="w-16 h-16 rounded-full object-cover border border-zinc-200 dark:border-zinc-800">
                 <div>
                     <h1 class="text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">{PERSONAL_INFO['name']}</h1>
-                    <p class="text-zinc-500 dark:text-zinc-400 mt-0.5">{PERSONAL_INFO['title']}</p>
+                    <p id="tagline" class="text-zinc-500 dark:text-zinc-400 mt-0.5 h-6 overflow-hidden relative">{TAGLINES[0]}</p>
                 </div>
             </div>
             
-            <div class="flex gap-4">
-                <a href="{PERSONAL_INFO['social_links']['github']}" target="_blank" rel="noopener noreferrer" class="text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors" aria-label="GitHub">
-                    <ion-icon name="logo-github" class="text-xl"></ion-icon>
+            <div class="flex gap-5 text-sm font-mono">
+                <a href="{PERSONAL_INFO['social_links']['github']}" target="_blank" rel="noopener noreferrer" class="text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors flex items-center gap-1" aria-label="GitHub">
+                    GitHub/<ion-icon name="logo-github" class="text-base"></ion-icon>
                 </a>
-                <a href="{PERSONAL_INFO['social_links']['linkedin']}" target="_blank" rel="noopener noreferrer" class="text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors" aria-label="LinkedIn">
-                    <ion-icon name="logo-linkedin" class="text-xl"></ion-icon>
+                <a href="{PERSONAL_INFO['social_links']['linkedin']}" target="_blank" rel="noopener noreferrer" class="text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors flex items-center gap-1" aria-label="LinkedIn">
+                    LinkedIn/<ion-icon name="logo-linkedin" class="text-base"></ion-icon>
                 </a>
-                <a href="{PERSONAL_INFO['social_links']['resume']}" target="_blank" rel="noopener noreferrer" class="text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors" aria-label="Resume">
-                    <ion-icon name="document-text-outline" class="text-xl"></ion-icon>
+                <a href="{PERSONAL_INFO['social_links']['discord']}" target="_blank" rel="noopener noreferrer" class="text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors flex items-center gap-1" aria-label="Discord">
+                    Discord/<ion-icon name="logo-discord" class="text-base"></ion-icon>
+                </a>
+                <a href="{PERSONAL_INFO['social_links']['resume']}" target="_blank" rel="noopener noreferrer" class="text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors flex items-center gap-1" aria-label="Resume">
+                    Resume/<ion-icon name="document-text-outline" class="text-base"></ion-icon>
                 </a>
             </div>
         </header>
@@ -484,7 +554,7 @@ def create_html_structure():
                 
                 <!-- Project Filters -->
                 <div class="flex flex-wrap gap-2 mb-6" id="project-filters">
-                    <button type="button" aria-pressed="true" class="px-3 py-1 text-sm rounded-full bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900 filter-btn active" data-filter="all">All</button>
+                    <button type="button" aria-pressed="true" class="px-3 py-1 text-sm rounded-full bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900 filter-btn active hover:bg-zinc-800 dark:hover:bg-zinc-200" data-filter="all">All</button>
                     <button type="button" aria-pressed="false" class="px-3 py-1 text-sm rounded-full bg-zinc-200 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300 hover:bg-zinc-300 dark:hover:bg-zinc-700 filter-btn transition-colors" data-filter="internship">Internship</button>
                     <button type="button" aria-pressed="false" class="px-3 py-1 text-sm rounded-full bg-zinc-200 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300 hover:bg-zinc-300 dark:hover:bg-zinc-700 filter-btn transition-colors" data-filter="discord-bots">Discord Bots</button>
                     <button type="button" aria-pressed="false" class="px-3 py-1 text-sm rounded-full bg-zinc-200 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300 hover:bg-zinc-300 dark:hover:bg-zinc-700 filter-btn transition-colors" data-filter="other">Other</button>
@@ -539,21 +609,132 @@ def create_html_structure():
         </main>
         
         <!-- Footer -->
-        <footer class="mt-20 pt-8 border-t border-zinc-200 dark:border-zinc-800 text-center text-sm text-zinc-500 dark:text-zinc-400">
+        <footer id="footer-easter-egg" class="mt-20 pt-8 border-t border-zinc-200 dark:border-zinc-800 text-center text-sm text-zinc-500 dark:text-zinc-400 cursor-pointer hover:text-zinc-700 dark:hover:text-zinc-300 transition-colors select-none">
             <p>Made with <3 by @quantumbagel</p>
         </footer>
 
-    </div>
+     </div>
+
+    <!-- Project Modals -->
+    {project_modals_html}
 
     <!-- Filter Script -->
     <script>
     document.addEventListener('DOMContentLoaded', () => {{
+        const taglines = {taglines_json};
+        const taglineEl = document.getElementById('tagline');
+        let currentIndex = 0;
+
+        const cycleTagline = () => {{
+            if (taglineEl && taglines.length > 0) {{
+                currentIndex = (currentIndex + 1) % taglines.length;
+                const nextTagline = taglines[currentIndex];
+                
+                taglineEl.style.opacity = '0';
+                taglineEl.style.transform = 'translateY(1.5rem)';
+                taglineEl.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+                
+                setTimeout(() => {{
+                    taglineEl.textContent = nextTagline;
+                    taglineEl.style.opacity = '1';
+                    taglineEl.style.transform = 'translateY(0)';
+                }}, 150);
+            }}
+        }};
+
+        setInterval(cycleTagline, 4000);
+
+        // Skill toggle functionality (click only)
+        const skillToggles = document.querySelectorAll('.skill-toggle');
+        let openSkill = null;
+
+        skillToggles.forEach(toggle => {{
+            const skillItem = toggle.closest('.skill-item');
+            const skillContent = skillItem.querySelector('.skill-content');
+            const toggleIcon = toggle.querySelector('.skill-toggle-icon');
+
+            const openSkillContent = () => {{
+                skillContent.classList.remove('hidden');
+                toggleIcon.style.transform = 'rotate(180deg)';
+            }};
+
+            const closeSkillContent = () => {{
+                skillContent.classList.add('hidden');
+                toggleIcon.style.transform = 'rotate(0deg)';
+            }};
+
+            toggle.addEventListener('click', () => {{
+                if (openSkill && openSkill !== skillItem) {{
+                    const prevContent = openSkill.querySelector('.skill-content');
+                    const prevIcon = openSkill.querySelector('.skill-toggle-icon');
+                    prevContent.classList.add('hidden');
+                    prevIcon.style.transform = 'rotate(0deg)';
+                }}
+
+                if (skillContent.classList.contains('hidden')) {{
+                    openSkillContent();
+                    openSkill = skillItem;
+                }} else {{
+                    closeSkillContent();
+                    openSkill = null;
+                }}
+            }});
+        }});
+
         const filterBtns = document.querySelectorAll('.filter-btn');
         const projectCards = document.querySelectorAll('.project-card');
         const projectJumpLinks = document.querySelectorAll('.project-jump');
         const activeClasses = ['bg-zinc-900', 'text-white', 'dark:bg-zinc-100', 'dark:text-zinc-900'];
         const inactiveClasses = ['bg-zinc-200', 'text-zinc-700', 'dark:bg-zinc-800', 'dark:text-zinc-300'];
         const allFilterBtn = document.querySelector('.filter-btn[data-filter="all"]');
+        const matrixCanvas = document.getElementById('matrix-bg');
+        const matrixContext = matrixCanvas ? matrixCanvas.getContext('2d') : null;
+
+        if (matrixCanvas && matrixContext) {{
+            const glyphs = '01ABCDEFGHIJKLMNOPQRSTUVWXYZ#$%*+-';
+            const fontSize = 14;
+            const frameInterval = 55;
+            let drops = [];
+            let lastFrameTime = 0;
+
+            const resizeMatrix = () => {{
+                matrixCanvas.width = window.innerWidth;
+                matrixCanvas.height = window.innerHeight;
+                const totalColumns = Math.ceil(matrixCanvas.width / fontSize);
+                const maxRows = Math.ceil(matrixCanvas.height / fontSize);
+                drops = Array.from({{ length: totalColumns }}, () => Math.floor(Math.random() * maxRows));
+                matrixContext.font = fontSize + 'px monospace';
+                matrixContext.textBaseline = 'top';
+            }};
+
+            const drawMatrix = (timestamp) => {{
+                if (!lastFrameTime || timestamp - lastFrameTime >= frameInterval) {{
+                    lastFrameTime = timestamp;
+                    matrixContext.fillStyle = 'rgba(0, 0, 0, 0.12)';
+                    matrixContext.fillRect(0, 0, matrixCanvas.width, matrixCanvas.height);
+                    matrixContext.fillStyle = 'rgba(255, 255, 255, 0.9)';
+
+                    for (let i = 0; i < drops.length; i += 1) {{
+                        const char = glyphs.charAt(Math.floor(Math.random() * glyphs.length));
+                        const x = i * fontSize;
+                        const y = drops[i] * fontSize;
+                        matrixContext.fillText(char, x, y);
+
+                        if (y > matrixCanvas.height && Math.random() > 0.975) {{
+                            drops[i] = 0;
+                        }} else {{
+                            drops[i] += 1;
+                        }}
+                    }}
+                }}
+
+                window.requestAnimationFrame(drawMatrix);
+            }};
+
+            resizeMatrix();
+            window.addEventListener('resize', resizeMatrix);
+            window.requestAnimationFrame(drawMatrix);
+        }}
 
         const setActiveFilter = (activeBtn) => {{
             filterBtns.forEach(b => {{
@@ -578,6 +759,13 @@ def create_html_structure():
                 setActiveFilter(btn);
                 applyFilter(btn.getAttribute('data-filter'));
             }});
+            
+            // Add hover brightening for active buttons
+            btn.addEventListener('mouseenter', () => {{
+                if (btn.classList.contains('active')) {{
+                    btn.classList.add('hover:bg-zinc-800');
+                }}
+            }});
         }});
 
         projectJumpLinks.forEach(link => {{
@@ -588,6 +776,157 @@ def create_html_structure():
                 }}
             }});
         }});
+
+        // Modal functionality
+        const detailsBtns = document.querySelectorAll('.project-details-btn');
+        const closeBtns = document.querySelectorAll('.modal-close-btn');
+
+        detailsBtns.forEach(btn => {{
+            btn.addEventListener('click', () => {{
+                const modalId = btn.getAttribute('data-modal-id');
+                const modal = document.getElementById(modalId);
+                if (modal) {{
+                    modal.classList.remove('hidden');
+                    modal.style.display = 'flex';
+                }}
+            }});
+        }});
+
+        closeBtns.forEach(btn => {{
+            btn.addEventListener('click', () => {{
+                const modalId = btn.getAttribute('data-modal-id');
+                const modal = document.getElementById(modalId);
+                if (modal) {{
+                    modal.classList.add('hidden');
+                    modal.style.display = 'none';
+                }}
+            }});
+        }});
+
+        // Close modal when clicking outside
+        document.querySelectorAll('[id^="modal-"]').forEach(modal => {{
+            modal.addEventListener('click', (e) => {{
+                if (e.target === modal) {{
+                    modal.classList.add('hidden');
+                    modal.style.display = 'none';
+                }}
+            }});
+        }});
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', (e) => {{
+            if (e.key === 'Escape') {{
+                document.querySelectorAll('[id^="modal-"]').forEach(modal => {{
+                    modal.classList.add('hidden');
+                    modal.style.display = 'none';
+                }});
+            }}
+        }});
+
+        // Footer Easter Egg: Raining PFPs
+        const footerEasterEgg = document.getElementById('footer-easter-egg');
+        footerEasterEgg.addEventListener('click', () => {{
+            const pfpPath = 'pfp.webp';
+            const rainDuration = 4000;
+            const pfpCount = 30;
+
+            for (let i = 0; i < pfpCount; i++) {{
+                const pfp = document.createElement('img');
+                pfp.src = pfpPath;
+                pfp.style.position = 'fixed';
+                pfp.style.pointerEvents = 'none';
+                pfp.style.zIndex = '9999';
+                pfp.style.width = '60px';
+                pfp.style.height = '60px';
+                pfp.style.borderRadius = '9999px';
+                pfp.style.objectFit = 'cover';
+                pfp.style.left = Math.random() * 100 + '%';
+                pfp.style.top = '-80px';
+                
+                const randomDuration = 2000 + Math.random() * 2000;
+                const randomDelay = i * 100;
+                
+                pfp.style.animation = `pfpFall ${{randomDuration}}ms linear ${{randomDelay}}ms forwards`;
+                
+                document.body.appendChild(pfp);
+                
+                setTimeout(() => {{
+                    pfp.remove();
+                }}, randomDuration + randomDelay);
+            }}
+        }});
+
+        // Project copy link functionality
+        const copyLinkBtns = document.querySelectorAll('.copy-link-btn');
+        copyLinkBtns.forEach(btn => {{
+            btn.addEventListener('click', (e) => {{
+                e.preventDefault();
+                const projectId = btn.getAttribute('data-project-id');
+                const url = window.location.origin + window.location.pathname + '#' + projectId;
+                navigator.clipboard.writeText(url).then(() => {{
+                    const originalIcon = btn.innerHTML;
+                    btn.innerHTML = '<ion-icon name="checkmark" class="text-lg"></ion-icon>';
+                    setTimeout(() => {{
+                        btn.innerHTML = originalIcon;
+                    }}, 2000);
+                }});
+            }});
+        }});
+
+        // Project highlight on scroll to
+        const highlightProject = (projectId) => {{
+            projectCards.forEach(card => {{
+                card.classList.remove('ring-2', 'ring-blue-400', 'dark:ring-blue-500');
+            }});
+            const targetCard = document.getElementById(projectId);
+            if (targetCard) {{
+                targetCard.classList.add('ring-2', 'ring-blue-400', 'dark:ring-blue-500');
+                setTimeout(() => {{
+                    targetCard.classList.remove('ring-2', 'ring-blue-400', 'dark:ring-blue-500');
+                }}, 3000);
+            }}
+        }};
+
+        // Check for hash on page load and highlight
+        if (window.location.hash) {{
+            const projectId = window.location.hash.substring(1);
+            highlightProject(projectId);
+        }}
+
+        // Handle hash changes
+        window.addEventListener('hashchange', () => {{
+            const projectId = window.location.hash.substring(1);
+            if (projectId) {{
+                highlightProject(projectId);
+            }}
+        }});
+
+        // Add CSS animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes pfpFall {{
+                to {{
+                    transform: translateY(100vh) rotate(360deg);
+                    opacity: 0;
+                }}
+            }}
+            @keyframes skillRollout {{
+                from {{
+                    opacity: 0;
+                    transform: scaleY(0);
+                    transform-origin: top;
+                }}
+                to {{
+                    opacity: 1;
+                    transform: scaleY(1);
+                    transform-origin: top;
+                }}
+            }}
+            .skill-rollout:not(.hidden) {{
+                animation: skillRollout 0.3s ease-out;
+            }}
+        `;
+        document.head.appendChild(style);
     }});
     </script>
 </body>
