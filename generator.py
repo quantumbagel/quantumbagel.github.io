@@ -1,7 +1,4 @@
 import os
-import html
-import htmlmin
-import json
 
 # ==============================================================================
 # PORTFOLIO DATA
@@ -27,7 +24,6 @@ PERSONAL_INFO = {
         {"icon": "logo-github", "label": "GitHub", "value": "@quantumbagel"},
         {"icon": "logo-linkedin", "label": "LinkedIn", "value": "@julian-reder-nc"},
         {"icon": "logo-discord", "label": "Discord", "value": "@thequantumbagel"}
-
     ]
 }
 
@@ -63,43 +59,55 @@ SKILLS = {
     "Programming Languages": [
         {
             "name": "Python", 
+            "icon": "logo-python",
             "level": "Expert", 
             "percentage": 100,
+            "duration": "5+ years",
             "details": "My primary language for most of my programming career. Used for web scraping, automation, data science, and drone software.",
             "projects": ["PyAerial", "airstrik.py", "DroneTracker", "finiteCraft", "Triggered"]
         },
         {
             "name": "C/C++", 
+            "icon": "code-slash-outline",
             "level": "Advanced", 
             "percentage": 90,
+            "duration": "3+ years",
             "details": "Proficient in C/C++ for systems programming and performance-critical applications. Used in various academic and personal projects.",
             "projects": ["Embedded Systems via Arduino", "Python compiler extensions for aerpaw", "JIT compilation for performance-critical Python code"]
         },
         {
             "name": "JavaScript", 
+            "icon": "logo-javascript",
             "level": "Advanced", 
             "percentage": 85,
+            "duration": "3+ years",
             "details": "Used extensively for front-end development (Tailwind, React) and specialized automation tools.",
             "projects": ["Portfolio Website (v2)", "Molotov", "finiteCraft"]
         },
         {
             "name": "Java", 
+            "icon": "cafe-outline",
             "level": "Competent", 
             "percentage": 80,
+            "duration": "4+ years",
             "details": "Really good understanding of OOP principles. Experience mostly in the context of building Minecraft plugins.",
             "projects": ["Statify"]
         },
         {
             "name": "C#", 
+            "icon": "code-outline",
             "level": "Competent", 
             "percentage": 75,
+            "duration": "2+ years",
             "details": "Experience with .NET and game development. Most recently used for Sebastian Lague's Chess Challenge.",
             "projects": ["Chess-Challenge"]
         },
         {
             "name": "Bash", 
+            "icon": "terminal-outline",
             "level": "Competent", 
             "percentage": 70,
+            "duration": "4+ years",
             "details": "Proficient in writing scripts for automation, CI/CD pipelines, and Linux system administration.",
             "projects": ["All projects", "Docker setup scripts"]
         },
@@ -107,57 +115,73 @@ SKILLS = {
     "Technologies & Frameworks": [
         {
             "name": "Linux/Unix", 
+            "icon": "desktop-outline",
             "level": "Expert", 
             "percentage": 100,
+            "duration": "5+ years",
             "details": "Heavy user of Linux for development and server management, as well as a daily driver of Cosmic.",
             "projects": ["Server Management", "All Projects"]
         },
         {
             "name": "Docker", 
+            "icon": "logo-docker",
             "level": "Expert", 
             "percentage": 100,
+            "duration": "3+ years",
             "details": "All my major projects are deployed using Docker for reproducibility and scale.",
             "projects": ["PyAerial", "airstrik.py", "DroneTracker", "Piranha"]
         },
         {
             "name": "JetBrains Suite", 
+            "icon": "bulb-outline",
             "level": "Expert", 
             "percentage": 100,
+            "duration": "5+ years",
             "details": "Advanced user of PyCharm, CLion, and IntelliJ. I use these IDEs for all my development work and am proficient with their advanced features.",
             "projects": ["All Projects"]
         },
         {
             "name": "Git", 
+            "icon": "logo-github",
             "level": "Advanced", 
             "percentage": 90,
+            "duration": "4+ years",
             "details": "Great understanding of Git workflows, branching strategies, and repository management.",
             "projects": ["All Projects"]
         },
         {
             "name": "Selenium / Web Scraping", 
+            "icon": "globe-outline",
             "level": "Advanced", 
             "percentage": 90,
+            "duration": "2+ years",
             "details": "Really good at web scraping and browser automation.",
             "projects": ["finiteCraft", "Molotov"]
         },
         {
             "name": "OpenAPI", 
+            "icon": "server-outline",
             "level": "Advanced", 
             "percentage": 90,
+            "duration": "2+ years",
             "details": "Experience designing and documenting RESTful APIs for complex data systems.",
             "projects": ["PyAerial", "Triggered"]
         },
         {
             "name": "SQL/MySQL/Postgres", 
+            "icon": "server-outline",
             "level": "Advanced", 
             "percentage": 90,
+            "duration": "4+ years",
             "details": "Relational database design, optimization, and management for high-concurrency applications.",
             "projects": ["PlayCord", "Triggered", "Statify"]
         },
         {
             "name": "MongoDB", 
+            "icon": "leaf-outline",
             "level": "Advanced", 
             "percentage": 90,
+            "duration": "2+ years",
             "details": "NoSQL database implementations for drone tracking data",
             "projects": ["PyAerial", "airstrik.py"]
         },
@@ -169,6 +193,7 @@ PROJECTS = [
         "category": "internship",
         "image": "https://placehold.co/400x250/3498DB/FFFFFF?text=PyAerial",
         "title": "PyAerial",
+        "date": "2024 - Present",
         "description": "A better plane tracker for AERPAW, successor to airstrik.py.",
         "details": "PyAerial is a comprehensive ADS-B tracking solution developed for the AERPAW research platform at NC State. It provides real-time aircraft position tracking, historical data storage, and visualization capabilities.",
         "features": ["Real-time ADS-B decoding", "MongoDB integration for data persistence", "Docker containerized deployment", "RESTful API for data access"],
@@ -179,6 +204,7 @@ PROJECTS = [
         "category": "internship",
         "image": "https://placehold.co/400x250/E74C3C/FFFFFF?text=airstrik.py",
         "title": "airstrik.py",
+        "date": "2023 - 2024",
         "description": "A pure-python ADS-B plane tracker for AERPAW.",
         "details": "The original pure-Python implementation of an ADS-B tracker for drone airspace monitoring. This project laid the groundwork for PyAerial.",
         "features": ["Pure Python implementation", "ADS-B signal processing", "Integration with MavSDK for drone communication"],
@@ -189,6 +215,7 @@ PROJECTS = [
         "category": "discord-bots",
         "image": "https://placehold.co/400x250/2ECC71/FFFFFF?text=Piranha",
         "title": "Piranha",
+        "date": "2022",
         "description": "A chess-playing Discord bot with various features.",
         "details": "Piranha is a feature-rich Discord bot that allows users to play chess directly within Discord. It integrates with the Stockfish chess engine for AI opponents.",
         "features": ["Play chess against AI or friends", "Multiple difficulty levels via Stockfish", "Game history and statistics", "Docker deployment support"],
@@ -199,6 +226,7 @@ PROJECTS = [
         "category": "other",
         "image": "https://placehold.co/400x250/E74C3C/FFFFFF?text=finiteCraft",
         "title": "finiteCraft",
+        "date": "2024",
         "description": "A web scraper and craft finder for Neal Agarwal's Infinite Craft.",
         "details": "finiteCraft is an automation tool that scrapes and discovers all possible crafting combinations in the game Infinite Craft. Uses distributed proxy networks for efficient scraping.",
         "features": ["Selenium-based automation", "Proxy rotation support", "Crafting recipe database", "Pathfinding algorithms for recipe discovery"],
@@ -209,6 +237,7 @@ PROJECTS = [
         "category": "internship",
         "image": "https://placehold.co/400x250/9B59B6/FFFFFF?text=DroneTracker",
         "title": "DroneTracker",
+        "date": "2024",
         "description": "Track drones with cameras! Another AERPAW project.",
         "details": "DroneTracker is a computer vision system that uses PTZ cameras to track drones in real-time. It integrates with AXIS cameras via VAPIX protocol.",
         "features": ["PTZ camera control via VAPIX", "Real-time drone position estimation", "MavSDK integration for telemetry", "Containerized deployment"],
@@ -219,6 +248,7 @@ PROJECTS = [
         "category": "discord-bots",
         "image": "https://placehold.co/400x250/F1C40F/FFFFFF?text=Triggered",
         "title": "Triggered",
+        "date": "2023 - 2024",
         "description": "An if-this-than-that Discord bot for automation and fun.",
         "details": "Triggered allows Discord server administrators to create custom automation rules based on triggers and actions, similar to IFTTT.",
         "features": ["Custom trigger/action system", "Programmable API", "MySQL database for persistence", "Extensive customization options"],
@@ -226,29 +256,10 @@ PROJECTS = [
         "skills": ["Python", "discord.py", "MySQL", "Programmable API"]
     },
     {
-        "category": "other",
-        "image": "https://placehold.co/400x250/1ABC9C/FFFFFF?text=Portfolio v1",
-        "title": "Portfolio Website (v1)",
-        "description": "A remake of the vCard portfolio website.",
-        "details": "The first version of my portfolio website, built as a customized version of the vCard template with personal modifications.",
-        "features": ["Responsive design", "Custom styling", "Ion-Icons integration"],
-        "link": "https://github.com/quantumbagel/quantumbagel.github.io/tree/d76d5fac008ab10e3a32b2550b36a8dd0a06b835",
-        "skills": ["Python", "HTML", "CSS", "JS", "Ion-Icons"]
-    },
-    {
-        "category": "other",
-        "image": "https://placehold.co/400x250/E74C3C/FFFFFF?text=Portfolio v2",
-        "title": "Portfolio Website (v2)",
-        "description": "A new portfolio website for me from the ground up. Made in three days.",
-        "details": "The current portfolio website you're viewing! Built from scratch using TailwindCSS for a modern, responsive design.",
-        "features": ["TailwindCSS styling", "Dark mode support", "Smooth scrolling navigation", "Project filtering system"],
-        "link": "https://github.com/quantumbagel/quantumbagel.github.io",
-        "skills": ["Python", "HTML", "CSS", "JS", "TailwindCSS", "Ion-Icons"]
-    },
-    {
         "category": "discord-bots",
         "image": "https://placehold.co/400x250/F1C40F/FFFFFF?text=PlayCord",
         "title": "PlayCord",
+        "date": "2025 - Present",
         "description": "A Discord bot for paper and pencil games with fully functional local and global leaderboards, and dynamic loading of games.",
         "details": "PlayCord brings classic paper and pencil games to Discord with a competitive twist. Features global and server-specific leaderboards.",
         "features": ["Multiple game modes", "Global and local leaderboards", "Dynamic game loading system", "MySQL persistence"],
@@ -259,6 +270,7 @@ PROJECTS = [
         "category": "other",
         "image": "https://placehold.co/400x250/3498DB/FFFFFF?text=Statify",
         "title": "Statify",
+        "date": "2022",
         "description": "A SpigotMC plugin for statistics aggregation and leaderboards",
         "details": "Statify is a Minecraft server plugin that tracks player statistics and generates leaderboards for competitive servers.",
         "features": ["Comprehensive stat tracking", "Customizable leaderboards", "SpigotMC API integration"],
@@ -269,6 +281,7 @@ PROJECTS = [
         "category": "other",
         "image": "https://placehold.co/400x250/2ECC71/FFFFFF?text=Molotov",
         "title": "Molotov",
+        "date": "2022",
         "description": "A Selenium-based bot for the game Bomb Party (jklm.fun)",
         "details": "Molotov is an automation bot for the word game Bomb Party. It uses Selenium to interact with the game and an optimized word database for fast responses.",
         "features": ["Selenium automation", "Optimized word lookup", "Configurable response timing", "JavaScript injection for speed"],
@@ -279,6 +292,7 @@ PROJECTS = [
         "category": "discord-bots",
         "image": "https://placehold.co/400x250/9B59B6/FFFFFF?text=discord.py+template",
         "title": "discord.py-template",
+        "date": "2025",
         "description": "A simple, modern, and clean discord.py 2.0+ template.",
         "details": "A well-structured template for building Discord bots using discord.py 2.0+. Designed to be easy to understand and extend for beginners and experienced developers alike.",
         "features": ["Clean project structure", "Modern discord.py 2.0+ syntax", "Slash command support", "Easy to customize and extend"],
@@ -289,6 +303,7 @@ PROJECTS = [
         "category": "other",
         "image": "https://placehold.co/400x250/1ABC9C/FFFFFF?text=Chess-Challenge",
         "title": "Chess-Challenge",
+        "date": "2023",
         "description": "A mini-chess bot for Sebastian Lague's chess bot challenge.",
         "details": "An entry for Sebastian Lague's Tiny Chess Bot Challenge. The goal was to create the strongest chess AI possible within strict code size limitations.",
         "features": ["Minimax algorithm with alpha-beta pruning", "Compact code optimization", "Custom evaluation function", "Competitive performance under constraints"],
@@ -299,6 +314,7 @@ PROJECTS = [
         "category": "internship",
         "image": "https://placehold.co/400x250/F1C40F/FFFFFF?text=aerpawlib",
         "title": "aerpawlib",
+        "date": "2025 - Present",
         "description": "A MAVLink/MAVSDK abstraction layer for experimenters under the AERPAW platform.",
         "details": "aerpawlib provides a high-level Python interface for controlling drones on the AERPAW testbed. It abstracts away the complexity of MAVLink/MAVSDK for easier experiment development.",
         "features": ["High-level drone control API", "MAVLink/MAVSDK abstraction", "Simplified experiment development", "AERPAW platform integration"],
@@ -307,709 +323,318 @@ PROJECTS = [
     },
 ]
 
-
 # ==============================================================================
 # HTML GENERATION FUNCTIONS
 # ==============================================================================
-# These functions build the HTML components of the website.
-# You shouldn't need to edit these unless you want to change the site's layout.
-# ==============================================================================
+
+def project_anchor_id(title):
+    slug = "".join(ch.lower() if ch.isalnum() else "-" for ch in title).strip("-")
+    while "--" in slug:
+        slug = slug.replace("--", "-")
+    return f"project-{slug}"
 
 def generate_timeline_item(item):
-    """Generates a single timeline item for the experience section."""
-    return f"""
-                        <div class="mb-10 ml-8">
-                            <span class="absolute flex items-center justify-center w-8 h-8 bg-blue-100 rounded-full -left-4 ring-8 ring-white dark:ring-gray-800 dark:bg-blue-900">
-                                <ion-icon name="{item['icon']}" class="text-blue-500 dark:text-blue-400"></ion-icon>
-                            </span>
-                            <h3 class="flex items-center mb-1 text-lg font-semibold text-gray-900 dark:text-white">{item['title']}</h3>
-                            <time class="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">{item['date']}</time>
-                            <p class="text-base font-normal text-gray-500 dark:text-gray-400">{item['description']}</p>
-                        </div>"""
-
+    return f'''
+        <div class="relative pl-8 mb-8 border-l border-zinc-200 dark:border-zinc-800 last:mb-0">
+            <div class="absolute w-3 h-3 bg-zinc-200 dark:bg-zinc-800 rounded-full -left-[6.5px] top-1.5 border-2 border-white dark:border-zinc-950"></div>
+            <h3 class="text-base font-medium text-zinc-900 dark:text-zinc-100">{item['title']}</h3>
+            <div class="text-sm text-zinc-500 dark:text-zinc-400 mb-2">{item['date']}</div>
+            <p class="text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed">{item['description']}</p>
+        </div>'''
 
 def generate_skill_bar(skill):
-    """Generates a single skill bar with expandable details."""
     projects_html = ""
     if skill.get("projects"):
-        project_pills = "".join([
-            f'<span class="inline-block bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-xs px-2 py-0.5 rounded border border-blue-100 dark:border-blue-800">{p}</span>'
-            for p in skill['projects']
-        ])
-        projects_html = f'<div class="flex flex-wrap gap-2 mt-2">{project_pills}</div>'
+        project_ids = {
+            project.get("title"): project_anchor_id(project["title"])
+            for project in PROJECTS
+            if project.get("title")
+        }
+        project_pills = "".join(
+            [
+                (
+                    f'<a href="#{project_ids[p]}" class="project-jump inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-zinc-100 mr-1.5 mb-1.5 transition-colors">{p}</a>'
+                    if p in project_ids else
+                    f'<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 mr-1.5 mb-1.5">{p}</span>'
+                )
+                for p in skill['projects']
+            ]
+        )
+        projects_html = f'<div class="mt-2 flex flex-wrap">{project_pills}</div>'
+        
+    icon_html = f'<ion-icon name="{skill["icon"]}" class="text-xl mr-2"></ion-icon>' if skill.get("icon") else ''
+    duration_html = f'<span class="text-xs text-zinc-500 dark:text-zinc-400 ml-2 bg-zinc-100 dark:bg-zinc-800 px-2 py-0.5 rounded">{skill["duration"]}</span>' if skill.get("duration") else ''
 
-    return f"""
-                            <div class="mb-4 skill-item group">
-                                <div class="flex justify-between mb-1 cursor-pointer items-center skill-header p-1 rounded hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-colors">
-                                    <div class="flex items-center">
-                                        <span class="text-base font-medium text-gray-700 dark:text-gray-300">{skill['name']}</span>
-                                        <ion-icon name="chevron-down-outline" class="ml-2 text-gray-400 group-hover:text-blue-500 transition-transform duration-300 skill-chevron"></ion-icon>
-                                    </div>
-                                    <span class="text-sm font-medium text-blue-700 dark:text-blue-400">{skill['level']}</span>
-                                </div>
-                                <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700 overflow-hidden">
-                                    <div class="bg-blue-500 h-2.5 rounded-full skill-bar-fill transition-all duration-1000" style="width: {skill['percentage']}%"></div>
-                                </div>
-                                <div class="skill-details hidden overflow-hidden mt-3 p-3 bg-gray-50 dark:bg-gray-800/50 rounded-lg border border-gray-100 dark:border-gray-700 text-sm">
-                                    <p class="text-gray-600 dark:text-gray-400 leading-relaxed">{skill.get('details', '')}</p>
-                                    {projects_html}
-                                </div>
-                            </div>"""
-
+    return f'''
+        <div class="mb-6 p-4 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl shadow-sm">
+            <div class="flex items-center mb-2">
+                {icon_html}
+                <span class="text-base font-semibold text-zinc-900 dark:text-zinc-100">{skill['name']}</span>
+                {duration_html}
+            </div>
+            <div class="mb-2">
+                <span class="text-xs text-zinc-500 dark:text-zinc-400">{skill['level']}</span>
+            </div>
+            <p class="text-sm text-zinc-600 dark:text-zinc-400 mb-3">{skill.get('details', '')}</p>
+            {projects_html}
+        </div>'''
 
 def generate_project_card(project):
-    """
-    Generates a single project card with advanced hover effects.
-
-    Expects a project dictionary with keys: 'category', 'image',
-    'hover_image', 'title', 'description', 'skills', and 'link'.
-    """
-    # Gracefully handle projects that may not have a hover image
-    # It will use the main image as a fallback to prevent errors
-    hover_image_src = project.get('hover_image', project.get('image'))
-
-    # Encode project data for JavaScript
-    project_json = json.dumps({
-        "title": project.get("title"),
-        "category": project.get("category", "other").replace("-", " ").title(),
-        "description": project.get("description"),
-        "details": project.get("details"),
-        "features": project.get("features", []),
-        "image": project.get("image"),
-        "link": project.get("link"),
-        "skills": project.get("skills", [])
-    })
-    # Escape JSON for safe embedding in an HTML attribute.
-    project_json_attr = html.escape(project_json, quote=True)
-
-    # Generate HTML for skill pills if they exist
+    project_id = project_anchor_id(project.get("title", "project"))
     skills_html = ""
     if project.get("skills"):
         pills_html = "".join([
-            f'<span class="inline-block bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full">{skill}</span>'
+            f'<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-zinc-100 dark:bg-zinc-800/60 text-zinc-600 dark:text-zinc-400 mr-1.5 mb-1.5">{skill}</span>'
             for skill in project['skills']
         ])
-        skills_html = f'<div class="flex flex-wrap mt-4">{pills_html}</div>'
+        skills_html = f'<div class="flex flex-wrap mt-3">{pills_html}</div>'
 
-    # Generate HTML for the link if it exists
     link_html = ""
     if project.get("link"):
-        link_html = f'<a href="{project["link"]}" class="text-blue-500 font-semibold hover:underline mt-4 inline-block">View Project &rarr;</a>'
+        link_html = f'<a href="{project["link"]}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-zinc-900 dark:text-zinc-100 hover:text-blue-600 dark:hover:text-blue-400 transition-colors mt-3">View Project <span class="ml-1 text-xs">↗</span></a>'
+        
+    image_html = ""
+    if project.get("image"):
+        image_html = f'<img src="{project["image"]}" alt="{project.get("title")}" loading="lazy" decoding="async" class="w-full h-48 object-cover border-b border-zinc-200 dark:border-zinc-800">'
 
-    # Return the complete card HTML using an f-string
-    return f"""
-<div class="project-card {project.get('category', 'other')} group relative hover:z-10" data-project="{project_json_attr}">
-    <div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg overflow-hidden transition-all duration-300 shadow-md hover:shadow-xl flex flex-col h-full">
+    date_html = ""
+    if project.get("date"):
+        date_html = f'<span class="text-xs font-medium text-zinc-500 dark:text-zinc-400 mb-2 block flex items-center"><ion-icon name="time-outline" class="mr-1"></ion-icon>{project["date"]}</span>'
 
-        <div class="relative h-48 transition-all duration-300 overflow-hidden bg-gray-100 dark:bg-gray-800">
-            <img src="{project.get('image')}" 
-                 class="absolute w-full h-full object-cover transition-transform duration-300 group-hover:scale-105 flex items-center justify-center text-gray-500 dark:text-gray-400" 
-                 alt="{project.get('title')} Project">
-
-            <img src="{hover_image_src}" 
-                 class="absolute w-full h-full object-cover opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:scale-105 flex items-center justify-center text-gray-500 dark:text-gray-400" 
-                 alt="{project.get('title')} Preview">
-        </div>
-
-        <div class="p-6 flex flex-col flex-grow">
-            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">{project.get('title')}</h3>
-            <p class="text-sm text-gray-600 dark:text-gray-400 mb-4 flex-grow">{project.get('description')}</p>
-            <div class="mt-auto">
-                {skills_html}
-                {link_html}
+    return f'''
+        <div id="{project_id}" class="project-card group relative flex flex-col bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl hover:border-zinc-300 dark:hover:border-zinc-700 transition-colors shadow-sm overflow-hidden" data-category="{project.get('category', 'other')}">
+            {image_html}
+            <div class="p-5 flex flex-col flex-grow">
+                <h3 class="text-base font-semibold text-zinc-900 dark:text-zinc-100 mb-1">{project.get('title')}</h3>
+                {date_html}
+                <p class="text-sm text-zinc-600 dark:text-zinc-400 mb-4 flex-grow leading-relaxed">{project.get('description')}</p>
+                <div>
+                    {skills_html}
+                    {link_html}
+                </div>
             </div>
-        </div>
-    </div>
-</div>
-"""
+        </div>'''
 
 def create_html_structure():
-    """Builds the final HTML file content by assembling all components."""
-
-    # Generate dynamic components
     timeline_items_html = "".join([generate_timeline_item(item) for item in EXPERIENCES])
-
     programming_skills_html = "".join([generate_skill_bar(skill) for skill in SKILLS['Programming Languages']])
     tech_skills_html = "".join([generate_skill_bar(skill) for skill in SKILLS['Technologies & Frameworks']])
-
     project_cards_html = "".join([generate_project_card(project) for project in PROJECTS])
+    about_me_html = "".join([f"<p class='mb-4 last:mb-0'>{paragraph}</p>" for paragraph in ABOUT_ME])
 
-    contact_details_html = "".join([f"""
-                    <li class="flex items-center">
-                        <div class="w-10 h-10 rounded-lg bg-blue-100 dark:bg-gray-700 flex items-center justify-center mr-4">
-                            <ion-icon name="{detail['icon']}" class="text-blue-500 dark:text-blue-400 text-xl"></ion-icon>
-                        </div>
-                        <div>
-                            <p class="text-sm text-gray-500 dark:text-gray-400">{detail['label']}</p>
-                            <p class="font-medium text-gray-800 dark:text-gray-200">{detail['value']}</p>
-                        </div>
-                    </li>""" for detail in PERSONAL_INFO['contact_details']])
-
-    about_me_html = "".join([f"<p>{paragraph}</p>" for paragraph in ABOUT_ME])
-
-    # Assemble the final HTML
-    html_content = f"""
-<!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+    return f'''<!DOCTYPE html>
+<html lang="en" class="antialiased scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{PERSONAL_INFO['name']} - Developer Portfolio</title>
-    <meta name="description" content="Julian Reder (@quantumbagel)'s official portfolio website.">
-    <meta name="author" content="Julian Reder">
-    <meta name="keywords" content="Julian Reder, portfolio, developer, computer engineering, programmer, NCSU, North Carolina State University, Python, C++, Docker, Tailwind CSS, projects">
-
-    <meta property="og:title" content="Julian Reder - Developer Portfolio">
-    <meta property="og:description" content="Computer Engineering student at NCSU">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://quantumbagel.github.io/"> <meta property="og:image" content="https://quantumbagel.github.io/social-preview.png"> <meta property="og:site_name" content="Julian Reder's Portfolio">
-
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Julian Reder - Developer Portfolio">
-    <meta name="twitter:description" content="Computer Engineering student at NCSU">
-    <meta name="twitter:image" content="https://quantumbagel.github.io"> 
-    <meta name="twitter:creator" content="@quantumbagel">
-
+    <title>{PERSONAL_INFO['name']} - {PERSONAL_INFO['title']}</title>
+    <meta name="description" content="Portfolio of {PERSONAL_INFO['name']}, {PERSONAL_INFO['title']}.">
     <link rel="icon" type="image/png" href="pfp.webp">
-
-    <link rel="apple-touch-icon" href="pfp.webp">
     <script src="tailwind.js"></script>
     <link href="font.css" rel="stylesheet">
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js" defer></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js" defer></script>
-    <style>
-        html, body {{
-            font-family: 'Inter', sans-serif;
-            overflow-x: hidden;
-        }}
-        html {{
-            scroll-behavior: smooth;
-        }}
-        .sidebar {{
-            -ms-overflow-style: none;
-            scrollbar-width: none;  
-        }}
-        .sidebar::-webkit-scrollbar {{ 
-            display: none; 
-        }}
-        .active-nav {{
-            color: #000000 !important;
-            background-color: #EFF6FF;
-        }}
-        .active-nav:hover {{
-            background-color: #DBEAFE !important;
-        }}
-        .dark .active-nav {{
-            color: #FFFFFF !important;
-            background-color: #1E40AF;
-        }}
-        .dark .active-nav:hover {{
-            background-color: #1D4ED8 !important;
-        }}
-        /* Project Modal Styles */
-        .project-modal {{
-            position: fixed;
-            inset: 0;
-            background-color: rgba(0, 0, 0, 0.7);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 100;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-            backdrop-filter: blur(4px);
-        }}
-        .project-modal.active {{
-            opacity: 1;
-            visibility: visible;
-        }}
-        .project-modal-content {{
-            background: #f9fafb;
-            border-radius: 1rem;
-            max-width: 600px;
-            width: 90%;
-            max-height: 85vh;
-            overflow-y: auto;
-            transform: scale(0.9) translateY(20px);
-            transition: transform 0.3s ease;
-        }}
-        .project-modal.active .project-modal-content {{
-            transform: scale(1) translateY(0);
-        }}
-        .dark .project-modal-content {{
-            background: #1f2937;
-        }}
-        /* Fix for project card hover overflow */
-        #project-grid {{
-            overflow: visible;
-            padding: 1rem;
-            margin: -1rem;
-        }}
-        .project-card {{
-            transition: transform 0.3s ease;
-        }}
-        .project-card:hover {{
-            transform: translateY(-4px);
-        }}
-        /* Click indicator on project cards */
-        .project-card .click-indicator {{
-            position: absolute;
-            top: 0.75rem;
-            right: 0.75rem;
-            background: rgba(59, 130, 246, 0.9);
-            color: white;
-            width: 2rem;
-            height: 2rem;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            z-index: 10;
-        }}
-        .project-card:hover .click-indicator {{
-            opacity: 1;
-        }}
-    </style>
 </head>
-<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
-    <div class="flex flex-col lg:flex-row min-h-screen">
-        <!-- Sidebar -->
-        <aside class="w-full lg:w-1/4 lg:max-w-sm bg-white dark:bg-gray-800 lg:fixed lg:h-full lg:overflow-y-auto sidebar border-r border-gray-200 dark:border-gray-700 p-8 shadow-lg lg:shadow-none">
-            <div class="flex flex-col items-center text-center">
-                <div class="relative">
-                    <img class="w-32 h-32 rounded-full mx-auto mb-4 object-cover shadow-md" src="{PERSONAL_INFO['profile_image']}" alt="{PERSONAL_INFO['name']}">
-                </div>
-                <h1 class="text-2xl font-bold text-gray-900 dark:text-white">{PERSONAL_INFO['name']}</h1>
-                <p class="text-blue-500 dark:text-blue-400 mt-1">{PERSONAL_INFO['title']}</p>
-
-                <div class="flex justify-center space-x-4 mt-6">
-                    <a href="{PERSONAL_INFO['social_links']['github']}"  aria-label="GitHub" class="text-gray-500 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 transition-colors duration-300">
-                        <ion-icon name="logo-github" class="text-3xl"></ion-icon>
-                    </a>
-                    <a href="{PERSONAL_INFO['social_links']['linkedin']}" aria-label="LinkedIn" class="text-gray-500 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 transition-colors duration-300">
-                        <ion-icon name="logo-linkedin" class="text-3xl"></ion-icon>
-                    </a>
-                    <a href="{PERSONAL_INFO['social_links']['discord']}" aria-label="Discord" class="text-gray-500 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 transition-colors duration-300">
-                        <ion-icon name="logo-discord" class="text-3xl"></ion-icon>
-                    </a>
-                    <a href="{PERSONAL_INFO['social_links']['resume']}" aria-label="Resume" class="text-gray-500 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 transition-colors duration-300">
-                        <ion-icon name="document" class="text-3xl"></ion-icon>
-                    </a>
+<body class="bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 min-h-screen selection:bg-zinc-200 dark:selection:bg-zinc-800 selection:text-zinc-900 dark:selection:text-zinc-100">
+    <div class="max-w-3xl mx-auto px-6 py-12 md:py-20">
+        
+        <!-- Header -->
+        <header class="mb-16">
+            <div class="flex items-center gap-6 mb-6">
+                <img src="{PERSONAL_INFO['profile_image']}" alt="{PERSONAL_INFO['name']}" class="w-16 h-16 rounded-full object-cover border border-zinc-200 dark:border-zinc-800">
+                <div>
+                    <h1 class="text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">{PERSONAL_INFO['name']}</h1>
+                    <p class="text-zinc-500 dark:text-zinc-400 mt-0.5">{PERSONAL_INFO['title']}</p>
                 </div>
             </div>
-
-            <div class="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
-                <ul class="space-y-4">
-                    {contact_details_html}
-                </ul>
-            </div>
-             <div class="mt-8 text-center">
-                <a href="#contact" class="inline-block w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg shadow-md transition-all duration-300 transform hover:-translate-y-1">
-                    Contact Me
+            
+            <div class="flex gap-4">
+                <a href="{PERSONAL_INFO['social_links']['github']}" target="_blank" rel="noopener noreferrer" class="text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors" aria-label="GitHub">
+                    <ion-icon name="logo-github" class="text-xl"></ion-icon>
+                </a>
+                <a href="{PERSONAL_INFO['social_links']['linkedin']}" target="_blank" rel="noopener noreferrer" class="text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors" aria-label="LinkedIn">
+                    <ion-icon name="logo-linkedin" class="text-xl"></ion-icon>
+                </a>
+                <a href="{PERSONAL_INFO['social_links']['resume']}" target="_blank" rel="noopener noreferrer" class="text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors" aria-label="Resume">
+                    <ion-icon name="document-text-outline" class="text-xl"></ion-icon>
                 </a>
             </div>
-        </aside>
+        </header>
 
-        <!-- Main Content -->
-        <main class="w-full lg:ml-[24rem] p-4 sm:p-8 lg:p-12 lg:pt-24">
-            <!-- Navigation -->
-            <nav class="bg-white dark:bg-gray-800/80 backdrop-blur-sm p-4 rounded-xl shadow-lg fixed top-4 left-4 right-4 lg:left-[25rem] lg:right-8 z-50 hidden lg:block">
-                 <ul class="flex justify-center items-center space-x-2">
-                    <li><a href="#about" class="nav-link px-4 py-2 rounded-md font-medium text-gray-600 dark:text-gray-300 hover:text-blue-500 hover:bg-blue-50 dark:hover:bg-gray-700 transition-colors duration-300">About</a></li>
-                    <li><a href="#experience" class="nav-link px-4 py-2 rounded-md font-medium text-gray-600 dark:text-gray-300 hover:text-blue-500 hover:bg-blue-50 dark:hover:bg-gray-700 transition-colors duration-300">Experience</a></li>
-                    <li><a href="#skills" class="nav-link px-4 py-2 rounded-md font-medium text-gray-600 dark:text-gray-300 hover:text-blue-500 hover:bg-blue-50 dark:hover:bg-gray-700 transition-colors duration-300">Skills</a></li>
-                    <li><a href="#projects" class="nav-link px-4 py-2 rounded-md font-medium text-gray-600 dark:text-gray-300 hover:text-blue-500 hover:bg-blue-50 dark:hover:bg-gray-700 transition-colors duration-300">Projects</a></li>
-                    <li><a href="#contact" class="nav-link px-4 py-2 rounded-md font-medium text-gray-600 dark:text-gray-300 hover:text-blue-500 hover:bg-blue-50 dark:hover:bg-gray-700 transition-colors duration-300">Contact</a></li>
-                </ul>
-            </nav>
+        <main class="space-y-20">
+            <!-- About -->
+            <section id="about">
+                <h2 class="text-lg font-semibold tracking-tight text-zinc-900 dark:text-zinc-100 mb-4">About</h2>
+                <div class="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                    {about_me_html}
+                </div>
+            </section>
 
-            <!-- About Section -->
-            <section id="about" class="mb-16 scroll-mt-24">
-                <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg">
-                    <h2 class="text-3xl font-bold mb-6 text-gray-900 dark:text-white flex items-center">
-                        <ion-icon name="person-outline" class="mr-3 text-blue-500"></ion-icon>
-                        About Me
-                    </h2>
-                    <div class="space-y-4 text-gray-600 dark:text-gray-300 leading-relaxed">
-                        {about_me_html}
+            <!-- Experience -->
+            <section id="experience">
+                <h2 class="text-lg font-semibold tracking-tight text-zinc-900 dark:text-zinc-100 mb-6">Experience</h2>
+                <div>
+                    {timeline_items_html}
+                </div>
+            </section>
+
+            <!-- Projects -->
+            <section id="projects">
+                <h2 class="text-lg font-semibold tracking-tight text-zinc-900 dark:text-zinc-100 mb-6">Projects</h2>
+                
+                <!-- Project Filters -->
+                <div class="flex flex-wrap gap-2 mb-6" id="project-filters">
+                    <button type="button" aria-pressed="true" class="px-3 py-1 text-sm rounded-full bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900 filter-btn active" data-filter="all">All</button>
+                    <button type="button" aria-pressed="false" class="px-3 py-1 text-sm rounded-full bg-zinc-200 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300 hover:bg-zinc-300 dark:hover:bg-zinc-700 filter-btn transition-colors" data-filter="internship">Internship</button>
+                    <button type="button" aria-pressed="false" class="px-3 py-1 text-sm rounded-full bg-zinc-200 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300 hover:bg-zinc-300 dark:hover:bg-zinc-700 filter-btn transition-colors" data-filter="discord-bots">Discord Bots</button>
+                    <button type="button" aria-pressed="false" class="px-3 py-1 text-sm rounded-full bg-zinc-200 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300 hover:bg-zinc-300 dark:hover:bg-zinc-700 filter-btn transition-colors" data-filter="other">Other</button>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="project-grid">
+                    {project_cards_html}
+                </div>
+            </section>
+
+            <!-- Skills -->
+            <section id="skills">
+                <h2 class="text-lg font-semibold tracking-tight text-zinc-900 dark:text-zinc-100 mb-6">Skills</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-sm font-medium text-zinc-900 dark:text-zinc-100 mb-4">Languages</h3>
+                        {programming_skills_html}
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-medium text-zinc-900 dark:text-zinc-100 mb-4">Technologies</h3>
+                        {tech_skills_html}
                     </div>
                 </div>
             </section>
 
-            <!-- Experience Section -->
-            <section id="experience" class="mb-16 scroll-mt-24">
-                <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg">
-                    <h2 class="text-3xl font-bold mb-8 text-gray-900 dark:text-white flex items-center">
-                        <ion-icon name="briefcase-outline" class="mr-3 text-blue-500"></ion-icon>
-                        Experience & Education
-                    </h2>
-                    <div class="relative border-l-2 border-blue-200 dark:border-gray-700 ml-4">
-                        {timeline_items_html}
-                    </div>
-                </div>
-            </section>
-
-            <!-- Skills Section -->
-            <section id="skills" class="mb-16 scroll-mt-24">
-                <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg">
-                    <h2 class="text-3xl font-bold mb-8 text-gray-900 dark:text-white flex items-center">
-                        <ion-icon name="bar-chart-outline" class="mr-3 text-blue-500"></ion-icon>
-                        My Skills
-                    </h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Contact -->
+            <section id="contact">
+                <h2 class="text-lg font-semibold tracking-tight text-zinc-900 dark:text-zinc-100 mb-6">Contact</h2>
+                <div class="bg-white dark:bg-zinc-900 p-6 rounded-xl border border-zinc-200 dark:border-zinc-800 shadow-sm">
+                    <form action="https://formspree.io/f/moqgwdop" method="POST" class="space-y-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label for="name" class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1">Name</label>
+                                <input type="text" id="name" name="name" required class="w-full px-4 py-2 bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all text-zinc-900 dark:text-zinc-100">
+                            </div>
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1">Email</label>
+                                <input type="email" id="email" name="email" required class="w-full px-4 py-2 bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all text-zinc-900 dark:text-zinc-100">
+                            </div>
+                        </div>
                         <div>
-                            <h3 class="text-lg font-semibold mb-4">Programming Languages</h3>
-                            {programming_skills_html}
+                            <label for="message" class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1">Message</label>
+                            <textarea id="message" name="message" rows="4" required class="w-full px-4 py-2 bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all text-zinc-900 dark:text-zinc-100 resize-none"></textarea>
                         </div>
-                         <div>
-                            <h3 class="text-lg font-semibold mb-4">Technologies & Frameworks</h3>
-                            {tech_skills_html}
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Projects Section -->
-            <section id="projects" class="mb-16 scroll-mt-24">
-                 <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg">
-                    <h2 class="text-3xl font-bold mb-8 text-gray-900 dark:text-white flex items-center">
-                        <ion-icon name="folder-open-outline" class="mr-3 text-blue-500"></ion-icon>
-                        Projects
-                    </h2>
-                    <div class="flex flex-wrap justify-center gap-2 mb-8" id="filter-buttons">
-                        <button class="filter-btn active-filter-btn bg-blue-500 text-white px-4 py-2 rounded-full text-sm font-medium" data-filter="all">All</button>
-                        <button class="filter-btn bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 px-4 py-2 rounded-full text-sm font-medium" data-filter="discord-bots">Discord Bots</button>
-                        <button class="filter-btn bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 px-4 py-2 rounded-full text-sm font-medium" data-filter="internship">Internship</button>
-                        <button class="filter-btn bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 px-4 py-2 rounded-full text-sm font-medium" data-filter="other">Other</button>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="project-grid">
-                        {project_cards_html}
-                    </div>
-                </div>
-            </section>
-
-            <!-- Contact Section -->
-            <section id="contact" class="scroll-mt-24">
-                <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg">
-                    <h2 class="text-3xl font-bold mb-6 text-gray-900 dark:text-white flex items-center">
-                        <ion-icon name="mail-outline" class="mr-3 text-blue-500"></ion-icon>
-                        Contact Me
-                    </h2>
-                    <p class="mb-8 text-gray-600 dark:text-gray-300">
-                        If you have a project or position you think I might be interested in, feel free to reach out using this form. :3
-                    </p>
-                    <form action="https://formspree.io/f/moqgwdop" method="POST" class="space-y-6">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <input type="text" name="fullname" placeholder="Your Name" required class="w-full px-4 py-3 bg-gray-100 dark:bg-gray-700 border-2 border-transparent focus:border-blue-500 rounded-lg outline-none transition-all">
-                            <input type="email" name="email" placeholder="Your Email Address" required class="w-full px-4 py-3 bg-gray-100 dark:bg-gray-700 border-2 border-transparent focus:border-blue-500 rounded-lg outline-none transition-all">
-                        </div>
-                        <textarea name="message" placeholder="Your Message" rows="5" required class="w-full px-4 py-3 bg-gray-100 dark:bg-gray-700 border-2 border-transparent focus:border-blue-500 rounded-lg outline-none transition-all"></textarea>
-                        <button type="submit" class="w-full md:w-auto bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-8 rounded-lg shadow-lg transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center">
-                             <ion-icon name="paper-plane-outline" class="mr-2"></ion-icon> Send Message
+                        <button type="submit" class="inline-flex items-center px-6 py-2.5 bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 font-medium rounded-lg hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors focus:ring-2 focus:ring-offset-2 focus:ring-zinc-900 dark:focus:ring-zinc-100">
+                            Send Message
+                            <ion-icon name="paper-plane-outline" class="ml-2 text-lg"></ion-icon>
                         </button>
                     </form>
                 </div>
             </section>
         </main>
+        
+        <!-- Footer -->
+        <footer class="mt-20 pt-8 border-t border-zinc-200 dark:border-zinc-800 text-center text-sm text-zinc-500 dark:text-zinc-400">
+            <p>Made with <3 by @quantumbagel</p>
+        </footer>
+
     </div>
 
-    <!-- Project Modal -->
-    <div id="project-modal" class="project-modal">
-        <div class="project-modal-content shadow-2xl">
-            <button id="modal-close" class="sticky top-4 float-right mr-4 mt-4 w-8 h-8 bg-white dark:bg-gray-800 rounded-full flex items-center justify-center shadow-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors z-10">
-                <ion-icon name="close-outline" class="text-xl text-gray-700 dark:text-gray-300"></ion-icon>
-            </button>
-            <div id="modal-image" class="h-48 bg-blue-100 dark:bg-gray-700 rounded-t-xl -mt-12"></div>
-            <div class="p-6 bg-white dark:bg-gray-800 rounded-b-xl">
-                <h3 id="modal-title" class="text-2xl font-bold text-gray-900 dark:text-white mb-2"></h3>
-                <p id="modal-category" class="text-sm text-blue-500 dark:text-blue-400 mb-4"></p>
-                <p id="modal-description" class="text-gray-600 dark:text-gray-300 mb-4"></p>
-                <div id="modal-details" class="text-gray-600 dark:text-gray-400 text-sm mb-4 space-y-2"></div>
-                <div id="modal-tags" class="flex flex-wrap gap-2 mb-6"></div>
-                <a id="modal-link" href="#" target="_blank" class="inline-flex items-center bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors">
-                    <ion-icon name="logo-github" class="mr-2"></ion-icon>
-                    View on GitHub
-                </a>
-            </div>
-        </div>
-    </div>
-
+    <!-- Filter Script -->
     <script>
-        document.addEventListener('DOMContentLoaded', () => {{
-            // Modal elements
-            const modal = document.getElementById('project-modal');
-            const modalClose = document.getElementById('modal-close');
-            const modalImage = document.getElementById('modal-image');
-            const modalTitle = document.getElementById('modal-title');
-            const modalCategory = document.getElementById('modal-category');
-            const modalDescription = document.getElementById('modal-description');
-            const modalDetails = document.getElementById('modal-details');
-            const modalTags = document.getElementById('modal-tags');
-            const modalLink = document.getElementById('modal-link');
+    document.addEventListener('DOMContentLoaded', () => {{
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const projectCards = document.querySelectorAll('.project-card');
+        const projectJumpLinks = document.querySelectorAll('.project-jump');
+        const activeClasses = ['bg-zinc-900', 'text-white', 'dark:bg-zinc-100', 'dark:text-zinc-900'];
+        const inactiveClasses = ['bg-zinc-200', 'text-zinc-700', 'dark:bg-zinc-800', 'dark:text-zinc-300'];
+        const allFilterBtn = document.querySelector('.filter-btn[data-filter="all"]');
 
-            // Open modal function
-            function openModal(data) {{
-                if (!data) return;
-
-                modalImage.style.backgroundImage = `url('${{data.image}}')`;
-                modalImage.style.backgroundSize = 'cover';
-                modalImage.style.backgroundPosition = 'center';
-                modalTitle.textContent = data.title;
-                modalCategory.textContent = data.category;
-                modalDescription.textContent = data.details || data.description;
-
-                // Add features list
-                if (data.features && data.features.length > 0) {{
-                    modalDetails.innerHTML = '<p class="font-semibold text-gray-700 dark:text-gray-300 mb-2">Key Features:</p><ul class="list-disc list-inside space-y-1">' +
-                        data.features.map(f => `<li>${{f}}</li>`).join('') + '</ul>';
-                }} else {{
-                    modalDetails.innerHTML = '';
-                }}
-
-                // Add tags
-                if (data.skills && data.skills.length > 0) {{
-                    modalTags.innerHTML = data.skills.map(tag =>
-                        `<span class="inline-block bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 text-xs font-medium px-3 py-1 rounded-full">${{tag}}</span>`
-                    ).join('');
-                }} else {{
-                    modalTags.innerHTML = '';
-                }}
-
-                // Set link
-                if (data.link) {{
-                    modalLink.href = data.link;
-                    modalLink.style.display = 'inline-flex';
-                }} else {{
-                    modalLink.style.display = 'none';
-                }}
-
-                modal.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            }}
-
-            // Close modal function
-            function closeModal() {{
-                modal.classList.remove('active');
-                document.body.style.overflow = '';
-            }}
-
-            // Add click handlers to project cards
-            document.querySelectorAll('.project-card').forEach(card => {{
-                card.style.cursor = 'pointer';
-
-                // Get project data from the data attribute
-                const projectDataStr = card.getAttribute('data-project');
-                if (projectDataStr) {{
-                    let projectData;
-                    try {{
-                        projectData = JSON.parse(projectDataStr);
-                    }} catch (err) {{
-                        console.error('Invalid project data for card:', card, err);
-                        return;
-                    }}
-
-                    // Add click indicator icon
-                    const indicator = document.createElement('div');
-                    indicator.className = 'click-indicator';
-                    indicator.innerHTML = '<ion-icon name="expand-outline"></ion-icon>';
-                    const cardInner = card.querySelector('.bg-gray-50');
-                    if (cardInner) {{
-                        cardInner.style.position = 'relative';
-                        cardInner.appendChild(indicator);
-                    }}
-
-                    card.addEventListener('click', (e) => {{
-                        // Don't open modal if clicking the link
-                        if (e.target.closest('a')) return;
-                        openModal(projectData);
-                    }});
-                }}
+        const setActiveFilter = (activeBtn) => {{
+            filterBtns.forEach(b => {{
+                b.classList.remove(...activeClasses);
+                b.classList.add(...inactiveClasses);
+                b.setAttribute('aria-pressed', 'false');
             }});
+            activeBtn.classList.remove(...inactiveClasses);
+            activeBtn.classList.add(...activeClasses);
+            activeBtn.setAttribute('aria-pressed', 'true');
+        }};
 
-            // Close modal events
-            modalClose.addEventListener('click', closeModal);
-            modal.addEventListener('click', (e) => {{
-                if (e.target === modal) closeModal();
+        const applyFilter = (filterValue) => {{
+            projectCards.forEach(card => {{
+                const shouldShow = filterValue === 'all' || card.getAttribute('data-category') === filterValue;
+                card.classList.toggle('hidden', !shouldShow);
             }});
-            document.addEventListener('keydown', (e) => {{
-                if (e.key === 'Escape') closeModal();
+        }};
+
+        filterBtns.forEach(btn => {{
+            btn.addEventListener('click', () => {{
+                setActiveFilter(btn);
+                applyFilter(btn.getAttribute('data-filter'));
             }});
-
-            // Skill expansion logic
-            document.querySelectorAll('.skill-header').forEach(header => {{
-                header.addEventListener('click', () => {{
-                    const skillItem = header.closest('.skill-item');
-                    const details = skillItem.querySelector('.skill-details');
-                    const chevron = skillItem.querySelector('.skill-chevron');
-                    
-                    const isHidden = details.classList.contains('hidden');
-                    
-                    // Close all other skill details in the same section for an accordion effect
-                    const section = skillItem.parentElement;
-                    section.querySelectorAll('.skill-details').forEach(otherDetails => {{
-                        if (otherDetails !== details) {{
-                            otherDetails.classList.add('hidden');
-                            const otherIcon = otherDetails.parentElement.querySelector('.skill-chevron');
-                            if (otherIcon) otherIcon.style.transform = 'rotate(0deg)';
-                        }}
-                    }});
-
-                    if (isHidden) {{
-                        details.classList.remove('hidden');
-                        chevron.style.transform = 'rotate(180deg)';
-                    }} else {{
-                        details.classList.add('hidden');
-                        chevron.style.transform = 'rotate(0deg)';
-                    }}
-                }});
-            }});
-
-            // Project filtering
-            const filterButtons = document.querySelectorAll('.filter-btn');
-            const projectCards = document.querySelectorAll('.project-card');
-
-            filterButtons.forEach(button => {{
-                button.addEventListener('click', () => {{
-                    const filter = button.dataset.filter;
-                    filterButtons.forEach(btn => {{
-                        btn.classList.remove('active-filter-btn', 'bg-blue-500', 'text-white');
-                        btn.classList.add('bg-gray-200', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-gray-200');
-                    }});
-                    button.classList.add('active-filter-btn', 'bg-blue-500', 'text-white');
-                    button.classList.remove('bg-gray-200', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-gray-200');
-                    projectCards.forEach(card => {{
-                        if (filter === 'all' || card.classList.contains(filter)) {{
-                            card.style.display = 'block';
-                        }} else {{
-                            card.style.display = 'none';
-                        }}
-                    }});
-                }});
-            }});
-
-            // --- Navigation Highlighting ---
-            const sections = document.querySelectorAll('section');
-            const navLinks = document.querySelectorAll('.nav-link');
-
-            const observer = new IntersectionObserver((entries) => {{
-                entries.forEach(entry => {{
-                    if (entry.isIntersecting) {{
-                        const id = entry.target.getAttribute('id');
-                        navLinks.forEach(link => link.classList.remove('active-nav'));
-                        const activeLink = document.querySelector(`.nav-link[href="#${{id}}"]`);
-                        if (activeLink) {{
-                            activeLink.classList.add('active-nav');
-                        }}
-                    }}
-                }});
-            }}, {{
-                rootMargin: '-40% 0px -40% 0px'
-            }});
-
-            sections.forEach(section => observer.observe(section));
-
-            const handleEdgeCases = () => {{
-                const scrollPosition = window.scrollY;
-                const pageHeight = document.body.offsetHeight;
-                const viewportHeight = window.innerHeight;
-
-                if (scrollPosition < 50) {{
-                    navLinks.forEach(link => link.classList.remove('active-nav'));
-                    document.querySelector('.nav-link[href="#about"]')?.classList.add('active-nav');
-                }}
-                else if (pageHeight - (scrollPosition + viewportHeight) < 50) {{
-                    navLinks.forEach(link => link.classList.remove('active-nav'));
-                    document.querySelector('.nav-link[href="#contact"]')?.classList.add('active-nav');
-                }}
-            }};
-
-            window.addEventListener('scroll', handleEdgeCases);
-            handleEdgeCases();
         }});
+
+        projectJumpLinks.forEach(link => {{
+            link.addEventListener('click', () => {{
+                if (allFilterBtn) {{
+                    setActiveFilter(allFilterBtn);
+                    applyFilter('all');
+                }}
+            }});
+        }});
+    }});
     </script>
 </body>
-</html>
-"""
-    return html_content
-
+</html>'''
 
 def generate_redirect_page(url, title="Redirecting...", description="View my resume", image="https://quantumbagel.github.io/pfp.webp"):
-    """Generates a minimal HTML redirect page with social preview tags."""
-    return f"""<!DOCTYPE html>
+    return f'''<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
-    <title>{title}</title>
-    <meta name="description" content="{description}">
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://quantumbagel.github.io/resume">
-    <meta property="og:title" content="{title}">
-    <meta property="og:description" content="{description}">
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://quantumbagel.github.io/resume">
-    <meta property="twitter:title" content="{title}">
-    <meta property="twitter:description" content="{description}">
-
-    <meta http-equiv="refresh" content="0; url={url}">
-    <link rel="canonical" href="{url}">
-    <script type="text/javascript">
-        window.location.href = "{url}";
-    </script>
+    <title>{{title}}</title>
+    <meta name="description" content="{{description}}">
+    <meta http-equiv="refresh" content="0; url={{url}}">
+    <link rel="canonical" href="{{url}}">
+    <script>window.location.href = "{{url}}";</script>
 </head>
 <body>
-    If you are not redirected, <a href="{url}">click here</a>.
+    If you are not redirected, <a href="{{url}}">click here</a>.
 </body>
-</html>
-"""
-
+</html>'''
 
 def main():
-    """Main function to generate and save the HTML file."""
-    # Ensure the output directory exists
-
-
-    # Generate the HTML content
     html_output = create_html_structure()
 
-    minified = htmlmin.minify(html_output, remove_empty_space=True)
+    try:
+        import htmlmin
+        minified = htmlmin.minify(html_output, remove_empty_space=True)
+    except Exception:
+        minified = html_output
 
-    # Write the content to the portfolio.html file
-    file_path = os.path.join("index.html")
-    with open(file_path, "w", encoding="utf-8") as f:
+    with open("index.html", "w", encoding="utf-8") as f:
         f.write(minified)
+        
+    print("Successfully generated clean portfolio website!")
 
-    print(f"Successfully generated portfolio website!")
-    print(f"File saved to: {os.path.abspath(file_path)}")
-
-    # Handle resume redirect
     resume_url = PERSONAL_INFO.get("social_links", {}).get("resume")
     if resume_url:
-        resume_dir = "resume"
-        if not os.path.exists(resume_dir):
-            os.makedirs(resume_dir)
-
+        if not os.path.exists("resume"):
+            os.makedirs("resume")
         redirect_html = generate_redirect_page(
             url=resume_url,
-            title=f"{PERSONAL_INFO['name']} - Resume",
-            description=f"View the resume of {PERSONAL_INFO['name']}, {PERSONAL_INFO['title']}.",
+            title=f"{{PERSONAL_INFO['name']}} - Resume",
+            description=f"View the resume of {{PERSONAL_INFO['name']}}.",
             image="https://quantumbagel.github.io/pfp.webp"
         )
-        redirect_file_path = os.path.join(resume_dir, "index.html")
-        with open(redirect_file_path, "w", encoding="utf-8") as f:
+        with open(os.path.join("resume", "index.html"), "w", encoding="utf-8") as f:
             f.write(redirect_html)
-
-        print(f"Successfully generated resume redirect!")
-        print(f"File saved to: {os.path.abspath(redirect_file_path)}")
-
 
 if __name__ == "__main__":
     main()
-
