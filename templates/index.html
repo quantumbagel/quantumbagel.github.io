@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="{site.lang}" class="antialiased scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{meta.page_title}</title>
+    <meta name="description" content="{meta.description}">
+    <link rel="icon" type="image/png" href="{meta.favicon}">
+    <script src="tailwind.js"></script>
+    <link href="font.css" rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js" defer></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js" defer></script>
+</head>
+<body class="bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 min-h-screen selection:bg-zinc-700 dark:selection:bg-zinc-300 selection:text-white dark:selection:text-zinc-950 relative overflow-x-hidden">
+    <canvas id="matrix-bg" class="fixed inset-0 pointer-events-none z-0 opacity-20" aria-hidden="true"></canvas>
+    <div class="relative z-10 max-w-3xl mx-auto px-6 py-12 md:py-20">
+        <header class="mb-16">
+            <div class="flex items-center gap-6 mb-6">
+                <img src="{user.profile_image}" alt="{user.name}" class="w-16 h-16 rounded-full object-cover border border-zinc-200 dark:border-zinc-800">
+                <div>
+                    <h1 class="text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">{user.name}</h1>
+                    <p id="tagline" class="text-zinc-500 dark:text-zinc-400 mt-0.5 h-6 overflow-hidden relative">{content.first_tagline}</p>
+                </div>
+            </div>
+
+            <div class="flex gap-5 text-sm font-mono">
+                <a href="{user.social.github}" target="_blank" rel="noopener noreferrer" class="text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors flex items-center gap-1" aria-label="GitHub">
+                    GitHub/<ion-icon name="logo-github" class="text-base"></ion-icon>
+                </a>
+                <a href="{user.social.linkedin}" target="_blank" rel="noopener noreferrer" class="text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors flex items-center gap-1" aria-label="LinkedIn">
+                    LinkedIn/<ion-icon name="logo-linkedin" class="text-base"></ion-icon>
+                </a>
+                <a href="{user.social.discord}" target="_blank" rel="noopener noreferrer" class="text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors flex items-center gap-1" aria-label="Discord">
+                    Discord/<ion-icon name="logo-discord" class="text-base"></ion-icon>
+                </a>
+                <a href="{user.social.resume}" target="_blank" rel="noopener noreferrer" class="text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors flex items-center gap-1" aria-label="Resume">
+                    Resume/<ion-icon name="document-text-outline" class="text-base"></ion-icon>
+                </a>
+            </div>
+        </header>
+
+        <main class="space-y-20">
+            <section id="about">
+                <h2 class="text-lg font-semibold tracking-tight text-zinc-900 dark:text-zinc-100 mb-4">{sections.about_title}</h2>
+                <div class="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                    {content.about_html}
+                </div>
+            </section>
+
+            <section id="experience">
+                <h2 class="text-lg font-semibold tracking-tight text-zinc-900 dark:text-zinc-100 mb-6">{sections.experience_title}</h2>
+                <div>
+                    {content.timeline_items_html}
+                </div>
+            </section>
+
+            <section id="projects">
+                <h2 class="text-lg font-semibold tracking-tight text-zinc-900 dark:text-zinc-100 mb-6">{sections.projects_title}</h2>
+                <div class="flex flex-wrap gap-2 mb-6" id="project-filters">
+                    {content.project_filters_html}
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="project-grid">
+                    {content.project_cards_html}
+                </div>
+            </section>
+
+            <section id="skills">
+                <h2 class="text-lg font-semibold tracking-tight text-zinc-900 dark:text-zinc-100 mb-6">{sections.skills_title}</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-sm font-medium text-zinc-900 dark:text-zinc-100 mb-4">{sections.languages_title}</h3>
+                        {content.programming_skills_html}
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-medium text-zinc-900 dark:text-zinc-100 mb-4">{sections.technologies_title}</h3>
+                        {content.tech_skills_html}
+                    </div>
+                </div>
+            </section>
+
+            <section id="contact">
+                <h2 class="text-lg font-semibold tracking-tight text-zinc-900 dark:text-zinc-100 mb-6">{sections.contact_title}</h2>
+                <div class="bg-white dark:bg-zinc-900 p-6 rounded-xl border border-zinc-200 dark:border-zinc-800 shadow-sm">
+                    <form action="{contact.form_action}" method="POST" class="space-y-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label for="name" class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1">Name</label>
+                                <input type="text" id="name" name="name" required class="w-full px-4 py-2 bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all text-zinc-900 dark:text-zinc-100">
+                            </div>
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1">Email</label>
+                                <input type="email" id="email" name="email" required class="w-full px-4 py-2 bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all text-zinc-900 dark:text-zinc-100">
+                            </div>
+                        </div>
+                        <div>
+                            <label for="message" class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1">Message</label>
+                            <textarea id="message" name="message" rows="4" required class="w-full px-4 py-2 bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all text-zinc-900 dark:text-zinc-100 resize-none"></textarea>
+                        </div>
+                        <button type="submit" class="inline-flex items-center px-6 py-2.5 bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 font-medium rounded-lg hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors focus:ring-2 focus:ring-offset-2 focus:ring-zinc-900 dark:focus:ring-zinc-100">
+                            {contact.submit_label}
+                            <ion-icon name="paper-plane-outline" class="ml-2 text-lg"></ion-icon>
+                        </button>
+                    </form>
+                </div>
+            </section>
+        </main>
+
+        <footer id="footer-easter-egg" class="mt-20 pt-8 border-t border-zinc-200 dark:border-zinc-800 text-center text-sm text-zinc-500 dark:text-zinc-400 cursor-pointer hover:text-zinc-700 dark:hover:text-zinc-300 transition-colors select-none">
+            <p>{footer.text}</p>
+        </footer>
+    </div>
+
+    {content.project_modals_html}
+
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const taglines = {content.taglines_json};
+        const taglineEl = document.getElementById("tagline");
+        let currentIndex = 0;
+
+        const cycleTagline = () => {
+            if (!taglineEl || taglines.length === 0) {
+                return;
+            }
+
+            currentIndex = (currentIndex + 1) % taglines.length;
+            const nextTagline = taglines[currentIndex];
+            taglineEl.style.opacity = "0";
+            taglineEl.style.transform = "translateY(1.5rem)";
+            taglineEl.style.transition = "opacity 0.3s ease, transform 0.3s ease";
+
+            setTimeout(() => {
+                taglineEl.textContent = nextTagline;
+                taglineEl.style.opacity = "1";
+                taglineEl.style.transform = "translateY(0)";
+            }, 150);
+        };
+
+        setInterval(cycleTagline, 4000);
+
+        const skillToggles = document.querySelectorAll(".skill-toggle");
+        let openSkill = null;
+        skillToggles.forEach((toggle) => {
+            const skillItem = toggle.closest(".skill-item");
+            const skillContent = skillItem.querySelector(".skill-content");
+            const toggleIcon = toggle.querySelector(".skill-toggle-icon");
+
+            toggle.addEventListener("click", () => {
+                if (openSkill && openSkill !== skillItem) {
+                    const prevContent = openSkill.querySelector(".skill-content");
+                    const prevIcon = openSkill.querySelector(".skill-toggle-icon");
+                    prevContent.classList.add("hidden");
+                    prevIcon.style.transform = "rotate(0deg)";
+                }
+
+                if (skillContent.classList.contains("hidden")) {
+                    skillContent.classList.remove("hidden");
+                    toggleIcon.style.transform = "rotate(180deg)";
+                    openSkill = skillItem;
+                } else {
+                    skillContent.classList.add("hidden");
+                    toggleIcon.style.transform = "rotate(0deg)";
+                    openSkill = null;
+                }
+            });
+        });
+
+        const filterBtns = document.querySelectorAll(".filter-btn");
+        const projectCards = document.querySelectorAll(".project-card");
+        const projectJumpLinks = document.querySelectorAll(".project-jump");
+        const activeClasses = ["bg-zinc-900", "text-white", "dark:bg-zinc-100", "dark:text-zinc-900"];
+        const inactiveClasses = ["bg-zinc-200", "text-zinc-700", "dark:bg-zinc-800", "dark:text-zinc-300"];
+        const allFilterBtn = document.querySelector('.filter-btn[data-filter="all"]');
+
+        const setActiveFilter = (activeBtn) => {
+            filterBtns.forEach((btn) => {
+                btn.classList.remove(...activeClasses);
+                btn.classList.add(...inactiveClasses);
+                btn.setAttribute("aria-pressed", "false");
+            });
+            activeBtn.classList.remove(...inactiveClasses);
+            activeBtn.classList.add(...activeClasses);
+            activeBtn.setAttribute("aria-pressed", "true");
+        };
+
+        const applyFilter = (filterValue) => {
+            projectCards.forEach((card) => {
+                const shouldShow = filterValue === "all" || card.getAttribute("data-category") === filterValue;
+                card.classList.toggle("hidden", !shouldShow);
+            });
+        };
+
+        filterBtns.forEach((btn) => {
+            btn.addEventListener("click", () => {
+                setActiveFilter(btn);
+                applyFilter(btn.getAttribute("data-filter"));
+            });
+        });
+
+        projectJumpLinks.forEach((link) => {
+            link.addEventListener("click", () => {
+                if (allFilterBtn) {
+                    setActiveFilter(allFilterBtn);
+                    applyFilter("all");
+                }
+            });
+        });
+
+        const detailsBtns = document.querySelectorAll(".project-details-btn");
+        const closeBtns = document.querySelectorAll(".modal-close-btn");
+
+        detailsBtns.forEach((btn) => {
+            btn.addEventListener("click", () => {
+                const modalId = btn.getAttribute("data-modal-id");
+                const modal = document.getElementById(modalId);
+                if (modal) {
+                    modal.classList.remove("hidden");
+                    modal.style.display = "flex";
+                }
+            });
+        });
+
+        closeBtns.forEach((btn) => {
+            btn.addEventListener("click", () => {
+                const modalId = btn.getAttribute("data-modal-id");
+                const modal = document.getElementById(modalId);
+                if (modal) {
+                    modal.classList.add("hidden");
+                    modal.style.display = "none";
+                }
+            });
+        });
+
+        document.querySelectorAll('[id^="modal-"]').forEach((modal) => {
+            modal.addEventListener("click", (event) => {
+                if (event.target === modal) {
+                    modal.classList.add("hidden");
+                    modal.style.display = "none";
+                }
+            });
+        });
+
+        document.addEventListener("keydown", (event) => {
+            if (event.key === "Escape") {
+                document.querySelectorAll('[id^="modal-"]').forEach((modal) => {
+                    modal.classList.add("hidden");
+                    modal.style.display = "none";
+                });
+            }
+        });
+
+        const copyLinkBtns = document.querySelectorAll(".copy-link-btn");
+        copyLinkBtns.forEach((btn) => {
+            btn.addEventListener("click", (event) => {
+                event.preventDefault();
+                const projectId = btn.getAttribute("data-project-id");
+                const url = `${window.location.origin}${window.location.pathname}#${projectId}`;
+                navigator.clipboard.writeText(url).then(() => {
+                    const originalIcon = btn.innerHTML;
+                    btn.innerHTML = '<ion-icon name="checkmark" class="text-lg"></ion-icon>';
+                    setTimeout(() => {
+                        btn.innerHTML = originalIcon;
+                    }, 2000);
+                });
+            });
+        });
+
+        const highlightProject = (projectId) => {
+            projectCards.forEach((card) => {
+                card.classList.remove("ring-2", "ring-blue-400", "dark:ring-blue-500");
+            });
+            const targetCard = document.getElementById(projectId);
+            if (targetCard) {
+                targetCard.classList.add("ring-2", "ring-blue-400", "dark:ring-blue-500");
+                setTimeout(() => {
+                    targetCard.classList.remove("ring-2", "ring-blue-400", "dark:ring-blue-500");
+                }, 3000);
+            }
+        };
+
+        if (window.location.hash) {
+            const projectId = window.location.hash.substring(1);
+            highlightProject(projectId);
+        }
+
+        window.addEventListener("hashchange", () => {
+            const projectId = window.location.hash.substring(1);
+            if (projectId) {
+                highlightProject(projectId);
+            }
+        });
+
+        const matrixCanvas = document.getElementById("matrix-bg");
+        const matrixContext = matrixCanvas ? matrixCanvas.getContext("2d") : null;
+        if (matrixCanvas && matrixContext) {
+            const glyphs = "01ABCDEFGHIJKLMNOPQRSTUVWXYZ#$%*+-";
+            const fontSize = 14;
+            const frameInterval = 55;
+            let drops = [];
+            let lastFrameTime = 0;
+
+            const resizeMatrix = () => {
+                matrixCanvas.width = window.innerWidth;
+                matrixCanvas.height = window.innerHeight;
+                const totalColumns = Math.ceil(matrixCanvas.width / fontSize);
+                const maxRows = Math.ceil(matrixCanvas.height / fontSize);
+                drops = Array.from({ length: totalColumns }, () => Math.floor(Math.random() * maxRows));
+                matrixContext.font = `${fontSize}px monospace`;
+                matrixContext.textBaseline = "top";
+            };
+
+            const drawMatrix = (timestamp) => {
+                if (!lastFrameTime || timestamp - lastFrameTime >= frameInterval) {
+                    lastFrameTime = timestamp;
+                    matrixContext.fillStyle = "rgba(0, 0, 0, 0.12)";
+                    matrixContext.fillRect(0, 0, matrixCanvas.width, matrixCanvas.height);
+                    matrixContext.fillStyle = "rgba(255, 255, 255, 0.9)";
+
+                    for (let i = 0; i < drops.length; i += 1) {
+                        const char = glyphs.charAt(Math.floor(Math.random() * glyphs.length));
+                        const x = i * fontSize;
+                        const y = drops[i] * fontSize;
+                        matrixContext.fillText(char, x, y);
+
+                        if (y > matrixCanvas.height && Math.random() > 0.975) {
+                            drops[i] = 0;
+                        } else {
+                            drops[i] += 1;
+                        }
+                    }
+                }
+
+                window.requestAnimationFrame(drawMatrix);
+            };
+
+            resizeMatrix();
+            window.addEventListener("resize", resizeMatrix);
+            window.requestAnimationFrame(drawMatrix);
+        }
+
+        const footerEasterEgg = document.getElementById("footer-easter-egg");
+        if (footerEasterEgg) {
+            footerEasterEgg.addEventListener("click", () => {
+                const rainDuration = 4000;
+                const pfpCount = 30;
+
+                for (let i = 0; i < pfpCount; i += 1) {
+                    const pfp = document.createElement("img");
+                    pfp.src = "{user.profile_image}";
+                    pfp.style.position = "fixed";
+                    pfp.style.pointerEvents = "none";
+                    pfp.style.zIndex = "9999";
+                    pfp.style.width = "60px";
+                    pfp.style.height = "60px";
+                    pfp.style.borderRadius = "9999px";
+                    pfp.style.objectFit = "cover";
+                    pfp.style.left = `${Math.random() * 100}%`;
+                    pfp.style.top = "-80px";
+
+                    const randomDuration = 2000 + Math.random() * 2000;
+                    const randomDelay = i * 100;
+                    pfp.style.animation = `pfpFall ${randomDuration}ms linear ${randomDelay}ms forwards`;
+                    document.body.appendChild(pfp);
+
+                    setTimeout(() => {
+                        pfp.remove();
+                    }, randomDuration + randomDelay);
+                }
+            });
+        }
+
+        const style = document.createElement("style");
+        style.textContent = `
+            @keyframes pfpFall {
+                to {
+                    transform: translateY(100vh) rotate(360deg);
+                    opacity: 0;
+                }
+            }
+            @keyframes skillRollout {
+                from {
+                    opacity: 0;
+                    transform: scaleY(0);
+                    transform-origin: top;
+                }
+                to {
+                    opacity: 1;
+                    transform: scaleY(1);
+                    transform-origin: top;
+                }
+            }
+            .skill-rollout:not(.hidden) {
+                animation: skillRollout 0.3s ease-out;
+            }
+        `;
+        document.head.appendChild(style);
+    });
+    </script>
+</body>
+</html>

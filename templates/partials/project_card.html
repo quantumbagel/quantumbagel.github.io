@@ -1,0 +1,18 @@
+<div id="{item.project_id}" class="project-card group relative flex flex-col bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl hover:border-zinc-300 dark:hover:border-zinc-700 transition-colors shadow-sm overflow-hidden" data-category="{item.category}">
+    {item.image_html}
+    <div class="p-5 flex flex-col flex-grow">
+        <div class="flex items-start justify-between">
+            <h3 class="text-base font-semibold text-zinc-900 dark:text-zinc-100 mb-1 flex-1">{item.title}</h3>
+            <button class="copy-link-btn ml-2 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors" data-project-id="{item.project_id}" title="Copy link to project">
+                <ion-icon name="link" class="text-lg"></ion-icon>
+            </button>
+        </div>
+        {item.date_html}
+        <p class="text-sm text-zinc-600 dark:text-zinc-400 mb-4 flex-grow leading-relaxed">{item.description}</p>
+        <div>
+            {item.skills_html}
+            {item.link_html}
+            {item.details_button_html}
+        </div>
+    </div>
+</div>
