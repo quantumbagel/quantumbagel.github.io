@@ -1056,7 +1056,7 @@
 
                     const randomDuration = 2000 + Math.random() * 2000;
                     const randomDelay = i * 100;
-                    const randomRotationSpeed = 180 + Math.random() * 360;
+                    const randomRotationSpeed = Math.random() * 720 - 360;
                     const randomStartRotation = Math.random() * 360;
                     pfp.style.animation = `pfpFall ${randomDuration}ms linear ${randomDelay}ms forwards`;
                     pfp.style.setProperty('--rotation-speed', `${randomRotationSpeed}deg`);
