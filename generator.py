@@ -76,7 +76,7 @@ def render_about(paragraphs: list[str]) -> str:
 
 
 def render_experience_item(item: dict[str, Any]) -> str:
-    title_html = f'<h3 class="text-base font-medium text-zinc-900 dark:text-zinc-100'
+    title_html = f'<h3 class="text-base font-medium font-mono text-zinc-900 dark:text-zinc-100'
     
     if item.get("link"):
         title_html += ' cursor-pointer hover:text-blue-600 dark:hover:text-blue-400 transition-colors"'
@@ -100,11 +100,11 @@ def render_skill_item(skill: dict[str, Any], project_ids: dict[str, str]) -> str
             project_id = project_ids.get(project_name)
             if project_id:
                 project_pills.append(
-                    f'<a href="#{project_id}" class="project-jump inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-zinc-100 mr-1.5 mb-1.5 transition-colors">{project_name}</a>'
+                    f'<a href="#{project_id}" class="project-jump inline-flex items-center px-2 py-0.5 rounded text-xs font-medium font-mono bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-zinc-100 mr-1.5 mb-1.5 transition-colors">{project_name}</a>'
                 )
             else:
                 project_pills.append(
-                    f'<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 mr-1.5 mb-1.5">{project_name}</span>'
+                    f'<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium font-mono bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 mr-1.5 mb-1.5">{project_name}</span>'
                 )
         projects_html = f'<div class="mt-2 flex flex-wrap">{"".join(project_pills)}</div>'
 
@@ -114,7 +114,7 @@ def render_skill_item(skill: dict[str, Any], project_ids: dict[str, str]) -> str
 
     duration_html = ""
     if skill.get("duration"):
-        duration_html = f'<span class="text-xs text-zinc-500 dark:text-zinc-400">{skill["duration"]}</span>'
+        duration_html = f'<span class="text-xs font-mono text-zinc-500 dark:text-zinc-400">{skill["duration"]}</span>'
 
     details_html = ""
     if skill.get("details"):
@@ -143,7 +143,7 @@ def render_project_card(project: dict[str, Any]) -> str:
     project_skills = project.get("skills", [])
     if project_skills:
         pills_html = "".join(
-            f'<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-zinc-100 dark:bg-zinc-800/60 text-zinc-600 dark:text-zinc-400 mr-1.5 mb-1.5">{skill}</span>'
+            f'<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium font-mono bg-zinc-100 dark:bg-zinc-800/60 text-zinc-600 dark:text-zinc-400 mr-1.5 mb-1.5">{skill}</span>'
             for skill in project_skills
         )
         skills_html = f'<div class="flex flex-wrap mt-3">{pills_html}</div>'
@@ -152,7 +152,7 @@ def render_project_card(project: dict[str, Any]) -> str:
     if project.get("link"):
         link_html = (
             f'<a href="{project["link"]}" target="_blank" rel="noopener noreferrer" '
-            'class="inline-flex items-center text-sm font-medium text-zinc-900 dark:text-zinc-100 '
+            'class="inline-flex items-center text-sm font-medium font-mono text-zinc-900 dark:text-zinc-100 '
             'hover:text-blue-600 dark:hover:text-blue-400 transition-colors mt-3">'
             'View Project <span class="ml-1 text-xs">↗</span></a>'
         )
@@ -167,7 +167,7 @@ def render_project_card(project: dict[str, Any]) -> str:
     date_html = ""
     if project.get("date"):
         date_html = (
-            '<span class="text-xs font-medium text-zinc-500 dark:text-zinc-400 mb-2 block flex items-center">'
+            '<span class="text-xs font-medium font-mono text-zinc-500 dark:text-zinc-400 mb-2 block flex items-center">'
             f'<ion-icon name="time-outline" class="mr-1"></ion-icon>{project["date"]}</span>'
         )
 
@@ -175,7 +175,7 @@ def render_project_card(project: dict[str, Any]) -> str:
     if project.get("details") or project.get("features"):
         margin_class = "ml-3" if project.get("link") else ""
         details_button_html = (
-            f'<button class="project-details-btn text-sm text-zinc-500 hover:text-zinc-900 '
+            f'<button class="project-details-btn text-sm font-mono text-zinc-500 hover:text-zinc-900 '
             f'dark:hover:text-zinc-100 transition-colors mt-3 {margin_class}" data-modal-id="{modal_id}">'
             "More Info →</button>"
         )
@@ -219,7 +219,7 @@ def render_project_modal(project: dict[str, Any]) -> str:
             for image in project_gallery
         )
         gallery_html = (
-            '<div class="mt-4"><h4 class="font-semibold text-zinc-900 dark:text-zinc-100 mb-2">Gallery</h4>'
+            '<div class="mt-4"><h4 class="font-semibold font-mono text-zinc-900 dark:text-zinc-100 mb-2">Gallery</h4>'
             f'<div class="grid grid-cols-1 sm:grid-cols-2 gap-2">{gallery_items}</div></div>'
         )
 
@@ -227,11 +227,11 @@ def render_project_modal(project: dict[str, Any]) -> str:
     project_features = project.get("features", [])
     if project_features:
         features_list = "".join(
-            f'<li class="text-sm text-zinc-600 dark:text-zinc-400 flex items-start"><span class="mr-3">•</span><span>{feature}</span></li>'
+            f'<li class="text-sm font-mono text-zinc-600 dark:text-zinc-400 flex items-start"><span class="mr-3">•</span><span>{feature}</span></li>'
             for feature in project_features
         )
         features_html = (
-            '<div class="mt-4"><h4 class="font-semibold text-zinc-900 dark:text-zinc-100 mb-2">Features</h4>'
+            '<div class="mt-4"><h4 class="font-semibold font-mono text-zinc-900 dark:text-zinc-100 mb-2">Features</h4>'
             f'<ul class="space-y-1">{features_list}</ul></div>'
         )
 
@@ -240,7 +240,7 @@ def render_project_modal(project: dict[str, Any]) -> str:
         link_button_html = (
             f'<a href="{project["link"]}" target="_blank" rel="noopener noreferrer" '
             'class="inline-flex items-center px-4 py-2 bg-zinc-900 dark:bg-zinc-100 text-white '
-            'dark:text-zinc-900 font-medium rounded-lg hover:bg-zinc-800 dark:hover:bg-zinc-200 '
+            'dark:text-zinc-900 font-medium font-mono rounded-lg hover:bg-zinc-800 dark:hover:bg-zinc-200 '
             'transition-colors">View on GitHub <span class="ml-2">↗</span></a>'
         )
 
@@ -259,7 +259,7 @@ def render_project_modal(project: dict[str, Any]) -> str:
 
 def render_filter_buttons(filters: list[dict[str, str]]) -> str:
     button_classes = (
-        "px-3 py-1 text-sm rounded-full bg-zinc-200 text-zinc-700 dark:bg-zinc-800 "
+        "px-3 py-1 text-sm font-mono rounded-full bg-zinc-200 text-zinc-700 dark:bg-zinc-800 "
         "dark:text-zinc-300 hover:bg-zinc-300 dark:hover:bg-zinc-700 filter-btn transition-colors"
     )
 
