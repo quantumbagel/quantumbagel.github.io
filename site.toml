@@ -250,7 +250,7 @@ date = "2025 - Present"
 description = "A Discord bot for paper and pencil games with local and global leaderboards."
 details = "PlayCord brings classic paper and pencil games to Discord with a competitive twist. Features global and server-specific leaderboards."
 features = ["Multiple game modes", "Global and local leaderboards", "Dynamic game loading system", "MySQL persistence"]
-link = "https://github.com/quantumbagel/PlayCord"
+link = "https://github.com/PlayCord/bot"
 skills = ["Python", "discord.py", "MySQL", "Programmable API"]
 
 [[projects]]
