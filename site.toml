@@ -41,6 +41,7 @@ about = [
 taglines = [
   "is a Computer Engineering and Statistics student @ NCSU",
   "is a full-stack developer",
+  "does things differently",
   "likes drones :D",
   "is an open source enthusiast",
   "has three cats :3",
@@ -49,8 +50,16 @@ taglines = [
   "plays Factorio"
 ]
 
+
+[[experiences]]
+title = "Financial Services Technical Lead, Merrill Lynch"
+link = "https://advisor.ml.com/sites/nc/raleigh-nc"
+date = "May 2025 - Present"
+description = "This summer, I am working with Mr. Geoffrey Bell at Merrill Lynch to help modernize their internal calculations platform via FactSet with Python."
+
 [[experiences]]
 title = "North Carolina State University"
+link = "https://ncsu.edu"
 date = "Fall 2025 - Present"
 description = "I am currently enrolled in the Computer Engineering program at North Carolina State University. I am pursuing a Bachelor's in Statistics and Computer Engineering and a Master's of Computer Science."
 
@@ -62,6 +71,7 @@ description = "I have had the pleasure to work with Dr. Mihail Sichitiu at the A
 
 [[experiences]]
 title = "Wake Tech Community College"
+link = "https://waketech.edu"
 date = "Fall 2023 - Spring 2025"
 description = "This was my first experience taking college coursework. I graduated with multiple appearances on the Dean's List, membership in the Phi Theta Kappa chapter, and an Associate in Science degree."
 
@@ -79,7 +89,7 @@ icon = "code-slash-outline"
 level = "Advanced"
 duration = "over 3 years"
 details = "Proficient in C/C++ for systems programming and performance-critical applications. Used in various academic and personal projects."
-projects = ["Embedded Systems via Arduino", "Python compiler extensions for aerpaw", "JIT compilation for performance-critical Python code"]
+projects = ["Embedded Systems via Arduino", "Python compiler extensions for AERPAW", "JIT compilation for performance-critical Python code"]
 
 [[skills.languages]]
 name = "JavaScript"
@@ -226,7 +236,7 @@ image = "https://placehold.co/400x250/9B59B6/FFFFFF?text=DroneTracker"
 title = "DroneTracker"
 date = "2024"
 description = "Track drones with cameras! Another AERPAW project."
-details = "DroneTracker is a computer vision system that uses PTZ cameras to track drones in real-time. It integrates with AXIS cameras via VAPIX protocol."
+details = "DroneTracker is a computer vision system that uses PTZ cameras to track drones in real-time. It integrates with AXIS cameras via VAPIX protocol. See a video of it in action: https://drive.google.com/file/d/1kAgfkhz04cGI_hY1XcNIUBpDtY-OiKQi/view"
 features = ["PTZ camera control via VAPIX", "Real-time drone position estimation", "MAVSDK integration for telemetry", "Containerized deployment"]
 link = "https://github.com/quantumbagel/DroneTracker"
 skills = ["Python", "VAPIX", "Docker", "MAVSDK", "netcat", "Linux"]
