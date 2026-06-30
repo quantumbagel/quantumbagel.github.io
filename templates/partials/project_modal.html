@@ -1,9 +1,9 @@
 <div id="{item.modal_id}" class="fixed inset-0 z-50 hidden overflow-y-auto bg-black/50 flex items-center justify-center p-4">
-    <div class="bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-lg">
+    <div class="bg-global-bg border border-zinc-300 dark:border-zinc-700 rounded-none w-full max-w-2xl max-h-[90vh] overflow-y-auto">
         <div class="p-6">
             <div class="flex items-start justify-between mb-4">
                 <h2 class="text-2xl font-bold font-mono text-zinc-900 dark:text-zinc-100">{item.title}</h2>
-                <button class="modal-close-btn text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100" data-modal-id="{item.modal_id}">✕</button>
+                <button class="modal-close-btn text-zinc-500 hover:text-accent dark:hover:text-accent" data-modal-id="{item.modal_id}">✕</button>
             </div>
             {item.details_html}
             {item.gallery_html}

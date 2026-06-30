@@ -7,76 +7,117 @@
     <meta name="description" content="{meta.description}">
     <link rel="icon" type="image/png" href="{meta.favicon}">
     <script src="tailwind.js"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'global-bg': 'var(--color-global-bg)',
+                        'global-text': 'var(--color-global-text)',
+                        'link': 'var(--color-link)',
+                        'accent': 'var(--color-accent)',
+                        'accent-2': 'var(--color-accent-2)',
+                        'quote': 'var(--color-quote)',
+                    }
+                }
+            }
+        };
+    </script>
     <link href="font.css" rel="stylesheet">
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js" defer></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js" defer></script>
     <style>
+        :root {
+            --color-global-bg: oklch(98.48% 0 0);
+            --color-global-text: oklch(26.99% .0096 235.05);
+            --color-link: oklch(55.44% .0431 185.69);
+            --color-accent: oklch(50.2% .27 29);
+            --color-accent-2: oklch(18.15% 0 0);
+            --color-quote: oklch(55.27% .195 19.06);
+        }
+
+        .dark {
+            --color-global-bg: oklch(23.64% .0045 248);
+            --color-global-text: oklch(83.54% 0 264);
+            --color-link: oklch(70.44% .1133 349);
+            --color-accent: oklch(73.5% .22 199);
+            --color-accent-2: oklch(94.66% 0 0);
+            --color-quote: oklch(94.8% .106 136.49);
+        }
+
+        body {
+            background-color: var(--color-global-bg);
+            color: var(--color-global-text);
+        }
+
+        .title {
+            color: var(--color-accent);
+        }
+
         .filter-btn[aria-pressed="true"] {
-            background-color: rgb(24 24 27);
-            color: rgb(255 255 255);
+            background-color: var(--color-accent) !important;
+            color: var(--color-global-bg) !important;
+            border-color: var(--color-accent) !important;
         }
 
         .filter-btn[aria-pressed="true"]:hover {
-            background-color: rgb(39 39 42);
-            color: rgb(244 244 245);
+            opacity: 0.9;
         }
 
-        .dark .filter-btn[aria-pressed="true"] {
-            background-color: rgb(244 244 245);
-            color: rgb(24 24 27);
-        }
-
-        .dark .filter-btn[aria-pressed="true"]:hover {
-            background-color: rgb(228 228 231);
-            color: rgb(9 9 11);
+        input:focus, textarea:focus {
+            border-color: var(--color-accent) !important;
         }
     </style>
 </head>
-<body class="bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 min-h-screen selection:bg-zinc-700 dark:selection:bg-zinc-300 selection:text-white dark:selection:text-zinc-950 relative overflow-x-hidden">
-    <canvas id="matrix-bg" class="fixed inset-0 pointer-events-none z-0 opacity-20" aria-hidden="true"></canvas>
-    <div class="relative z-10 max-w-3xl mx-auto px-6 py-12 md:py-20">
+<body class="bg-global-bg text-global-text min-h-screen font-mono text-sm font-normal antialiased selection:bg-zinc-700 dark:selection:bg-zinc-300 selection:text-white dark:selection:text-zinc-950 relative overflow-x-hidden">
+    <canvas id="interactive-bg" class="absolute inset-0 pointer-events-none z-0" aria-hidden="true"></canvas>
+    <div class="relative z-10 max-w-3xl mx-auto px-4 sm:px-8 py-12 md:py-20">
         <header class="mb-16">
             <div class="flex items-center gap-6 mb-6">
-                <img src="{user.profile_image}" alt="{user.name}" class="w-16 h-16 rounded-full object-cover border border-zinc-200 dark:border-zinc-800">
+                <img src="{user.profile_image}" alt="{user.name}" class="w-16 h-16 rounded-none object-cover border border-zinc-300 dark:border-zinc-700">
                 <div>
-                    <h1 class="text-2xl font-bold font-mono tracking-tight text-zinc-900 dark:text-zinc-100">{user.name}</h1>
+                    <h1 class="text-2xl font-bold font-mono tracking-tight text-accent-2">{user.name}</h1>
                     <p id="tagline" class="font-mono text-zinc-500 dark:text-zinc-400 mt-0.5 h-6 overflow-hidden relative">{content.first_tagline}</p>
                 </div>
             </div>
 
-            <div class="flex gap-5 text-sm font-mono">
-                <a href="{user.social.github}" target="_blank" rel="noopener noreferrer" class="text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors flex items-center gap-1" aria-label="GitHub">
+            <div class="flex flex-wrap gap-5 text-sm font-mono">
+                <a href="{user.social.github}" target="_blank" rel="noopener noreferrer" class="text-zinc-500 hover:text-accent dark:hover:text-accent transition-colors flex items-center gap-1" aria-label="GitHub">
                     GitHub/<ion-icon name="logo-github" class="text-base"></ion-icon>
                 </a>
-                <a href="{user.social.linkedin}" target="_blank" rel="noopener noreferrer" class="text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors flex items-center gap-1" aria-label="LinkedIn">
+                <a href="{user.social.linkedin}" target="_blank" rel="noopener noreferrer" class="text-zinc-500 hover:text-accent dark:hover:text-accent transition-colors flex items-center gap-1" aria-label="LinkedIn">
                     LinkedIn/<ion-icon name="logo-linkedin" class="text-base"></ion-icon>
                 </a>
-                <a href="{user.social.discord}" target="_blank" rel="noopener noreferrer" class="text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors flex items-center gap-1" aria-label="Discord">
+                <a href="{user.social.discord}" target="_blank" rel="noopener noreferrer" class="text-zinc-500 hover:text-accent dark:hover:text-accent transition-colors flex items-center gap-1" aria-label="Discord">
                     Discord/<ion-icon name="logo-discord" class="text-base"></ion-icon>
                 </a>
-                <a href="{user.social.resume}" target="_blank" rel="noopener noreferrer" class="text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors flex items-center gap-1" aria-label="Resume">
+                <a href="{user.social.resume}" target="_blank" rel="noopener noreferrer" class="text-zinc-500 hover:text-accent dark:hover:text-accent transition-colors flex items-center gap-1" aria-label="Resume">
                     Resume/<ion-icon name="document-text-outline" class="text-base"></ion-icon>
                 </a>
+                <button id="theme-toggle" class="text-zinc-500 hover:text-accent transition-colors flex items-center gap-1 cursor-pointer" aria-label="Toggle Theme">
+                    Theme/<ion-icon id="theme-toggle-icon" name="moon-outline" class="text-base"></ion-icon>
+                </button>
             </div>
         </header>
 
         <main class="space-y-20">
             <section id="about">
-                <h2 class="text-lg font-semibold font-mono tracking-tight text-zinc-900 dark:text-zinc-100 mb-4">{sections.about_title}</h2>
-                <div class="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                <h2 class="title font-bold font-mono tracking-tight text-xl mb-4">{sections.about_title}</h2>
+                <div class="text-sm text-global-text leading-relaxed">
                     {content.about_html}
                 </div>
             </section>
 
             <section id="experience">
-                <h2 class="text-lg font-semibold font-mono tracking-tight text-zinc-900 dark:text-zinc-100 mb-6">{sections.experience_title}</h2>
+                <h2 class="title font-bold font-mono tracking-tight text-xl mb-6">{sections.experience_title}</h2>
                 <div>
                     {content.timeline_items_html}
                 </div>
             </section>
 
             <section id="projects">
-                <h2 class="text-lg font-semibold font-mono tracking-tight text-zinc-900 dark:text-zinc-100 mb-6">{sections.projects_title}</h2>
+                <h2 class="title font-bold font-mono tracking-tight text-xl mb-6">{sections.projects_title}</h2>
                 <div class="flex flex-wrap gap-2 mb-6" id="project-filters">
                     {content.project_filters_html}
                 </div>
@@ -86,38 +127,38 @@
             </section>
 
             <section id="skills">
-                <h2 class="text-lg font-semibold font-mono tracking-tight text-zinc-900 dark:text-zinc-100 mb-6">{sections.skills_title}</h2>
+                <h2 class="title font-bold font-mono tracking-tight text-xl mb-6">{sections.skills_title}</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div>
-                        <h3 class="text-sm font-medium font-mono text-zinc-900 dark:text-zinc-100 mb-4">{sections.languages_title}</h3>
+                        <h3 class="text-base font-semibold font-mono text-accent-2 mb-4">{sections.languages_title}</h3>
                         {content.programming_skills_html}
                     </div>
                     <div>
-                        <h3 class="text-sm font-medium font-mono text-zinc-900 dark:text-zinc-100 mb-4">{sections.technologies_title}</h3>
+                        <h3 class="text-base font-semibold font-mono text-accent-2 mb-4">{sections.technologies_title}</h3>
                         {content.tech_skills_html}
                     </div>
                 </div>
             </section>
 
             <section id="contact">
-                <h2 class="text-lg font-semibold font-mono tracking-tight text-zinc-900 dark:text-zinc-100 mb-6">{sections.contact_title}</h2>
-                <div class="bg-white dark:bg-zinc-900 p-6 rounded-xl border border-zinc-200 dark:border-zinc-800 shadow-sm">
+                <h2 class="title font-bold font-mono tracking-tight text-xl mb-6">{sections.contact_title}</h2>
+                <div class="bg-transparent p-6 rounded-none border border-zinc-300 dark:border-zinc-700">
                     <form action="{contact.form_action}" method="POST" class="space-y-4">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
-                                <label for="name" class="block text-sm font-medium font-mono text-zinc-700 dark:text-zinc-300 mb-1">Name</label>
-                                <input type="text" id="name" name="name" required class="w-full px-4 py-2 bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all text-zinc-900 dark:text-zinc-100">
+                                <label for="name" class="block text-sm font-medium font-mono text-zinc-500 dark:text-zinc-400 mb-1">Name</label>
+                                <input type="text" id="name" name="name" required class="w-full px-4 py-2 bg-transparent border border-zinc-300 dark:border-zinc-700 rounded-none focus:outline-none focus:border-accent dark:focus:border-accent transition-colors text-zinc-900 dark:text-zinc-100">
                             </div>
                             <div>
-                                <label for="email" class="block text-sm font-medium font-mono text-zinc-700 dark:text-zinc-300 mb-1">Email</label>
-                                <input type="email" id="email" name="email" required class="w-full px-4 py-2 bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all text-zinc-900 dark:text-zinc-100">
+                                <label for="email" class="block text-sm font-medium font-mono text-zinc-500 dark:text-zinc-400 mb-1">Email</label>
+                                <input type="email" id="email" name="email" required class="w-full px-4 py-2 bg-transparent border border-zinc-300 dark:border-zinc-700 rounded-none focus:outline-none focus:border-accent dark:focus:border-accent transition-colors text-zinc-900 dark:text-zinc-100">
                             </div>
                         </div>
                         <div>
-                            <label for="message" class="block text-sm font-medium font-mono text-zinc-700 dark:text-zinc-300 mb-1">Message</label>
-                            <textarea id="message" name="message" rows="4" required class="w-full px-4 py-2 bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all text-zinc-900 dark:text-zinc-100 resize-none"></textarea>
+                            <label for="message" class="block text-sm font-medium font-mono text-zinc-500 dark:text-zinc-400 mb-1">Message</label>
+                            <textarea id="message" name="message" rows="4" required class="w-full px-4 py-2 bg-transparent border border-zinc-300 dark:border-zinc-700 rounded-none focus:outline-none focus:border-accent dark:focus:border-accent transition-colors text-zinc-900 dark:text-zinc-100 resize-none"></textarea>
                         </div>
-                        <button type="submit" class="inline-flex items-center px-6 py-2.5 bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 font-medium font-mono rounded-lg hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors focus:ring-2 focus:ring-offset-2 focus:ring-zinc-900 dark:focus:ring-zinc-100">
+                        <button type="submit" class="inline-flex items-center px-6 py-2.5 bg-transparent border border-accent text-accent font-medium font-mono rounded-none hover:bg-accent hover:text-global-bg transition-colors focus:outline-none cursor-pointer">
                             {contact.submit_label}
                             <ion-icon name="paper-plane-outline" class="ml-2 text-lg"></ion-icon>
                         </button>
@@ -126,7 +167,7 @@
             </section>
         </main>
 
-        <footer id="footer-easter-egg" class="mt-20 pt-8 border-t border-zinc-200 dark:border-zinc-800 text-center text-sm font-mono text-zinc-500 dark:text-zinc-400 cursor-pointer hover:text-zinc-700 dark:hover:text-zinc-300 transition-colors select-none">
+        <footer id="footer-easter-egg" class="mt-20 pt-8 border-t border-zinc-300 dark:border-zinc-700 text-center text-sm font-mono text-zinc-500 dark:text-zinc-400 cursor-pointer hover:text-accent transition-colors select-none">
             <p>{footer.text}</p>
         </footer>
     </div>
@@ -316,13 +357,13 @@
 
         const highlightProject = (projectId) => {
             projectCards.forEach((card) => {
-                card.classList.remove("ring-2", "ring-blue-400", "dark:ring-blue-500");
+                card.classList.remove("ring-2", "ring-accent");
             });
             const targetCard = document.getElementById(projectId);
             if (targetCard) {
-                targetCard.classList.add("ring-2", "ring-blue-400", "dark:ring-blue-500");
+                targetCard.classList.add("ring-2", "ring-accent");
                 setTimeout(() => {
-                    targetCard.classList.remove("ring-2", "ring-blue-400", "dark:ring-blue-500");
+                    targetCard.classList.remove("ring-2", "ring-accent");
                 }, 3000);
             }
         };
@@ -339,52 +380,36 @@
             }
         });
 
-        const matrixCanvas = document.getElementById("matrix-bg");
-        const matrixContext = matrixCanvas ? matrixCanvas.getContext("2d") : null;
-        if (matrixCanvas && matrixContext) {
-            const glyphs = "01ABCDEFGHIJKLMNOPQRSTUVWXYZ#$%*+-";
-            const fontSize = 14;
-            const frameInterval = 55;
-            let drops = [];
-            let lastFrameTime = 0;
+        // Theme Toggle Logic
+        const themeToggle = document.getElementById("theme-toggle");
+        
+        const getPreferredTheme = () => {
+            const storedTheme = localStorage.getItem("theme");
+            if (storedTheme) return storedTheme;
+            return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        };
 
-            const resizeMatrix = () => {
-                matrixCanvas.width = window.innerWidth;
-                matrixCanvas.height = window.innerHeight;
-                const totalColumns = Math.ceil(matrixCanvas.width / fontSize);
-                const maxRows = Math.ceil(matrixCanvas.height / fontSize);
-                drops = Array.from({ length: totalColumns }, () => Math.floor(Math.random() * maxRows));
-                matrixContext.font = `${fontSize}px monospace`;
-                matrixContext.textBaseline = "top";
-            };
+        const setTheme = (theme) => {
+            if (theme === "dark") {
+                document.documentElement.classList.add("dark");
+            } else {
+                document.documentElement.classList.remove("dark");
+            }
+            localStorage.setItem("theme", theme);
+            
+            if (themeToggle) {
+                const iconName = theme === "dark" ? "sunny-outline" : "moon-outline";
+                themeToggle.innerHTML = `Theme/<ion-icon id="theme-toggle-icon" name="${iconName}" class="text-base"></ion-icon>`;
+            }
+        };
 
-            const drawMatrix = (timestamp) => {
-                if (!lastFrameTime || timestamp - lastFrameTime >= frameInterval) {
-                    lastFrameTime = timestamp;
-                    matrixContext.fillStyle = "rgba(0, 0, 0, 0.12)";
-                    matrixContext.fillRect(0, 0, matrixCanvas.width, matrixCanvas.height);
-                    matrixContext.fillStyle = "rgba(255, 255, 255, 0.9)";
+        setTheme(getPreferredTheme());
 
-                    for (let i = 0; i < drops.length; i += 1) {
-                        const char = glyphs.charAt(Math.floor(Math.random() * glyphs.length));
-                        const x = i * fontSize;
-                        const y = drops[i] * fontSize;
-                        matrixContext.fillText(char, x, y);
-
-                        if (y > matrixCanvas.height && Math.random() > 0.975) {
-                            drops[i] = 0;
-                        } else {
-                            drops[i] += 1;
-                        }
-                    }
-                }
-
-                window.requestAnimationFrame(drawMatrix);
-            };
-
-            resizeMatrix();
-            window.addEventListener("resize", resizeMatrix);
-            window.requestAnimationFrame(drawMatrix);
+        if (themeToggle) {
+            themeToggle.addEventListener("click", () => {
+                const isDark = document.documentElement.classList.contains("dark");
+                setTheme(isDark ? "light" : "dark");
+            });
         }
 
         const footerEasterEgg = document.getElementById("footer-easter-egg");
@@ -401,7 +426,7 @@
                     pfp.style.zIndex = "9999";
                     pfp.style.width = "60px";
                     pfp.style.height = "60px";
-                    pfp.style.borderRadius = "9999px";
+                    pfp.style.borderRadius = "0px";
                     pfp.style.objectFit = "cover";
                     pfp.style.left = `${Math.random() * 100}%`;
                     pfp.style.top = "-80px";
@@ -420,6 +445,337 @@
                     }, randomDuration + randomDelay);
                 }
             });
+        }
+
+        // Interactive Particle Simulation Background
+        const canvas = document.getElementById("interactive-bg");
+        if (canvas) {
+            const ctx = canvas.getContext("2d");
+            let width = (canvas.width = window.innerWidth);
+            let docHeight = document.documentElement.scrollHeight;
+            let height = (canvas.height = docHeight);
+
+            let mouse = { x: -1000, y: -1000 };
+
+            // Spatial Hash Grid class to handle O(N) queries for high particle counts
+            class SpatialHashGrid {
+                constructor(width, height, cellSize) {
+                    this.width = width;
+                    this.height = height;
+                    this.cellSize = cellSize;
+                    this.cols = Math.ceil(width / cellSize);
+                    this.rows = Math.ceil(height / cellSize);
+                    this.grid = {};
+                }
+
+                clear() {
+                    this.grid = {};
+                }
+
+                getKey(x, y) {
+                    const cx = Math.floor(x / this.cellSize);
+                    const cy = Math.floor(y / this.cellSize);
+                    return `${cx},${cy}`;
+                }
+
+                insert(particle) {
+                    const key = this.getKey(particle.x, particle.y);
+                    if (!this.grid[key]) {
+                        this.grid[key] = [];
+                    }
+                    this.grid[key].push(particle);
+                }
+
+                getNearby(particle) {
+                    const cx = Math.floor(particle.x / this.cellSize);
+                    const cy = Math.floor(particle.y / this.cellSize);
+                    const neighbors = [];
+
+                    for (let dx = -1; dx <= 1; dx++) {
+                        for (let dy = -1; dy <= 1; dy++) {
+                            const key = `${cx + dx},${cy + dy}`;
+                            const cell = this.grid[key];
+                            if (cell) {
+                                for (let i = 0; i < cell.length; i++) {
+                                    if (cell[i] !== particle) {
+                                        neighbors.push(cell[i]);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    return neighbors;
+                }
+            }
+
+            const grid = new SpatialHashGrid(width, height, 95);
+
+            const adjustParticles = () => {
+                docHeight = document.documentElement.scrollHeight;
+                const area = width * docHeight;
+                const targetCount = Math.min(3000, Math.max(250, Math.floor(area * 0.0004)));
+                
+                if (particles.length < targetCount) {
+                    const diff = targetCount - particles.length;
+                    let maxId = particles.reduce((max, p) => p.id > max ? p.id : max, -1);
+                    for (let i = 0; i < diff; i++) {
+                        particles.push(new Particle(maxId + 1 + i));
+                    }
+                } else if (particles.length > targetCount) {
+                    particles.length = targetCount;
+                }
+            };
+
+            window.addEventListener("mousemove", (e) => {
+                mouse.x = e.clientX;
+                mouse.y = e.clientY;
+            });
+
+            window.addEventListener("mouseleave", () => {
+                mouse.x = -1000;
+                mouse.y = -1000;
+            });
+
+            window.addEventListener("resize", () => {
+                width = (canvas.width = window.innerWidth);
+                docHeight = document.documentElement.scrollHeight;
+                height = (canvas.height = docHeight);
+                grid.width = width;
+                grid.height = height;
+                grid.cols = Math.ceil(width / grid.cellSize);
+                grid.rows = Math.ceil(height / grid.cellSize);
+                adjustParticles();
+            });
+
+            // Click blast listener using document-relative coordinates
+            window.addEventListener("click", (e) => {
+                const clickX = e.clientX;
+                const clickY = e.clientY + window.scrollY; // Convert to document coordinates
+                const blastRadius = 250;
+
+                for (let i = 0; i < particles.length; i++) {
+                    const p = particles[i];
+                    const dx = p.x - clickX;
+                    const dy = p.y - clickY;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < blastRadius) {
+                        const force = (blastRadius - dist) / blastRadius;
+                        const angle = Math.atan2(dy, dx);
+                        const push = force * 14;
+
+                        p.vx = Math.cos(angle) * push;
+                        p.vy = Math.sin(angle) * push;
+                        p.color = colors.accent;
+                        p.opacity = 0.6;
+                    }
+                }
+            });
+
+            const getThemeColors = () => {
+                const style = getComputedStyle(document.documentElement);
+                return {
+                    accent: style.getPropertyValue("--color-accent").trim() || "rgb(120, 120, 120)",
+                    text: style.getPropertyValue("--color-global-text").trim() || "rgb(200, 200, 200)"
+                };
+            };
+
+            let colors = getThemeColors();
+            const observer = new MutationObserver(() => {
+                colors = getThemeColors();
+            });
+            observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+
+            // Particles definition - dynamically sized based on document area
+            const particles = [];
+
+            class Particle {
+                constructor(id) {
+                    this.id = id;
+                    this.reset(true);
+                }
+
+                reset(initial = false) {
+                    this.x = Math.random() * width;
+                    this.y = Math.random() * docHeight; // Spread across full document height
+                    this.baseVx = (Math.random() - 0.5) * 0.35;
+                    this.baseVy = (Math.random() - 0.5) * 0.35;
+                    this.vx = this.baseVx;
+                    this.vy = this.baseVy;
+                    this.radius = Math.random() * 1.5 + 1;
+                    this.baseOpacity = Math.random() * 0.05 + 0.08;
+                    this.opacity = this.baseOpacity;
+                    this.color = colors.text;
+                }
+
+                update(mouseAbsX, mouseAbsY) {
+                    // Decay velocity back to base cruise speed
+                    this.vx += (this.baseVx - this.vx) * 0.04;
+                    this.vy += (this.baseVy - this.vy) * 0.04;
+
+                    this.x += this.vx;
+                    this.y += this.vy;
+
+                    // Bounce off document boundaries
+                    if (this.x < 0) {
+                        this.x = 0;
+                        this.vx = -this.vx;
+                        this.baseVx = -this.baseVx;
+                    }
+                    if (this.x > width) {
+                        this.x = width;
+                        this.vx = -this.vx;
+                        this.baseVx = -this.baseVx;
+                    }
+                    if (this.y < 0) {
+                        this.y = 0;
+                        this.vy = -this.vy;
+                        this.baseVy = -this.baseVy;
+                    }
+                    if (this.y > docHeight) {
+                        this.y = docHeight;
+                        this.vy = -this.vy;
+                        this.baseVy = -this.baseVy;
+                    }
+
+                    // Cursor interaction (mouse coordinates are absolute document-relative)
+                    const dx = mouseAbsX - this.x;
+                    const dy = mouseAbsY - this.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    const forceRadius = 140;
+
+                    if (dist < forceRadius) {
+                        const force = (forceRadius - dist) / forceRadius;
+                        const angle = Math.atan2(dy, dx);
+                        
+                        this.x -= Math.cos(angle) * force * 0.9;
+                        this.y -= Math.sin(angle) * force * 0.9;
+
+                        this.color = colors.accent;
+                        this.opacity = this.baseOpacity + force * 0.35;
+                    } else {
+                        // Return to base color/opacity when speed decays back to normal
+                        const speedSq = this.vx * this.vx + this.vy * this.vy;
+                        const baseSpeedSq = this.baseVx * this.baseVx + this.baseVy * this.baseVy;
+                        if (speedSq < baseSpeedSq * 1.8) {
+                            this.color = colors.text;
+                            this.opacity += (this.baseOpacity - this.opacity) * 0.05;
+                        }
+                    }
+                }
+
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = this.color;
+                    ctx.globalAlpha = this.opacity;
+                    ctx.fill();
+                }
+            }
+
+            const initParticles = () => {
+                particles.length = 0;
+                docHeight = document.documentElement.scrollHeight;
+                const area = width * docHeight;
+                const targetCount = Math.min(3000, Math.max(250, Math.floor(area * 0.0004)));
+                for (let i = 0; i < targetCount; i++) {
+                    particles.push(new Particle(i));
+                }
+            };
+
+            initParticles();
+
+            const draw = () => {
+                ctx.clearRect(0, 0, width, height);
+                docHeight = document.documentElement.scrollHeight; // Keep document height sync'd
+
+                const scrollY = window.scrollY;
+                const viewHeight = window.innerHeight;
+                const padding = 100;
+
+                const mouseAbsX = mouse.x;
+                const mouseAbsY = mouse.y + scrollY;
+
+                // Update all particles positions (O(N) cheap math)
+                for (let i = 0; i < particles.length; i++) {
+                    particles[i].update(mouseAbsX, mouseAbsY);
+                }
+
+                // Filter only visible particles for drawing and grid connection calculations
+                const visibleParticles = [];
+                for (let i = 0; i < particles.length; i++) {
+                    const p = particles[i];
+                    const screenY = p.y - scrollY;
+                    if (screenY >= -padding && screenY <= viewHeight + padding) {
+                        visibleParticles.push(p);
+                    }
+                }
+
+                // Rebuild spatial hash grid for visible particles only
+                grid.clear();
+                for (let i = 0; i < visibleParticles.length; i++) {
+                    grid.insert(visibleParticles[i]);
+                }
+
+                // Pre-calculate local density for visible particles
+                for (let i = 0; i < visibleParticles.length; i++) {
+                    visibleParticles[i].density = grid.getNearby(visibleParticles[i]).length;
+                }
+
+                // Process interactions using the grid for visible particles
+                for (let i = 0; i < visibleParticles.length; i++) {
+                    const p1 = visibleParticles[i];
+                    const neighbors = grid.getNearby(p1);
+
+                    for (let n = 0; n < neighbors.length; n++) {
+                        const p2 = neighbors[n];
+                        
+                        if (p2.id > p1.id) {
+                            const dx = p1.x - p2.x;
+                            const dy = p1.y - p2.y;
+                            const dist = Math.sqrt(dx * dx + dy * dy);
+
+                            // Gentle repulsion to prevent clumping
+                            const minDistance = 35;
+                            if (dist < minDistance && dist > 0.1) {
+                                const force = (minDistance - dist) / minDistance;
+                                const densityFactor = 1 + (p1.density + p2.density) * 0.2;
+                                const pushStrength = force * 0.12 * densityFactor;
+                                const pushX = (dx / dist) * pushStrength;
+                                const pushY = (dy / dist) * pushStrength;
+
+                                p1.x += pushX;
+                                p1.y += pushY;
+                                p2.x -= pushX;
+                                p2.y -= pushY;
+                            }
+
+                            // Draw connection lines at viewport scroll coordinates
+                            if (dist < 95) {
+                                const ratio = 1 - dist / 95;
+                                const nearMouse = p1.color === colors.accent || p2.color === colors.accent;
+
+                                ctx.beginPath();
+                                ctx.moveTo(p1.x, p1.y);
+                                ctx.lineTo(p2.x, p2.y);
+                                ctx.strokeStyle = nearMouse ? colors.accent : colors.text;
+                                ctx.globalAlpha = ratio * (nearMouse ? 0.25 : 0.07);
+                                ctx.lineWidth = 0.5;
+                                ctx.stroke();
+                            }
+                        }
+                    }
+                }
+
+                // Render visible particles
+                for (let i = 0; i < visibleParticles.length; i++) {
+                    visibleParticles[i].draw();
+                }
+
+                requestAnimationFrame(draw);
+            };
+
+            draw();
         }
 
         const style = document.createElement("style");

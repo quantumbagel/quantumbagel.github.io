@@ -205,7 +205,7 @@ title = "airstrik.py"
 date = "2023 - 2024"
 description = "A pure-python ADS-B plane tracker for AERPAW."
 details = "The original pure-Python implementation of an ADS-B tracker for drone airspace monitoring. This project laid the groundwork for PyAerial."
-features = ["Pure Python implementation", "ADS-B signal processing", "Integration with MAVSDK for drone communication"]
+features = ["ADS-B signal processing", "Integration with MAVSDK for drone communication"]
 link = "https://github.com/quantumbagel/airstrik.py"
 skills = ["Python", "MAVSDK", "Docker", "MongoDB", "ADS-B"]
 

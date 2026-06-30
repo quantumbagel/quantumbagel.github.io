@@ -76,12 +76,12 @@ def render_about(paragraphs: list[str]) -> str:
 
 
 def render_experience_item(item: dict[str, Any]) -> str:
-    title_html = f'<h3 class="text-base font-medium font-mono text-zinc-900 dark:text-zinc-100'
+    title_html = f'<h3 class="text-base font-semibold font-mono text-zinc-900 dark:text-zinc-100'
     
     if item.get("link"):
-        title_html += ' cursor-pointer hover:text-blue-600 dark:hover:text-blue-400 transition-colors"'
+        title_html += ' cursor-pointer hover:text-accent dark:hover:text-accent transition-colors"'
         title_html += f' onclick="window.location.href=\'{item["link"]}\'">{item["title"]}</h3>'
-        title_html += f'<button class="experience-copy-link hidden group-hover:block text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors" data-link="{item["link"]}" title="Copy link"><ion-icon name="link" class="text-sm"></ion-icon></button>'
+        title_html += f'<button class="experience-copy-link hidden group-hover:block text-zinc-400 hover:text-accent dark:hover:text-accent transition-colors" data-link="{item["link"]}" title="Copy link"><ion-icon name="link" class="text-sm"></ion-icon></button>'
     else:
         title_html += '">' + item["title"] + '</h3>'
     
@@ -100,11 +100,11 @@ def render_skill_item(skill: dict[str, Any], project_ids: dict[str, str]) -> str
             project_id = project_ids.get(project_name)
             if project_id:
                 project_pills.append(
-                    f'<a href="#{project_id}" class="project-jump inline-flex items-center px-2 py-0.5 rounded text-xs font-medium font-mono bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-zinc-100 mr-1.5 mb-1.5 transition-colors">{project_name}</a>'
+                    f'<a href="#{project_id}" class="project-jump inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-600 dark:text-zinc-400 hover:text-accent dark:hover:text-accent hover:border-accent dark:hover:border-accent mr-1.5 mb-1.5 transition-colors">{project_name}</a>'
                 )
             else:
                 project_pills.append(
-                    f'<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium font-mono bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 mr-1.5 mb-1.5">{project_name}</span>'
+                    f'<span class="inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-500 dark:text-zinc-500 mr-1.5 mb-1.5">{project_name}</span>'
                 )
         projects_html = f'<div class="mt-2 flex flex-wrap">{"".join(project_pills)}</div>'
 
@@ -143,7 +143,7 @@ def render_project_card(project: dict[str, Any]) -> str:
     project_skills = project.get("skills", [])
     if project_skills:
         pills_html = "".join(
-            f'<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium font-mono bg-zinc-100 dark:bg-zinc-800/60 text-zinc-600 dark:text-zinc-400 mr-1.5 mb-1.5">{skill}</span>'
+            f'<span class="inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-600 dark:text-zinc-400 mr-1.5 mb-1.5">{skill}</span>'
             for skill in project_skills
         )
         skills_html = f'<div class="flex flex-wrap mt-3">{pills_html}</div>'
@@ -153,7 +153,7 @@ def render_project_card(project: dict[str, Any]) -> str:
         link_html = (
             f'<a href="{project["link"]}" target="_blank" rel="noopener noreferrer" '
             'class="inline-flex items-center text-sm font-medium font-mono text-zinc-900 dark:text-zinc-100 '
-            'hover:text-blue-600 dark:hover:text-blue-400 transition-colors mt-3">'
+            'hover:text-accent dark:hover:text-accent transition-colors mt-3">'
             'View Project <span class="ml-1 text-xs">↗</span></a>'
         )
 
@@ -161,7 +161,7 @@ def render_project_card(project: dict[str, Any]) -> str:
     if project.get("image"):
         image_html = (
             f'<img src="{project["image"]}" alt="{project_title}" loading="lazy" decoding="async" '
-            'class="w-full h-48 object-cover border-b border-zinc-200 dark:border-zinc-800">'
+            'class="w-full h-48 object-cover border-b border-zinc-300 dark:border-zinc-700">'
         )
 
     date_html = ""
@@ -175,8 +175,8 @@ def render_project_card(project: dict[str, Any]) -> str:
     if project.get("details") or project.get("features"):
         margin_class = "ml-3" if project.get("link") else ""
         details_button_html = (
-            f'<button class="project-details-btn text-sm font-mono text-zinc-500 hover:text-zinc-900 '
-            f'dark:hover:text-zinc-100 transition-colors mt-3 {margin_class}" data-modal-id="{modal_id}">'
+            f'<button class="project-details-btn text-sm font-mono text-zinc-500 hover:text-accent '
+            f'dark:hover:text-accent transition-colors mt-3 {margin_class}" data-modal-id="{modal_id}">'
             "More Info →</button>"
         )
 
@@ -214,7 +214,7 @@ def render_project_modal(project: dict[str, Any]) -> str:
     if project_gallery:
         gallery_items = "".join(
             f'<img src="{image}" alt="Gallery image" loading="lazy" decoding="async" '
-            f'class="w-full h-64 object-cover rounded-lg cursor-pointer hover:opacity-90 transition-opacity gallery-image" '
+            f'class="w-full h-64 object-cover rounded-none border border-zinc-300 dark:border-zinc-700 cursor-pointer hover:opacity-90 transition-opacity gallery-image" '
             f'data-modal-id="{modal_id}">'
             for image in project_gallery
         )
@@ -239,8 +239,8 @@ def render_project_modal(project: dict[str, Any]) -> str:
     if project.get("link"):
         link_button_html = (
             f'<a href="{project["link"]}" target="_blank" rel="noopener noreferrer" '
-            'class="inline-flex items-center px-4 py-2 bg-zinc-900 dark:bg-zinc-100 text-white '
-            'dark:text-zinc-900 font-medium font-mono rounded-lg hover:bg-zinc-800 dark:hover:bg-zinc-200 '
+            'class="inline-flex items-center px-4 py-2 bg-transparent border border-accent text-accent '
+            'font-medium font-mono rounded-none hover:bg-accent hover:text-global-bg '
             'transition-colors">View on GitHub <span class="ml-2">↗</span></a>'
         )
 
@@ -259,8 +259,8 @@ def render_project_modal(project: dict[str, Any]) -> str:
 
 def render_filter_buttons(filters: list[dict[str, str]]) -> str:
     button_classes = (
-        "px-3 py-1 text-sm font-mono rounded-full bg-zinc-200 text-zinc-700 dark:bg-zinc-800 "
-        "dark:text-zinc-300 hover:bg-zinc-300 dark:hover:bg-zinc-700 filter-btn transition-colors"
+        "px-3 py-1 text-sm font-mono rounded-none border border-zinc-300 dark:border-zinc-700 bg-transparent text-zinc-700 dark:text-zinc-300 "
+        "hover:bg-zinc-100 dark:hover:bg-zinc-800 filter-btn transition-colors"
     )
 
     buttons: list[str] = []
