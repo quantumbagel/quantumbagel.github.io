@@ -6,6 +6,24 @@
     <title>Julian Reder - Computer Engineering Student @ NCSU</title>
     <meta name="description" content="Julian Reder, Computer Engineering Student @ NCSU.">
     <link rel="icon" type="image/png" href="pfp.webp">
+    <script>
+        (function() {
+            const storedTheme = localStorage.getItem("theme");
+            const preferredTheme = storedTheme || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+            if (preferredTheme === "dark") {
+                document.documentElement.classList.add("dark");
+            } else {
+                document.documentElement.classList.remove("dark");
+            }
+        })();
+
+        // Set scrollRestoration to manual immediately to prevent browser layout snapping/restoration on deep links
+        if (window.location.hash) {
+            if ('scrollRestoration' in history) {
+                history.scrollRestoration = 'manual';
+            }
+        }
+    </script>
     <script src="tailwind.js"></script>
     <script>
         tailwind.config = {
@@ -71,11 +89,11 @@
     </style>
 </head>
 <body class="bg-global-bg text-global-text min-h-screen font-mono text-sm font-normal antialiased selection:bg-zinc-700 dark:selection:bg-zinc-300 selection:text-white dark:selection:text-zinc-950 relative overflow-x-hidden">
-    <canvas id="interactive-bg" class="absolute inset-0 pointer-events-none z-0" aria-hidden="true"></canvas>
+    <canvas id="interactive-bg" class="fixed inset-0 w-full h-full pointer-events-none z-0" aria-hidden="true"></canvas>
     <div class="relative z-10 max-w-3xl mx-auto px-4 sm:px-8 py-12 md:py-20">
         <header class="mb-16">
             <div class="flex items-center gap-6 mb-6">
-                <img src="pfp.webp" alt="Julian Reder" class="w-16 h-16 rounded-none object-cover border border-zinc-300 dark:border-zinc-700">
+                <img src="pfp.webp" alt="Julian Reder" class="w-16 h-16 rounded-none object-cover">
                 <div>
                     <h1 class="text-2xl font-bold font-mono tracking-tight text-accent-2">Julian Reder</h1>
                     <p id="tagline" class="font-mono text-zinc-500 dark:text-zinc-400 mt-0.5 h-6 overflow-hidden relative">is a Computer Engineering and Statistics student @ NCSU</p>
@@ -83,39 +101,49 @@
             </div>
 
             <div class="flex flex-wrap gap-5 text-sm font-mono">
-                <a href="https://github.com/quantumbagel" target="_blank" rel="noopener noreferrer" class="text-zinc-500 hover:text-accent dark:hover:text-accent transition-colors flex items-center gap-1" aria-label="GitHub">
-                    GitHub/<ion-icon name="logo-github" class="text-base"></ion-icon>
+                <a href="https://github.com/quantumbagel" target="_blank" rel="noopener noreferrer" class="text-zinc-500 hover:text-accent dark:hover:text-accent transition-colors" aria-label="GitHub">
+                    GitHub/<ion-icon name="logo-github" class="text-base inline-block align-middle pointer-events-none ml-0.5"></ion-icon>
                 </a>
-                <a href="https://www.linkedin.com/in/julian-reder-nc/" target="_blank" rel="noopener noreferrer" class="text-zinc-500 hover:text-accent dark:hover:text-accent transition-colors flex items-center gap-1" aria-label="LinkedIn">
-                    LinkedIn/<ion-icon name="logo-linkedin" class="text-base"></ion-icon>
+                <a href="https://www.linkedin.com/in/julian-reder-nc/" target="_blank" rel="noopener noreferrer" class="text-zinc-500 hover:text-accent dark:hover:text-accent transition-colors" aria-label="LinkedIn">
+                    LinkedIn/<ion-icon name="logo-linkedin" class="text-base inline-block align-middle pointer-events-none ml-0.5"></ion-icon>
                 </a>
-                <a href="https://discordapp.com/users/897146430664355850" target="_blank" rel="noopener noreferrer" class="text-zinc-500 hover:text-accent dark:hover:text-accent transition-colors flex items-center gap-1" aria-label="Discord">
-                    Discord/<ion-icon name="logo-discord" class="text-base"></ion-icon>
+                <a href="https://discordapp.com/users/897146430664355850" target="_blank" rel="noopener noreferrer" class="text-zinc-500 hover:text-accent dark:hover:text-accent transition-colors" aria-label="Discord">
+                    Discord/<ion-icon name="logo-discord" class="text-base inline-block align-middle pointer-events-none ml-0.5"></ion-icon>
                 </a>
-                <a href="/resume" target="_blank" rel="noopener noreferrer" class="text-zinc-500 hover:text-accent dark:hover:text-accent transition-colors flex items-center gap-1" aria-label="Resume">
-                    Resume/<ion-icon name="document-text-outline" class="text-base"></ion-icon>
+                <a href="/resume" target="_blank" rel="noopener noreferrer" class="text-zinc-500 hover:text-accent dark:hover:text-accent transition-colors" aria-label="Resume">
+                    Resume/<ion-icon name="document-text-outline" class="text-base inline-block align-middle pointer-events-none ml-0.5"></ion-icon>
                 </a>
-                <button id="theme-toggle" class="text-zinc-500 hover:text-accent transition-colors flex items-center gap-1 cursor-pointer" aria-label="Toggle Theme">
-                    Theme/<ion-icon id="theme-toggle-icon" name="moon-outline" class="text-base"></ion-icon>
+                <button id="theme-toggle" class="text-zinc-500 hover:text-accent transition-colors cursor-pointer" aria-label="Toggle Theme">
+                    Theme/<ion-icon id="theme-toggle-icon" name="moon-outline" class="text-base inline-block align-middle pointer-events-none ml-0.5"></ion-icon>
                 </button>
             </div>
         </header>
 
         <main class="space-y-20">
             <section id="about">
-                <h2 class="title font-bold font-mono tracking-tight text-xl mb-4">About</h2>
+                <h2 class="title group flex items-center gap-2 font-bold font-mono tracking-tight text-xl mb-4">
+                    <span>About</span>
+                    <button class="section-copy-link hidden group-hover:inline-flex items-center text-zinc-400 hover:text-accent dark:hover:text-accent transition-colors" data-section-id="about" title="Copy link to Section">
+                        <ion-icon name="link" class="text-sm"></ion-icon>
+                    </button>
+                </h2>
                 <div class="text-sm text-global-text leading-relaxed">
                     <p class='mb-4 last:mb-0'>Hello! I'm <strong class='text-gray-800 dark:text-white'>Julian Reder</strong>, a programmer and student at North Carolina State University. This website has a brief overview of my projects and skillset, as well as a contact form. It's also a template, see the project on GitHub to see how to use it yourself :D </p><p class='mb-4 last:mb-0'>Hopefully you find something interesting here! Feel free to reach out if you want to chat about anything or have questions about my projects or experience.</p>
                 </div>
             </section>
 
             <section id="experience">
-                <h2 class="title font-bold font-mono tracking-tight text-xl mb-6">Experience</h2>
+                <h2 class="title group flex items-center gap-2 font-bold font-mono tracking-tight text-xl mb-6">
+                    <span>Experience</span>
+                    <button class="section-copy-link hidden group-hover:inline-flex items-center text-zinc-400 hover:text-accent dark:hover:text-accent transition-colors" data-section-id="experience" title="Copy link to Section">
+                        <ion-icon name="link" class="text-sm"></ion-icon>
+                    </button>
+                </h2>
                 <div>
                     <div class="relative pl-8 mb-8 border-l border-zinc-300 dark:border-zinc-700 last:mb-0">
     <div class="absolute w-2.5 h-2.5 bg-accent -left-[5px] top-1.5"></div>
     <div class="flex items-center gap-2 group"><h3 class="text-base font-semibold font-mono text-zinc-900 dark:text-zinc-100 cursor-pointer hover:text-accent dark:hover:text-accent transition-colors" onclick="window.location.href='https://advisor.ml.com/sites/nc/raleigh-nc'">Financial Services Technical Lead, Merrill Lynch</h3><button class="experience-copy-link hidden group-hover:block text-zinc-400 hover:text-accent dark:hover:text-accent transition-colors" data-link="https://advisor.ml.com/sites/nc/raleigh-nc" title="Copy link"><ion-icon name="link" class="text-sm"></ion-icon></button></div>
-    <div class="text-sm font-mono text-zinc-500 dark:text-zinc-400 mb-2">May 2025 - Present</div>
+    <div class="text-sm font-mono text-zinc-500 dark:text-zinc-400 mb-2">May 2026 - Present</div>
     <p class="text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed">This summer, I am working with Mr. Geoffrey Bell at Merrill Lynch to help modernize their internal calculations platform via FactSet with Python.</p>
 </div>
 <div class="relative pl-8 mb-8 border-l border-zinc-300 dark:border-zinc-700 last:mb-0">
@@ -141,7 +169,12 @@
             </section>
 
             <section id="projects">
-                <h2 class="title font-bold font-mono tracking-tight text-xl mb-6">Projects</h2>
+                <h2 class="title group flex items-center gap-2 font-bold font-mono tracking-tight text-xl mb-6">
+                    <span>Projects</span>
+                    <button class="section-copy-link hidden group-hover:inline-flex items-center text-zinc-400 hover:text-accent dark:hover:text-accent transition-colors" data-section-id="projects" title="Copy link to Section">
+                        <ion-icon name="link" class="text-sm"></ion-icon>
+                    </button>
+                </h2>
                 <div class="flex flex-wrap gap-2 mb-6" id="project-filters">
                     <button type="button" aria-pressed="true" class="px-3 py-1 text-sm font-mono rounded-none border border-zinc-300 dark:border-zinc-700 bg-transparent text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 filter-btn transition-colors" data-filter="all">
     All
@@ -379,222 +412,325 @@
             </section>
 
             <section id="skills">
-                <h2 class="title font-bold font-mono tracking-tight text-xl mb-6">Skills</h2>
+                <h2 class="title group flex items-center gap-2 font-bold font-mono tracking-tight text-xl mb-6">
+                    <span>Skills</span>
+                    <button class="section-copy-link hidden group-hover:inline-flex items-center text-zinc-400 hover:text-accent dark:hover:text-accent transition-colors" data-section-id="skills" title="Copy link to Section">
+                        <ion-icon name="link" class="text-sm"></ion-icon>
+                    </button>
+                </h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div>
                         <h3 class="text-base font-semibold font-mono text-accent-2 mb-4">Languages</h3>
-                        <div class="skill-item group mb-3 rounded-none border border-zinc-300 dark:border-zinc-700 bg-transparent overflow-hidden transition-all">
-    <button class="skill-toggle w-full px-4 py-3 flex items-center justify-between hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors text-left" data-skill-id="python">
+                        <div id="skill-python" class="skill-item group mb-3 rounded-none border border-zinc-300 dark:border-zinc-700 bg-transparent overflow-hidden transition-all">
+    <div class="skill-toggle w-full px-4 py-3 flex items-center justify-between hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors text-left cursor-pointer" data-skill-id="python">
         <div class="flex items-center gap-2 flex-1">
             <ion-icon name="logo-python" class="text-lg mr-2"></ion-icon>
             <span class="text-sm font-semibold font-mono text-zinc-900 dark:text-zinc-100">Python</span>
+            <button class="skill-copy-link hidden group-hover:inline-flex items-center text-zinc-400 hover:text-accent dark:hover:text-accent transition-colors" data-skill-id="python" title="Copy link to skill">
+                <ion-icon name="link" class="text-sm"></ion-icon>
+            </button>
             <span class="text-xs font-mono text-zinc-500 dark:text-zinc-400">over 5 years</span>
         </div>
         <ion-icon name="chevron-down-outline" class="skill-toggle-icon text-zinc-500 dark:text-zinc-400 transition-transform"></ion-icon>
-    </button>
-    <div class="skill-content hidden px-4 pb-4 border-t border-zinc-300 dark:border-zinc-700 skill-rollout">
-        <div class="text-xs font-mono text-zinc-600 dark:text-zinc-400 font-medium mb-4 pt-2">Expert</div>
-        <p class="text-sm text-zinc-600 dark:text-zinc-400 mb-3 mt-2">My primary language for most of my programming career. Used for web scraping, automation, data science, and drone software.</p>
-        <div class="mt-2 flex flex-wrap"><a href="#project-pyaerial" class="project-jump inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-600 dark:text-zinc-400 hover:text-accent dark:hover:text-accent hover:border-accent dark:hover:border-accent mr-1.5 mb-1.5 transition-colors">PyAerial</a><a href="#project-airstrik-py" class="project-jump inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-600 dark:text-zinc-400 hover:text-accent dark:hover:text-accent hover:border-accent dark:hover:border-accent mr-1.5 mb-1.5 transition-colors">airstrik.py</a><a href="#project-dronetracker" class="project-jump inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-600 dark:text-zinc-400 hover:text-accent dark:hover:text-accent hover:border-accent dark:hover:border-accent mr-1.5 mb-1.5 transition-colors">DroneTracker</a><a href="#project-finitecraft" class="project-jump inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-600 dark:text-zinc-400 hover:text-accent dark:hover:text-accent hover:border-accent dark:hover:border-accent mr-1.5 mb-1.5 transition-colors">finiteCraft</a><a href="#project-triggered" class="project-jump inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-600 dark:text-zinc-400 hover:text-accent dark:hover:text-accent hover:border-accent dark:hover:border-accent mr-1.5 mb-1.5 transition-colors">Triggered</a></div>
+    </div>
+    <div class="skill-content">
+        <div class="overflow-hidden opacity-0 transition-opacity duration-300">
+            <div class="px-4 pb-4 border-t border-zinc-300 dark:border-zinc-700">
+                <div class="text-xs font-mono text-zinc-600 dark:text-zinc-400 font-medium mb-4 pt-2">Expert</div>
+                <p class="text-sm text-zinc-600 dark:text-zinc-400 mb-3 mt-2">My primary language for most of my programming career. Used for web scraping, automation, data science, and drone software.</p>
+                <div class="mt-2 flex flex-wrap"><a href="#project-pyaerial" class="project-jump inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-600 dark:text-zinc-400 hover:text-accent dark:hover:text-accent hover:border-accent dark:hover:border-accent mr-1.5 mb-1.5 transition-colors">PyAerial</a><a href="#project-airstrik-py" class="project-jump inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-600 dark:text-zinc-400 hover:text-accent dark:hover:text-accent hover:border-accent dark:hover:border-accent mr-1.5 mb-1.5 transition-colors">airstrik.py</a><a href="#project-dronetracker" class="project-jump inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-600 dark:text-zinc-400 hover:text-accent dark:hover:text-accent hover:border-accent dark:hover:border-accent mr-1.5 mb-1.5 transition-colors">DroneTracker</a><a href="#project-finitecraft" class="project-jump inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-600 dark:text-zinc-400 hover:text-accent dark:hover:text-accent hover:border-accent dark:hover:border-accent mr-1.5 mb-1.5 transition-colors">finiteCraft</a><a href="#project-triggered" class="project-jump inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-600 dark:text-zinc-400 hover:text-accent dark:hover:text-accent hover:border-accent dark:hover:border-accent mr-1.5 mb-1.5 transition-colors">Triggered</a></div>
+            </div>
+        </div>
     </div>
 </div>
-<div class="skill-item group mb-3 rounded-none border border-zinc-300 dark:border-zinc-700 bg-transparent overflow-hidden transition-all">
-    <button class="skill-toggle w-full px-4 py-3 flex items-center justify-between hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors text-left" data-skill-id="c-cplusplus">
+<div id="skill-c-cplusplus" class="skill-item group mb-3 rounded-none border border-zinc-300 dark:border-zinc-700 bg-transparent overflow-hidden transition-all">
+    <div class="skill-toggle w-full px-4 py-3 flex items-center justify-between hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors text-left cursor-pointer" data-skill-id="c-cplusplus">
         <div class="flex items-center gap-2 flex-1">
             <ion-icon name="code-slash-outline" class="text-lg mr-2"></ion-icon>
             <span class="text-sm font-semibold font-mono text-zinc-900 dark:text-zinc-100">C/C++</span>
+            <button class="skill-copy-link hidden group-hover:inline-flex items-center text-zinc-400 hover:text-accent dark:hover:text-accent transition-colors" data-skill-id="c-cplusplus" title="Copy link to skill">
+                <ion-icon name="link" class="text-sm"></ion-icon>
+            </button>
             <span class="text-xs font-mono text-zinc-500 dark:text-zinc-400">over 3 years</span>
         </div>
         <ion-icon name="chevron-down-outline" class="skill-toggle-icon text-zinc-500 dark:text-zinc-400 transition-transform"></ion-icon>
-    </button>
-    <div class="skill-content hidden px-4 pb-4 border-t border-zinc-300 dark:border-zinc-700 skill-rollout">
-        <div class="text-xs font-mono text-zinc-600 dark:text-zinc-400 font-medium mb-4 pt-2">Advanced</div>
-        <p class="text-sm text-zinc-600 dark:text-zinc-400 mb-3 mt-2">Proficient in C/C++ for systems programming and performance-critical applications. Used in various academic and personal projects.</p>
-        <div class="mt-2 flex flex-wrap"><span class="inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-500 dark:text-zinc-500 mr-1.5 mb-1.5">Embedded Systems via Arduino</span><span class="inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-500 dark:text-zinc-500 mr-1.5 mb-1.5">Python compiler extensions for AERPAW</span><span class="inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-500 dark:text-zinc-500 mr-1.5 mb-1.5">JIT compilation for performance-critical Python code</span></div>
+    </div>
+    <div class="skill-content">
+        <div class="overflow-hidden opacity-0 transition-opacity duration-300">
+            <div class="px-4 pb-4 border-t border-zinc-300 dark:border-zinc-700">
+                <div class="text-xs font-mono text-zinc-600 dark:text-zinc-400 font-medium mb-4 pt-2">Advanced</div>
+                <p class="text-sm text-zinc-600 dark:text-zinc-400 mb-3 mt-2">Proficient in C/C++ for systems programming and performance-critical applications. Used in various academic and personal projects.</p>
+                <div class="mt-2 flex flex-wrap"><span class="inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-500 dark:text-zinc-500 mr-1.5 mb-1.5">Embedded Systems via Arduino</span><span class="inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-500 dark:text-zinc-500 mr-1.5 mb-1.5">Python compiler extensions for AERPAW</span><span class="inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-500 dark:text-zinc-500 mr-1.5 mb-1.5">JIT compilation for performance-critical Python code</span></div>
+            </div>
+        </div>
     </div>
 </div>
-<div class="skill-item group mb-3 rounded-none border border-zinc-300 dark:border-zinc-700 bg-transparent overflow-hidden transition-all">
-    <button class="skill-toggle w-full px-4 py-3 flex items-center justify-between hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors text-left" data-skill-id="javascript">
+<div id="skill-javascript" class="skill-item group mb-3 rounded-none border border-zinc-300 dark:border-zinc-700 bg-transparent overflow-hidden transition-all">
+    <div class="skill-toggle w-full px-4 py-3 flex items-center justify-between hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors text-left cursor-pointer" data-skill-id="javascript">
         <div class="flex items-center gap-2 flex-1">
             <ion-icon name="logo-javascript" class="text-lg mr-2"></ion-icon>
             <span class="text-sm font-semibold font-mono text-zinc-900 dark:text-zinc-100">JavaScript</span>
+            <button class="skill-copy-link hidden group-hover:inline-flex items-center text-zinc-400 hover:text-accent dark:hover:text-accent transition-colors" data-skill-id="javascript" title="Copy link to skill">
+                <ion-icon name="link" class="text-sm"></ion-icon>
+            </button>
             <span class="text-xs font-mono text-zinc-500 dark:text-zinc-400">over 3 years</span>
         </div>
         <ion-icon name="chevron-down-outline" class="skill-toggle-icon text-zinc-500 dark:text-zinc-400 transition-transform"></ion-icon>
-    </button>
-    <div class="skill-content hidden px-4 pb-4 border-t border-zinc-300 dark:border-zinc-700 skill-rollout">
-        <div class="text-xs font-mono text-zinc-600 dark:text-zinc-400 font-medium mb-4 pt-2">Advanced</div>
-        <p class="text-sm text-zinc-600 dark:text-zinc-400 mb-3 mt-2">Used extensively for front-end development (Tailwind, React) and specialized automation tools.</p>
-        <div class="mt-2 flex flex-wrap"><span class="inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-500 dark:text-zinc-500 mr-1.5 mb-1.5">Portfolio Website (v2)</span><a href="#project-molotov" class="project-jump inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-600 dark:text-zinc-400 hover:text-accent dark:hover:text-accent hover:border-accent dark:hover:border-accent mr-1.5 mb-1.5 transition-colors">Molotov</a><a href="#project-finitecraft" class="project-jump inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-600 dark:text-zinc-400 hover:text-accent dark:hover:text-accent hover:border-accent dark:hover:border-accent mr-1.5 mb-1.5 transition-colors">finiteCraft</a></div>
+    </div>
+    <div class="skill-content">
+        <div class="overflow-hidden opacity-0 transition-opacity duration-300">
+            <div class="px-4 pb-4 border-t border-zinc-300 dark:border-zinc-700">
+                <div class="text-xs font-mono text-zinc-600 dark:text-zinc-400 font-medium mb-4 pt-2">Advanced</div>
+                <p class="text-sm text-zinc-600 dark:text-zinc-400 mb-3 mt-2">Used extensively for front-end development (Tailwind, React) and specialized automation tools.</p>
+                <div class="mt-2 flex flex-wrap"><span class="inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-500 dark:text-zinc-500 mr-1.5 mb-1.5">Portfolio Website (v2)</span><a href="#project-molotov" class="project-jump inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-600 dark:text-zinc-400 hover:text-accent dark:hover:text-accent hover:border-accent dark:hover:border-accent mr-1.5 mb-1.5 transition-colors">Molotov</a><a href="#project-finitecraft" class="project-jump inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-600 dark:text-zinc-400 hover:text-accent dark:hover:text-accent hover:border-accent dark:hover:border-accent mr-1.5 mb-1.5 transition-colors">finiteCraft</a></div>
+            </div>
+        </div>
     </div>
 </div>
-<div class="skill-item group mb-3 rounded-none border border-zinc-300 dark:border-zinc-700 bg-transparent overflow-hidden transition-all">
-    <button class="skill-toggle w-full px-4 py-3 flex items-center justify-between hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors text-left" data-skill-id="java">
+<div id="skill-java" class="skill-item group mb-3 rounded-none border border-zinc-300 dark:border-zinc-700 bg-transparent overflow-hidden transition-all">
+    <div class="skill-toggle w-full px-4 py-3 flex items-center justify-between hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors text-left cursor-pointer" data-skill-id="java">
         <div class="flex items-center gap-2 flex-1">
             <ion-icon name="cafe-outline" class="text-lg mr-2"></ion-icon>
             <span class="text-sm font-semibold font-mono text-zinc-900 dark:text-zinc-100">Java</span>
+            <button class="skill-copy-link hidden group-hover:inline-flex items-center text-zinc-400 hover:text-accent dark:hover:text-accent transition-colors" data-skill-id="java" title="Copy link to skill">
+                <ion-icon name="link" class="text-sm"></ion-icon>
+            </button>
             <span class="text-xs font-mono text-zinc-500 dark:text-zinc-400">over 4 years</span>
         </div>
         <ion-icon name="chevron-down-outline" class="skill-toggle-icon text-zinc-500 dark:text-zinc-400 transition-transform"></ion-icon>
-    </button>
-    <div class="skill-content hidden px-4 pb-4 border-t border-zinc-300 dark:border-zinc-700 skill-rollout">
-        <div class="text-xs font-mono text-zinc-600 dark:text-zinc-400 font-medium mb-4 pt-2">Competent</div>
-        <p class="text-sm text-zinc-600 dark:text-zinc-400 mb-3 mt-2">Really good understanding of OOP principles. Experience mostly in the context of building Minecraft plugins.</p>
-        <div class="mt-2 flex flex-wrap"><a href="#project-statify" class="project-jump inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-600 dark:text-zinc-400 hover:text-accent dark:hover:text-accent hover:border-accent dark:hover:border-accent mr-1.5 mb-1.5 transition-colors">Statify</a></div>
+    </div>
+    <div class="skill-content">
+        <div class="overflow-hidden opacity-0 transition-opacity duration-300">
+            <div class="px-4 pb-4 border-t border-zinc-300 dark:border-zinc-700">
+                <div class="text-xs font-mono text-zinc-600 dark:text-zinc-400 font-medium mb-4 pt-2">Competent</div>
+                <p class="text-sm text-zinc-600 dark:text-zinc-400 mb-3 mt-2">Really good understanding of OOP principles. Experience mostly in the context of building Minecraft plugins.</p>
+                <div class="mt-2 flex flex-wrap"><a href="#project-statify" class="project-jump inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-600 dark:text-zinc-400 hover:text-accent dark:hover:text-accent hover:border-accent dark:hover:border-accent mr-1.5 mb-1.5 transition-colors">Statify</a></div>
+            </div>
+        </div>
     </div>
 </div>
-<div class="skill-item group mb-3 rounded-none border border-zinc-300 dark:border-zinc-700 bg-transparent overflow-hidden transition-all">
-    <button class="skill-toggle w-full px-4 py-3 flex items-center justify-between hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors text-left" data-skill-id="c">
+<div id="skill-c" class="skill-item group mb-3 rounded-none border border-zinc-300 dark:border-zinc-700 bg-transparent overflow-hidden transition-all">
+    <div class="skill-toggle w-full px-4 py-3 flex items-center justify-between hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors text-left cursor-pointer" data-skill-id="c">
         <div class="flex items-center gap-2 flex-1">
             <ion-icon name="code-outline" class="text-lg mr-2"></ion-icon>
             <span class="text-sm font-semibold font-mono text-zinc-900 dark:text-zinc-100">C#</span>
+            <button class="skill-copy-link hidden group-hover:inline-flex items-center text-zinc-400 hover:text-accent dark:hover:text-accent transition-colors" data-skill-id="c" title="Copy link to skill">
+                <ion-icon name="link" class="text-sm"></ion-icon>
+            </button>
             <span class="text-xs font-mono text-zinc-500 dark:text-zinc-400">over 2 years</span>
         </div>
         <ion-icon name="chevron-down-outline" class="skill-toggle-icon text-zinc-500 dark:text-zinc-400 transition-transform"></ion-icon>
-    </button>
-    <div class="skill-content hidden px-4 pb-4 border-t border-zinc-300 dark:border-zinc-700 skill-rollout">
-        <div class="text-xs font-mono text-zinc-600 dark:text-zinc-400 font-medium mb-4 pt-2">Competent</div>
-        <p class="text-sm text-zinc-600 dark:text-zinc-400 mb-3 mt-2">Experience with .NET and game development. Most recently used for Sebastian Lague's Chess Challenge.</p>
-        <div class="mt-2 flex flex-wrap"><a href="#project-chess-challenge" class="project-jump inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-600 dark:text-zinc-400 hover:text-accent dark:hover:text-accent hover:border-accent dark:hover:border-accent mr-1.5 mb-1.5 transition-colors">Chess-Challenge</a></div>
+    </div>
+    <div class="skill-content">
+        <div class="overflow-hidden opacity-0 transition-opacity duration-300">
+            <div class="px-4 pb-4 border-t border-zinc-300 dark:border-zinc-700">
+                <div class="text-xs font-mono text-zinc-600 dark:text-zinc-400 font-medium mb-4 pt-2">Competent</div>
+                <p class="text-sm text-zinc-600 dark:text-zinc-400 mb-3 mt-2">Experience with .NET and game development. Most recently used for Sebastian Lague's Chess Challenge.</p>
+                <div class="mt-2 flex flex-wrap"><a href="#project-chess-challenge" class="project-jump inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-600 dark:text-zinc-400 hover:text-accent dark:hover:text-accent hover:border-accent dark:hover:border-accent mr-1.5 mb-1.5 transition-colors">Chess-Challenge</a></div>
+            </div>
+        </div>
     </div>
 </div>
-<div class="skill-item group mb-3 rounded-none border border-zinc-300 dark:border-zinc-700 bg-transparent overflow-hidden transition-all">
-    <button class="skill-toggle w-full px-4 py-3 flex items-center justify-between hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors text-left" data-skill-id="bash">
+<div id="skill-bash" class="skill-item group mb-3 rounded-none border border-zinc-300 dark:border-zinc-700 bg-transparent overflow-hidden transition-all">
+    <div class="skill-toggle w-full px-4 py-3 flex items-center justify-between hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors text-left cursor-pointer" data-skill-id="bash">
         <div class="flex items-center gap-2 flex-1">
             <ion-icon name="terminal-outline" class="text-lg mr-2"></ion-icon>
             <span class="text-sm font-semibold font-mono text-zinc-900 dark:text-zinc-100">Bash</span>
+            <button class="skill-copy-link hidden group-hover:inline-flex items-center text-zinc-400 hover:text-accent dark:hover:text-accent transition-colors" data-skill-id="bash" title="Copy link to skill">
+                <ion-icon name="link" class="text-sm"></ion-icon>
+            </button>
             <span class="text-xs font-mono text-zinc-500 dark:text-zinc-400">over 4 years</span>
         </div>
         <ion-icon name="chevron-down-outline" class="skill-toggle-icon text-zinc-500 dark:text-zinc-400 transition-transform"></ion-icon>
-    </button>
-    <div class="skill-content hidden px-4 pb-4 border-t border-zinc-300 dark:border-zinc-700 skill-rollout">
-        <div class="text-xs font-mono text-zinc-600 dark:text-zinc-400 font-medium mb-4 pt-2">Competent</div>
-        <p class="text-sm text-zinc-600 dark:text-zinc-400 mb-3 mt-2">Proficient in writing scripts for automation, CI/CD pipelines, and Linux system administration.</p>
-        <div class="mt-2 flex flex-wrap"><span class="inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-500 dark:text-zinc-500 mr-1.5 mb-1.5">All projects</span><span class="inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-500 dark:text-zinc-500 mr-1.5 mb-1.5">Docker setup scripts</span></div>
+    </div>
+    <div class="skill-content">
+        <div class="overflow-hidden opacity-0 transition-opacity duration-300">
+            <div class="px-4 pb-4 border-t border-zinc-300 dark:border-zinc-700">
+                <div class="text-xs font-mono text-zinc-600 dark:text-zinc-400 font-medium mb-4 pt-2">Competent</div>
+                <p class="text-sm text-zinc-600 dark:text-zinc-400 mb-3 mt-2">Proficient in writing scripts for automation, CI/CD pipelines, and Linux system administration.</p>
+                <div class="mt-2 flex flex-wrap"><span class="inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-500 dark:text-zinc-500 mr-1.5 mb-1.5">All projects</span><span class="inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-500 dark:text-zinc-500 mr-1.5 mb-1.5">Docker setup scripts</span></div>
+            </div>
+        </div>
     </div>
 </div>
 
                     </div>
                     <div>
                         <h3 class="text-base font-semibold font-mono text-accent-2 mb-4">Technologies</h3>
-                        <div class="skill-item group mb-3 rounded-none border border-zinc-300 dark:border-zinc-700 bg-transparent overflow-hidden transition-all">
-    <button class="skill-toggle w-full px-4 py-3 flex items-center justify-between hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors text-left" data-skill-id="linux-unix">
+                        <div id="skill-linux-unix" class="skill-item group mb-3 rounded-none border border-zinc-300 dark:border-zinc-700 bg-transparent overflow-hidden transition-all">
+    <div class="skill-toggle w-full px-4 py-3 flex items-center justify-between hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors text-left cursor-pointer" data-skill-id="linux-unix">
         <div class="flex items-center gap-2 flex-1">
             <ion-icon name="desktop-outline" class="text-lg mr-2"></ion-icon>
             <span class="text-sm font-semibold font-mono text-zinc-900 dark:text-zinc-100">Linux/Unix</span>
+            <button class="skill-copy-link hidden group-hover:inline-flex items-center text-zinc-400 hover:text-accent dark:hover:text-accent transition-colors" data-skill-id="linux-unix" title="Copy link to skill">
+                <ion-icon name="link" class="text-sm"></ion-icon>
+            </button>
             <span class="text-xs font-mono text-zinc-500 dark:text-zinc-400">over 5 years</span>
         </div>
         <ion-icon name="chevron-down-outline" class="skill-toggle-icon text-zinc-500 dark:text-zinc-400 transition-transform"></ion-icon>
-    </button>
-    <div class="skill-content hidden px-4 pb-4 border-t border-zinc-300 dark:border-zinc-700 skill-rollout">
-        <div class="text-xs font-mono text-zinc-600 dark:text-zinc-400 font-medium mb-4 pt-2">Expert</div>
-        <p class="text-sm text-zinc-600 dark:text-zinc-400 mb-3 mt-2">Heavy user of Linux for development and server management.</p>
-        <div class="mt-2 flex flex-wrap"><span class="inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-500 dark:text-zinc-500 mr-1.5 mb-1.5">Server Management</span><span class="inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-500 dark:text-zinc-500 mr-1.5 mb-1.5">All Projects</span></div>
+    </div>
+    <div class="skill-content">
+        <div class="overflow-hidden opacity-0 transition-opacity duration-300">
+            <div class="px-4 pb-4 border-t border-zinc-300 dark:border-zinc-700">
+                <div class="text-xs font-mono text-zinc-600 dark:text-zinc-400 font-medium mb-4 pt-2">Expert</div>
+                <p class="text-sm text-zinc-600 dark:text-zinc-400 mb-3 mt-2">Heavy user of Linux for development and server management.</p>
+                <div class="mt-2 flex flex-wrap"><span class="inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-500 dark:text-zinc-500 mr-1.5 mb-1.5">Server Management</span><span class="inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-500 dark:text-zinc-500 mr-1.5 mb-1.5">All Projects</span></div>
+            </div>
+        </div>
     </div>
 </div>
-<div class="skill-item group mb-3 rounded-none border border-zinc-300 dark:border-zinc-700 bg-transparent overflow-hidden transition-all">
-    <button class="skill-toggle w-full px-4 py-3 flex items-center justify-between hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors text-left" data-skill-id="docker">
+<div id="skill-docker" class="skill-item group mb-3 rounded-none border border-zinc-300 dark:border-zinc-700 bg-transparent overflow-hidden transition-all">
+    <div class="skill-toggle w-full px-4 py-3 flex items-center justify-between hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors text-left cursor-pointer" data-skill-id="docker">
         <div class="flex items-center gap-2 flex-1">
             <ion-icon name="logo-docker" class="text-lg mr-2"></ion-icon>
             <span class="text-sm font-semibold font-mono text-zinc-900 dark:text-zinc-100">Docker</span>
+            <button class="skill-copy-link hidden group-hover:inline-flex items-center text-zinc-400 hover:text-accent dark:hover:text-accent transition-colors" data-skill-id="docker" title="Copy link to skill">
+                <ion-icon name="link" class="text-sm"></ion-icon>
+            </button>
             <span class="text-xs font-mono text-zinc-500 dark:text-zinc-400">over 3 years</span>
         </div>
         <ion-icon name="chevron-down-outline" class="skill-toggle-icon text-zinc-500 dark:text-zinc-400 transition-transform"></ion-icon>
-    </button>
-    <div class="skill-content hidden px-4 pb-4 border-t border-zinc-300 dark:border-zinc-700 skill-rollout">
-        <div class="text-xs font-mono text-zinc-600 dark:text-zinc-400 font-medium mb-4 pt-2">Expert</div>
-        <p class="text-sm text-zinc-600 dark:text-zinc-400 mb-3 mt-2">All my major projects are deployed using Docker for reproducibility and scale.</p>
-        <div class="mt-2 flex flex-wrap"><a href="#project-pyaerial" class="project-jump inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-600 dark:text-zinc-400 hover:text-accent dark:hover:text-accent hover:border-accent dark:hover:border-accent mr-1.5 mb-1.5 transition-colors">PyAerial</a><a href="#project-airstrik-py" class="project-jump inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-600 dark:text-zinc-400 hover:text-accent dark:hover:text-accent hover:border-accent dark:hover:border-accent mr-1.5 mb-1.5 transition-colors">airstrik.py</a><a href="#project-dronetracker" class="project-jump inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-600 dark:text-zinc-400 hover:text-accent dark:hover:text-accent hover:border-accent dark:hover:border-accent mr-1.5 mb-1.5 transition-colors">DroneTracker</a><a href="#project-piranha" class="project-jump inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-600 dark:text-zinc-400 hover:text-accent dark:hover:text-accent hover:border-accent dark:hover:border-accent mr-1.5 mb-1.5 transition-colors">Piranha</a></div>
+    </div>
+    <div class="skill-content">
+        <div class="overflow-hidden opacity-0 transition-opacity duration-300">
+            <div class="px-4 pb-4 border-t border-zinc-300 dark:border-zinc-700">
+                <div class="text-xs font-mono text-zinc-600 dark:text-zinc-400 font-medium mb-4 pt-2">Expert</div>
+                <p class="text-sm text-zinc-600 dark:text-zinc-400 mb-3 mt-2">All my major projects are deployed using Docker for reproducibility and scale.</p>
+                <div class="mt-2 flex flex-wrap"><a href="#project-pyaerial" class="project-jump inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-600 dark:text-zinc-400 hover:text-accent dark:hover:text-accent hover:border-accent dark:hover:border-accent mr-1.5 mb-1.5 transition-colors">PyAerial</a><a href="#project-airstrik-py" class="project-jump inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-600 dark:text-zinc-400 hover:text-accent dark:hover:text-accent hover:border-accent dark:hover:border-accent mr-1.5 mb-1.5 transition-colors">airstrik.py</a><a href="#project-dronetracker" class="project-jump inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-600 dark:text-zinc-400 hover:text-accent dark:hover:text-accent hover:border-accent dark:hover:border-accent mr-1.5 mb-1.5 transition-colors">DroneTracker</a><a href="#project-piranha" class="project-jump inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-600 dark:text-zinc-400 hover:text-accent dark:hover:text-accent hover:border-accent dark:hover:border-accent mr-1.5 mb-1.5 transition-colors">Piranha</a></div>
+            </div>
+        </div>
     </div>
 </div>
-<div class="skill-item group mb-3 rounded-none border border-zinc-300 dark:border-zinc-700 bg-transparent overflow-hidden transition-all">
-    <button class="skill-toggle w-full px-4 py-3 flex items-center justify-between hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors text-left" data-skill-id="jetbrains-suite">
+<div id="skill-jetbrains-suite" class="skill-item group mb-3 rounded-none border border-zinc-300 dark:border-zinc-700 bg-transparent overflow-hidden transition-all">
+    <div class="skill-toggle w-full px-4 py-3 flex items-center justify-between hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors text-left cursor-pointer" data-skill-id="jetbrains-suite">
         <div class="flex items-center gap-2 flex-1">
             <ion-icon name="bulb-outline" class="text-lg mr-2"></ion-icon>
             <span class="text-sm font-semibold font-mono text-zinc-900 dark:text-zinc-100">JetBrains Suite</span>
+            <button class="skill-copy-link hidden group-hover:inline-flex items-center text-zinc-400 hover:text-accent dark:hover:text-accent transition-colors" data-skill-id="jetbrains-suite" title="Copy link to skill">
+                <ion-icon name="link" class="text-sm"></ion-icon>
+            </button>
             <span class="text-xs font-mono text-zinc-500 dark:text-zinc-400">over 5 years</span>
         </div>
         <ion-icon name="chevron-down-outline" class="skill-toggle-icon text-zinc-500 dark:text-zinc-400 transition-transform"></ion-icon>
-    </button>
-    <div class="skill-content hidden px-4 pb-4 border-t border-zinc-300 dark:border-zinc-700 skill-rollout">
-        <div class="text-xs font-mono text-zinc-600 dark:text-zinc-400 font-medium mb-4 pt-2">Expert</div>
-        <p class="text-sm text-zinc-600 dark:text-zinc-400 mb-3 mt-2">Advanced user of PyCharm, CLion, and IntelliJ.</p>
-        <div class="mt-2 flex flex-wrap"><span class="inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-500 dark:text-zinc-500 mr-1.5 mb-1.5">All Projects</span></div>
+    </div>
+    <div class="skill-content">
+        <div class="overflow-hidden opacity-0 transition-opacity duration-300">
+            <div class="px-4 pb-4 border-t border-zinc-300 dark:border-zinc-700">
+                <div class="text-xs font-mono text-zinc-600 dark:text-zinc-400 font-medium mb-4 pt-2">Expert</div>
+                <p class="text-sm text-zinc-600 dark:text-zinc-400 mb-3 mt-2">Advanced user of PyCharm, CLion, and IntelliJ.</p>
+                <div class="mt-2 flex flex-wrap"><span class="inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-500 dark:text-zinc-500 mr-1.5 mb-1.5">All Projects</span></div>
+            </div>
+        </div>
     </div>
 </div>
-<div class="skill-item group mb-3 rounded-none border border-zinc-300 dark:border-zinc-700 bg-transparent overflow-hidden transition-all">
-    <button class="skill-toggle w-full px-4 py-3 flex items-center justify-between hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors text-left" data-skill-id="git">
+<div id="skill-git" class="skill-item group mb-3 rounded-none border border-zinc-300 dark:border-zinc-700 bg-transparent overflow-hidden transition-all">
+    <div class="skill-toggle w-full px-4 py-3 flex items-center justify-between hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors text-left cursor-pointer" data-skill-id="git">
         <div class="flex items-center gap-2 flex-1">
             <ion-icon name="logo-github" class="text-lg mr-2"></ion-icon>
             <span class="text-sm font-semibold font-mono text-zinc-900 dark:text-zinc-100">Git</span>
+            <button class="skill-copy-link hidden group-hover:inline-flex items-center text-zinc-400 hover:text-accent dark:hover:text-accent transition-colors" data-skill-id="git" title="Copy link to skill">
+                <ion-icon name="link" class="text-sm"></ion-icon>
+            </button>
             <span class="text-xs font-mono text-zinc-500 dark:text-zinc-400">over 4 years</span>
         </div>
         <ion-icon name="chevron-down-outline" class="skill-toggle-icon text-zinc-500 dark:text-zinc-400 transition-transform"></ion-icon>
-    </button>
-    <div class="skill-content hidden px-4 pb-4 border-t border-zinc-300 dark:border-zinc-700 skill-rollout">
-        <div class="text-xs font-mono text-zinc-600 dark:text-zinc-400 font-medium mb-4 pt-2">Advanced</div>
-        <p class="text-sm text-zinc-600 dark:text-zinc-400 mb-3 mt-2">Strong understanding of Git workflows, branching strategies, and repository management.</p>
-        <div class="mt-2 flex flex-wrap"><span class="inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-500 dark:text-zinc-500 mr-1.5 mb-1.5">All Projects</span></div>
+    </div>
+    <div class="skill-content">
+        <div class="overflow-hidden opacity-0 transition-opacity duration-300">
+            <div class="px-4 pb-4 border-t border-zinc-300 dark:border-zinc-700">
+                <div class="text-xs font-mono text-zinc-600 dark:text-zinc-400 font-medium mb-4 pt-2">Advanced</div>
+                <p class="text-sm text-zinc-600 dark:text-zinc-400 mb-3 mt-2">Strong understanding of Git workflows, branching strategies, and repository management.</p>
+                <div class="mt-2 flex flex-wrap"><span class="inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-500 dark:text-zinc-500 mr-1.5 mb-1.5">All Projects</span></div>
+            </div>
+        </div>
     </div>
 </div>
-<div class="skill-item group mb-3 rounded-none border border-zinc-300 dark:border-zinc-700 bg-transparent overflow-hidden transition-all">
-    <button class="skill-toggle w-full px-4 py-3 flex items-center justify-between hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors text-left" data-skill-id="selenium-web-scraping">
+<div id="skill-selenium-web-scraping" class="skill-item group mb-3 rounded-none border border-zinc-300 dark:border-zinc-700 bg-transparent overflow-hidden transition-all">
+    <div class="skill-toggle w-full px-4 py-3 flex items-center justify-between hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors text-left cursor-pointer" data-skill-id="selenium-web-scraping">
         <div class="flex items-center gap-2 flex-1">
             <ion-icon name="globe-outline" class="text-lg mr-2"></ion-icon>
             <span class="text-sm font-semibold font-mono text-zinc-900 dark:text-zinc-100">Selenium / Web Scraping</span>
+            <button class="skill-copy-link hidden group-hover:inline-flex items-center text-zinc-400 hover:text-accent dark:hover:text-accent transition-colors" data-skill-id="selenium-web-scraping" title="Copy link to skill">
+                <ion-icon name="link" class="text-sm"></ion-icon>
+            </button>
             <span class="text-xs font-mono text-zinc-500 dark:text-zinc-400">over 2 years</span>
         </div>
         <ion-icon name="chevron-down-outline" class="skill-toggle-icon text-zinc-500 dark:text-zinc-400 transition-transform"></ion-icon>
-    </button>
-    <div class="skill-content hidden px-4 pb-4 border-t border-zinc-300 dark:border-zinc-700 skill-rollout">
-        <div class="text-xs font-mono text-zinc-600 dark:text-zinc-400 font-medium mb-4 pt-2">Advanced</div>
-        <p class="text-sm text-zinc-600 dark:text-zinc-400 mb-3 mt-2">Strong experience with web scraping and browser automation.</p>
-        <div class="mt-2 flex flex-wrap"><a href="#project-finitecraft" class="project-jump inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-600 dark:text-zinc-400 hover:text-accent dark:hover:text-accent hover:border-accent dark:hover:border-accent mr-1.5 mb-1.5 transition-colors">finiteCraft</a><a href="#project-molotov" class="project-jump inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-600 dark:text-zinc-400 hover:text-accent dark:hover:text-accent hover:border-accent dark:hover:border-accent mr-1.5 mb-1.5 transition-colors">Molotov</a></div>
+    </div>
+    <div class="skill-content">
+        <div class="overflow-hidden opacity-0 transition-opacity duration-300">
+            <div class="px-4 pb-4 border-t border-zinc-300 dark:border-zinc-700">
+                <div class="text-xs font-mono text-zinc-600 dark:text-zinc-400 font-medium mb-4 pt-2">Advanced</div>
+                <p class="text-sm text-zinc-600 dark:text-zinc-400 mb-3 mt-2">Strong experience with web scraping and browser automation.</p>
+                <div class="mt-2 flex flex-wrap"><a href="#project-finitecraft" class="project-jump inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-600 dark:text-zinc-400 hover:text-accent dark:hover:text-accent hover:border-accent dark:hover:border-accent mr-1.5 mb-1.5 transition-colors">finiteCraft</a><a href="#project-molotov" class="project-jump inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-600 dark:text-zinc-400 hover:text-accent dark:hover:text-accent hover:border-accent dark:hover:border-accent mr-1.5 mb-1.5 transition-colors">Molotov</a></div>
+            </div>
+        </div>
     </div>
 </div>
-<div class="skill-item group mb-3 rounded-none border border-zinc-300 dark:border-zinc-700 bg-transparent overflow-hidden transition-all">
-    <button class="skill-toggle w-full px-4 py-3 flex items-center justify-between hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors text-left" data-skill-id="openapi">
+<div id="skill-openapi" class="skill-item group mb-3 rounded-none border border-zinc-300 dark:border-zinc-700 bg-transparent overflow-hidden transition-all">
+    <div class="skill-toggle w-full px-4 py-3 flex items-center justify-between hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors text-left cursor-pointer" data-skill-id="openapi">
         <div class="flex items-center gap-2 flex-1">
             <ion-icon name="server-outline" class="text-lg mr-2"></ion-icon>
             <span class="text-sm font-semibold font-mono text-zinc-900 dark:text-zinc-100">OpenAPI</span>
+            <button class="skill-copy-link hidden group-hover:inline-flex items-center text-zinc-400 hover:text-accent dark:hover:text-accent transition-colors" data-skill-id="openapi" title="Copy link to skill">
+                <ion-icon name="link" class="text-sm"></ion-icon>
+            </button>
             <span class="text-xs font-mono text-zinc-500 dark:text-zinc-400">over 2 years</span>
         </div>
         <ion-icon name="chevron-down-outline" class="skill-toggle-icon text-zinc-500 dark:text-zinc-400 transition-transform"></ion-icon>
-    </button>
-    <div class="skill-content hidden px-4 pb-4 border-t border-zinc-300 dark:border-zinc-700 skill-rollout">
-        <div class="text-xs font-mono text-zinc-600 dark:text-zinc-400 font-medium mb-4 pt-2">Advanced</div>
-        <p class="text-sm text-zinc-600 dark:text-zinc-400 mb-3 mt-2">Experience designing and documenting REST APIs for complex data systems.</p>
-        <div class="mt-2 flex flex-wrap"><a href="#project-pyaerial" class="project-jump inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-600 dark:text-zinc-400 hover:text-accent dark:hover:text-accent hover:border-accent dark:hover:border-accent mr-1.5 mb-1.5 transition-colors">PyAerial</a><a href="#project-triggered" class="project-jump inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-600 dark:text-zinc-400 hover:text-accent dark:hover:text-accent hover:border-accent dark:hover:border-accent mr-1.5 mb-1.5 transition-colors">Triggered</a></div>
+    </div>
+    <div class="skill-content">
+        <div class="overflow-hidden opacity-0 transition-opacity duration-300">
+            <div class="px-4 pb-4 border-t border-zinc-300 dark:border-zinc-700">
+                <div class="text-xs font-mono text-zinc-600 dark:text-zinc-400 font-medium mb-4 pt-2">Advanced</div>
+                <p class="text-sm text-zinc-600 dark:text-zinc-400 mb-3 mt-2">Experience designing and documenting REST APIs for complex data systems.</p>
+                <div class="mt-2 flex flex-wrap"><a href="#project-pyaerial" class="project-jump inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-600 dark:text-zinc-400 hover:text-accent dark:hover:text-accent hover:border-accent dark:hover:border-accent mr-1.5 mb-1.5 transition-colors">PyAerial</a><a href="#project-triggered" class="project-jump inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-600 dark:text-zinc-400 hover:text-accent dark:hover:text-accent hover:border-accent dark:hover:border-accent mr-1.5 mb-1.5 transition-colors">Triggered</a></div>
+            </div>
+        </div>
     </div>
 </div>
-<div class="skill-item group mb-3 rounded-none border border-zinc-300 dark:border-zinc-700 bg-transparent overflow-hidden transition-all">
-    <button class="skill-toggle w-full px-4 py-3 flex items-center justify-between hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors text-left" data-skill-id="sql-mysql-postgres">
+<div id="skill-sql-mysql-postgres" class="skill-item group mb-3 rounded-none border border-zinc-300 dark:border-zinc-700 bg-transparent overflow-hidden transition-all">
+    <div class="skill-toggle w-full px-4 py-3 flex items-center justify-between hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors text-left cursor-pointer" data-skill-id="sql-mysql-postgres">
         <div class="flex items-center gap-2 flex-1">
             <ion-icon name="server-outline" class="text-lg mr-2"></ion-icon>
             <span class="text-sm font-semibold font-mono text-zinc-900 dark:text-zinc-100">SQL/MySQL/Postgres</span>
+            <button class="skill-copy-link hidden group-hover:inline-flex items-center text-zinc-400 hover:text-accent dark:hover:text-accent transition-colors" data-skill-id="sql-mysql-postgres" title="Copy link to skill">
+                <ion-icon name="link" class="text-sm"></ion-icon>
+            </button>
             <span class="text-xs font-mono text-zinc-500 dark:text-zinc-400">over 4 years</span>
         </div>
         <ion-icon name="chevron-down-outline" class="skill-toggle-icon text-zinc-500 dark:text-zinc-400 transition-transform"></ion-icon>
-    </button>
-    <div class="skill-content hidden px-4 pb-4 border-t border-zinc-300 dark:border-zinc-700 skill-rollout">
-        <div class="text-xs font-mono text-zinc-600 dark:text-zinc-400 font-medium mb-4 pt-2">Advanced</div>
-        <p class="text-sm text-zinc-600 dark:text-zinc-400 mb-3 mt-2">Relational database design, optimization, and management for high-concurrency applications.</p>
-        <div class="mt-2 flex flex-wrap"><a href="#project-playcord" class="project-jump inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-600 dark:text-zinc-400 hover:text-accent dark:hover:text-accent hover:border-accent dark:hover:border-accent mr-1.5 mb-1.5 transition-colors">PlayCord</a><a href="#project-triggered" class="project-jump inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-600 dark:text-zinc-400 hover:text-accent dark:hover:text-accent hover:border-accent dark:hover:border-accent mr-1.5 mb-1.5 transition-colors">Triggered</a><a href="#project-statify" class="project-jump inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-600 dark:text-zinc-400 hover:text-accent dark:hover:text-accent hover:border-accent dark:hover:border-accent mr-1.5 mb-1.5 transition-colors">Statify</a></div>
+    </div>
+    <div class="skill-content">
+        <div class="overflow-hidden opacity-0 transition-opacity duration-300">
+            <div class="px-4 pb-4 border-t border-zinc-300 dark:border-zinc-700">
+                <div class="text-xs font-mono text-zinc-600 dark:text-zinc-400 font-medium mb-4 pt-2">Advanced</div>
+                <p class="text-sm text-zinc-600 dark:text-zinc-400 mb-3 mt-2">Relational database design, optimization, and management for high-concurrency applications.</p>
+                <div class="mt-2 flex flex-wrap"><a href="#project-playcord" class="project-jump inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-600 dark:text-zinc-400 hover:text-accent dark:hover:text-accent hover:border-accent dark:hover:border-accent mr-1.5 mb-1.5 transition-colors">PlayCord</a><a href="#project-triggered" class="project-jump inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-600 dark:text-zinc-400 hover:text-accent dark:hover:text-accent hover:border-accent dark:hover:border-accent mr-1.5 mb-1.5 transition-colors">Triggered</a><a href="#project-statify" class="project-jump inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-600 dark:text-zinc-400 hover:text-accent dark:hover:text-accent hover:border-accent dark:hover:border-accent mr-1.5 mb-1.5 transition-colors">Statify</a></div>
+            </div>
+        </div>
     </div>
 </div>
-<div class="skill-item group mb-3 rounded-none border border-zinc-300 dark:border-zinc-700 bg-transparent overflow-hidden transition-all">
-    <button class="skill-toggle w-full px-4 py-3 flex items-center justify-between hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors text-left" data-skill-id="mongodb">
+<div id="skill-mongodb" class="skill-item group mb-3 rounded-none border border-zinc-300 dark:border-zinc-700 bg-transparent overflow-hidden transition-all">
+    <div class="skill-toggle w-full px-4 py-3 flex items-center justify-between hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors text-left cursor-pointer" data-skill-id="mongodb">
         <div class="flex items-center gap-2 flex-1">
             <ion-icon name="leaf-outline" class="text-lg mr-2"></ion-icon>
             <span class="text-sm font-semibold font-mono text-zinc-900 dark:text-zinc-100">MongoDB</span>
+            <button class="skill-copy-link hidden group-hover:inline-flex items-center text-zinc-400 hover:text-accent dark:hover:text-accent transition-colors" data-skill-id="mongodb" title="Copy link to skill">
+                <ion-icon name="link" class="text-sm"></ion-icon>
+            </button>
             <span class="text-xs font-mono text-zinc-500 dark:text-zinc-400">over 2 years</span>
         </div>
         <ion-icon name="chevron-down-outline" class="skill-toggle-icon text-zinc-500 dark:text-zinc-400 transition-transform"></ion-icon>
-    </button>
-    <div class="skill-content hidden px-4 pb-4 border-t border-zinc-300 dark:border-zinc-700 skill-rollout">
-        <div class="text-xs font-mono text-zinc-600 dark:text-zinc-400 font-medium mb-4 pt-2">Advanced</div>
-        <p class="text-sm text-zinc-600 dark:text-zinc-400 mb-3 mt-2">NoSQL database implementations for drone tracking data.</p>
-        <div class="mt-2 flex flex-wrap"><a href="#project-pyaerial" class="project-jump inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-600 dark:text-zinc-400 hover:text-accent dark:hover:text-accent hover:border-accent dark:hover:border-accent mr-1.5 mb-1.5 transition-colors">PyAerial</a><a href="#project-airstrik-py" class="project-jump inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-600 dark:text-zinc-400 hover:text-accent dark:hover:text-accent hover:border-accent dark:hover:border-accent mr-1.5 mb-1.5 transition-colors">airstrik.py</a></div>
+    </div>
+    <div class="skill-content">
+        <div class="overflow-hidden opacity-0 transition-opacity duration-300">
+            <div class="px-4 pb-4 border-t border-zinc-300 dark:border-zinc-700">
+                <div class="text-xs font-mono text-zinc-600 dark:text-zinc-400 font-medium mb-4 pt-2">Advanced</div>
+                <p class="text-sm text-zinc-600 dark:text-zinc-400 mb-3 mt-2">NoSQL database implementations for drone tracking data.</p>
+                <div class="mt-2 flex flex-wrap"><a href="#project-pyaerial" class="project-jump inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-600 dark:text-zinc-400 hover:text-accent dark:hover:text-accent hover:border-accent dark:hover:border-accent mr-1.5 mb-1.5 transition-colors">PyAerial</a><a href="#project-airstrik-py" class="project-jump inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-600 dark:text-zinc-400 hover:text-accent dark:hover:text-accent hover:border-accent dark:hover:border-accent mr-1.5 mb-1.5 transition-colors">airstrik.py</a></div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -603,7 +739,12 @@
             </section>
 
             <section id="contact">
-                <h2 class="title font-bold font-mono tracking-tight text-xl mb-6">Contact</h2>
+                <h2 class="title group flex items-center gap-2 font-bold font-mono tracking-tight text-xl mb-6">
+                    <span>Contact</span>
+                    <button class="section-copy-link hidden group-hover:inline-flex items-center text-zinc-400 hover:text-accent dark:hover:text-accent transition-colors" data-section-id="contact" title="Copy link to Section">
+                        <ion-icon name="link" class="text-sm"></ion-icon>
+                    </button>
+                </h2>
                 <div class="bg-transparent p-6 rounded-none border border-zinc-300 dark:border-zinc-700">
                     <form action="https://formspree.io/f/moqgwdop" method="POST" class="space-y-4">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -630,7 +771,7 @@
         </main>
 
         <footer id="footer-easter-egg" class="mt-20 pt-8 border-t border-zinc-300 dark:border-zinc-700 text-center text-sm font-mono text-zinc-500 dark:text-zinc-400 cursor-pointer hover:text-accent transition-colors select-none">
-            <p>Made with <3 by @quantumbagel</p>
+            <p>Made with <3 by @quantumbagel, not AI.</p>
         </footer>
     </div>
 
@@ -830,6 +971,7 @@
 
     <script>
     document.addEventListener("DOMContentLoaded", () => {
+        let updateCanvasDimensions = () => {};
         const taglines = ["is a Computer Engineering and Statistics student @ NCSU", "does things differently", "likes drones :D", "is an open source enthusiast", "has three cats :3", "is always learning", "would like a job \ud83e\udd7a", "plays Factorio", "makes stuff work"];
         const taglineEl = document.getElementById("tagline");
         let currentIndex = 0;
@@ -861,22 +1003,33 @@
             const skillContent = skillItem.querySelector(".skill-content");
             const toggleIcon = toggle.querySelector(".skill-toggle-icon");
 
-            toggle.addEventListener("click", () => {
+            toggle.addEventListener("click", (e) => {
+                // If they clicked the copy link button inside, don't toggle the skill item
+                if (e.target.closest(".skill-copy-link")) {
+                    return;
+                }
+
                 if (openSkill && openSkill !== skillItem) {
                     const prevContent = openSkill.querySelector(".skill-content");
                     const prevIcon = openSkill.querySelector(".skill-toggle-icon");
-                    prevContent.classList.add("hidden");
+                    prevContent.classList.remove("open");
                     prevIcon.style.transform = "rotate(0deg)";
                 }
 
-                if (skillContent.classList.contains("hidden")) {
-                    skillContent.classList.remove("hidden");
+                if (!skillContent.classList.contains("open")) {
+                    skillContent.classList.add("open");
                     toggleIcon.style.transform = "rotate(180deg)";
                     openSkill = skillItem;
                 } else {
-                    skillContent.classList.add("hidden");
+                    skillContent.classList.remove("open");
                     toggleIcon.style.transform = "rotate(0deg)";
                     openSkill = null;
+                }
+            });
+
+            skillContent.addEventListener("transitionend", (e) => {
+                if (e.propertyName === "grid-template-rows") {
+                    updateCanvasDimensions();
                 }
             });
         });
@@ -904,6 +1057,7 @@
         const selectFilter = (filterValue) => {
             setActiveFilter(filterValue);
             applyFilter(filterValue);
+            updateCanvasDimensions();
         };
 
         if (projectFilters) {
@@ -1009,30 +1163,144 @@
             });
         });
 
-        const highlightProject = (projectId) => {
-            projectCards.forEach((card) => {
-                card.classList.remove("ring-2", "ring-accent");
+        const skillCopyLinkBtns = document.querySelectorAll(".skill-copy-link");
+        skillCopyLinkBtns.forEach((btn) => {
+            btn.addEventListener("click", (event) => {
+                event.preventDefault();
+                event.stopPropagation();
+                const skillId = btn.getAttribute("data-skill-id");
+                const url = `${window.location.origin}${window.location.pathname}#skill-${skillId}`;
+                navigator.clipboard.writeText(url).then(() => {
+                    const originalIcon = btn.innerHTML;
+                    btn.innerHTML = '<ion-icon name="checkmark" class="text-sm"></ion-icon>';
+                    setTimeout(() => {
+                        btn.innerHTML = originalIcon;
+                    }, 2000);
+                });
             });
+        });
+
+        const sectionCopyLinkBtns = document.querySelectorAll(".section-copy-link");
+        sectionCopyLinkBtns.forEach((btn) => {
+            btn.addEventListener("click", (event) => {
+                event.preventDefault();
+                event.stopPropagation();
+                const sectionId = btn.getAttribute("data-section-id");
+                const url = `${window.location.origin}${window.location.pathname}#${sectionId}`;
+                navigator.clipboard.writeText(url).then(() => {
+                    const originalIcon = btn.innerHTML;
+                    btn.innerHTML = '<ion-icon name="checkmark" class="text-sm"></ion-icon>';
+                    setTimeout(() => {
+                        btn.innerHTML = originalIcon;
+                    }, 2000);
+                });
+            });
+        });
+
+        const highlightProject = (projectId, immediate = false) => {
             const targetCard = document.getElementById(projectId);
             if (targetCard) {
-                targetCard.classList.add("ring-2", "ring-accent");
-                setTimeout(() => {
-                    targetCard.classList.remove("ring-2", "ring-accent");
-                }, 3000);
+                // If the target project is hidden by active category filters, reset filter to 'all'
+                if (targetCard.classList.contains("hidden") && allFilterBtn) {
+                    selectFilter("all");
+                }
+
+                projectCards.forEach((card) => {
+                    card.classList.remove("ring-2", "ring-accent");
+                });
+
+                if (immediate) {
+                    targetCard.scrollIntoView({ block: "center" });
+                    targetCard.classList.add("ring-2", "ring-accent");
+                    setTimeout(() => {
+                        targetCard.classList.remove("ring-2", "ring-accent");
+                    }, 3000);
+                } else {
+                    // Let layout settle, then scroll smoothly and add highlight ring
+                    requestAnimationFrame(() => {
+                        targetCard.scrollIntoView({ behavior: "smooth", block: "center" });
+                        targetCard.classList.add("ring-2", "ring-accent");
+                        setTimeout(() => {
+                            targetCard.classList.remove("ring-2", "ring-accent");
+                        }, 3000);
+                    });
+                }
             }
         };
 
+        const highlightAndOpenSkill = (skillId, immediate = false) => {
+            const skillItem = document.getElementById(skillId);
+            if (skillItem) {
+                const skillContent = skillItem.querySelector(".skill-content");
+                const toggleIcon = skillItem.querySelector(".skill-toggle-icon");
+
+                // Close any currently open skill if different
+                if (openSkill && openSkill !== skillItem) {
+                    const prevContent = openSkill.querySelector(".skill-content");
+                    const prevIcon = openSkill.querySelector(".skill-toggle-icon");
+                    prevContent.classList.remove("open");
+                    if (prevIcon) prevIcon.style.transform = "rotate(0deg)";
+                }
+
+                // Open this skill
+                if (skillContent && !skillContent.classList.contains("open")) {
+                    skillContent.classList.add("open");
+                    if (toggleIcon) {
+                        toggleIcon.style.transform = "rotate(180deg)";
+                    }
+                    openSkill = skillItem;
+                }
+
+                // Highlight border temporarily
+                skillItem.classList.add("ring-2", "ring-accent");
+                setTimeout(() => {
+                    skillItem.classList.remove("ring-2", "ring-accent");
+                }, 3000);
+
+                if (immediate) {
+                    skillItem.scrollIntoView({ block: "center" });
+                } else {
+                    // Scroll smoothly to the skill item
+                    requestAnimationFrame(() => {
+                        skillItem.scrollIntoView({ behavior: "smooth", block: "center" });
+                    });
+                }
+            }
+        };
+
+        const handleHashRouting = (hashString, immediate = false) => {
+            if (!hashString) return;
+            const cleanHash = hashString.substring(1);
+            if (cleanHash.startsWith("skill-")) {
+                highlightAndOpenSkill(cleanHash, immediate);
+            } else if (cleanHash.startsWith("project-")) {
+                highlightProject(cleanHash, immediate);
+            } else {
+                const el = document.getElementById(cleanHash);
+                if (el) {
+                    if (immediate) {
+                        el.scrollIntoView({ block: "center" });
+                    } else {
+                        el.scrollIntoView({ behavior: "smooth", block: "center" });
+                    }
+                }
+            }
+        };
+
+        // Handle initial hash routing on page load (instant placement, no layout lag/double scroll)
         if (window.location.hash) {
-            const projectId = window.location.hash.substring(1);
-            highlightProject(projectId);
+            if ('scrollRestoration' in history) {
+                history.scrollRestoration = 'manual';
+            }
+            handleHashRouting(window.location.hash, true);
+            
+            // Re-align once layout and assets are fully parsed/loaded
+            window.addEventListener("load", () => {
+                handleHashRouting(window.location.hash, true);
+            });
         }
 
-        window.addEventListener("hashchange", () => {
-            const projectId = window.location.hash.substring(1);
-            if (projectId) {
-                highlightProject(projectId);
-            }
-        });
+
 
         // Theme Toggle Logic
         const themeToggle = document.getElementById("theme-toggle");
@@ -1053,7 +1321,7 @@
             
             if (themeToggle) {
                 const iconName = theme === "dark" ? "sunny-outline" : "moon-outline";
-                themeToggle.innerHTML = `Theme/<ion-icon id="theme-toggle-icon" name="${iconName}" class="text-base"></ion-icon>`;
+                themeToggle.innerHTML = `Theme/<ion-icon id="theme-toggle-icon" name="${iconName}" class="text-base inline-block align-middle pointer-events-none ml-0.5"></ion-icon>`;
             }
         };
 
@@ -1105,9 +1373,19 @@
         const canvas = document.getElementById("interactive-bg");
         if (canvas) {
             const ctx = canvas.getContext("2d");
+            const getDocumentScrollHeight = () => {
+                return Math.max(
+                    document.body ? document.body.scrollHeight : 0,
+                    document.documentElement.scrollHeight,
+                    document.body ? document.body.offsetHeight : 0,
+                    document.documentElement.offsetHeight,
+                    document.body ? document.body.clientHeight : 0,
+                    document.documentElement.clientHeight
+                );
+            };
             let width = (canvas.width = window.innerWidth);
-            let docHeight = document.documentElement.scrollHeight;
-            let height = (canvas.height = docHeight);
+            let height = (canvas.height = window.innerHeight);
+            let docHeight = getDocumentScrollHeight();
 
             let mouse = { x: -1000, y: -1000 };
 
@@ -1162,10 +1440,9 @@
                 }
             }
 
-            const grid = new SpatialHashGrid(width, height, 95);
+            const grid = new SpatialHashGrid(width, docHeight, 95);
 
             const adjustParticles = () => {
-                docHeight = document.documentElement.scrollHeight;
                 const area = width * docHeight;
                 const targetCount = Math.min(3000, Math.max(250, Math.floor(area * 0.0004)));
                 
@@ -1190,16 +1467,7 @@
                 mouse.y = -1000;
             });
 
-            window.addEventListener("resize", () => {
-                width = (canvas.width = window.innerWidth);
-                docHeight = document.documentElement.scrollHeight;
-                height = (canvas.height = docHeight);
-                grid.width = width;
-                grid.height = height;
-                grid.cols = Math.ceil(width / grid.cellSize);
-                grid.rows = Math.ceil(height / grid.cellSize);
-                adjustParticles();
-            });
+            // Resize is handled by ResizeObserver
 
             // Click blast listener using document-relative coordinates
             window.addEventListener("click", (e) => {
@@ -1267,6 +1535,14 @@
                     this.vx += (this.baseVx - this.vx) * 0.04;
                     this.vy += (this.baseVy - this.vy) * 0.04;
 
+                    // Cap velocity to prevent extreme spikes
+                    const speed = Math.sqrt(this.vx * this.vx + this.vy * this.vy);
+                    const maxSpeed = 4.0;
+                    if (speed > maxSpeed) {
+                        this.vx = (this.vx / speed) * maxSpeed;
+                        this.vy = (this.vy / speed) * maxSpeed;
+                    }
+
                     this.x += this.vx;
                     this.y += this.vy;
 
@@ -1287,9 +1563,7 @@
                         this.baseVy = -this.baseVy;
                     }
                     if (this.y > docHeight) {
-                        this.y = docHeight;
-                        this.vy = -this.vy;
-                        this.baseVy = -this.baseVy;
+                        this.reset();
                     }
 
                     // Cursor interaction (mouse coordinates are absolute document-relative)
@@ -1318,9 +1592,9 @@
                     }
                 }
 
-                draw() {
+                draw(scrollY) {
                     ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                    ctx.arc(this.x, this.y - scrollY, this.radius, 0, Math.PI * 2);
                     ctx.fillStyle = this.color;
                     ctx.globalAlpha = this.opacity;
                     ctx.fill();
@@ -1329,7 +1603,6 @@
 
             const initParticles = () => {
                 particles.length = 0;
-                docHeight = document.documentElement.scrollHeight;
                 const area = width * docHeight;
                 const targetCount = Math.min(3000, Math.max(250, Math.floor(area * 0.0004)));
                 for (let i = 0; i < targetCount; i++) {
@@ -1339,9 +1612,49 @@
 
             initParticles();
 
+            updateCanvasDimensions = () => {
+                const currentScrollHeight = getDocumentScrollHeight();
+                const currentWidth = window.innerWidth;
+                const currentHeight = window.innerHeight;
+
+                let sizeChanged = false;
+                if (width !== currentWidth || height !== currentHeight) {
+                    width = canvas.width = currentWidth;
+                    height = canvas.height = currentHeight;
+                    sizeChanged = true;
+                }
+                // Use a threshold to ignore minor variations under 30px
+                if (Math.abs(docHeight - currentScrollHeight) > 30) {
+                    docHeight = currentScrollHeight;
+                    sizeChanged = true;
+                }
+
+                if (sizeChanged) {
+                    grid.width = width;
+                    grid.height = docHeight;
+                    grid.cols = Math.ceil(width / grid.cellSize);
+                    grid.rows = Math.ceil(docHeight / grid.cellSize);
+                    adjustParticles();
+                }
+            };
+
+            window.addEventListener("resize", updateCanvasDimensions);
+            if (document.readyState === "complete") {
+                updateCanvasDimensions();
+            } else {
+                window.addEventListener("load", updateCanvasDimensions);
+            }
+
+            // Observe body size changes (e.g. when skill cards expand/collapse or images load)
+            if (typeof ResizeObserver !== "undefined" && document.body) {
+                const resizeObserver = new ResizeObserver(() => {
+                    updateCanvasDimensions();
+                });
+                resizeObserver.observe(document.body);
+            }
+
             const draw = () => {
                 ctx.clearRect(0, 0, width, height);
-                docHeight = document.documentElement.scrollHeight; // Keep document height sync'd
 
                 const scrollY = window.scrollY;
                 const viewHeight = window.innerHeight;
@@ -1389,12 +1702,14 @@
                             const dy = p1.y - p2.y;
                             const dist = Math.sqrt(dx * dx + dy * dy);
 
-                            // Gentle repulsion to prevent clumping
-                            const minDistance = 35;
+                            // Aggressive repulsion to prevent clumping - particles don't like touching
+                            const minDistance = 55;
                             if (dist < minDistance && dist > 0.1) {
                                 const force = (minDistance - dist) / minDistance;
-                                const densityFactor = 1 + (p1.density + p2.density) * 0.2;
-                                const pushStrength = force * 0.12 * densityFactor;
+                                const densityFactor = 1 + (p1.density + p2.density) * 0.25;
+                                
+                                // Stronger push strength + velocity impulse
+                                const pushStrength = force * 0.8 * densityFactor;
                                 const pushX = (dx / dist) * pushStrength;
                                 const pushY = (dy / dist) * pushStrength;
 
@@ -1402,6 +1717,12 @@
                                 p1.y += pushY;
                                 p2.x -= pushX;
                                 p2.y -= pushY;
+
+                                // Add a velocity impulse to push them apart smoothly
+                                p1.vx += pushX * 0.15;
+                                p1.vy += pushY * 0.15;
+                                p2.vx -= pushX * 0.15;
+                                p2.vy -= pushY * 0.15;
                             }
 
                             // Draw connection lines at viewport scroll coordinates
@@ -1410,8 +1731,8 @@
                                 const nearMouse = p1.color === colors.accent || p2.color === colors.accent;
 
                                 ctx.beginPath();
-                                ctx.moveTo(p1.x, p1.y);
-                                ctx.lineTo(p2.x, p2.y);
+                                ctx.moveTo(p1.x, p1.y - scrollY);
+                                ctx.lineTo(p2.x, p2.y - scrollY);
                                 ctx.strokeStyle = nearMouse ? colors.accent : colors.text;
                                 ctx.globalAlpha = ratio * (nearMouse ? 0.25 : 0.07);
                                 ctx.lineWidth = 0.5;
@@ -1423,7 +1744,7 @@
 
                 // Render visible particles
                 for (let i = 0; i < visibleParticles.length; i++) {
-                    visibleParticles[i].draw();
+                    visibleParticles[i].draw(scrollY);
                 }
 
                 requestAnimationFrame(draw);
@@ -1440,20 +1761,26 @@
                     opacity: 0;
                 }
             }
-            @keyframes skillRollout {
-                from {
-                    opacity: 0;
-                    transform: scaleY(0);
-                    transform-origin: top;
-                }
-                to {
-                    opacity: 1;
-                    transform: scaleY(1);
-                    transform-origin: top;
-                }
+            .skill-content {
+                display: grid;
+                grid-template-rows: 0fr;
+                transition: grid-template-rows 0.3s ease-out;
             }
-            .skill-rollout:not(.hidden) {
-                animation: skillRollout 0.3s ease-out;
+            .skill-content.open {
+                grid-template-rows: 1fr;
+            }
+            .skill-content.open > div {
+                opacity: 1;
+            }
+            header a::selection,
+            header a *::selection {
+                background-color: rgb(63, 63, 70) !important;
+                color: #ffffff !important;
+            }
+            .dark header a::selection,
+            .dark header a *::selection {
+                background-color: rgb(212, 212, 216) !important;
+                color: #09090b !important;
             }
         `;
         document.head.appendChild(style);

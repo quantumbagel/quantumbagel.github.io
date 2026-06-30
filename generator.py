@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import datetime
 import json
 import re
 from pathlib import Path
@@ -89,6 +90,47 @@ def render_experience_item(item: dict[str, Any]) -> str:
     return render_template("partials/experience_item.html", {"item": context_item})
 
 
+def calculate_duration(start_val: Any) -> str:
+    if not start_val:
+        return ""
+    
+    today = datetime.date.today()
+    try:
+        if isinstance(start_val, int):
+            start_year = start_val
+            start_month = 1
+            start_day = 1
+        elif isinstance(start_val, str):
+            parts = [int(p) for p in start_val.split("-") if p.isdigit()]
+            if len(parts) == 3:
+                start_year, start_month, start_day = parts
+            elif len(parts) == 2:
+                start_year, start_month = parts
+                start_day = 1
+            elif len(parts) == 1:
+                start_year = parts[0]
+                start_month = 1
+                start_day = 1
+            else:
+                return str(start_val)
+        else:
+            return str(start_val)
+            
+        years = today.year - start_year - ((today.month, today.day) < (start_month, start_day))
+        
+        if years <= 0:
+            months = (today.year - start_year) * 12 + today.month - start_month
+            if months <= 1:
+                return "1 month"
+            return f"{months} months"
+        elif years == 1:
+            return "over 1 year"
+        else:
+            return f"over {years} years"
+    except Exception:
+        return str(start_val)
+
+
 def render_skill_item(skill: dict[str, Any], project_ids: dict[str, str]) -> str:
     skill_id = slugify(skill["name"].replace("/", "-").replace("+", "plus"))
 
@@ -113,8 +155,12 @@ def render_skill_item(skill: dict[str, Any], project_ids: dict[str, str]) -> str
         icon_html = f'<ion-icon name="{skill["icon"]}" class="text-lg mr-2"></ion-icon>'
 
     duration_html = ""
-    if skill.get("duration"):
-        duration_html = f'<span class="text-xs font-mono text-zinc-500 dark:text-zinc-400">{skill["duration"]}</span>'
+    duration = skill.get("duration")
+    if skill.get("start_date"):
+        duration = calculate_duration(skill["start_date"])
+
+    if duration:
+        duration_html = f'<span class="text-xs font-mono text-zinc-500 dark:text-zinc-400">{duration}</span>'
 
     details_html = ""
     if skill.get("details"):

@@ -30,7 +30,7 @@ form_action = "https://formspree.io/f/moqgwdop"
 submit_label = "Send Message"
 
 [footer]
-text = "Made with <3 by @quantumbagel"
+text = "Made with <3 by @quantumbagel, not AI."
 
 [content]
 about = [
@@ -54,7 +54,7 @@ taglines = [
 [[experiences]]
 title = "Financial Services Technical Lead, Merrill Lynch"
 link = "https://advisor.ml.com/sites/nc/raleigh-nc"
-date = "May 2025 - Present"
+date = "May 2026 - Present"
 description = "This summer, I am working with Mr. Geoffrey Bell at Merrill Lynch to help modernize their internal calculations platform via FactSet with Python."
 
 [[experiences]]
@@ -79,7 +79,7 @@ description = "This was my first experience taking college coursework. I graduat
 name = "Python"
 icon = "logo-python"
 level = "Expert"
-duration = "over 5 years"
+start_date = "2021-01-01"
 details = "My primary language for most of my programming career. Used for web scraping, automation, data science, and drone software."
 projects = ["PyAerial", "airstrik.py", "DroneTracker", "finiteCraft", "Triggered"]
 
@@ -87,7 +87,7 @@ projects = ["PyAerial", "airstrik.py", "DroneTracker", "finiteCraft", "Triggered
 name = "C/C++"
 icon = "code-slash-outline"
 level = "Advanced"
-duration = "over 3 years"
+start_date = "2023-01-01"
 details = "Proficient in C/C++ for systems programming and performance-critical applications. Used in various academic and personal projects."
 projects = ["Embedded Systems via Arduino", "Python compiler extensions for AERPAW", "JIT compilation for performance-critical Python code"]
 
@@ -95,7 +95,7 @@ projects = ["Embedded Systems via Arduino", "Python compiler extensions for AERP
 name = "JavaScript"
 icon = "logo-javascript"
 level = "Advanced"
-duration = "over 3 years"
+start_date = "2023-01-01"
 details = "Used extensively for front-end development (Tailwind, React) and specialized automation tools."
 projects = ["Portfolio Website (v2)", "Molotov", "finiteCraft"]
 
@@ -103,7 +103,7 @@ projects = ["Portfolio Website (v2)", "Molotov", "finiteCraft"]
 name = "Java"
 icon = "cafe-outline"
 level = "Competent"
-duration = "over 4 years"
+start_date = "2022-01-01"
 details = "Really good understanding of OOP principles. Experience mostly in the context of building Minecraft plugins."
 projects = ["Statify"]
 
@@ -111,7 +111,7 @@ projects = ["Statify"]
 name = "C#"
 icon = "code-outline"
 level = "Competent"
-duration = "over 2 years"
+start_date = "2024-01-01"
 details = "Experience with .NET and game development. Most recently used for Sebastian Lague's Chess Challenge."
 projects = ["Chess-Challenge"]
 
@@ -119,7 +119,7 @@ projects = ["Chess-Challenge"]
 name = "Bash"
 icon = "terminal-outline"
 level = "Competent"
-duration = "over 4 years"
+start_date = "2022-01-01"
 details = "Proficient in writing scripts for automation, CI/CD pipelines, and Linux system administration."
 projects = ["All projects", "Docker setup scripts"]
 
@@ -127,7 +127,7 @@ projects = ["All projects", "Docker setup scripts"]
 name = "Linux/Unix"
 icon = "desktop-outline"
 level = "Expert"
-duration = "over 5 years"
+start_date = "2021-01-01"
 details = "Heavy user of Linux for development and server management."
 projects = ["Server Management", "All Projects"]
 
@@ -135,7 +135,7 @@ projects = ["Server Management", "All Projects"]
 name = "Docker"
 icon = "logo-docker"
 level = "Expert"
-duration = "over 3 years"
+start_date = "2023-01-01"
 details = "All my major projects are deployed using Docker for reproducibility and scale."
 projects = ["PyAerial", "airstrik.py", "DroneTracker", "Piranha"]
 
@@ -143,7 +143,7 @@ projects = ["PyAerial", "airstrik.py", "DroneTracker", "Piranha"]
 name = "JetBrains Suite"
 icon = "bulb-outline"
 level = "Expert"
-duration = "over 5 years"
+start_date = "2021-01-01"
 details = "Advanced user of PyCharm, CLion, and IntelliJ."
 projects = ["All Projects"]
 
@@ -151,7 +151,7 @@ projects = ["All Projects"]
 name = "Git"
 icon = "logo-github"
 level = "Advanced"
-duration = "over 4 years"
+start_date = "2022-01-01"
 details = "Strong understanding of Git workflows, branching strategies, and repository management."
 projects = ["All Projects"]
 
@@ -159,7 +159,7 @@ projects = ["All Projects"]
 name = "Selenium / Web Scraping"
 icon = "globe-outline"
 level = "Advanced"
-duration = "over 2 years"
+start_date = "2024-01-01"
 details = "Strong experience with web scraping and browser automation."
 projects = ["finiteCraft", "Molotov"]
 
@@ -167,7 +167,7 @@ projects = ["finiteCraft", "Molotov"]
 name = "OpenAPI"
 icon = "server-outline"
 level = "Advanced"
-duration = "over 2 years"
+start_date = "2024-01-01"
 details = "Experience designing and documenting REST APIs for complex data systems."
 projects = ["PyAerial", "Triggered"]
 
@@ -175,7 +175,7 @@ projects = ["PyAerial", "Triggered"]
 name = "SQL/MySQL/Postgres"
 icon = "server-outline"
 level = "Advanced"
-duration = "over 4 years"
+start_date = "2022-01-01"
 details = "Relational database design, optimization, and management for high-concurrency applications."
 projects = ["PlayCord", "Triggered", "Statify"]
 
@@ -183,9 +183,10 @@ projects = ["PlayCord", "Triggered", "Statify"]
 name = "MongoDB"
 icon = "leaf-outline"
 level = "Advanced"
-duration = "over 2 years"
+start_date = "2024-01-01"
 details = "NoSQL database implementations for drone tracking data."
 projects = ["PyAerial", "airstrik.py"]
+
 
 [[projects]]
 category = "internship"
