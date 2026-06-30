@@ -55,13 +55,13 @@ taglines = [
 title = "Financial Services Technical Lead, Merrill Lynch"
 link = "https://advisor.ml.com/sites/nc/raleigh-nc/bellbellcronlund"
 date = "May 2026 - Present"
-description = "This summer, I am working with Mr. Geoffrey Bell at Merrill Lynch to help modernize their internal calculations platform via FactSet with Python."
+description = "This summer, I am working with the Bell, Bell, and Cronlund Group within Merrill to improve their internal calculations platform responsible for $500M+ in assets under management."
 
 [[experiences]]
-title = "North Carolina State University"
+title = "North Carolina State University (GPA: 4.0)"
 link = "https://ncsu.edu"
 date = "Fall 2025 - Present"
-description = "I am currently enrolled in the Computer Engineering program at North Carolina State University. I am pursuing a Bachelor's in Statistics and Computer Engineering and a Master's of Computer Science."
+description = "I am currently enrolled in the Computer Engineering and Statistics departments at North Carolina State University. I am pursuing a Bachelor's in Statistics and Computer Engineering."
 
 [[experiences]]
 title = "AERPAW Developer"
@@ -70,7 +70,7 @@ date = "Summer 2023 - Present"
 description = "I have had the pleasure to work with Dr. Mihail Sichitiu at the Aerial Experimentation and Research Platform for Advanced Wireless at North Carolina State University for a couple of years now. I have built several interesting projects including a plane tracker and a drone flight recorder."
 
 [[experiences]]
-title = "Wake Tech Community College"
+title = "Wake Tech Community College: (GPA: 3.8)"
 link = "https://waketech.edu"
 date = "Fall 2023 - Spring 2025"
 description = "This was my first experience taking college coursework. I graduated with multiple appearances on the Dean's List, membership in the Phi Theta Kappa chapter, and an Associate in Science degree."
