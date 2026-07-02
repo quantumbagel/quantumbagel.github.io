@@ -172,7 +172,7 @@ details = "Experience designing and documenting REST APIs for complex data syste
 projects = ["PyAerial", "Triggered"]
 
 [[skills.technologies]]
-name = "SQL/MySQL/Postgres"
+name = "SQL-like databases (MySQL, PostgreSQL)"
 icon = "server-outline"
 level = "Advanced"
 start_date = "2022-01-01"

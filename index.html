@@ -100,7 +100,7 @@
                 </div>
             </div>
 
-            <div class="flex flex-wrap gap-5 text-sm font-mono">
+            <div class="flex flex-wrap items-center gap-5 text-sm font-mono">
                 <a href="https://github.com/quantumbagel" target="_blank" rel="noopener noreferrer" class="text-zinc-500 hover:text-accent dark:hover:text-accent transition-colors" aria-label="GitHub">
                     GitHub/<ion-icon name="logo-github" class="text-base inline-block align-middle pointer-events-none ml-0.5"></ion-icon>
                 </a>
@@ -115,6 +115,9 @@
                 </a>
                 <button id="theme-toggle" class="text-zinc-500 hover:text-accent transition-colors cursor-pointer" aria-label="Toggle Theme">
                     Theme/<ion-icon id="theme-toggle-icon" name="moon-outline" class="text-base inline-block align-middle pointer-events-none ml-0.5"></ion-icon>
+                </button>
+                <button id="particle-toggle" class="text-zinc-500 hover:text-accent transition-colors cursor-pointer" aria-label="Background: On">
+                    Background/On
                 </button>
             </div>
         </header>
@@ -689,12 +692,12 @@
         </div>
     </div>
 </div>
-<div id="skill-sql-mysql-postgres" class="skill-item group mb-3 rounded-none border border-zinc-300 dark:border-zinc-700 bg-transparent overflow-hidden transition-all">
-    <div class="skill-toggle w-full px-4 py-3 flex items-center justify-between hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors text-left cursor-pointer" data-skill-id="sql-mysql-postgres">
+<div id="skill-sql-like-databases-mysql-postgresql" class="skill-item group mb-3 rounded-none border border-zinc-300 dark:border-zinc-700 bg-transparent overflow-hidden transition-all">
+    <div class="skill-toggle w-full px-4 py-3 flex items-center justify-between hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors text-left cursor-pointer" data-skill-id="sql-like-databases-mysql-postgresql">
         <div class="flex items-center gap-2 flex-1">
             <ion-icon name="server-outline" class="text-lg mr-2"></ion-icon>
-            <span class="text-sm font-semibold font-mono text-zinc-900 dark:text-zinc-100">SQL/MySQL/Postgres</span>
-            <button class="skill-copy-link hidden group-hover:inline-flex items-center text-zinc-400 hover:text-accent dark:hover:text-accent transition-colors" data-skill-id="sql-mysql-postgres" title="Copy link to skill">
+            <span class="text-sm font-semibold font-mono text-zinc-900 dark:text-zinc-100">SQL-like databases (MySQL, PostgreSQL)</span>
+            <button class="skill-copy-link hidden group-hover:inline-flex items-center text-zinc-400 hover:text-accent dark:hover:text-accent transition-colors" data-skill-id="sql-like-databases-mysql-postgresql" title="Copy link to skill">
                 <ion-icon name="link" class="text-sm"></ion-icon>
             </button>
             <span class="text-xs font-mono text-zinc-500 dark:text-zinc-400">over 4 years</span>
@@ -969,6 +972,7 @@
 </div>
 
 
+    <script src="particles.js"></script>
     <script>
     document.addEventListener("DOMContentLoaded", () => {
         let updateCanvasDimensions = () => {};
@@ -1369,388 +1373,12 @@
             });
         }
 
-        // Interactive Particle Simulation Background
-        const canvas = document.getElementById("interactive-bg");
-        if (canvas) {
-            const ctx = canvas.getContext("2d");
-            const getDocumentScrollHeight = () => {
-                return Math.max(
-                    document.body ? document.body.scrollHeight : 0,
-                    document.documentElement.scrollHeight,
-                    document.body ? document.body.offsetHeight : 0,
-                    document.documentElement.offsetHeight,
-                    document.body ? document.body.clientHeight : 0,
-                    document.documentElement.clientHeight
-                );
-            };
-            let width = (canvas.width = window.innerWidth);
-            let height = (canvas.height = window.innerHeight);
-            let docHeight = getDocumentScrollHeight();
-
-            let mouse = { x: -1000, y: -1000 };
-
-            // Spatial Hash Grid class to handle O(N) queries for high particle counts
-            class SpatialHashGrid {
-                constructor(width, height, cellSize) {
-                    this.width = width;
-                    this.height = height;
-                    this.cellSize = cellSize;
-                    this.cols = Math.ceil(width / cellSize);
-                    this.rows = Math.ceil(height / cellSize);
-                    this.grid = {};
-                }
-
-                clear() {
-                    this.grid = {};
-                }
-
-                getKey(x, y) {
-                    const cx = Math.floor(x / this.cellSize);
-                    const cy = Math.floor(y / this.cellSize);
-                    return `${cx},${cy}`;
-                }
-
-                insert(particle) {
-                    const key = this.getKey(particle.x, particle.y);
-                    if (!this.grid[key]) {
-                        this.grid[key] = [];
-                    }
-                    this.grid[key].push(particle);
-                }
-
-                getNearby(particle) {
-                    const cx = Math.floor(particle.x / this.cellSize);
-                    const cy = Math.floor(particle.y / this.cellSize);
-                    const neighbors = [];
-
-                    for (let dx = -1; dx <= 1; dx++) {
-                        for (let dy = -1; dy <= 1; dy++) {
-                            const key = `${cx + dx},${cy + dy}`;
-                            const cell = this.grid[key];
-                            if (cell) {
-                                for (let i = 0; i < cell.length; i++) {
-                                    if (cell[i] !== particle) {
-                                        neighbors.push(cell[i]);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    return neighbors;
-                }
-            }
-
-            const grid = new SpatialHashGrid(width, docHeight, 95);
-
-            const adjustParticles = () => {
-                const area = width * docHeight;
-                const targetCount = Math.min(3000, Math.max(250, Math.floor(area * 0.0004)));
-                
-                if (particles.length < targetCount) {
-                    const diff = targetCount - particles.length;
-                    let maxId = particles.reduce((max, p) => p.id > max ? p.id : max, -1);
-                    for (let i = 0; i < diff; i++) {
-                        particles.push(new Particle(maxId + 1 + i));
-                    }
-                } else if (particles.length > targetCount) {
-                    particles.length = targetCount;
-                }
-            };
-
-            window.addEventListener("mousemove", (e) => {
-                mouse.x = e.clientX;
-                mouse.y = e.clientY;
+        const particleCanvas = document.getElementById("interactive-bg");
+        if (particleCanvas && window.initParticleBackground) {
+            const particleApi = window.initParticleBackground(particleCanvas, {
+                toggleButton: document.getElementById("particle-toggle"),
             });
-
-            window.addEventListener("mouseleave", () => {
-                mouse.x = -1000;
-                mouse.y = -1000;
-            });
-
-            // Resize is handled by ResizeObserver
-
-            // Click blast listener using document-relative coordinates
-            window.addEventListener("click", (e) => {
-                const clickX = e.clientX;
-                const clickY = e.clientY + window.scrollY; // Convert to document coordinates
-                const blastRadius = 250;
-
-                for (let i = 0; i < particles.length; i++) {
-                    const p = particles[i];
-                    const dx = p.x - clickX;
-                    const dy = p.y - clickY;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
-
-                    if (dist < blastRadius) {
-                        const force = (blastRadius - dist) / blastRadius;
-                        const angle = Math.atan2(dy, dx);
-                        const push = force * 14;
-
-                        p.vx = Math.cos(angle) * push;
-                        p.vy = Math.sin(angle) * push;
-                        p.color = colors.accent;
-                        p.opacity = 0.6;
-                    }
-                }
-            });
-
-            const getThemeColors = () => {
-                const style = getComputedStyle(document.documentElement);
-                return {
-                    accent: style.getPropertyValue("--color-accent").trim() || "rgb(120, 120, 120)",
-                    text: style.getPropertyValue("--color-global-text").trim() || "rgb(200, 200, 200)"
-                };
-            };
-
-            let colors = getThemeColors();
-            const observer = new MutationObserver(() => {
-                colors = getThemeColors();
-            });
-            observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
-
-            // Particles definition - dynamically sized based on document area
-            const particles = [];
-
-            class Particle {
-                constructor(id) {
-                    this.id = id;
-                    this.reset(true);
-                }
-
-                reset(initial = false) {
-                    this.x = Math.random() * width;
-                    this.y = Math.random() * docHeight; // Spread across full document height
-                    this.baseVx = (Math.random() - 0.5) * 0.35;
-                    this.baseVy = (Math.random() - 0.5) * 0.35;
-                    this.vx = this.baseVx;
-                    this.vy = this.baseVy;
-                    this.radius = Math.random() * 1.5 + 1;
-                    this.baseOpacity = Math.random() * 0.05 + 0.08;
-                    this.opacity = this.baseOpacity;
-                    this.color = colors.text;
-                }
-
-                update(mouseAbsX, mouseAbsY) {
-                    // Decay velocity back to base cruise speed
-                    this.vx += (this.baseVx - this.vx) * 0.04;
-                    this.vy += (this.baseVy - this.vy) * 0.04;
-
-                    // Cap velocity to prevent extreme spikes
-                    const speed = Math.sqrt(this.vx * this.vx + this.vy * this.vy);
-                    const maxSpeed = 4.0;
-                    if (speed > maxSpeed) {
-                        this.vx = (this.vx / speed) * maxSpeed;
-                        this.vy = (this.vy / speed) * maxSpeed;
-                    }
-
-                    this.x += this.vx;
-                    this.y += this.vy;
-
-                    // Bounce off document boundaries
-                    if (this.x < 0) {
-                        this.x = 0;
-                        this.vx = -this.vx;
-                        this.baseVx = -this.baseVx;
-                    }
-                    if (this.x > width) {
-                        this.x = width;
-                        this.vx = -this.vx;
-                        this.baseVx = -this.baseVx;
-                    }
-                    if (this.y < 0) {
-                        this.y = 0;
-                        this.vy = -this.vy;
-                        this.baseVy = -this.baseVy;
-                    }
-                    if (this.y > docHeight) {
-                        this.reset();
-                    }
-
-                    // Cursor interaction (mouse coordinates are absolute document-relative)
-                    const dx = mouseAbsX - this.x;
-                    const dy = mouseAbsY - this.y;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
-                    const forceRadius = 140;
-
-                    if (dist < forceRadius) {
-                        const force = (forceRadius - dist) / forceRadius;
-                        const angle = Math.atan2(dy, dx);
-                        
-                        this.x -= Math.cos(angle) * force * 0.9;
-                        this.y -= Math.sin(angle) * force * 0.9;
-
-                        this.color = colors.accent;
-                        this.opacity = this.baseOpacity + force * 0.35;
-                    } else {
-                        // Return to base color/opacity when speed decays back to normal
-                        const speedSq = this.vx * this.vx + this.vy * this.vy;
-                        const baseSpeedSq = this.baseVx * this.baseVx + this.baseVy * this.baseVy;
-                        if (speedSq < baseSpeedSq * 1.8) {
-                            this.color = colors.text;
-                            this.opacity += (this.baseOpacity - this.opacity) * 0.05;
-                        }
-                    }
-                }
-
-                draw(scrollY) {
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y - scrollY, this.radius, 0, Math.PI * 2);
-                    ctx.fillStyle = this.color;
-                    ctx.globalAlpha = this.opacity;
-                    ctx.fill();
-                }
-            }
-
-            const initParticles = () => {
-                particles.length = 0;
-                const area = width * docHeight;
-                const targetCount = Math.min(3000, Math.max(250, Math.floor(area * 0.0004)));
-                for (let i = 0; i < targetCount; i++) {
-                    particles.push(new Particle(i));
-                }
-            };
-
-            initParticles();
-
-            updateCanvasDimensions = () => {
-                const currentScrollHeight = getDocumentScrollHeight();
-                const currentWidth = window.innerWidth;
-                const currentHeight = window.innerHeight;
-
-                let sizeChanged = false;
-                if (width !== currentWidth || height !== currentHeight) {
-                    width = canvas.width = currentWidth;
-                    height = canvas.height = currentHeight;
-                    sizeChanged = true;
-                }
-                // Use a threshold to ignore minor variations under 30px
-                if (Math.abs(docHeight - currentScrollHeight) > 30) {
-                    docHeight = currentScrollHeight;
-                    sizeChanged = true;
-                }
-
-                if (sizeChanged) {
-                    grid.width = width;
-                    grid.height = docHeight;
-                    grid.cols = Math.ceil(width / grid.cellSize);
-                    grid.rows = Math.ceil(docHeight / grid.cellSize);
-                    adjustParticles();
-                }
-            };
-
-            window.addEventListener("resize", updateCanvasDimensions);
-            if (document.readyState === "complete") {
-                updateCanvasDimensions();
-            } else {
-                window.addEventListener("load", updateCanvasDimensions);
-            }
-
-            // Observe body size changes (e.g. when skill cards expand/collapse or images load)
-            if (typeof ResizeObserver !== "undefined" && document.body) {
-                const resizeObserver = new ResizeObserver(() => {
-                    updateCanvasDimensions();
-                });
-                resizeObserver.observe(document.body);
-            }
-
-            const draw = () => {
-                ctx.clearRect(0, 0, width, height);
-
-                const scrollY = window.scrollY;
-                const viewHeight = window.innerHeight;
-                const padding = 100;
-
-                const mouseAbsX = mouse.x;
-                const mouseAbsY = mouse.y + scrollY;
-
-                // Update all particles positions (O(N) cheap math)
-                for (let i = 0; i < particles.length; i++) {
-                    particles[i].update(mouseAbsX, mouseAbsY);
-                }
-
-                // Filter only visible particles for drawing and grid connection calculations
-                const visibleParticles = [];
-                for (let i = 0; i < particles.length; i++) {
-                    const p = particles[i];
-                    const screenY = p.y - scrollY;
-                    if (screenY >= -padding && screenY <= viewHeight + padding) {
-                        visibleParticles.push(p);
-                    }
-                }
-
-                // Rebuild spatial hash grid for visible particles only
-                grid.clear();
-                for (let i = 0; i < visibleParticles.length; i++) {
-                    grid.insert(visibleParticles[i]);
-                }
-
-                // Pre-calculate local density for visible particles
-                for (let i = 0; i < visibleParticles.length; i++) {
-                    visibleParticles[i].density = grid.getNearby(visibleParticles[i]).length;
-                }
-
-                // Process interactions using the grid for visible particles
-                for (let i = 0; i < visibleParticles.length; i++) {
-                    const p1 = visibleParticles[i];
-                    const neighbors = grid.getNearby(p1);
-
-                    for (let n = 0; n < neighbors.length; n++) {
-                        const p2 = neighbors[n];
-                        
-                        if (p2.id > p1.id) {
-                            const dx = p1.x - p2.x;
-                            const dy = p1.y - p2.y;
-                            const dist = Math.sqrt(dx * dx + dy * dy);
-
-                            // Aggressive repulsion to prevent clumping - particles don't like touching
-                            const minDistance = 55;
-                            if (dist < minDistance && dist > 0.1) {
-                                const force = (minDistance - dist) / minDistance;
-                                const densityFactor = 1 + (p1.density + p2.density) * 0.25;
-                                
-                                // Stronger push strength + velocity impulse
-                                const pushStrength = force * 0.8 * densityFactor;
-                                const pushX = (dx / dist) * pushStrength;
-                                const pushY = (dy / dist) * pushStrength;
-
-                                p1.x += pushX;
-                                p1.y += pushY;
-                                p2.x -= pushX;
-                                p2.y -= pushY;
-
-                                // Add a velocity impulse to push them apart smoothly
-                                p1.vx += pushX * 0.15;
-                                p1.vy += pushY * 0.15;
-                                p2.vx -= pushX * 0.15;
-                                p2.vy -= pushY * 0.15;
-                            }
-
-                            // Draw connection lines at viewport scroll coordinates
-                            if (dist < 95) {
-                                const ratio = 1 - dist / 95;
-                                const nearMouse = p1.color === colors.accent || p2.color === colors.accent;
-
-                                ctx.beginPath();
-                                ctx.moveTo(p1.x, p1.y - scrollY);
-                                ctx.lineTo(p2.x, p2.y - scrollY);
-                                ctx.strokeStyle = nearMouse ? colors.accent : colors.text;
-                                ctx.globalAlpha = ratio * (nearMouse ? 0.25 : 0.07);
-                                ctx.lineWidth = 0.5;
-                                ctx.stroke();
-                            }
-                        }
-                    }
-                }
-
-                // Render visible particles
-                for (let i = 0; i < visibleParticles.length; i++) {
-                    visibleParticles[i].draw(scrollY);
-                }
-
-                requestAnimationFrame(draw);
-            };
-
-            draw();
+            updateCanvasDimensions = particleApi.updateCanvasDimensions;
         }
 
         const style = document.createElement("style");
