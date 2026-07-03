@@ -92,6 +92,7 @@
         let dpr = getDpr();
         let particlesInitialized = false;
         let animationFrameId = null;
+        let stopTimeoutId = null;
         let resizeRaf = null;
         let isPageVisible = !document.hidden;
         let reducedMotion = reducedMotionQuery.matches;
@@ -591,12 +592,18 @@
                 animationFrameId = null;
             }
 
+            if (stopTimeoutId !== null) {
+                clearTimeout(stopTimeoutId);
+                stopTimeoutId = null;
+            }
+
             const finishStop = () => {
                 ctx.globalAlpha = 1;
                 ctx.clearRect(0, 0, width, height);
                 canvas.style.opacity = "0";
                 particlesInitialized = false;
                 particles.length = 0;
+                stopTimeoutId = null;
             };
 
             if (immediate) {
@@ -605,19 +612,30 @@
             }
 
             canvas.style.opacity = "0";
-            setTimeout(finishStop, CANVAS_FADE_MS);
+            stopTimeoutId = setTimeout(finishStop, CANVAS_FADE_MS);
         };
 
         const startAnimation = () => {
+            const wasFading = stopTimeoutId !== null;
+            if (stopTimeoutId !== null) {
+                clearTimeout(stopTimeoutId);
+                stopTimeoutId = null;
+            }
             colors = getThemeColors();
             updateCanvasDimensions();
-            initParticles();
-            mouse.x = -1000;
-            mouse.y = -1000;
-            canvas.style.opacity = "0";
-            requestAnimationFrame(() => {
+            
+            if (!particlesInitialized || !wasFading) {
+                initParticles();
+                mouse.x = -1000;
+                mouse.y = -1000;
+                canvas.style.opacity = "0";
+                requestAnimationFrame(() => {
+                    canvas.style.opacity = "1";
+                });
+            } else {
                 canvas.style.opacity = "1";
-            });
+            }
+            
             if (reducedMotion) {
                 drawStatic();
                 return;

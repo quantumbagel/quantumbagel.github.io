@@ -262,16 +262,91 @@ def render_project_modal(project: dict[str, Any]) -> str:
     gallery_html = ""
     project_gallery = project.get("gallery", [])
     if project_gallery:
-        gallery_items = "".join(
-            f'<img src="{image}" alt="Gallery image" loading="lazy" decoding="async" '
-            f'class="w-full h-64 object-cover rounded-none border border-zinc-300 dark:border-zinc-700 cursor-pointer hover:opacity-90 transition-opacity gallery-image" '
-            f'data-modal-id="{modal_id}">'
-            for image in project_gallery
-        )
-        gallery_html = (
-            '<div class="mt-4"><h4 class="font-semibold font-mono text-zinc-900 dark:text-zinc-100 mb-2">Gallery</h4>'
-            f'<div class="grid grid-cols-1 sm:grid-cols-2 gap-2">{gallery_items}</div></div>'
-        )
+        slides = []
+        for index, item in enumerate(project_gallery):
+            media_type = "image"
+            src = ""
+            poster = ""
+            alt = f"Gallery item {index + 1}"
+            
+            if isinstance(item, str):
+                src = item
+                ext = src.split("?")[0].split("#")[0].split(".")[-1].lower()
+                if ext in ("mp4", "webm", "ogg", "mov", "m4v"):
+                    media_type = "video"
+            elif isinstance(item, dict):
+                media_type = item.get("type", "image")
+                src = item.get("src") or item.get("url", "")
+                poster = item.get("poster", "")
+                alt = item.get("alt") or item.get("caption") or f"Gallery item {index + 1}"
+            
+            if not src:
+                continue
+                
+            if media_type == "video":
+                poster_attr = f' poster="{poster}"' if poster else ""
+                media_element = (
+                    f'<video src="{src}"{poster_attr} controls playsinline '
+                    f'class="w-full h-full object-contain bg-black" '
+                    f'preload="metadata"></video>'
+                )
+            else:
+                media_element = (
+                    f'<img src="{src}" alt="{alt}" loading="lazy" decoding="async" '
+                    f'class="w-full h-full object-contain bg-black">'
+                )
+                
+            slide_html = (
+                f'<div class="carousel-slide min-w-full h-64 sm:h-96 flex items-center justify-center flex-shrink-0">'
+                f'{media_element}'
+                f'</div>'
+            )
+            slides.append(slide_html)
+            
+        if slides:
+            slides_html = "".join(slides)
+            
+            prev_btn = ""
+            next_btn = ""
+            indicators = ""
+            
+            if len(slides) > 1:
+                prev_btn = (
+                    f'<button class="carousel-prev absolute left-2 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/70 text-white font-semibold rounded-none p-2 border border-white/20 z-10 transition-all opacity-100 md:opacity-0 md:group-hover/carousel:opacity-100 md:focus:opacity-100 flex items-center justify-center" aria-label="Previous slide">'
+                    f'<ion-icon name="chevron-back" class="text-xl"></ion-icon>'
+                    f'</button>'
+                )
+                next_btn = (
+                    f'<button class="carousel-next absolute right-2 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/70 text-white font-semibold rounded-none p-2 border border-white/20 z-10 transition-all opacity-100 md:opacity-0 md:group-hover/carousel:opacity-100 md:focus:opacity-100 flex items-center justify-center" aria-label="Next slide">'
+                    f'<ion-icon name="chevron-forward" class="text-xl"></ion-icon>'
+                    f'</button>'
+                )
+                
+                dots = []
+                for i in range(len(slides)):
+                    active_class = "bg-accent" if i == 0 else "bg-white/40 hover:bg-white/70"
+                    dot = f'<button class="carousel-dot h-1 w-6 transition-colors {active_class}" data-slide-to="{i}" aria-label="Go to slide {i + 1}"></button>'
+                    dots.append(dot)
+                
+                indicators = (
+                    f'<div class="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">'
+                    f'{"".join(dots)}'
+                    f'</div>'
+                )
+            
+            gallery_html = (
+                f'<div class="mt-4">'
+                f'<h4 class="font-semibold font-mono text-zinc-900 dark:text-zinc-100 mb-2">Media</h4>'
+                f'<div class="relative group/carousel w-full overflow-hidden border border-zinc-300 dark:border-zinc-700 bg-zinc-100 dark:bg-zinc-900 media-carousel" data-carousel-id="carousel-{modal_id}">'
+                f'<div class="carousel-slides flex transition-transform duration-300 ease-out" style="transform: translateX(0%);">'
+                f'{slides_html}'
+                f'</div>'
+                f'{prev_btn}'
+                f'{next_btn}'
+                f'{indicators}'
+                f'</div>'
+                f'</div>'
+            )
 
     features_html = ""
     project_features = project.get("features", [])

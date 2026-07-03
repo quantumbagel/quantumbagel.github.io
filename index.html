@@ -433,7 +433,7 @@
         </div>
     </div>
 </div>
-<div id="project-ml-ticker" class="project-card group relative flex flex-col bg-transparent border border-zinc-300 dark:border-zinc-700 rounded-none hover:border-accent dark:hover:border-accent transition-colors overflow-hidden" data-category="aerpaw">
+<div id="project-ml-ticker" class="project-card group relative flex flex-col bg-transparent border border-zinc-300 dark:border-zinc-700 rounded-none hover:border-accent dark:hover:border-accent transition-colors overflow-hidden" data-category="other">
     <img src="https://placehold.co/400x250/34495E/FFFFFF?text=ML-Ticker" alt="ML-Ticker" loading="lazy" decoding="async" class="w-full h-48 object-cover border-b border-zinc-300 dark:border-zinc-700">
     <div class="p-5 flex flex-col flex-grow">
         <div class="flex items-start justify-between">
@@ -442,7 +442,7 @@
                 <ion-icon name="link" class="text-lg"></ion-icon>
             </button>
         </div>
-        <span class="text-xs font-medium font-mono text-zinc-500 dark:text-zinc-400 mb-2 block flex items-center"><ion-icon name="time-outline" class="mr-1"></ion-icon>2026 - Present • AERPAW</span>
+        <span class="text-xs font-medium font-mono text-zinc-500 dark:text-zinc-400 mb-2 block flex items-center"><ion-icon name="time-outline" class="mr-1"></ion-icon>2026 - Present • Other</span>
         <p class="text-sm text-zinc-600 dark:text-zinc-400 mb-4 flex-grow leading-relaxed">A Python command-line utility for retrieving equity research metrics via the FactSet FQL API.</p>
         <div>
             <div class="flex flex-wrap mt-3"><span class="inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-600 dark:text-zinc-400 mr-1.5 mb-1.5">Python</span><span class="inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-600 dark:text-zinc-400 mr-1.5 mb-1.5">FactSet FQL</span><span class="inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-600 dark:text-zinc-400 mr-1.5 mb-1.5">Pydantic</span><span class="inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-600 dark:text-zinc-400 mr-1.5 mb-1.5">openpyxl</span><span class="inline-flex items-center px-2 py-0.5 rounded-none border border-zinc-300 dark:border-zinc-700 text-xs font-medium font-mono bg-transparent text-zinc-600 dark:text-zinc-400 mr-1.5 mb-1.5">CLI</span></div>
@@ -1046,7 +1046,7 @@
                 <h2 class="text-2xl font-bold font-mono text-zinc-900 dark:text-zinc-100">ML-Ticker</h2>
                 <button class="modal-close-btn text-zinc-500 hover:text-accent dark:hover:text-accent" data-modal-id="modal-project-ml-ticker">✕</button>
             </div>
-            <p class="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed mb-4">ML-Ticker is a Python command-line tool built for the Merrill Lynch aerpaw to query FactSet FQL API data. It uses a sandboxed Python formula engine to compute post-query custom metrics, features an automatic dependency DAG, validates configuration files via Pydantic, and outputs colorized terminal tables or styled Excel spreadsheets.</p>
+            <p class="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed mb-4">ML-Ticker is a Python command-line tool built for Merrill Lynch to query FactSet FQL API data. It uses a sandboxed Python formula engine to compute post-query custom metrics, features an automatic dependency DAG, validates configuration files via Pydantic, and outputs colorized terminal tables or styled Excel spreadsheets.</p>
             
             <div class="mt-4"><h4 class="font-semibold font-mono text-zinc-900 dark:text-zinc-100 mb-2">Features</h4><ul class="space-y-1"><li class="text-sm font-mono text-zinc-600 dark:text-zinc-400 flex items-start"><span class="mr-3">•</span><span>FactSet FQL API integration for snapshot and historical timeseries data</span></li><li class="text-sm font-mono text-zinc-600 dark:text-zinc-400 flex items-start"><span class="mr-3">•</span><span>Sandboxed Python formula engine for post-query custom metrics</span></li><li class="text-sm font-mono text-zinc-600 dark:text-zinc-400 flex items-start"><span class="mr-3">•</span><span>Dependency validation using directed acyclic graphs (DAGs) and Pydantic</span></li><li class="text-sm font-mono text-zinc-600 dark:text-zinc-400 flex items-start"><span class="mr-3">•</span><span>Colorized terminal tables and styled multi-sheet Excel spreadsheet export</span></li></ul></div>
             <div class="mt-6 flex gap-3">
@@ -1190,8 +1190,117 @@
             selectFilter(initialFilter);
         }
 
+        // Media Carousel Logic
+        const initMediaCarousels = () => {
+            const carousels = document.querySelectorAll(".media-carousel");
+            carousels.forEach((carousel) => {
+                const slidesContainer = carousel.querySelector(".carousel-slides");
+                const prevBtn = carousel.querySelector(".carousel-prev");
+                const nextBtn = carousel.querySelector(".carousel-next");
+                const dots = carousel.querySelectorAll(".carousel-dot");
+                
+                if (!slidesContainer) return;
+                
+                const totalSlides = slidesContainer.children.length;
+                let currentIndex = 0;
+                
+                const goToSlide = (index) => {
+                    if (index < 0) {
+                        currentIndex = totalSlides - 1;
+                    } else if (index >= totalSlides) {
+                        currentIndex = 0;
+                    } else {
+                        currentIndex = index;
+                    }
+                    
+                    slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+                    
+                    // Update dots
+                    dots.forEach((dot, idx) => {
+                        if (idx === currentIndex) {
+                            dot.classList.add("bg-accent");
+                            dot.classList.remove("bg-white/40", "hover:bg-white/70");
+                        } else {
+                            dot.classList.remove("bg-accent");
+                            dot.classList.add("bg-white/40", "hover:bg-white/70");
+                        }
+                    });
+                    
+                    // Pause videos on inactive slides
+                    Array.from(slidesContainer.children).forEach((slide, idx) => {
+                        const video = slide.querySelector("video");
+                        if (video && idx !== currentIndex) {
+                            video.pause();
+                        }
+                    });
+                };
+                
+                // Attach function to the element so we can invoke it on modal actions
+                carousel.goToSlide = goToSlide;
+                
+                if (prevBtn) {
+                    prevBtn.addEventListener("click", (e) => {
+                        e.stopPropagation();
+                        goToSlide(currentIndex - 1);
+                    });
+                }
+                
+                if (nextBtn) {
+                    nextBtn.addEventListener("click", (e) => {
+                        e.stopPropagation();
+                        goToSlide(currentIndex + 1);
+                    });
+                }
+                
+                dots.forEach((dot) => {
+                    dot.addEventListener("click", (e) => {
+                        e.stopPropagation();
+                        const slideIndex = parseInt(dot.getAttribute("data-slide-to"), 10);
+                        if (!isNaN(slideIndex)) {
+                            goToSlide(slideIndex);
+                        }
+                    });
+                });
+                
+                // Swipe Support for Touch Screens
+                let touchStartX = 0;
+                let touchEndX = 0;
+                
+                carousel.addEventListener("touchstart", (e) => {
+                    touchStartX = e.changedTouches[0].screenX;
+                }, { passive: true });
+                
+                carousel.addEventListener("touchend", (e) => {
+                    touchEndX = e.changedTouches[0].screenX;
+                    const swipeThreshold = 50;
+                    if (touchEndX < touchStartX - swipeThreshold) {
+                        goToSlide(currentIndex + 1);
+                    } else if (touchEndX > touchStartX + swipeThreshold) {
+                        goToSlide(currentIndex - 1);
+                    }
+                }, { passive: true });
+            });
+        };
+        
+        initMediaCarousels();
+
         const detailsBtns = document.querySelectorAll(".project-details-btn");
         const closeBtns = document.querySelectorAll(".modal-close-btn");
+
+        const pauseModalVideos = (modal) => {
+            if (modal) {
+                modal.querySelectorAll("video").forEach((v) => v.pause());
+            }
+        };
+
+        const resetCarousel = (modal) => {
+            if (modal) {
+                const carousel = modal.querySelector(".media-carousel");
+                if (carousel && typeof carousel.goToSlide === "function") {
+                    carousel.goToSlide(0);
+                }
+            }
+        };
 
         detailsBtns.forEach((btn) => {
             btn.addEventListener("click", () => {
@@ -1200,6 +1309,7 @@
                 if (modal) {
                     modal.classList.remove("hidden");
                     modal.style.display = "flex";
+                    resetCarousel(modal);
                 }
             });
         });
@@ -1211,6 +1321,7 @@
                 if (modal) {
                     modal.classList.add("hidden");
                     modal.style.display = "none";
+                    pauseModalVideos(modal);
                 }
             });
         });
@@ -1220,6 +1331,7 @@
                 if (event.target === modal) {
                     modal.classList.add("hidden");
                     modal.style.display = "none";
+                    pauseModalVideos(modal);
                 }
             });
         });
@@ -1229,6 +1341,7 @@
                 document.querySelectorAll('[id^="modal-"]').forEach((modal) => {
                     modal.classList.add("hidden");
                     modal.style.display = "none";
+                    pauseModalVideos(modal);
                 });
             }
         });
@@ -1518,6 +1631,9 @@
             .dark header a *::selection {
                 background-color: rgb(212, 212, 216) !important;
                 color: #09090b !important;
+            }
+            .carousel-slides {
+                will-change: transform;
             }
         `;
         document.head.appendChild(style);
