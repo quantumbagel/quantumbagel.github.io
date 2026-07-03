@@ -656,9 +656,9 @@
             if (!toggleButton) {
                 return;
             }
-            const label = enabled ? "On" : "Off";
-            toggleButton.textContent = `Background/${label}`;
-            toggleButton.setAttribute("aria-label", `Background: ${label}`);
+            const dot = enabled ? "●" : "○";
+            toggleButton.textContent = `Background/${dot}`;
+            toggleButton.setAttribute("aria-label", `Background: ${enabled ? "On" : "Off"}`);
         };
 
         const initializeParticlesWhenReady = async () => {
