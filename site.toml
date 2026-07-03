@@ -81,7 +81,7 @@ icon = "logo-python"
 level = "Expert"
 start_date = "2021-01-01"
 details = "My primary language for most of my programming career. Used for web scraping, automation, data science, and drone software."
-projects = ["PyAerial", "airstrik.py", "DroneTracker", "finiteCraft", "Triggered"]
+projects = ["PyAerial", "airstrik.py", "DroneTracker", "finiteCraft", "Triggered", "ML-Ticker"]
 
 [[skills.languages]]
 name = "C/C++"
@@ -189,7 +189,7 @@ projects = ["PyAerial", "airstrik.py"]
 
 
 [[projects]]
-category = "internship"
+category = "aerpaw"
 image = "https://placehold.co/400x250/3498DB/FFFFFF?text=PyAerial"
 title = "PyAerial"
 date = "2024 - Present"
@@ -200,7 +200,7 @@ link = "https://github.com/quantumbagel/PyAerial"
 skills = ["Python", "MAVSDK", "Docker", "MongoDB", "ADS-B"]
 
 [[projects]]
-category = "internship"
+category = "aerpaw"
 image = "https://placehold.co/400x250/E74C3C/FFFFFF?text=airstrik.py"
 title = "airstrik.py"
 date = "2023 - 2024"
@@ -232,7 +232,7 @@ link = "https://github.com/finiteCraft/finiteCraft"
 skills = ["Python", "Selenium", "Web Scraping", "Proxies", "Automation"]
 
 [[projects]]
-category = "internship"
+category = "aerpaw"
 image = "https://placehold.co/400x250/9B59B6/FFFFFF?text=DroneTracker"
 title = "DroneTracker"
 date = "2024"
@@ -309,7 +309,7 @@ link = "https://github.com/quantumbagel/Chess-Challenge"
 skills = ["C#", "Chess", "AI"]
 
 [[projects]]
-category = "internship"
+category = "aerpaw"
 image = "https://placehold.co/400x250/F1C40F/FFFFFF?text=aerpawlib"
 title = "aerpawlib"
 date = "2025 - Present"
@@ -319,13 +319,24 @@ features = ["High-level drone control API", "MAVLink/MAVSDK abstraction", "Simpl
 link = "https://github.com/aerpaw/aerpawlib"
 skills = ["Python", "MAVLink", "MAVSDK", "Drones"]
 
+[[projects]]
+category = "aerpaw"
+image = "https://placehold.co/400x250/34495E/FFFFFF?text=ML-Ticker"
+title = "ML-Ticker"
+date = "2026 - Present"
+description = "A Python command-line utility for retrieving equity research metrics via the FactSet FQL API."
+details = "ML-Ticker is a Python command-line tool built for the Merrill Lynch aerpaw to query FactSet FQL API data. It uses a sandboxed Python formula engine to compute post-query custom metrics, features an automatic dependency DAG, validates configuration files via Pydantic, and outputs colorized terminal tables or styled Excel spreadsheets."
+features = ["FactSet FQL API integration for snapshot and historical timeseries data", "Sandboxed Python formula engine for post-query custom metrics", "Dependency validation using directed acyclic graphs (DAGs) and Pydantic", "Colorized terminal tables and styled multi-sheet Excel spreadsheet export"]
+link = "https://github.com/quantumbagel/ML-Ticker"
+skills = ["Python", "FactSet FQL", "Pydantic", "openpyxl", "CLI"]
+
 [[project_filters]]
 key = "all"
 label = "All"
 
 [[project_filters]]
-key = "internship"
-label = "Internship"
+key = "aerpaw"
+label = "AERPAW"
 
 [[project_filters]]
 key = "discord-bots"

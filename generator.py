@@ -180,7 +180,7 @@ def render_skill_item(skill: dict[str, Any], project_ids: dict[str, str]) -> str
     return render_template("partials/skill_item.html", context)
 
 
-def render_project_card(project: dict[str, Any]) -> str:
+def render_project_card(project: dict[str, Any], category_map: dict[str, str] | None = None) -> str:
     project_title = project.get("title", "Project")
     project_id = f"project-{slugify(project_title)}"
     modal_id = f"modal-{project_id}"
@@ -212,9 +212,13 @@ def render_project_card(project: dict[str, Any]) -> str:
 
     date_html = ""
     if project.get("date"):
+        category = project.get("category", "other")
+        category_label = category_map.get(category) if category_map else None
+        if not category_label:
+            category_label = category.replace("-", " ").title()
         date_html = (
             '<span class="text-xs font-medium font-mono text-zinc-500 dark:text-zinc-400 mb-2 block flex items-center">'
-            f'<ion-icon name="time-outline" class="mr-1"></ion-icon>{project["date"]}</span>'
+            f'<ion-icon name="time-outline" class="mr-1"></ion-icon>{project["date"]} \u2022 {category_label}</span>'
         )
 
     details_button_html = ""
@@ -393,6 +397,7 @@ def build_index_context(config: dict[str, Any]) -> dict[str, Any]:
     }
 
     filters = config.get("project_filters") or default_project_filters(projects)
+    category_map = {f["key"]: f["label"] for f in filters if "key" in f and "label" in f}
 
     content = {
         "first_tagline": taglines[0],
@@ -406,7 +411,7 @@ def build_index_context(config: dict[str, Any]) -> dict[str, Any]:
             render_skill_item(skill, project_ids) for skill in skills.get("technologies", [])
         ),
         "project_filters_html": render_filter_buttons(filters),
-        "project_cards_html": "".join(render_project_card(project) for project in projects),
+        "project_cards_html": "".join(render_project_card(project, category_map) for project in projects),
         "project_modals_html": "".join(render_project_modal(project) for project in projects),
     }
 
