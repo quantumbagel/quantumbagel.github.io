@@ -1381,66 +1381,6 @@
             updateCanvasDimensions = particleApi.updateCanvasDimensions;
         }
 
-        // Teto Easter Egg in Developer Console
-        const tetoAscii = `⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡴⢚⡫⠽⢗⣦⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣞⠞⠁⠀⠀⠀⠈⠙⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⠴⠚⠋⠉⠉⠉⢻⡟⠉⠉⠉⠛⠲⢤⡀⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡴⠋⠁⠀⠀⠀⠀⠀⠀⠘⠀⠀⠀⠀⠀⠀⠀⠉⠳⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⡞⢀⠀⠀⢀⡠⠒⠉⠀⠀⠀⠘⣦⣀⠀⠉⠒⢦⡀⠀⠘⢦⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⣀⢤⣤⣤⣒⣒⣒⣶⣖⣠⣴⣳⡠⠃⣠⠖⠁⠀⠀⠀⢠⠃⠀⠀⢸⡌⠳⣄⠀⠀⠙⣄⠀⠘⣇⢀⣀⣀⣀⣀⣀⣀⣀⠀⠀⠀
-⢸⠺⣏⠉⠁⠀⠀⠉⠉⠉⣹⠇⡰⣡⠞⠁⡀⠀⠀⠀⣠⡎⠀⠀⠀⢨⡇⠀⠈⠢⡀⠀⠘⣆⠀⠸⡟⠛⠋⠉⠛⠛⠻⠿⠿⢯⣶
-⠈⡦⢄⣉⠒⠒⠀⠒⢒⣩⣿⣼⡿⡁⠤⡼⢂⣀⢀⡴⢻⠁⠀⠀⠀⢸⠱⡀⠀⠀⠀⠀⠀⠈⢆⢣⣗⣦⠤⣀⣀⣀⣀⠤⠖⠫⡾
-⠀⢯⠒⠦⠬⠍⠙⢧⣤⡤⠟⠋⣁⣠⠟⠀⣠⠴⠋⠀⢸⠀⠀⠀⢠⠟⠒⠳⣄⠀⠀⢰⡀⠀⠈⠣⡧⣉⣓⠒⠠⠤⠄⠒⠂⣩⡇
-⠀⠸⣯⣓⣒⣒⣒⣒⣲⠯⣿⢉⡵⠋⣠⢞⣿⣿⣦⠢⢸⢠⠇⣠⢋⡀⢀⣀⣈⠢⣀⠀⠻⡦⣤⣀⣬⡿⠯⣍⣉⣀⣀⣤⠬⢴⠁
-⠀⠀⢇⠉⠉⠉⠉⢁⣒⣭⢿⣫⢴⣻⡇⢸⣈⢿⡤⡇⢰⣞⡜⠁⢠⣾⣿⡿⢿⠻⡏⠓⠦⣝⣦⣟⡷⣉⠙⠓⠒⠶⠶⠶⠶⠟⡇⠀
-⠀⠀⢯⣉⠉⠉⣉⣙⡿⢿⣿⢇⡎⢸⡃⠈⠣⠤⠝⢀⠞⠋⠀⠀⠀⣧⠜⠣⡺⢠⡃⠀⠀⡎⢻⠋⢿⣫⢝⡒⠲⠤⠤⠤⢖⡇⠀
-⠀⠀⢻⢛⡻⠯⠥⠤⠖⠋⣾⢸⣼⠸⣧⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠒⠚⢁⡼⡇⠀⣾⢠⡏⠀⢸⣝⠯⣙⣒⣲⣶⣲⢖⡇⠀
-⠀⠀⠘⠦⠴⠿⠛⣲⣺⣿⠁⠀⠱⣦⡗⣿⣗⡤⣄⣀⠐⠤⠤⠀⠀⠀⠀⢀⣨⢴⣁⡾⠷⠏⠀⠀⠘⢢⡥⣤⣀⣀⣀⣒⣹⠀⠀
-⠀⠀⠀⠀⠸⣉⣉⣹⠾⠋⠀⠀⠀⠁⠙⠊⠛⠾⢇⡽⣿⣿⣗⣲⣶⠿⡍⠉⠰⠟⠁⠀⠀⠀⠀⠀⠀⠸⣍⠺⣦⡤⢤⠈⠁⠀⠀
-⠀⠀⠀⠀⠀⠀⠳⢾⣄⡀⠀⠀⠀⠀⠀⠀⠀⣠⠿⣏⣈⢹⣏⣉⣧⡰⢿⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢩⣳⡞⠋⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠀⠀⠀⠀⠀⢀⡴⠁⢀⡟⠜⣦⡟⠶⠛⢻⡓⠙⢆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠒⠛⠁⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡴⣿⡿⢢⢫⠇⠀⡷⡇⠀⠀⠸⣷⠀⢈⣧⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠰⡛⣫⡴⢣⣾⡦⢤⣷⣇⣀⣠⠤⡷⣧⠿⠟⣳⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠀⡰⣻⡹⠁⠀⡇⠀⡇⠀⢇⠘⣜⣦⣼⢚⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠳⢗⣒⣤⣇⣀⣥⣒⣚⢭⣽⠊⠈⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡧⠤⠤⡏⡧⠹⠮⢿⠟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢻⣿⣿⡇⢸⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⡇⢸⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠉⠉⠀⠘⠛⠛⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀`;
-
-        const blankStyle = "color: rgba(255, 51, 102, 0.08); font-family: monospace; font-size: 8px; line-height: 1.15;";
-        const dotStyle = "color: rgb(255, 51, 102); font-family: monospace; font-size: 8px; line-height: 1.15; font-weight: bold;";
-
-        tetoAscii.split("\n").forEach((line) => {
-            const parts = [];
-            const styles = [];
-            let currentType = null;
-            let currentStr = "";
-
-            for (const char of line) {
-                const isBlank = char === "⠀" || char === " ";
-                const type = isBlank ? "blank" : "dots";
-
-                if (type !== currentType) {
-                    if (currentStr) {
-                        parts.push("%c" + currentStr);
-                        styles.push(currentType === "blank" ? blankStyle : dotStyle);
-                    }
-                    currentStr = char;
-                    currentType = type;
-                } else {
-                    currentStr += char;
-                }
-            }
-            if (currentStr) {
-                parts.push("%c" + currentStr);
-                styles.push(currentType === "blank" ? blankStyle : dotStyle);
-            }
-            console.log(parts.join(""), ...styles);
-        });
-
-        console.log("%cChimera Kasane Teto is watching your console! 🥖", "color: #FF3366; font-family: monospace; font-size: 12px; font-weight: bold;");
-
 
         const style = document.createElement("style");
         style.textContent = `
