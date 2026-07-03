@@ -656,7 +656,8 @@
             if (!toggleButton) {
                 return;
             }
-            const dot = enabled ? "●" : "○";
+            // Show the target/next state when clicked (consistent with theme toggle)
+            const dot = enabled ? "○" : "●";
             toggleButton.textContent = `Background/${dot}`;
             toggleButton.setAttribute("aria-label", `Background: ${enabled ? "On" : "Off"}`);
         };

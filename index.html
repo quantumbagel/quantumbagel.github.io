@@ -86,6 +86,24 @@
         input:focus, textarea:focus {
             border-color: var(--color-accent) !important;
         }
+
+        /* Smooth transitions when switching themes */
+        html.theme-transitioning,
+        html.theme-transitioning body,
+        html.theme-transitioning *,
+        html.theme-transitioning *::before,
+        html.theme-transitioning *::after {
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, text-decoration-color 0.3s ease !important;
+        }
+
+        /* Make copy link buttons visible always on mobile/touch screens (less than md size) */
+        @media (max-width: 767px) {
+            .section-copy-link,
+            .experience-copy-link,
+            .skill-copy-link {
+                display: inline-flex !important;
+            }
+        }
     </style>
 </head>
 <body class="bg-global-bg text-global-text min-h-screen font-mono text-sm font-normal antialiased selection:bg-zinc-700 dark:selection:bg-zinc-300 selection:text-white dark:selection:text-zinc-950 relative overflow-x-hidden">
@@ -117,7 +135,7 @@
                     Theme/<ion-icon id="theme-toggle-icon" name="moon-outline" class="text-base inline-block align-middle pointer-events-none ml-0.5"></ion-icon>
                 </button>
                 <button id="particle-toggle" class="text-zinc-500 hover:text-accent transition-colors cursor-pointer" aria-label="Background: On">
-                    Background/●
+                    Background/○
                 </button>
             </div>
         </header>
@@ -178,8 +196,9 @@
                         <ion-icon name="link" class="text-sm"></ion-icon>
                     </button>
                 </h2>
-                <div class="flex flex-wrap gap-2 mb-6" id="project-filters">
-                    <button type="button" aria-pressed="true" class="px-3 py-1 text-sm font-mono rounded-none border border-zinc-300 dark:border-zinc-700 bg-transparent text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 filter-btn transition-colors" data-filter="all">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+                    <div class="flex flex-wrap gap-2" id="project-filters">
+                        <button type="button" aria-pressed="true" class="px-3 py-1 text-sm font-mono rounded-none border border-zinc-300 dark:border-zinc-700 bg-transparent text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 filter-btn transition-colors" data-filter="all">
     All
 </button>
 <button type="button" aria-pressed="false" class="px-3 py-1 text-sm font-mono rounded-none border border-zinc-300 dark:border-zinc-700 bg-transparent text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 filter-btn transition-colors" data-filter="internship">
@@ -192,6 +211,10 @@
     Other
 </button>
 
+                    </div>
+                    <div class="relative w-full md:w-64">
+                        <input type="text" id="project-search" placeholder="Search projects..." class="w-full px-3 py-1 text-sm font-mono bg-transparent border border-zinc-300 dark:border-zinc-700 rounded-none focus:outline-none focus:border-accent dark:focus:border-accent transition-colors text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500">
+                    </div>
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="project-grid">
                     <div id="project-pyaerial" class="project-card group relative flex flex-col bg-transparent border border-zinc-300 dark:border-zinc-700 rounded-none hover:border-accent dark:hover:border-accent transition-colors overflow-hidden" data-category="internship">
@@ -429,12 +452,14 @@
         <div class="flex items-center gap-2 flex-1">
             <ion-icon name="logo-python" class="text-lg mr-2"></ion-icon>
             <span class="text-sm font-semibold font-mono text-zinc-900 dark:text-zinc-100">Python</span>
+            <span class="text-xs font-mono text-zinc-500 dark:text-zinc-400">over 5 years</span>
+        </div>
+        <div class="flex items-center gap-3">
             <button class="skill-copy-link hidden group-hover:inline-flex items-center text-zinc-400 hover:text-accent dark:hover:text-accent transition-colors" data-skill-id="python" title="Copy link to skill">
                 <ion-icon name="link" class="text-sm"></ion-icon>
             </button>
-            <span class="text-xs font-mono text-zinc-500 dark:text-zinc-400">over 5 years</span>
+            <ion-icon name="chevron-down-outline" class="skill-toggle-icon text-zinc-500 dark:text-zinc-400 transition-transform"></ion-icon>
         </div>
-        <ion-icon name="chevron-down-outline" class="skill-toggle-icon text-zinc-500 dark:text-zinc-400 transition-transform"></ion-icon>
     </div>
     <div class="skill-content">
         <div class="overflow-hidden opacity-0 transition-opacity duration-300">
@@ -451,12 +476,14 @@
         <div class="flex items-center gap-2 flex-1">
             <ion-icon name="code-slash-outline" class="text-lg mr-2"></ion-icon>
             <span class="text-sm font-semibold font-mono text-zinc-900 dark:text-zinc-100">C/C++</span>
+            <span class="text-xs font-mono text-zinc-500 dark:text-zinc-400">over 3 years</span>
+        </div>
+        <div class="flex items-center gap-3">
             <button class="skill-copy-link hidden group-hover:inline-flex items-center text-zinc-400 hover:text-accent dark:hover:text-accent transition-colors" data-skill-id="c-cplusplus" title="Copy link to skill">
                 <ion-icon name="link" class="text-sm"></ion-icon>
             </button>
-            <span class="text-xs font-mono text-zinc-500 dark:text-zinc-400">over 3 years</span>
+            <ion-icon name="chevron-down-outline" class="skill-toggle-icon text-zinc-500 dark:text-zinc-400 transition-transform"></ion-icon>
         </div>
-        <ion-icon name="chevron-down-outline" class="skill-toggle-icon text-zinc-500 dark:text-zinc-400 transition-transform"></ion-icon>
     </div>
     <div class="skill-content">
         <div class="overflow-hidden opacity-0 transition-opacity duration-300">
@@ -473,12 +500,14 @@
         <div class="flex items-center gap-2 flex-1">
             <ion-icon name="logo-javascript" class="text-lg mr-2"></ion-icon>
             <span class="text-sm font-semibold font-mono text-zinc-900 dark:text-zinc-100">JavaScript</span>
+            <span class="text-xs font-mono text-zinc-500 dark:text-zinc-400">over 3 years</span>
+        </div>
+        <div class="flex items-center gap-3">
             <button class="skill-copy-link hidden group-hover:inline-flex items-center text-zinc-400 hover:text-accent dark:hover:text-accent transition-colors" data-skill-id="javascript" title="Copy link to skill">
                 <ion-icon name="link" class="text-sm"></ion-icon>
             </button>
-            <span class="text-xs font-mono text-zinc-500 dark:text-zinc-400">over 3 years</span>
+            <ion-icon name="chevron-down-outline" class="skill-toggle-icon text-zinc-500 dark:text-zinc-400 transition-transform"></ion-icon>
         </div>
-        <ion-icon name="chevron-down-outline" class="skill-toggle-icon text-zinc-500 dark:text-zinc-400 transition-transform"></ion-icon>
     </div>
     <div class="skill-content">
         <div class="overflow-hidden opacity-0 transition-opacity duration-300">
@@ -495,12 +524,14 @@
         <div class="flex items-center gap-2 flex-1">
             <ion-icon name="cafe-outline" class="text-lg mr-2"></ion-icon>
             <span class="text-sm font-semibold font-mono text-zinc-900 dark:text-zinc-100">Java</span>
+            <span class="text-xs font-mono text-zinc-500 dark:text-zinc-400">over 4 years</span>
+        </div>
+        <div class="flex items-center gap-3">
             <button class="skill-copy-link hidden group-hover:inline-flex items-center text-zinc-400 hover:text-accent dark:hover:text-accent transition-colors" data-skill-id="java" title="Copy link to skill">
                 <ion-icon name="link" class="text-sm"></ion-icon>
             </button>
-            <span class="text-xs font-mono text-zinc-500 dark:text-zinc-400">over 4 years</span>
+            <ion-icon name="chevron-down-outline" class="skill-toggle-icon text-zinc-500 dark:text-zinc-400 transition-transform"></ion-icon>
         </div>
-        <ion-icon name="chevron-down-outline" class="skill-toggle-icon text-zinc-500 dark:text-zinc-400 transition-transform"></ion-icon>
     </div>
     <div class="skill-content">
         <div class="overflow-hidden opacity-0 transition-opacity duration-300">
@@ -517,12 +548,14 @@
         <div class="flex items-center gap-2 flex-1">
             <ion-icon name="code-outline" class="text-lg mr-2"></ion-icon>
             <span class="text-sm font-semibold font-mono text-zinc-900 dark:text-zinc-100">C#</span>
+            <span class="text-xs font-mono text-zinc-500 dark:text-zinc-400">over 2 years</span>
+        </div>
+        <div class="flex items-center gap-3">
             <button class="skill-copy-link hidden group-hover:inline-flex items-center text-zinc-400 hover:text-accent dark:hover:text-accent transition-colors" data-skill-id="c" title="Copy link to skill">
                 <ion-icon name="link" class="text-sm"></ion-icon>
             </button>
-            <span class="text-xs font-mono text-zinc-500 dark:text-zinc-400">over 2 years</span>
+            <ion-icon name="chevron-down-outline" class="skill-toggle-icon text-zinc-500 dark:text-zinc-400 transition-transform"></ion-icon>
         </div>
-        <ion-icon name="chevron-down-outline" class="skill-toggle-icon text-zinc-500 dark:text-zinc-400 transition-transform"></ion-icon>
     </div>
     <div class="skill-content">
         <div class="overflow-hidden opacity-0 transition-opacity duration-300">
@@ -539,12 +572,14 @@
         <div class="flex items-center gap-2 flex-1">
             <ion-icon name="terminal-outline" class="text-lg mr-2"></ion-icon>
             <span class="text-sm font-semibold font-mono text-zinc-900 dark:text-zinc-100">Bash</span>
+            <span class="text-xs font-mono text-zinc-500 dark:text-zinc-400">over 4 years</span>
+        </div>
+        <div class="flex items-center gap-3">
             <button class="skill-copy-link hidden group-hover:inline-flex items-center text-zinc-400 hover:text-accent dark:hover:text-accent transition-colors" data-skill-id="bash" title="Copy link to skill">
                 <ion-icon name="link" class="text-sm"></ion-icon>
             </button>
-            <span class="text-xs font-mono text-zinc-500 dark:text-zinc-400">over 4 years</span>
+            <ion-icon name="chevron-down-outline" class="skill-toggle-icon text-zinc-500 dark:text-zinc-400 transition-transform"></ion-icon>
         </div>
-        <ion-icon name="chevron-down-outline" class="skill-toggle-icon text-zinc-500 dark:text-zinc-400 transition-transform"></ion-icon>
     </div>
     <div class="skill-content">
         <div class="overflow-hidden opacity-0 transition-opacity duration-300">
@@ -565,12 +600,14 @@
         <div class="flex items-center gap-2 flex-1">
             <ion-icon name="desktop-outline" class="text-lg mr-2"></ion-icon>
             <span class="text-sm font-semibold font-mono text-zinc-900 dark:text-zinc-100">Linux/Unix</span>
+            <span class="text-xs font-mono text-zinc-500 dark:text-zinc-400">over 5 years</span>
+        </div>
+        <div class="flex items-center gap-3">
             <button class="skill-copy-link hidden group-hover:inline-flex items-center text-zinc-400 hover:text-accent dark:hover:text-accent transition-colors" data-skill-id="linux-unix" title="Copy link to skill">
                 <ion-icon name="link" class="text-sm"></ion-icon>
             </button>
-            <span class="text-xs font-mono text-zinc-500 dark:text-zinc-400">over 5 years</span>
+            <ion-icon name="chevron-down-outline" class="skill-toggle-icon text-zinc-500 dark:text-zinc-400 transition-transform"></ion-icon>
         </div>
-        <ion-icon name="chevron-down-outline" class="skill-toggle-icon text-zinc-500 dark:text-zinc-400 transition-transform"></ion-icon>
     </div>
     <div class="skill-content">
         <div class="overflow-hidden opacity-0 transition-opacity duration-300">
@@ -587,12 +624,14 @@
         <div class="flex items-center gap-2 flex-1">
             <ion-icon name="logo-docker" class="text-lg mr-2"></ion-icon>
             <span class="text-sm font-semibold font-mono text-zinc-900 dark:text-zinc-100">Docker</span>
+            <span class="text-xs font-mono text-zinc-500 dark:text-zinc-400">over 3 years</span>
+        </div>
+        <div class="flex items-center gap-3">
             <button class="skill-copy-link hidden group-hover:inline-flex items-center text-zinc-400 hover:text-accent dark:hover:text-accent transition-colors" data-skill-id="docker" title="Copy link to skill">
                 <ion-icon name="link" class="text-sm"></ion-icon>
             </button>
-            <span class="text-xs font-mono text-zinc-500 dark:text-zinc-400">over 3 years</span>
+            <ion-icon name="chevron-down-outline" class="skill-toggle-icon text-zinc-500 dark:text-zinc-400 transition-transform"></ion-icon>
         </div>
-        <ion-icon name="chevron-down-outline" class="skill-toggle-icon text-zinc-500 dark:text-zinc-400 transition-transform"></ion-icon>
     </div>
     <div class="skill-content">
         <div class="overflow-hidden opacity-0 transition-opacity duration-300">
@@ -609,12 +648,14 @@
         <div class="flex items-center gap-2 flex-1">
             <ion-icon name="bulb-outline" class="text-lg mr-2"></ion-icon>
             <span class="text-sm font-semibold font-mono text-zinc-900 dark:text-zinc-100">JetBrains Suite</span>
+            <span class="text-xs font-mono text-zinc-500 dark:text-zinc-400">over 5 years</span>
+        </div>
+        <div class="flex items-center gap-3">
             <button class="skill-copy-link hidden group-hover:inline-flex items-center text-zinc-400 hover:text-accent dark:hover:text-accent transition-colors" data-skill-id="jetbrains-suite" title="Copy link to skill">
                 <ion-icon name="link" class="text-sm"></ion-icon>
             </button>
-            <span class="text-xs font-mono text-zinc-500 dark:text-zinc-400">over 5 years</span>
+            <ion-icon name="chevron-down-outline" class="skill-toggle-icon text-zinc-500 dark:text-zinc-400 transition-transform"></ion-icon>
         </div>
-        <ion-icon name="chevron-down-outline" class="skill-toggle-icon text-zinc-500 dark:text-zinc-400 transition-transform"></ion-icon>
     </div>
     <div class="skill-content">
         <div class="overflow-hidden opacity-0 transition-opacity duration-300">
@@ -631,12 +672,14 @@
         <div class="flex items-center gap-2 flex-1">
             <ion-icon name="logo-github" class="text-lg mr-2"></ion-icon>
             <span class="text-sm font-semibold font-mono text-zinc-900 dark:text-zinc-100">Git</span>
+            <span class="text-xs font-mono text-zinc-500 dark:text-zinc-400">over 4 years</span>
+        </div>
+        <div class="flex items-center gap-3">
             <button class="skill-copy-link hidden group-hover:inline-flex items-center text-zinc-400 hover:text-accent dark:hover:text-accent transition-colors" data-skill-id="git" title="Copy link to skill">
                 <ion-icon name="link" class="text-sm"></ion-icon>
             </button>
-            <span class="text-xs font-mono text-zinc-500 dark:text-zinc-400">over 4 years</span>
+            <ion-icon name="chevron-down-outline" class="skill-toggle-icon text-zinc-500 dark:text-zinc-400 transition-transform"></ion-icon>
         </div>
-        <ion-icon name="chevron-down-outline" class="skill-toggle-icon text-zinc-500 dark:text-zinc-400 transition-transform"></ion-icon>
     </div>
     <div class="skill-content">
         <div class="overflow-hidden opacity-0 transition-opacity duration-300">
@@ -653,12 +696,14 @@
         <div class="flex items-center gap-2 flex-1">
             <ion-icon name="globe-outline" class="text-lg mr-2"></ion-icon>
             <span class="text-sm font-semibold font-mono text-zinc-900 dark:text-zinc-100">Selenium / Web Scraping</span>
+            <span class="text-xs font-mono text-zinc-500 dark:text-zinc-400">over 2 years</span>
+        </div>
+        <div class="flex items-center gap-3">
             <button class="skill-copy-link hidden group-hover:inline-flex items-center text-zinc-400 hover:text-accent dark:hover:text-accent transition-colors" data-skill-id="selenium-web-scraping" title="Copy link to skill">
                 <ion-icon name="link" class="text-sm"></ion-icon>
             </button>
-            <span class="text-xs font-mono text-zinc-500 dark:text-zinc-400">over 2 years</span>
+            <ion-icon name="chevron-down-outline" class="skill-toggle-icon text-zinc-500 dark:text-zinc-400 transition-transform"></ion-icon>
         </div>
-        <ion-icon name="chevron-down-outline" class="skill-toggle-icon text-zinc-500 dark:text-zinc-400 transition-transform"></ion-icon>
     </div>
     <div class="skill-content">
         <div class="overflow-hidden opacity-0 transition-opacity duration-300">
@@ -675,12 +720,14 @@
         <div class="flex items-center gap-2 flex-1">
             <ion-icon name="server-outline" class="text-lg mr-2"></ion-icon>
             <span class="text-sm font-semibold font-mono text-zinc-900 dark:text-zinc-100">OpenAPI</span>
+            <span class="text-xs font-mono text-zinc-500 dark:text-zinc-400">over 2 years</span>
+        </div>
+        <div class="flex items-center gap-3">
             <button class="skill-copy-link hidden group-hover:inline-flex items-center text-zinc-400 hover:text-accent dark:hover:text-accent transition-colors" data-skill-id="openapi" title="Copy link to skill">
                 <ion-icon name="link" class="text-sm"></ion-icon>
             </button>
-            <span class="text-xs font-mono text-zinc-500 dark:text-zinc-400">over 2 years</span>
+            <ion-icon name="chevron-down-outline" class="skill-toggle-icon text-zinc-500 dark:text-zinc-400 transition-transform"></ion-icon>
         </div>
-        <ion-icon name="chevron-down-outline" class="skill-toggle-icon text-zinc-500 dark:text-zinc-400 transition-transform"></ion-icon>
     </div>
     <div class="skill-content">
         <div class="overflow-hidden opacity-0 transition-opacity duration-300">
@@ -697,12 +744,14 @@
         <div class="flex items-center gap-2 flex-1">
             <ion-icon name="server-outline" class="text-lg mr-2"></ion-icon>
             <span class="text-sm font-semibold font-mono text-zinc-900 dark:text-zinc-100">SQL-like databases (MySQL, PostgreSQL)</span>
+            <span class="text-xs font-mono text-zinc-500 dark:text-zinc-400">over 4 years</span>
+        </div>
+        <div class="flex items-center gap-3">
             <button class="skill-copy-link hidden group-hover:inline-flex items-center text-zinc-400 hover:text-accent dark:hover:text-accent transition-colors" data-skill-id="sql-like-databases-mysql-postgresql" title="Copy link to skill">
                 <ion-icon name="link" class="text-sm"></ion-icon>
             </button>
-            <span class="text-xs font-mono text-zinc-500 dark:text-zinc-400">over 4 years</span>
+            <ion-icon name="chevron-down-outline" class="skill-toggle-icon text-zinc-500 dark:text-zinc-400 transition-transform"></ion-icon>
         </div>
-        <ion-icon name="chevron-down-outline" class="skill-toggle-icon text-zinc-500 dark:text-zinc-400 transition-transform"></ion-icon>
     </div>
     <div class="skill-content">
         <div class="overflow-hidden opacity-0 transition-opacity duration-300">
@@ -719,12 +768,14 @@
         <div class="flex items-center gap-2 flex-1">
             <ion-icon name="leaf-outline" class="text-lg mr-2"></ion-icon>
             <span class="text-sm font-semibold font-mono text-zinc-900 dark:text-zinc-100">MongoDB</span>
+            <span class="text-xs font-mono text-zinc-500 dark:text-zinc-400">over 2 years</span>
+        </div>
+        <div class="flex items-center gap-3">
             <button class="skill-copy-link hidden group-hover:inline-flex items-center text-zinc-400 hover:text-accent dark:hover:text-accent transition-colors" data-skill-id="mongodb" title="Copy link to skill">
                 <ion-icon name="link" class="text-sm"></ion-icon>
             </button>
-            <span class="text-xs font-mono text-zinc-500 dark:text-zinc-400">over 2 years</span>
+            <ion-icon name="chevron-down-outline" class="skill-toggle-icon text-zinc-500 dark:text-zinc-400 transition-transform"></ion-icon>
         </div>
-        <ion-icon name="chevron-down-outline" class="skill-toggle-icon text-zinc-500 dark:text-zinc-400 transition-transform"></ion-icon>
     </div>
     <div class="skill-content">
         <div class="overflow-hidden opacity-0 transition-opacity duration-300">
@@ -1043,6 +1094,19 @@
         const projectCards = document.querySelectorAll(".project-card");
         const projectJumpLinks = document.querySelectorAll(".project-jump");
         const allFilterBtn = projectFilters ? projectFilters.querySelector('.filter-btn[data-filter="all"]') : null;
+        const projectSearch = document.getElementById("project-search");
+
+        let activeCategory = "all";
+        let searchQuery = "";
+
+        const applyFilterAndSearch = () => {
+            projectCards.forEach((card) => {
+                const matchesCategory = activeCategory === "all" || card.getAttribute("data-category") === activeCategory;
+                const matchesSearch = !searchQuery || card.textContent.toLowerCase().includes(searchQuery);
+                card.classList.toggle("hidden", !(matchesCategory && matchesSearch));
+            });
+            updateCanvasDimensions();
+        };
 
         const setActiveFilter = (filterValue) => {
             filterBtns.forEach((btn) => {
@@ -1051,17 +1115,10 @@
             });
         };
 
-        const applyFilter = (filterValue) => {
-            projectCards.forEach((card) => {
-                const shouldShow = filterValue === "all" || card.getAttribute("data-category") === filterValue;
-                card.classList.toggle("hidden", !shouldShow);
-            });
-        };
-
         const selectFilter = (filterValue) => {
+            activeCategory = filterValue;
             setActiveFilter(filterValue);
-            applyFilter(filterValue);
-            updateCanvasDimensions();
+            applyFilterAndSearch();
         };
 
         if (projectFilters) {
@@ -1072,6 +1129,13 @@
                 }
 
                 selectFilter(filterBtn.getAttribute("data-filter") || "all");
+            });
+        }
+
+        if (projectSearch) {
+            projectSearch.addEventListener("input", (event) => {
+                searchQuery = event.target.value.toLowerCase().trim();
+                applyFilterAndSearch();
             });
         }
 
@@ -1204,9 +1268,15 @@
         const highlightProject = (projectId, immediate = false) => {
             const targetCard = document.getElementById(projectId);
             if (targetCard) {
-                // If the target project is hidden by active category filters, reset filter to 'all'
-                if (targetCard.classList.contains("hidden") && allFilterBtn) {
-                    selectFilter("all");
+                // If the target project is hidden by active filters, reset filter and search to show it
+                if (targetCard.classList.contains("hidden")) {
+                    if (projectSearch) {
+                        projectSearch.value = "";
+                        searchQuery = "";
+                    }
+                    if (allFilterBtn) {
+                        selectFilter("all");
+                    }
                 }
 
                 projectCards.forEach((card) => {
@@ -1333,8 +1403,12 @@
 
         if (themeToggle) {
             themeToggle.addEventListener("click", () => {
+                document.documentElement.classList.add("theme-transitioning");
                 const isDark = document.documentElement.classList.contains("dark");
                 setTheme(isDark ? "light" : "dark");
+                setTimeout(() => {
+                    document.documentElement.classList.remove("theme-transitioning");
+                }, 300);
             });
         }
 
