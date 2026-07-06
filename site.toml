@@ -24,6 +24,12 @@ skills_title = "Skills"
 languages_title = "Languages"
 technologies_title = "Technologies"
 contact_title = "Contact"
+no_projects = "No projects found matching your criteria."
+
+[skills_categories]
+languages = "Languages"
+technologies = "Technologies"
+tools = "Tools"
 
 [contact]
 form_action = "https://formspree.io/f/moqgwdop"
@@ -34,7 +40,7 @@ text = "Made with <3 by @quantumbagel, not AI."
 
 [content]
 about = [
-  "Hello! I'm <strong class='text-gray-800 dark:text-white'>Julian Reder</strong>, a programmer and student at North Carolina State University. This website has a brief overview of my projects and skillset, as well as a contact form. It's also a template, see the project on GitHub to see how to use it yourself :D ",
+  "Hello! I'm <strong class='text-gray-800 dark:text-white'>Julian Reder</strong>, a programmer and student at North Carolina State University. I've had a passion for learning and developing my entire life and wanted to collect my projects and skills in one centralized place. This website has a brief overview of my projects and skillset, as well as a contact form. It's also a template, see the project on GitHub to see how to use it yourself ^w^",
   "Hopefully you find something interesting here! Feel free to reach out if you want to chat about anything or have questions about my projects or experience."
 ]
 
@@ -47,12 +53,14 @@ taglines = [
   "is always learning",
   "would like a job 🥺",
   "plays Factorio",
-  "makes stuff work"
+  "makes stuff work",
+  "is a little bit weird",
+  "no actually a lot weird"
 ]
 
 
 [[experiences]]
-title = "Financial Services Technical Lead, Merrill Lynch"
+title = "Financial Services Technical Intern, The Bell, Bell & Cronlund Group @ Merrill Lynch Wealth Management"
 link = "https://advisor.ml.com/sites/nc/raleigh-nc/bellbellcronlund"
 date = "May 2026 - Present"
 description = "This summer, I am working with the Bell, Bell, and Cronlund Group within Merrill to improve their internal calculations platform responsible for $500M+ in assets under management."
@@ -64,7 +72,7 @@ date = "Fall 2025 - Present"
 description = "I am currently enrolled in the Computer Engineering and Statistics departments at North Carolina State University. I am pursuing a Bachelor's in Statistics and Computer Engineering."
 
 [[experiences]]
-title = "AERPAW Developer"
+title = "Developer @ AERPAW"
 link = "https://aerpaw.org"
 date = "Summer 2023 - Present"
 description = "I have had the pleasure to work with Dr. Mihail Sichitiu at the Aerial Experimentation and Research Platform for Advanced Wireless at North Carolina State University for a couple of years now. I have built several interesting projects including a plane tracker and a drone flight recorder."
@@ -73,118 +81,142 @@ description = "I have had the pleasure to work with Dr. Mihail Sichitiu at the A
 title = "Wake Tech Community College: (GPA: 3.8)"
 link = "https://waketech.edu"
 date = "Fall 2023 - Spring 2025"
-description = "This was my first experience taking college coursework. I graduated with multiple appearances on the Dean's List, membership in the Phi Theta Kappa chapter, and an Associate in Science degree."
+description = "This was my first experience taking college coursework. I graduated with multiple appearances on the Dean's List, membership in the Beta Alpha chapter of the Phi Theta Kappa honor society, and an Associate in Science degree."
 
 [[skills.languages]]
 name = "Python"
-icon = "logo-python"
+icon = "devicon-python-plain"
 level = "Expert"
 start_date = "2021-01-01"
-details = "My primary language for most of my programming career. Used for web scraping, automation, data science, and drone software."
-projects = ["PyAerial", "airstrik.py", "DroneTracker", "finiteCraft", "Triggered", "ML-Ticker"]
+details = "I've used Python in almost every major project to tie together microservices, automate tasks, and design API wrappers. Some examples:<ul class='list-disc pl-5 mt-2 space-y-1'><li><strong>PyAerial / airstrik.py:</strong> Building plane trackers using MongoDB and Kafka</li><li><strong>DroneTracker:</strong> Scripting dynamic PTZ camera controllers to track flying drones in real-time</li><li><strong>aerpawlib:</strong> Wrapping complex low-level MAVLink flight controls</li><li><strong>Strife / Piranha:</strong> Coding interactive Discord bots with session matchmaking and custom interaction routers (Strife replacing PlayCord)</li><li><strong>ML-Ticker:</strong> Constructing data analysis utilities with custom sandboxed engines</li></ul>"
+projects = ["PyAerial", "airstrik.py", "Piranha", "DroneTracker", "finiteCraft", "Triggered", "PlayCord", "Strife", "Molotov", "discord.py-template", "aerpawlib", "ML-Ticker", "Portfolio Website (v3)"]
 
 [[skills.languages]]
 name = "C/C++"
-icon = "code-slash-outline"
+icon = "devicon-cplusplus-plain"
 level = "Advanced"
 start_date = "2023-01-01"
-details = "Proficient in C/C++ for systems programming and performance-critical applications. Used in various academic and personal projects."
-projects = ["Embedded Systems via Arduino", "Python compiler extensions for AERPAW", "JIT compilation for performance-critical Python code"]
+details = "I've used C/C++ in performance-critical sections and systems programming where high execution speeds or direct hardware controls are needed. I have a lot of experience with Arduino and microcontrollers, as well as JIT compilation for Python code.>"
+projects = ["Arduino", "Python compiler extensions for AERPAW", "JIT compilation for performance-critical Python code"]
 
 [[skills.languages]]
 name = "JavaScript"
-icon = "logo-javascript"
+icon = "devicon-javascript-plain"
 level = "Advanced"
 start_date = "2023-01-01"
-details = "Used extensively for front-end development (Tailwind, React) and specialized automation tools."
-projects = ["Portfolio Website (v2)", "Molotov", "finiteCraft"]
+details = "I've used JavaScript to implement client-side interactive elements and interface logic on web pages. Some examples:<ul class='list-disc pl-5 mt-2 space-y-1'><li><strong>Portfolio Website (v3):</strong> Building dynamic client-side filtering and overlay layouts</li><li><strong>finiteCraft:</strong> Constructing DOM scraping scripts</li><li><strong>Telemetry Dashboards:</strong> Designing interactive visualization systems</li></ul>"
+projects = ["Portfolio Website (v3)", "finiteCraft"]
 
 [[skills.languages]]
 name = "Java"
-icon = "cafe-outline"
+icon = "devicon-java-plain"
 level = "Competent"
 start_date = "2022-01-01"
-details = "Really good understanding of OOP principles. Experience mostly in the context of building Minecraft plugins."
+details = "I've used Java in a pretty limited fashion outside of class. My main project using Java was the Statify Minecraft plugin, where I developed server-side Minecraft plugin using SpigotMC to expose Minecraft's statistics to the server and players."
 projects = ["Statify"]
 
 [[skills.languages]]
 name = "C#"
-icon = "code-outline"
+icon = "devicon-csharp-plain"
 level = "Competent"
 start_date = "2024-01-01"
-details = "Experience with .NET and game development. Most recently used for Sebastian Lague's Chess Challenge."
+details = "I've used C# to build performance-critical projects. My primary example of this is my chess bot made for Sebastian Lague's tiny chess bot competition."
 projects = ["Chess-Challenge"]
 
 [[skills.languages]]
 name = "Bash"
-icon = "terminal-outline"
+icon = "devicon-bash-plain"
 level = "Competent"
 start_date = "2022-01-01"
-details = "Proficient in writing scripts for automation, CI/CD pipelines, and Linux system administration."
+details = "I've used Bash to write automation scripts, orchestrate system builds, and streamline developer setup commands. Some examples:<ul class='list-disc pl-5 mt-2 space-y-1'><li><strong>All Projects:</strong> Bootstrapping local developer environments</li><li><strong>Docker setup scripts:</strong> Managing container deployment pipelines</li><li><strong>Database Initialization:</strong> Creating port-monitoring routines to ensure database startup sequences execute in order</li></ul>"
 projects = ["All projects", "Docker setup scripts"]
 
 [[skills.technologies]]
 name = "Linux/Unix"
-icon = "desktop-outline"
+icon = "devicon-linux-plain"
 level = "Expert"
 start_date = "2021-01-01"
-details = "Heavy user of Linux for development and server management."
+details = "I've used Linux/Unix environments to host production systems, configure deployment pipelines, and run diagnostics. Some examples:<ul class='list-disc pl-5 mt-2 space-y-1'><li><strong>All Projects:</strong> Hosting applications on remote VPS instances</li><li><strong>Service Configuration:</strong> Setting up systemd service units and redirecting daemon output to log files</li><li><strong>Diagnostics:</strong> Managing environment variables and file permissions, and debugging network issues using standard utilities like netstat and tcpdump</li></ul>"
 projects = ["Server Management", "All Projects"]
 
 [[skills.technologies]]
 name = "Docker"
-icon = "logo-docker"
+icon = "devicon-docker-plain"
 level = "Expert"
 start_date = "2023-01-01"
-details = "All my major projects are deployed using Docker for reproducibility and scale."
-projects = ["PyAerial", "airstrik.py", "DroneTracker", "Piranha"]
+details = "I've used Docker to containerize multi-service applications, ensuring consistent execution across development and production environments. Some examples:<ul class='list-disc pl-5 mt-2 space-y-1'><li><strong>PyAerial / airstrik.py:</strong> Containerizing multi-container architectures combining database and telemetry services</li><li><strong>discord.py-template:</strong> Creating optimized multi-stage build files to minimize production footprint</li><li><strong>Strife:</strong> Configuring network isolation for microservices and Docker Compose deployment (replacing PlayCord)</li></ul>"
+projects = ["PyAerial", "airstrik.py", "DroneTracker", "Piranha", "PlayCord", "Strife", "discord.py-template"]
 
-[[skills.technologies]]
+[[skills.tools]]
 name = "JetBrains Suite"
-icon = "bulb-outline"
+icon = "devicon-jetbrains-plain"
 level = "Expert"
 start_date = "2021-01-01"
-details = "Advanced user of PyCharm, CLion, and IntelliJ."
+details = "I've used the JetBrains Suite of IDEs to debug and profile complex codebases across multiple stacks. Some examples:<ul class='list-disc pl-5 mt-2 space-y-1'><li><strong>All Projects:</strong> Using PyCharm to step through multi-threaded environments</li><li><strong>C++ Development:</strong> Using CLion to profile memory usage and trace performance bottlenecks</li><li><strong>Java Integration:</strong> Inspecting remote database schemas and JVM bytecode within IntelliJ IDEA</li></ul>"
 projects = ["All Projects"]
 
-[[skills.technologies]]
+[[skills.tools]]
 name = "Git"
-icon = "logo-github"
+icon = "devicon-git-plain"
 level = "Advanced"
 start_date = "2022-01-01"
-details = "Strong understanding of Git workflows, branching strategies, and repository management."
+details = "I've used Git to track codebase changes, collaborate on repositories, and manage deployment integrations. Some examples:<ul class='list-disc pl-5 mt-2 space-y-1'><li><strong>All Projects:</strong> Tracking source code changes and branching</li><li><strong>aerpawlib:</strong> Using git submodules for external dependency tracking</li><li><strong>CI/CD Pipelines:</strong> Squash commit histories with interactive rebases and configure automated testing in GitHub Actions</li></ul>"
 projects = ["All Projects"]
 
 [[skills.technologies]]
 name = "Selenium / Web Scraping"
-icon = "globe-outline"
+icon = "globe"
 level = "Advanced"
 start_date = "2024-01-01"
-details = "Strong experience with web scraping and browser automation."
-projects = ["finiteCraft", "Molotov"]
+details = "I'm really good at using Selenium to scrape large amounts of data. Some examples:<ul class='list-disc pl-5 mt-2 space-y-1'><li><strong>finiteCraft:</strong> Automating browser sessions to discover crafting recipes</li><li><strong>Worker Threads:</strong> Spawning headless Chromium instances to scrap pages</li><li><strong>Proxy Rotation:</strong> Managing rotating proxy pools to avoid request rate limits</li></ul>"
+projects = ["finiteCraft"]
 
-[[skills.technologies]]
+[[skills.technologies]] # done
 name = "OpenAPI"
-icon = "server-outline"
+icon = "braces"
 level = "Advanced"
 start_date = "2024-01-01"
-details = "Experience designing and documenting REST APIs for complex data systems."
+details = "I've used OpenAPI schemas to design structured schemas and write API documentation. Projects I've used this skill for: <ul class='list-disc pl-5 mt-2 space-y-1'><li><strong>PyAerial:</strong> Designing a REST APIs that external tools can use to interface with the program</li><li><strong>finiteCraft:</strong> Writing documentation for a hacky static API using Github Pages</li></ul>"
 projects = ["PyAerial", "Triggered"]
 
-[[skills.technologies]]
-name = "SQL-like databases (MySQL, PostgreSQL)"
-icon = "server-outline"
+[[skills.technologies]] # Done
+name = "SQL"
+icon = "database"
 level = "Advanced"
 start_date = "2022-01-01"
-details = "Relational database design, optimization, and management for high-concurrency applications."
-projects = ["PlayCord", "Triggered", "Statify"]
+details = "After some time using the significantly simpler database MongoDB, I began to use more traditional SQL-like databases (MySQL, PostgreSQL) as storage methods for my more complicated applications. Some examples of this: <ul class='list-disc pl-5 mt-2 space-y-1'><li><strong>Strife:</strong> Designing robust repository patterns and migration flows using asyncpg and PostgreSQL (replacing PlayCord's MySQL schema)</li><li><strong>Triggered:</strong> Storing custom event triggers and role permissions</li><li><strong>Statify:</strong> Aggregating server-wide statistics and leaderboards, and aggressive indexing to optimize queries.</li></ul>"
+projects = ["PlayCord", "Strife", "Triggered", "Statify"]
 
-[[skills.technologies]]
+[[skills.technologies]] # done
 name = "MongoDB"
-icon = "leaf-outline"
+icon = "devicon-mongodb-plain"
 level = "Advanced"
 start_date = "2024-01-01"
-details = "NoSQL database implementations for drone tracking data."
+details = "MongoDB was the first database that I used, which is reflected in the projects I used it for. Some of the stronger examples:<ul class='list-disc pl-5 mt-2 space-y-1'><li><strong>PyAerial / airstrik.py:</strong> Storing raw, high-frequency aircraft coordinates in real-time</li><li><strong>finiteCraft:</strong> Mapping the element crafting paths in a graph-like structure</li></ul>"
+projects = ["PyAerial", "airstrik.py", "finiteCraft"]
+
+[[skills.technologies]] # Done
+name = "Kafka"
+icon = "devicon-apachekafka-original"
+level = "Advanced"
+start_date = "2023-06-01"
+details = "I've used Kafka to stream telemetry data for my AERPAW projects and have gotten quite experienced with it. Some examples:<ul class='list-disc pl-5 mt-2 space-y-1'><li><strong>PyAerial / airstrik.py:</strong> Streaming real-time collision warnings and alerts to notification brokers</li><li><strong>DroneTracker:</strong> Broadcasting high-frequency GPS telemetry to the AXIS camera</li></ul>"
+projects = ["PyAerial", "airstrik.py", "DroneTracker"]
+
+[[skills.technologies]]
+name = "discord.py"
+icon = "discord"
+level = "Expert"
+start_date = "2022-01-01"
+details = "I've used discord.py to develop a variety of bots and even a modular bot templates. Work I've done:<ul class='list-disc pl-5 mt-2 space-y-1'><li><strong>discord.py-template:</strong>A modular bot framework with hot-reloading cog engines</li><li><strong>Strife / Piranha:</strong> Designing interactive games with a custom interaction router (Strife replacing PlayCord)</li><li><strong>Triggered:</strong>A full trigger-based automation system entirely within Discord</li></ul>"
+projects = ["Piranha", "Triggered", "PlayCord", "Strife", "discord.py-template"]
+
+[[skills.technologies]]
+name = "ADS-B / Mode-S"
+icon = "broadcast"
+level = "Advanced"
+start_date = "2023-06-01"
+details = "I've used ADS-B / Mode-S to use radio hardware to parse aircraft signals, and track flight coordinates. I have gotten down to the hardware level of this protocol with my work at AERPAW. With my work on PyAerial, I set up RTL-SDR hardware to capture raw 1090 MHz transponder packets and parse them."
 projects = ["PyAerial", "airstrik.py"]
 
 
@@ -193,142 +225,174 @@ category = "aerpaw"
 image = "https://placehold.co/400x250/3498DB/FFFFFF?text=PyAerial"
 title = "PyAerial"
 date = "2024 - Present"
-description = "A better plane tracker for AERPAW, successor to airstrik.py."
-details = "PyAerial is a comprehensive ADS-B tracking solution developed for the AERPAW research platform at NC State. It provides real-time aircraft position tracking, historical data storage, and visualization capabilities."
-features = ["Real-time ADS-B decoding", "MongoDB integration for data persistence", "Docker containerized deployment", "REST API for data access"]
+description = "A high-performance ADS-B and Mode-S aircraft tracking system developed for the AERPAW research platform."
+details = "PyAerial is a comprehensive ADS-B tracking solution developed for the AERPAW research platform at NC State. It provides real-time aircraft position tracking, historical data storage, and geofenced alerting. It is designed to be modular and extensible, allowing for integration with additional data sources and early-warning systems."
+features = ["15% percent faster collision detection [compared to airstrik.py]", "92% less false positives [compared to airstrik.py]", "Detailed flight tracking in MongoDB", "Docker containerized deployment", "Kafka notification integration", "Compatibility with commonly used geofence file formats"]
 link = "https://github.com/quantumbagel/PyAerial"
-skills = ["Python", "MAVSDK", "Docker", "MongoDB", "ADS-B"]
+skills = ["Python", "Kafka", "MongoDB", "RTL-SDR", "Docker", "ADS-B / Mode-S", "OpenAPI", "Shapely", "Geospatial Analysis"]
 
 [[projects]]
 category = "aerpaw"
 image = "https://placehold.co/400x250/E74C3C/FFFFFF?text=airstrik.py"
 title = "airstrik.py"
-date = "2023 - 2024"
-description = "A pure-python ADS-B plane tracker for AERPAW."
-details = "The original pure-Python implementation of an ADS-B tracker for drone airspace monitoring. This project laid the groundwork for PyAerial."
-features = ["ADS-B signal processing", "Integration with MAVSDK for drone communication"]
+date = "2023 - 2024 [unmaintained]"
+description = "A legacy pure-Python ADS-B plane tracking and early warning system for the AERPAW platform."
+details = "A legacy Python-based ADS-B tracking utility designed to process live transponder messages, perform trigonometry-based geofencing calculations, and publish alerts to a Kafka notification bus."
+features = ["ADS-B signal processing and parsing", "Trigonometry-based geofence warning system", "MongoDB persistence for flight data", "Kafka pub/sub alert integration"]
 link = "https://github.com/quantumbagel/airstrik.py"
-skills = ["Python", "MAVSDK", "Docker", "MongoDB", "ADS-B"]
+skills = ["Python", "Kafka", "MongoDB", "RTL-SDR", "Docker", "ADS-B / Mode-S", "Trigonometry"]
 
 [[projects]]
 category = "discord-bots"
 image = "https://placehold.co/400x250/2ECC71/FFFFFF?text=Piranha"
 title = "Piranha"
 date = "2022"
-description = "A chess-playing Discord bot with various features."
-details = "Piranha is a feature-rich Discord bot that allows users to play chess directly within Discord. It integrates with the Stockfish chess engine for AI opponents."
+description = "A feature-rich Discord bot that integrates the Stockfish chess engine to let users play chess directly in chat."
+details = "A Python-based Discord bot designed for chess enthusiasts. It interfaces with the Stockfish engine to support multiple difficulty levels, game history tracking, and player statistics."
 features = ["Play chess against AI or friends", "Multiple difficulty levels via Stockfish", "Game history and statistics", "Docker deployment support"]
-skills = ["Python", "Stockfish", "Docker"]
+skills = ["Python", "discord.py", "Stockfish", "Docker", "Algorithms"]
 
 [[projects]]
-category = "other"
+category = "collabs"
 image = "https://placehold.co/400x250/E74C3C/FFFFFF?text=finiteCraft"
 title = "finiteCraft"
-date = "2024"
-description = "A web scraper and craft finder for Neal Agarwal's Infinite Craft."
-details = "finiteCraft is an automation tool that scrapes and discovers all possible crafting combinations in the game Infinite Craft. Uses distributed proxy networks for efficient scraping."
-features = ["Selenium-based automation", "Proxy rotation support", "Crafting recipe database", "Pathfinding algorithms for recipe discovery"]
+date = "2024 [unmaintained]"
+description = "A high-performance scraping and recipe discovery pathfinder for the Infinite Craft game."
+details = "finiteCraft is a multi-threaded scraping and optimization project designed to automate recipe discovery in Neal Agarwal's Infinite Craft. It utilizes distributed rotating proxies to bypass rate limits and implements pathfinding algorithms to compute optimal crafting trees."
+features = ["Multi-threaded recipe scraping", "Rotating proxy integration", "MongoDB database for element relationships", "Tree-search pathfinding for optimal recipe discovery"]
 link = "https://github.com/finiteCraft/finiteCraft"
-skills = ["Python", "Selenium", "Web Scraping", "Proxies", "Automation"]
+skills = ["Python", "Playwright / Selenium", "Web Scraping", "Proxy Rotation", "MongoDB", "Pathfinding Algorithms"]
 
 [[projects]]
 category = "aerpaw"
 image = "https://placehold.co/400x250/9B59B6/FFFFFF?text=DroneTracker"
 title = "DroneTracker"
 date = "2024"
-description = "Track drones with cameras! Another AERPAW project."
-details = "DroneTracker is a computer vision system that uses PTZ cameras to track drones in real-time. It integrates with AXIS cameras via VAPIX protocol. See a video of it in action: https://drive.google.com/file/d/1kAgfkhz04cGI_hY1XcNIUBpDtY-OiKQi/view"
-features = ["PTZ camera control via VAPIX", "Real-time drone position estimation", "MAVSDK integration for telemetry", "Containerized deployment"]
+description = "A real-time computer vision and PTZ camera tracking system for AERPAW drones."
+details = "DroneTracker controls pan-tilt-zoom (PTZ) AXIS cameras using the VAPIX API to track flying drones in real-time. The system calculates tracking angles using drone GPS coordinates received over Kafka and automatically adjusts camera orientation and zoom to keep the target centered."
+features = ["PTZ camera control using AXIS VAPIX protocol", "Real-time coordinate-to-angle mathematical conversion", "Telemetry consumption over Kafka", "Dockerized deployment for field execution"]
 link = "https://github.com/quantumbagel/DroneTracker"
-skills = ["Python", "VAPIX", "Docker", "MAVSDK", "netcat", "Linux"]
+skills = ["Python", "VAPIX (PTZ Camera API)", "Kafka", "Docker", "Trigonometry", "Linux/Unix"]
 
 [[projects]]
 category = "discord-bots"
 image = "https://placehold.co/400x250/F1C40F/FFFFFF?text=Triggered"
 title = "Triggered"
 date = "2023 - 2024"
-description = "An if-this-then-that Discord bot for automation and fun."
-details = "Triggered allows Discord server administrators to create custom automation rules based on triggers and actions, similar to IFTTT."
+description = "A programmable IFTTT-style automation and utility bot for Discord server administrators."
+details = "Triggered is a customizable Discord bot that provides administrators with a flexible event-driven automation framework. It allows creating custom triggers (e.g., messages, user joins) and corresponding actions, backed by a relational database."
 features = ["Custom trigger/action system", "Programmable API", "MySQL database for persistence", "Extensive customization options"]
 link = "https://github.com/quantumbagel/Triggered"
-skills = ["Python", "discord.py", "MySQL", "Programmable API"]
+skills = ["Python", "discord.py", "MySQL", "Database Design", "API Integration", "OpenAPI"]
 
 [[projects]]
 category = "discord-bots"
 image = "https://placehold.co/400x250/F1C40F/FFFFFF?text=PlayCord"
 title = "PlayCord"
-date = "2025 - Present"
-description = "A Discord bot for paper and pencil games with local and global leaderboards."
-details = "PlayCord brings classic paper and pencil games to Discord with a competitive twist. Features global and server-specific leaderboards."
-features = ["Multiple game modes", "Global and local leaderboards", "Dynamic game loading system", "MySQL persistence"]
+date = "2025 [replaced by Strife]"
+description = "A legacy competitive turn-based gaming bot for Discord. Succeeded and replaced by Strife."
+details = "PlayCord is a legacy Python-based Discord bot that hosts classic turn-based board and pencil games. Succeeded and replaced by Strife. It features matchmaking, dynamic game state replays with interactive UI controls, and matchmaking rankings using Microsoft's TrueSkill rating system."
+features = ["Turn-based board games (e.g., paper/pencil)", "TrueSkill ranking and matchmaking algorithm", "Interactive game replay viewer in Discord UI", "MySQL database for persistence and match history"]
 link = "https://github.com/PlayCord/bot"
-skills = ["Python", "discord.py", "MySQL", "Programmable API"]
+skills = ["Python", "discord.py", "MySQL", "TrueSkill Algorithm", "Database Design", "Docker"]
 
 [[projects]]
-category = "other"
+category = "discord-bots"
+image = "https://placehold.co/400x250/F1C40F/FFFFFF?text=Strife"
+title = "Strife"
+date = "2026 - Present"
+description = "A high-performance Discord bot hosting interactive multiplayer games with a custom interaction router, session lifecycle management, and PostgreSQL database integration."
+details = "Strife is a modern, modular Discord bot built with discord.py and asyncpg designed to host competitive multiplayer games like Mafia and Tic-Tac-Toe. It features an advanced session and lobby matchmaking lifecycle, dynamic UI components rendered with custom emojis, a sandboxed game simulation engine, and database-driven game history and player profile services. Strife succeeds and replaces the older PlayCord project."
+features = [
+  "Modular lobby matchmaking and session lifecycle management",
+  "High-performance PostgreSQL database backend with repository patterns and migrator",
+  "Custom interaction routing and payload caching to support complex game inputs",
+  "Interactive multiplayer games including Tic-Tac-Toe and Mafia",
+  "Comprehensive game replays, moves history tracking, and player profiles"
+]
+skills = ["Python", "discord.py", "PostgreSQL", "Database Design", "Pydantic", "Software Architecture", "Docker", "asyncpg"]
+
+[[projects]]
+category = "solo"
 image = "https://placehold.co/400x250/3498DB/FFFFFF?text=Statify"
 title = "Statify"
-date = "2022"
-description = "A SpigotMC plugin for statistics aggregation and leaderboards."
-details = "Statify is a Minecraft server plugin that tracks player statistics and generates leaderboards for competitive servers."
-features = ["Comprehensive stat tracking", "Customizable leaderboards", "SpigotMC API integration"]
+date = "2022 [unmaintained]"
+description = "A server-side Minecraft plugin for advanced statistic aggregation and database-driven leaderboards."
+details = "Statify is a lightweight, server-side SpigotMC plugin designed to aggregate, query, and visualize player statistics by providing a /stat command. It supports complex mathematical queries and integrates with relational databases to maintain customizable leaderboards."
+features = ["Advanced server-wide statistic aggregation", "SpigotMC API integration for Minecraft event handling", "Relational database support (MySQL/PostgreSQL)", "Customizable leaderboard layouts"]
 link = "https://github.com/quantumbagel/Statify"
-skills = ["Java", "SpigotMC"]
+skills = ["Java", "SpigotMC API", "MySQL / PostgreSQL", "Database Design"]
 
 [[projects]]
-category = "other"
+category = "solo"
 image = "https://placehold.co/400x250/2ECC71/FFFFFF?text=Molotov"
 title = "Molotov"
 date = "2022"
-description = "A Selenium-based bot for the game Bomb Party (jklm.fun)."
-details = "Molotov is an automation bot for the word game Bomb Party. It uses Selenium to interact with the game and an optimized word database for fast responses."
-features = ["Selenium automation", "Optimized word lookup", "Configurable response timing", "JavaScript injection for speed"]
+description = "A screen-scraping and automated keyboard injection bot for the jklm.fun word game Bomb Party."
+details = "Molotov is a high-speed automation bot for the word game Bomb Party on jklm.fun. It utilizes mss for ultra-fast desktop screen capture, analyzes pixel colors to track game state and active turns, and simulates human typing using PyAutoGUI to inject optimal words from an indexed dictionary database. It also chooses words based on a scoring heuristic to maximize points for the bonus hearts mechanic and can fake typing to bypass bot detection."
+features = ["High-speed screen capturing via mss", "Pixel-color game state tracking", "Simulated human typing delays via PyAutoGUI", "Indexed dictionary database for instantaneous word lookup"]
 link = "https://github.com/quantumbagel/Molotov"
-skills = ["Python", "Selenium", "JavaScript"]
+skills = ["Python", "PyAutoGUI", "Image Manipulation", "Algorithms"]
 
 [[projects]]
 category = "discord-bots"
 image = "https://placehold.co/400x250/9B59B6/FFFFFF?text=discord.py+template"
 title = "discord.py-template"
-date = "2025"
-description = "A simple, modern, and clean discord.py 2.0+ template."
-details = "A well-structured template for building Discord bots using discord.py 2.0+. Designed to be easy to understand and extend for beginners and experienced developers alike."
-features = ["Clean project structure", "Modern discord.py 2.0+ syntax", "Slash command support", "Easy to customize and extend"]
+date = "2025 - Present"
+description = "A feature-rich template for developing modern discord.py bots."
+details = "A template for discord.py (v2.0+) bots. It includes hot-reloading cogs with automatic failure rollback, centralized YAML configuration, standardized embed generators, and structured multi-destination logging. Other features soon to be added include an integrated UI library using Discord Components V2 and a built-in command-line interface for bot management."
+features = ["Dynamic failure management", "Global error handling and automatic crash logging", "Easy to use and build off of with centralized configuration"]
 link = "https://github.com/quantumbagel/discord.py-template"
-skills = ["Python", "discord.py"]
+skills = ["Python", "discord.py", "YAML", "Software Architecture", "Docker"]
 
 [[projects]]
-category = "other"
+category = "collabs"
 image = "https://placehold.co/400x250/1ABC9C/FFFFFF?text=Chess-Challenge"
 title = "Chess-Challenge"
-date = "2023"
-description = "A mini-chess bot for Sebastian Lague's chess bot challenge."
-details = "An entry for Sebastian Lague's Tiny Chess Bot Challenge. The goal was to create the strongest chess AI possible within strict code size limitations."
-features = ["Minimax algorithm with alpha-beta pruning", "Compact code optimization", "Custom evaluation function", "Competitive performance under constraints"]
+date = "2023 [unmaintained]"
+description = "A compact C# chess bot developed for Sebastian Lague's tiny chess bot competition."
+details = "A miniature chess engine written in C# (.NET 6.0) under strict size/token constraints. This tiny little botiImplements search algorithms, move valuation, and game state optimizations within a 1024-token budget."
+features = ["Minimax search with alpha-beta pruning", "Quiescence search", "~1500-2000 ELO [tested against Stockfish]", "Heavy optimization"]
 link = "https://github.com/quantumbagel/Chess-Challenge"
-skills = ["C#", "Chess", "AI"]
+skills = ["C#", ".NET", "Algorithms", "Optimization"]
 
 [[projects]]
 category = "aerpaw"
 image = "https://placehold.co/400x250/F1C40F/FFFFFF?text=aerpawlib"
 title = "aerpawlib"
 date = "2025 - Present"
-description = "A MAVLink/MAVSDK abstraction layer for experimenters under the AERPAW platform."
-details = "aerpawlib provides a high-level Python interface for controlling drones on the AERPAW testbed. It abstracts away the complexity of MAVLink/MAVSDK for easier experiment development."
+description = "A high-level MAVLink and MAVSDK abstraction framework for drone flight experimentation."
+details = "aerpawlib is a Python framework that abstracts complex low-level MAVLink and MAVSDK protocols into a clean, scriptable API for drone flight control. It is designed to help researchers safely write, simulate, and deploy multi-vehicle drone experiments on the AERPAW testbed. My work on this project was migrating it to use the MAVSDK library instead of pymavlink/DroneKit because of the latter's lack of active development and support for modern MAVLink features."
 features = ["High-level drone control API", "MAVLink/MAVSDK abstraction", "Simplified experiment development", "AERPAW platform integration"]
 link = "https://github.com/aerpaw/aerpawlib"
-skills = ["Python", "MAVLink", "MAVSDK", "Drones"]
+skills = ["Python", "MAVSDK / MAVLink", "ArduPilot", "Drone Flight Control", "API Design", "Network Protocols"]
 
 [[projects]]
-category = "other"
+category = "ml"
 image = "https://placehold.co/400x250/34495E/FFFFFF?text=ML-Ticker"
 title = "ML-Ticker"
 date = "2026 - Present"
-description = "A Python command-line utility for retrieving equity research metrics via the FactSet FQL API."
+description = "A financial query utility with a sandboxed formula engine, developed for Merrill Lynch."
 details = "ML-Ticker is a Python command-line tool built for Merrill Lynch to query FactSet FQL API data. It uses a sandboxed Python formula engine to compute post-query custom metrics, features an automatic dependency DAG, validates configuration files via Pydantic, and outputs colorized terminal tables or styled Excel spreadsheets."
 features = ["FactSet FQL API integration for snapshot and historical timeseries data", "Sandboxed Python formula engine for post-query custom metrics", "Dependency validation using directed acyclic graphs (DAGs) and Pydantic", "Colorized terminal tables and styled multi-sheet Excel spreadsheet export"]
 link = "https://github.com/quantumbagel/ML-Ticker"
-skills = ["Python", "FactSet FQL", "Pydantic", "openpyxl", "CLI"]
+skills = ["Python", "FactSet FQL API", "Pydantic", "openpyxl (Excel)", "DAGs / Dependency Graphs", "CLI Development"]
+
+[[projects]]
+category = "solo"
+image = "https://placehold.co/400x250/2C3E50/FFFFFF?text=Portfolio+V3"
+title = "Portfolio Website (v3)"
+date = "2026 - Present"
+description = "The third iteration of my personal developer portfolio website, built with Python, Tailwind CSS, and Bootstrap Icons."
+details = "A clean, fast, and responsive static website generated using a custom Python script. Features a dark/light mode toggle, dynamic client-side filtering, and search functionality for projects."
+features = [
+  "Static site generation via custom Python script",
+  "Tailwind CSS styling with dynamic dark/light mode support",
+  "Bootstrap Icons integration with zero JavaScript parser layout lag",
+  "Instant client-side project filtering and search"
+]
+link = "https://github.com/quantumbagel/quantumbagel.github.io"
+skills = ["Python", "JavaScript", "Git"]
 
 [[project_filters]]
 key = "all"
@@ -339,12 +403,22 @@ key = "aerpaw"
 label = "AERPAW"
 
 [[project_filters]]
+key = "ml"
+label = "Merrill Lynch"
+
+
+[[project_filters]]
 key = "discord-bots"
 label = "Discord Bots"
 
 [[project_filters]]
-key = "other"
-label = "Other"
+key = "solo"
+label = "Solo Projects"
+
+[[project_filters]]
+key = "collabs"
+label = "Collaborations"
+
 
 [redirects]
 resume = "https://docs.google.com/document/d/1gq5sdEZpf0Aa72OVL7mjcgrHgKJGtB1S-MCWjtZQWz8/edit"

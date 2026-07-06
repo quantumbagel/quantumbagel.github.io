@@ -43,8 +43,8 @@
         };
     </script>
     <link href="font.css" rel="stylesheet">
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js" defer></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js" defer></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <style>
         :root {
             --color-global-bg: oklch(98.48% 0 0);
@@ -120,19 +120,19 @@
 
             <div class="flex flex-wrap items-center gap-5 text-sm font-mono">
                 <a href="{user.social.github}" target="_blank" rel="noopener noreferrer" class="text-zinc-500 hover:text-accent dark:hover:text-accent transition-colors" aria-label="GitHub">
-                    GitHub/<ion-icon name="logo-github" class="text-base inline-block align-middle pointer-events-none ml-0.5"></ion-icon>
+                    GitHub/<i class="bi bi-github inline-block align-middle pointer-events-none ml-0.5"></i>
                 </a>
                 <a href="{user.social.linkedin}" target="_blank" rel="noopener noreferrer" class="text-zinc-500 hover:text-accent dark:hover:text-accent transition-colors" aria-label="LinkedIn">
-                    LinkedIn/<ion-icon name="logo-linkedin" class="text-base inline-block align-middle pointer-events-none ml-0.5"></ion-icon>
+                    LinkedIn/<i class="bi bi-linkedin inline-block align-middle pointer-events-none ml-0.5"></i>
                 </a>
                 <a href="{user.social.discord}" target="_blank" rel="noopener noreferrer" class="text-zinc-500 hover:text-accent dark:hover:text-accent transition-colors" aria-label="Discord">
-                    Discord/<ion-icon name="logo-discord" class="text-base inline-block align-middle pointer-events-none ml-0.5"></ion-icon>
+                    Discord/<i class="bi bi-discord inline-block align-middle pointer-events-none ml-0.5"></i>
                 </a>
                 <a href="{user.social.resume}" target="_blank" rel="noopener noreferrer" class="text-zinc-500 hover:text-accent dark:hover:text-accent transition-colors" aria-label="Resume">
-                    Resume/<ion-icon name="document-text-outline" class="text-base inline-block align-middle pointer-events-none ml-0.5"></ion-icon>
+                    Resume/<i class="bi bi-file-earmark-text inline-block align-middle pointer-events-none ml-0.5"></i>
                 </a>
                 <button id="theme-toggle" class="text-zinc-500 hover:text-accent transition-colors cursor-pointer" aria-label="Toggle Theme">
-                    Theme/<ion-icon id="theme-toggle-icon" name="moon-outline" class="text-base inline-block align-middle pointer-events-none ml-0.5"></ion-icon>
+                    Theme/<i id="theme-toggle-icon" class="bi bi-moon inline-block align-middle pointer-events-none ml-0.5"></i>
                 </button>
                 <button id="particle-toggle" class="text-zinc-500 hover:text-accent transition-colors cursor-pointer" aria-label="Background: On">
                     Background/○
@@ -145,7 +145,7 @@
                 <h2 class="title group flex items-center gap-2 font-bold font-mono tracking-tight text-xl mb-4">
                     <span>{sections.about_title}</span>
                     <button class="section-copy-link hidden group-hover:inline-flex items-center text-zinc-400 hover:text-accent dark:hover:text-accent transition-colors" data-section-id="about" title="Copy link to Section">
-                        <ion-icon name="link" class="text-sm"></ion-icon>
+                        <i class="bi bi-link-45deg"></i>
                     </button>
                 </h2>
                 <div class="text-sm text-global-text leading-relaxed">
@@ -157,7 +157,7 @@
                 <h2 class="title group flex items-center gap-2 font-bold font-mono tracking-tight text-xl mb-6">
                     <span>{sections.experience_title}</span>
                     <button class="section-copy-link hidden group-hover:inline-flex items-center text-zinc-400 hover:text-accent dark:hover:text-accent transition-colors" data-section-id="experience" title="Copy link to Section">
-                        <ion-icon name="link" class="text-sm"></ion-icon>
+                        <i class="bi bi-link-45deg"></i>
                     </button>
                 </h2>
                 <div>
@@ -169,7 +169,7 @@
                 <h2 class="title group flex items-center gap-2 font-bold font-mono tracking-tight text-xl mb-6">
                     <span>{sections.projects_title}</span>
                     <button class="section-copy-link hidden group-hover:inline-flex items-center text-zinc-400 hover:text-accent dark:hover:text-accent transition-colors" data-section-id="projects" title="Copy link to Section">
-                        <ion-icon name="link" class="text-sm"></ion-icon>
+                        <i class="bi bi-link-45deg"></i>
                     </button>
                 </h2>
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
@@ -182,6 +182,10 @@
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="project-grid">
                     {content.project_cards_html}
+                    <div id="no-projects-message" class="hidden col-span-full text-center py-12 px-4 border border-dashed border-zinc-300 dark:border-zinc-700 font-mono text-zinc-500 dark:text-zinc-400">
+                        <i class="bi bi-search text-xl mb-2 block text-zinc-400 dark:text-zinc-500"></i>
+                        <span>{sections.no_projects}</span>
+                    </div>
                 </div>
             </section>
 
@@ -189,18 +193,11 @@
                 <h2 class="title group flex items-center gap-2 font-bold font-mono tracking-tight text-xl mb-6">
                     <span>{sections.skills_title}</span>
                     <button class="section-copy-link hidden group-hover:inline-flex items-center text-zinc-400 hover:text-accent dark:hover:text-accent transition-colors" data-section-id="skills" title="Copy link to Section">
-                        <ion-icon name="link" class="text-sm"></ion-icon>
+                        <i class="bi bi-link-45deg"></i>
                     </button>
                 </h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div>
-                        <h3 class="text-base font-semibold font-mono text-accent-2 mb-4">{sections.languages_title}</h3>
-                        {content.programming_skills_html}
-                    </div>
-                    <div>
-                        <h3 class="text-base font-semibold font-mono text-accent-2 mb-4">{sections.technologies_title}</h3>
-                        {content.tech_skills_html}
-                    </div>
+                <div class="{content.skills_grid_class}">
+                    {content.skills_html}
                 </div>
             </section>
 
@@ -208,7 +205,7 @@
                 <h2 class="title group flex items-center gap-2 font-bold font-mono tracking-tight text-xl mb-6">
                     <span>{sections.contact_title}</span>
                     <button class="section-copy-link hidden group-hover:inline-flex items-center text-zinc-400 hover:text-accent dark:hover:text-accent transition-colors" data-section-id="contact" title="Copy link to Section">
-                        <ion-icon name="link" class="text-sm"></ion-icon>
+                        <i class="bi bi-link-45deg"></i>
                     </button>
                 </h2>
                 <div class="bg-transparent p-6 rounded-none border border-zinc-300 dark:border-zinc-700">
@@ -229,7 +226,7 @@
                         </div>
                         <button type="submit" class="inline-flex items-center px-6 py-2.5 bg-transparent border border-accent text-accent font-medium font-mono rounded-none hover:bg-accent hover:text-global-bg transition-colors focus:outline-none cursor-pointer">
                             {contact.submit_label}
-                            <ion-icon name="paper-plane-outline" class="ml-2 text-lg"></ion-icon>
+                            <i class="bi bi-send ml-2"></i>
                         </button>
                     </form>
                 </div>
@@ -315,16 +312,25 @@
         const projectJumpLinks = document.querySelectorAll(".project-jump");
         const allFilterBtn = projectFilters ? projectFilters.querySelector('.filter-btn[data-filter="all"]') : null;
         const projectSearch = document.getElementById("project-search");
+        const noProjectsMessage = document.getElementById("no-projects-message");
 
         let activeCategory = "all";
         let searchQuery = "";
 
         const applyFilterAndSearch = () => {
+            let visibleCount = 0;
             projectCards.forEach((card) => {
                 const matchesCategory = activeCategory === "all" || card.getAttribute("data-category") === activeCategory;
                 const matchesSearch = !searchQuery || card.textContent.toLowerCase().includes(searchQuery);
-                card.classList.toggle("hidden", !(matchesCategory && matchesSearch));
+                const isVisible = matchesCategory && matchesSearch;
+                card.classList.toggle("hidden", !isVisible);
+                if (isVisible) {
+                    visibleCount++;
+                }
             });
+            if (noProjectsMessage) {
+                noProjectsMessage.classList.toggle("hidden", visibleCount > 0);
+            }
             updateCanvasDimensions();
         };
 
@@ -540,7 +546,7 @@
                 const url = `${window.location.origin}${window.location.pathname}#${projectId}`;
                 navigator.clipboard.writeText(url).then(() => {
                     const originalIcon = btn.innerHTML;
-                    btn.innerHTML = '<ion-icon name="checkmark" class="text-lg"></ion-icon>';
+                    btn.innerHTML = '<i class="bi bi-check text-lg"></i>';
                     setTimeout(() => {
                         btn.innerHTML = originalIcon;
                     }, 2000);
@@ -556,7 +562,7 @@
                 const link = btn.getAttribute("data-link");
                 navigator.clipboard.writeText(link).then(() => {
                     const originalIcon = btn.innerHTML;
-                    btn.innerHTML = '<ion-icon name="checkmark" class="text-sm"></ion-icon>';
+                    btn.innerHTML = '<i class="bi bi-check text-sm"></i>';
                     setTimeout(() => {
                         btn.innerHTML = originalIcon;
                     }, 2000);
@@ -573,7 +579,7 @@
                 const url = `${window.location.origin}${window.location.pathname}#skill-${skillId}`;
                 navigator.clipboard.writeText(url).then(() => {
                     const originalIcon = btn.innerHTML;
-                    btn.innerHTML = '<ion-icon name="checkmark" class="text-sm"></ion-icon>';
+                    btn.innerHTML = '<i class="bi bi-check text-sm"></i>';
                     setTimeout(() => {
                         btn.innerHTML = originalIcon;
                     }, 2000);
@@ -590,7 +596,7 @@
                 const url = `${window.location.origin}${window.location.pathname}#${sectionId}`;
                 navigator.clipboard.writeText(url).then(() => {
                     const originalIcon = btn.innerHTML;
-                    btn.innerHTML = '<ion-icon name="checkmark" class="text-sm"></ion-icon>';
+                    btn.innerHTML = '<i class="bi bi-check text-sm"></i>';
                     setTimeout(() => {
                         btn.innerHTML = originalIcon;
                     }, 2000);
@@ -727,8 +733,8 @@
             localStorage.setItem("theme", theme);
             
             if (themeToggle) {
-                const iconName = theme === "dark" ? "sunny-outline" : "moon-outline";
-                themeToggle.innerHTML = `Theme/<ion-icon id="theme-toggle-icon" name="${iconName}" class="text-base inline-block align-middle pointer-events-none ml-0.5"></ion-icon>`;
+                const iconName = theme === "dark" ? "sun" : "moon";
+                themeToggle.innerHTML = `Theme/<i id="theme-toggle-icon" class="bi bi-${iconName} inline-block align-middle pointer-events-none ml-0.5"></i>`;
             }
         };
 

@@ -82,7 +82,7 @@ def render_experience_item(item: dict[str, Any]) -> str:
     if item.get("link"):
         title_html += ' cursor-pointer hover:text-accent dark:hover:text-accent transition-colors"'
         title_html += f' onclick="window.location.href=\'{item["link"]}\'">{item["title"]}</h3>'
-        title_html += f'<button class="experience-copy-link hidden group-hover:block text-zinc-400 hover:text-accent dark:hover:text-accent transition-colors" data-link="{item["link"]}" title="Copy link"><ion-icon name="link" class="text-sm"></ion-icon></button>'
+        title_html += f'<button class="experience-copy-link hidden group-hover:block text-zinc-400 hover:text-accent dark:hover:text-accent transition-colors" data-link="{item["link"]}" title="Copy link"><i class="bi bi-link-45deg inline-block align-middle"></i></button>'
     else:
         title_html += '">' + item["title"] + '</h3>'
     
@@ -152,7 +152,14 @@ def render_skill_item(skill: dict[str, Any], project_ids: dict[str, str]) -> str
 
     icon_html = ""
     if skill.get("icon"):
-        icon_html = f'<ion-icon name="{skill["icon"]}" class="text-lg mr-2"></ion-icon>'
+        icon_val = skill["icon"]
+        if "devicon" in icon_val:
+            icon_class = icon_val
+        elif icon_val.startswith("bi bi-") or icon_val.startswith("bi-"):
+            icon_class = icon_val if icon_val.startswith("bi bi-") else f"bi {icon_val}"
+        else:
+            icon_class = f"bi bi-{icon_val}"
+        icon_html = f'<i class="{icon_class} text-lg mr-2 inline-block align-middle"></i>'
 
     duration_html = ""
     duration = skill.get("duration")
@@ -218,7 +225,7 @@ def render_project_card(project: dict[str, Any], category_map: dict[str, str] | 
             category_label = category.replace("-", " ").title()
         date_html = (
             '<span class="text-xs font-medium font-mono text-zinc-500 dark:text-zinc-400 mb-2 block flex items-center">'
-            f'<ion-icon name="time-outline" class="mr-1"></ion-icon>{project["date"]} \u2022 {category_label}</span>'
+            f'<i class="bi bi-clock mr-1 inline-block align-middle"></i>{project["date"]} \u2022 {category_label}</span>'
         )
 
     details_button_html = ""
@@ -313,12 +320,12 @@ def render_project_modal(project: dict[str, Any]) -> str:
             if len(slides) > 1:
                 prev_btn = (
                     f'<button class="carousel-prev absolute left-2 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/70 text-white font-semibold rounded-none p-2 border border-white/20 z-10 transition-all opacity-100 md:opacity-0 md:group-hover/carousel:opacity-100 md:focus:opacity-100 flex items-center justify-center" aria-label="Previous slide">'
-                    f'<ion-icon name="chevron-back" class="text-xl"></ion-icon>'
+                    f'<i class="bi bi-chevron-left"></i>'
                     f'</button>'
                 )
                 next_btn = (
                     f'<button class="carousel-next absolute right-2 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/70 text-white font-semibold rounded-none p-2 border border-white/20 z-10 transition-all opacity-100 md:opacity-0 md:group-hover/carousel:opacity-100 md:focus:opacity-100 flex items-center justify-center" aria-label="Next slide">'
-                    f'<ion-icon name="chevron-forward" class="text-xl"></ion-icon>'
+                    f'<i class="bi bi-chevron-right"></i>'
                     f'</button>'
                 )
                 
@@ -441,6 +448,7 @@ def build_index_context(config: dict[str, Any]) -> dict[str, Any]:
         "languages_title": "Languages",
         "technologies_title": "Technologies",
         "contact_title": "Contact",
+        "no_projects": "No projects found matching your criteria.",
         **config.get("sections", {}),
     }
 
@@ -474,17 +482,72 @@ def build_index_context(config: dict[str, Any]) -> dict[str, Any]:
     filters = config.get("project_filters") or default_project_filters(projects)
     category_map = {f["key"]: f["label"] for f in filters if "key" in f and "label" in f}
 
+    skills_categories_config = config.get("skills_categories", {})
+    skills_categories = []
+
+    if isinstance(skills_categories_config, dict):
+        for key, val in skills_categories_config.items():
+            skills_categories.append({"key": key, "title": val})
+    elif isinstance(skills_categories_config, list):
+        for item in skills_categories_config:
+            if isinstance(item, dict) and "key" in item and "title" in item:
+                skills_categories.append({"key": item["key"], "title": item["title"]})
+
+    if not skills_categories:
+        skills_categories = [
+            {"key": "languages", "title": sections.get("languages_title", "Languages")},
+            {"key": "technologies", "title": sections.get("technologies_title", "Technologies")},
+        ]
+
+    existing_keys = {cat["key"] for cat in skills_categories}
+    if isinstance(skills, dict):
+        for key in skills.keys():
+            if key not in existing_keys:
+                title = key.replace("_", " ").title()
+                skills_categories.append({"key": key, "title": title})
+
+    skills_columns = []
+    for cat in skills_categories:
+        cat_key = cat["key"]
+        cat_title = cat["title"]
+        items = skills.get(cat_key, []) if isinstance(skills, dict) else []
+        if not items:
+            continue
+
+        items_html = "".join(render_skill_item(skill, project_ids) for skill in items)
+        column_html = (
+            f'                    <div>\n'
+            f'                        <h3 class="text-base font-semibold font-mono text-accent-2 mb-4">{cat_title}</h3>\n'
+            f'                        {items_html}\n'
+            f'                    </div>'
+        )
+        skills_columns.append(column_html)
+
+    num_columns = len(skills_columns)
+    if num_columns == 1:
+        skills_grid_class = "grid grid-cols-1 gap-8"
+    elif num_columns == 2:
+        skills_grid_class = "grid grid-cols-1 md:grid-cols-2 gap-8"
+    elif num_columns == 3:
+        skills_grid_class = "grid grid-cols-1 md:grid-cols-3 gap-8"
+    else:
+        skills_grid_class = "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
+
+    skills_html = "\n".join(skills_columns)
+
     content = {
         "first_tagline": taglines[0],
         "taglines_json": json.dumps(taglines),
         "about_html": render_about(about_paragraphs),
         "timeline_items_html": "".join(render_experience_item(item) for item in experiences),
         "programming_skills_html": "".join(
-            render_skill_item(skill, project_ids) for skill in skills.get("languages", [])
+            render_skill_item(skill, project_ids) for skill in (skills.get("languages", []) if isinstance(skills, dict) else [])
         ),
         "tech_skills_html": "".join(
-            render_skill_item(skill, project_ids) for skill in skills.get("technologies", [])
+            render_skill_item(skill, project_ids) for skill in (skills.get("technologies", []) if isinstance(skills, dict) else [])
         ),
+        "skills_html": skills_html,
+        "skills_grid_class": skills_grid_class,
         "project_filters_html": render_filter_buttons(filters),
         "project_cards_html": "".join(render_project_card(project, category_map) for project in projects),
         "project_modals_html": "".join(render_project_modal(project) for project in projects),
