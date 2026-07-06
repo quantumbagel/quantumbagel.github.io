@@ -21,8 +21,6 @@ about_title = "About"
 experience_title = "Experience"
 projects_title = "Projects"
 skills_title = "Skills"
-languages_title = "Languages"
-technologies_title = "Technologies"
 contact_title = "Contact"
 no_projects = "No projects found matching your criteria."
 
@@ -88,8 +86,8 @@ name = "Python"
 icon = "devicon-python-plain"
 level = "Expert"
 start_date = "2021-01-01"
-details = "I've used Python in almost every major project to tie together microservices, automate tasks, and design API wrappers. Some examples:<ul class='list-disc pl-5 mt-2 space-y-1'><li><strong>PyAerial / airstrik.py:</strong> Building plane trackers using MongoDB and Kafka</li><li><strong>DroneTracker:</strong> Scripting dynamic PTZ camera controllers to track flying drones in real-time</li><li><strong>aerpawlib:</strong> Wrapping complex low-level MAVLink flight controls</li><li><strong>Strife / Piranha:</strong> Coding interactive Discord bots with session matchmaking and custom interaction routers (Strife replacing PlayCord)</li><li><strong>ML-Ticker:</strong> Constructing data analysis utilities with custom sandboxed engines</li></ul>"
-projects = ["PyAerial", "airstrik.py", "Piranha", "DroneTracker", "finiteCraft", "Triggered", "PlayCord", "Strife", "Molotov", "discord.py-template", "aerpawlib", "ML-Ticker", "Portfolio Website (v3)"]
+details = "I've used Python in almost every major project to tie together microservices, automate tasks, and design API wrappers. Some examples:<ul class='list-disc pl-5 mt-2 space-y-1'><li><strong>PyAerial:</strong> Building plane trackers using MongoDB and Kafka</li><li><strong>DroneTracker:</strong> Scripting dynamic PTZ camera controllers to track flying drones in real-time</li><li><strong>aerpawlib:</strong> Wrapping complex low-level MAVLink flight controls</li><li><strong>Strife / Piranha:</strong> Coding interactive Discord bots with session matchmaking and custom interaction routers</li><li><strong>ML-Ticker:</strong> Constructing data analysis utilities with custom sandboxed engines</li></ul>"
+projects = ["PyAerial", "Piranha", "DroneTracker", "finiteCraft", "Triggered", "Strife", "Molotov", "discord.py-template", "aerpawlib", "ML-Ticker", "Portfolio Website (v3)"]
 
 [[skills.languages]]
 name = "C/C++"
@@ -144,8 +142,8 @@ name = "Docker"
 icon = "devicon-docker-plain"
 level = "Expert"
 start_date = "2023-01-01"
-details = "I've used Docker to containerize multi-service applications, ensuring consistent execution across development and production environments. Some examples:<ul class='list-disc pl-5 mt-2 space-y-1'><li><strong>PyAerial / airstrik.py:</strong> Containerizing multi-container architectures combining database and telemetry services</li><li><strong>discord.py-template:</strong> Creating optimized multi-stage build files to minimize production footprint</li><li><strong>Strife:</strong> Configuring network isolation for microservices and Docker Compose deployment (replacing PlayCord)</li></ul>"
-projects = ["PyAerial", "airstrik.py", "DroneTracker", "Piranha", "PlayCord", "Strife", "discord.py-template"]
+details = "I've used Docker to containerize multi-service applications, ensuring consistent execution across development and production environments. Some examples:<ul class='list-disc pl-5 mt-2 space-y-1'><li><strong>PyAerial:</strong> Containerizing multi-container architectures combining database and telemetry services</li><li><strong>discord.py-template:</strong> Creating optimized multi-stage build files to minimize production footprint</li><li><strong>Strife:</strong> Configuring network isolation for microservices and Docker Compose deployment</li></ul>"
+projects = ["PyAerial", "DroneTracker", "Piranha", "Strife", "discord.py-template"]
 
 [[skills.tools]]
 name = "JetBrains Suite"
@@ -184,32 +182,32 @@ name = "SQL"
 icon = "database"
 level = "Advanced"
 start_date = "2022-01-01"
-details = "After some time using the significantly simpler database MongoDB, I began to use more traditional SQL-like databases (MySQL, PostgreSQL) as storage methods for my more complicated applications. Some examples of this: <ul class='list-disc pl-5 mt-2 space-y-1'><li><strong>Strife:</strong> Designing robust repository patterns and migration flows using asyncpg and PostgreSQL (replacing PlayCord's MySQL schema)</li><li><strong>Triggered:</strong> Storing custom event triggers and role permissions</li><li><strong>Statify:</strong> Aggregating server-wide statistics and leaderboards, and aggressive indexing to optimize queries.</li></ul>"
-projects = ["PlayCord", "Strife", "Triggered", "Statify"]
+details = "After some time using the significantly simpler database MongoDB, I began to use more traditional SQL-like databases (MySQL, PostgreSQL) as storage methods for my more complicated applications. Some examples of this: <ul class='list-disc pl-5 mt-2 space-y-1'><li><strong>Strife:</strong> Designing robust repository patterns and migration flows using asyncpg and PostgreSQL</li><li><strong>Triggered:</strong> Storing custom event triggers and role permissions</li><li><strong>Statify:</strong> Aggregating server-wide statistics and leaderboards, and aggressive indexing to optimize queries.</li></ul>"
+projects = ["Strife", "Triggered", "Statify"]
 
 [[skills.technologies]] # done
 name = "MongoDB"
 icon = "devicon-mongodb-plain"
 level = "Advanced"
 start_date = "2024-01-01"
-details = "MongoDB was the first database that I used, which is reflected in the projects I used it for. Some of the stronger examples:<ul class='list-disc pl-5 mt-2 space-y-1'><li><strong>PyAerial / airstrik.py:</strong> Storing raw, high-frequency aircraft coordinates in real-time</li><li><strong>finiteCraft:</strong> Mapping the element crafting paths in a graph-like structure</li></ul>"
-projects = ["PyAerial", "airstrik.py", "finiteCraft"]
+details = "MongoDB was the first database that I used, which is reflected in the projects I used it for. Some of the stronger examples:<ul class='list-disc pl-5 mt-2 space-y-1'><li><strong>PyAerial:</strong> Storing raw, high-frequency aircraft coordinates in real-time</li><li><strong>finiteCraft:</strong> Mapping the element crafting paths in a graph-like structure</li></ul>"
+projects = ["PyAerial", "finiteCraft"]
 
 [[skills.technologies]] # Done
 name = "Kafka"
 icon = "devicon-apachekafka-original"
 level = "Advanced"
 start_date = "2023-06-01"
-details = "I've used Kafka to stream telemetry data for my AERPAW projects and have gotten quite experienced with it. Some examples:<ul class='list-disc pl-5 mt-2 space-y-1'><li><strong>PyAerial / airstrik.py:</strong> Streaming real-time collision warnings and alerts to notification brokers</li><li><strong>DroneTracker:</strong> Broadcasting high-frequency GPS telemetry to the AXIS camera</li></ul>"
-projects = ["PyAerial", "airstrik.py", "DroneTracker"]
+details = "I've used Kafka to stream telemetry data for my AERPAW projects and have gotten quite experienced with it. Some examples:<ul class='list-disc pl-5 mt-2 space-y-1'><li><strong>PyAerial:</strong> Streaming real-time collision warnings and alerts to notification brokers</li><li><strong>DroneTracker:</strong> Broadcasting high-frequency GPS telemetry to the AXIS camera</li></ul>"
+projects = ["PyAerial", "DroneTracker"]
 
 [[skills.technologies]]
 name = "discord.py"
 icon = "discord"
 level = "Expert"
 start_date = "2022-01-01"
-details = "I've used discord.py to develop a variety of bots and even a modular bot templates. Work I've done:<ul class='list-disc pl-5 mt-2 space-y-1'><li><strong>discord.py-template:</strong>A modular bot framework with hot-reloading cog engines</li><li><strong>Strife / Piranha:</strong> Designing interactive games with a custom interaction router (Strife replacing PlayCord)</li><li><strong>Triggered:</strong>A full trigger-based automation system entirely within Discord</li></ul>"
-projects = ["Piranha", "Triggered", "PlayCord", "Strife", "discord.py-template"]
+details = "I've used discord.py to develop a variety of bots and even a modular bot templates. Work I've done:<ul class='list-disc pl-5 mt-2 space-y-1'><li><strong>discord.py-template:</strong>A modular bot framework with hot-reloading cog engines</li><li><strong>Strife / Piranha:</strong> Designing interactive games with a custom interaction router</li><li><strong>Triggered:</strong>A full trigger-based automation system entirely within Discord</li></ul>"
+projects = ["Piranha", "Triggered", "Strife", "discord.py-template"]
 
 [[skills.technologies]]
 name = "ADS-B / Mode-S"
@@ -217,7 +215,7 @@ icon = "broadcast"
 level = "Advanced"
 start_date = "2023-06-01"
 details = "I've used ADS-B / Mode-S to use radio hardware to parse aircraft signals, and track flight coordinates. I have gotten down to the hardware level of this protocol with my work at AERPAW. With my work on PyAerial, I set up RTL-SDR hardware to capture raw 1090 MHz transponder packets and parse them."
-projects = ["PyAerial", "airstrik.py"]
+projects = ["PyAerial"]
 
 
 [[projects]]
@@ -227,20 +225,9 @@ title = "PyAerial"
 date = "2024 - Present"
 description = "A high-performance ADS-B and Mode-S aircraft tracking system developed for the AERPAW research platform."
 details = "PyAerial is a comprehensive ADS-B tracking solution developed for the AERPAW research platform at NC State. It provides real-time aircraft position tracking, historical data storage, and geofenced alerting. It is designed to be modular and extensible, allowing for integration with additional data sources and early-warning systems."
-features = ["15% percent faster collision detection [compared to airstrik.py]", "92% less false positives [compared to airstrik.py]", "Detailed flight tracking in MongoDB", "Docker containerized deployment", "Kafka notification integration", "Compatibility with commonly used geofence file formats"]
+features = ["15% percent faster collision detection", "92% fewer false positives", "Detailed flight tracking in MongoDB", "Docker containerized deployment", "Kafka notification integration", "Compatibility with commonly used geofence file formats"]
 link = "https://github.com/quantumbagel/PyAerial"
 skills = ["Python", "Kafka", "MongoDB", "RTL-SDR", "Docker", "ADS-B / Mode-S", "OpenAPI", "Shapely", "Geospatial Analysis"]
-
-[[projects]]
-category = "aerpaw"
-image = "https://placehold.co/400x250/E74C3C/FFFFFF?text=airstrik.py"
-title = "airstrik.py"
-date = "2023 - 2024 [unmaintained]"
-description = "A legacy pure-Python ADS-B plane tracking and early warning system for the AERPAW platform."
-details = "A legacy Python-based ADS-B tracking utility designed to process live transponder messages, perform trigonometry-based geofencing calculations, and publish alerts to a Kafka notification bus."
-features = ["ADS-B signal processing and parsing", "Trigonometry-based geofence warning system", "MongoDB persistence for flight data", "Kafka pub/sub alert integration"]
-link = "https://github.com/quantumbagel/airstrik.py"
-skills = ["Python", "Kafka", "MongoDB", "RTL-SDR", "Docker", "ADS-B / Mode-S", "Trigonometry"]
 
 [[projects]]
 category = "discord-bots"
@@ -287,22 +274,11 @@ skills = ["Python", "discord.py", "MySQL", "Database Design", "API Integration",
 
 [[projects]]
 category = "discord-bots"
-image = "https://placehold.co/400x250/F1C40F/FFFFFF?text=PlayCord"
-title = "PlayCord"
-date = "2025 [replaced by Strife]"
-description = "A legacy competitive turn-based gaming bot for Discord. Succeeded and replaced by Strife."
-details = "PlayCord is a legacy Python-based Discord bot that hosts classic turn-based board and pencil games. Succeeded and replaced by Strife. It features matchmaking, dynamic game state replays with interactive UI controls, and matchmaking rankings using Microsoft's TrueSkill rating system."
-features = ["Turn-based board games (e.g., paper/pencil)", "TrueSkill ranking and matchmaking algorithm", "Interactive game replay viewer in Discord UI", "MySQL database for persistence and match history"]
-link = "https://github.com/PlayCord/bot"
-skills = ["Python", "discord.py", "MySQL", "TrueSkill Algorithm", "Database Design", "Docker"]
-
-[[projects]]
-category = "discord-bots"
 image = "https://placehold.co/400x250/F1C40F/FFFFFF?text=Strife"
 title = "Strife"
 date = "2026 - Present"
 description = "A high-performance Discord bot hosting interactive multiplayer games with a custom interaction router, session lifecycle management, and PostgreSQL database integration."
-details = "Strife is a modern, modular Discord bot built with discord.py and asyncpg designed to host competitive multiplayer games like Mafia and Tic-Tac-Toe. It features an advanced session and lobby matchmaking lifecycle, dynamic UI components rendered with custom emojis, a sandboxed game simulation engine, and database-driven game history and player profile services. Strife succeeds and replaces the older PlayCord project."
+details = "Strife is a modern, modular Discord bot built with discord.py and asyncpg designed to host competitive multiplayer games like Mafia and Tic-Tac-Toe. It features an advanced session and lobby matchmaking lifecycle, dynamic UI components rendered with custom emojis, a sandboxed game simulation engine, and database-driven game history and player profile services."
 features = [
   "Modular lobby matchmaking and session lifecycle management",
   "High-performance PostgreSQL database backend with repository patterns and migrator",

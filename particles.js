@@ -55,14 +55,6 @@
         if (stored === "off" || stored === "false") {
             return false;
         }
-        if (stored === "on" || stored === "true") {
-            return true;
-        }
-
-        const legacy = localStorage.getItem("particle-intensity");
-        if (legacy === "off") {
-            return false;
-        }
         return true;
     }
 

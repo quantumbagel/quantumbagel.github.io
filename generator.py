@@ -91,28 +91,14 @@ def render_experience_item(item: dict[str, Any]) -> str:
 
 
 def calculate_duration(start_val: Any) -> str:
-    if not start_val:
+    if not start_val or not isinstance(start_val, str):
         return ""
     
     today = datetime.date.today()
     try:
-        if isinstance(start_val, int):
-            start_year = start_val
-            start_month = 1
-            start_day = 1
-        elif isinstance(start_val, str):
-            parts = [int(p) for p in start_val.split("-") if p.isdigit()]
-            if len(parts) == 3:
-                start_year, start_month, start_day = parts
-            elif len(parts) == 2:
-                start_year, start_month = parts
-                start_day = 1
-            elif len(parts) == 1:
-                start_year = parts[0]
-                start_month = 1
-                start_day = 1
-            else:
-                return str(start_val)
+        parts = [int(p) for p in start_val.split("-") if p.isdigit()]
+        if len(parts) == 3:
+            start_year, start_month, start_day = parts
         else:
             return str(start_val)
             
@@ -445,8 +431,6 @@ def build_index_context(config: dict[str, Any]) -> dict[str, Any]:
         "experience_title": "Experience",
         "projects_title": "Projects",
         "skills_title": "Skills",
-        "languages_title": "Languages",
-        "technologies_title": "Technologies",
         "contact_title": "Contact",
         "no_projects": "No projects found matching your criteria.",
         **config.get("sections", {}),
@@ -464,14 +448,14 @@ def build_index_context(config: dict[str, Any]) -> dict[str, Any]:
     }
 
     content_config = config.get("content", {})
-    taglines = content_config.get("taglines", config.get("taglines", []))
+    taglines = content_config.get("taglines", [])
     if not taglines:
         taglines = [user["headline"]] if user["headline"] else [user["name"]]
 
     experiences = config.get("experiences", [])
     skills = config.get("skills", {})
     projects = config.get("projects", [])
-    about_paragraphs = content_config.get("about", config.get("about", []))
+    about_paragraphs = content_config.get("about", [])
 
     project_ids = {
         project["title"]: f'project-{slugify(project["title"])}'
@@ -488,16 +472,6 @@ def build_index_context(config: dict[str, Any]) -> dict[str, Any]:
     if isinstance(skills_categories_config, dict):
         for key, val in skills_categories_config.items():
             skills_categories.append({"key": key, "title": val})
-    elif isinstance(skills_categories_config, list):
-        for item in skills_categories_config:
-            if isinstance(item, dict) and "key" in item and "title" in item:
-                skills_categories.append({"key": item["key"], "title": item["title"]})
-
-    if not skills_categories:
-        skills_categories = [
-            {"key": "languages", "title": sections.get("languages_title", "Languages")},
-            {"key": "technologies", "title": sections.get("technologies_title", "Technologies")},
-        ]
 
     existing_keys = {cat["key"] for cat in skills_categories}
     if isinstance(skills, dict):
@@ -540,12 +514,6 @@ def build_index_context(config: dict[str, Any]) -> dict[str, Any]:
         "taglines_json": json.dumps(taglines),
         "about_html": render_about(about_paragraphs),
         "timeline_items_html": "".join(render_experience_item(item) for item in experiences),
-        "programming_skills_html": "".join(
-            render_skill_item(skill, project_ids) for skill in (skills.get("languages", []) if isinstance(skills, dict) else [])
-        ),
-        "tech_skills_html": "".join(
-            render_skill_item(skill, project_ids) for skill in (skills.get("technologies", []) if isinstance(skills, dict) else [])
-        ),
         "skills_html": skills_html,
         "skills_grid_class": skills_grid_class,
         "project_filters_html": render_filter_buttons(filters),
