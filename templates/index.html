@@ -209,7 +209,7 @@
                     </button>
                 </h2>
                 <div class="bg-transparent p-6 rounded-none border border-zinc-300 dark:border-zinc-700">
-                    <form action="{contact.form_action}" method="POST" class="space-y-4">
+                    <form id="contact-form" action="{contact.form_action}" method="POST" class="space-y-4">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
                                 <label for="name" class="block text-sm font-medium font-mono text-zinc-500 dark:text-zinc-400 mb-1">Name</label>
@@ -224,10 +224,13 @@
                             <label for="message" class="block text-sm font-medium font-mono text-zinc-500 dark:text-zinc-400 mb-1">Message</label>
                             <textarea id="message" name="message" rows="4" required class="w-full px-4 py-2 bg-transparent border border-zinc-300 dark:border-zinc-700 rounded-none focus:outline-none focus:border-accent dark:focus:border-accent transition-colors text-zinc-900 dark:text-zinc-100 resize-none"></textarea>
                         </div>
-                        <button type="submit" class="inline-flex items-center px-6 py-2.5 bg-transparent border border-accent text-accent font-medium font-mono rounded-none hover:bg-accent hover:text-global-bg transition-colors focus:outline-none cursor-pointer">
-                            {contact.submit_label}
-                            <i class="bi bi-send ml-2"></i>
-                        </button>
+                        <div class="flex flex-col sm:flex-row sm:items-center gap-4">
+                            <button id="contact-submit-btn" type="submit" class="inline-flex items-center px-6 py-2.5 bg-transparent border border-accent text-accent font-medium font-mono rounded-none hover:bg-accent hover:text-global-bg transition-colors focus:outline-none cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed">
+                                <span id="contact-submit-text">{contact.submit_label}</span>
+                                <i id="contact-submit-icon" class="bi bi-send ml-2"></i>
+                            </button>
+                            <div id="contact-status" class="hidden text-sm font-mono transition-opacity duration-300 flex items-center gap-2"></div>
+                        </div>
                     </form>
                 </div>
             </section>
@@ -267,6 +270,66 @@
         };
 
         setInterval(cycleTagline, 4000);
+
+        const contactForm = document.getElementById("contact-form");
+        if (contactForm) {
+            const submitBtn = document.getElementById("contact-submit-btn");
+            const submitText = document.getElementById("contact-submit-text");
+            const submitIcon = document.getElementById("contact-submit-icon");
+            const statusEl = document.getElementById("contact-status");
+
+            contactForm.addEventListener("submit", async (event) => {
+                event.preventDefault();
+                
+                // Set loading state
+                submitBtn.disabled = true;
+                const originalText = submitText.textContent;
+                submitText.textContent = "Sending...";
+                submitIcon.className = "bi bi-arrow-repeat ml-2 animate-spin";
+                
+                // Reset status element
+                statusEl.classList.add("hidden");
+                statusEl.classList.remove("text-emerald-600", "dark:text-emerald-400", "text-red-600", "dark:text-red-400");
+                statusEl.innerHTML = "";
+
+                const formData = new FormData(contactForm);
+
+                try {
+                    const response = await fetch(contactForm.action, {
+                        method: contactForm.method,
+                        body: formData,
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    });
+
+                    if (response.ok) {
+                        statusEl.className = "text-emerald-600 dark:text-emerald-400 text-sm font-mono flex items-center gap-2";
+                        statusEl.innerHTML = '<i class="bi bi-check-circle-fill"></i> Message sent successfully!';
+                        contactForm.reset();
+                    } else {
+                        const data = await response.json();
+                        let errorMessage = "Oops! There was a problem sending your message.";
+                        if (data && data.errors) {
+                            errorMessage = data.errors.map(err => err.message).join(", ");
+                        }
+                        statusEl.className = "text-red-600 dark:text-red-400 text-sm font-mono flex items-center gap-2";
+                        statusEl.innerHTML = `<i class="bi bi-exclamation-triangle-fill"></i> ${errorMessage}`;
+                    }
+                } catch (error) {
+                    statusEl.className = "text-red-600 dark:text-red-400 text-sm font-mono flex items-center gap-2";
+                    statusEl.innerHTML = '<i class="bi bi-exclamation-triangle-fill"></i> Connection error. Please try again.';
+                } finally {
+                    // Reset button state
+                    submitBtn.disabled = false;
+                    submitText.textContent = originalText;
+                    submitIcon.className = "bi bi-send ml-2";
+                    
+                    // Show status
+                    statusEl.classList.remove("hidden");
+                }
+            });
+        }
 
         const skillToggles = document.querySelectorAll(".skill-toggle");
         let openSkill = null;
