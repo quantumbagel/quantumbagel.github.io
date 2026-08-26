@@ -280,17 +280,17 @@ def render_project_modal(project: dict[str, Any]) -> str:
                 poster_attr = f' poster="{poster}"' if poster else ""
                 media_element = (
                     f'<video src="{src}"{poster_attr} controls playsinline '
-                    f'class="w-full h-full object-contain bg-black" '
+                    f'class="max-w-full max-h-full object-contain bg-black" '
                     f'preload="metadata"></video>'
                 )
             else:
                 media_element = (
                     f'<img src="{src}" alt="{alt}" loading="lazy" decoding="async" '
-                    f'class="w-full h-full object-contain bg-black">'
+                    f'class="max-w-full max-h-full object-contain bg-black">'
                 )
                 
             slide_html = (
-                f'<div class="carousel-slide min-w-full h-64 sm:h-96 flex items-center justify-center flex-shrink-0">'
+                f'<div class="carousel-slide min-w-full h-48 sm:h-64 max-h-[40vh] flex items-center justify-center flex-shrink-0 bg-black overflow-hidden">'
                 f'{media_element}'
                 f'</div>'
             )
@@ -402,7 +402,7 @@ def build_index_context(config: dict[str, Any]) -> dict[str, Any]:
     user = {
         "name": "Your Name",
         "headline": "Your headline",
-        "profile_image": "pfp.webp",
+        "profile_image": "pfp.png",
         **user_config,
     }
     user["social"] = {

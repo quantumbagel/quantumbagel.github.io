@@ -408,6 +408,9 @@
             activeCategory = filterValue;
             setActiveFilter(filterValue);
             applyFilterAndSearch();
+            document.querySelectorAll('[id^="modal-"]').forEach((modal) => {
+                pauseModalVideos(modal);
+            });
         };
 
         if (projectFilters) {
@@ -542,11 +545,11 @@
         const detailsBtns = document.querySelectorAll(".project-details-btn");
         const closeBtns = document.querySelectorAll(".modal-close-btn");
 
-        const pauseModalVideos = (modal) => {
+        function pauseModalVideos(modal) {
             if (modal) {
                 modal.querySelectorAll("video").forEach((v) => v.pause());
             }
-        };
+        }
 
         const resetCarousel = (modal) => {
             if (modal) {
@@ -598,6 +601,12 @@
                     modal.style.display = "none";
                     pauseModalVideos(modal);
                 });
+            }
+        });
+
+        document.addEventListener("visibilitychange", () => {
+            if (document.hidden) {
+                document.querySelectorAll("video").forEach((v) => v.pause());
             }
         });
 

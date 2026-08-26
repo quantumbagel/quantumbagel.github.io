@@ -1,0 +1,16 @@
+# JetBrains IDE
+.idea/
+
+# Python Virtual Environment
+.venv/
+venv/
+ENV/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# System files
+.DS_Store
+Thumbs.db
