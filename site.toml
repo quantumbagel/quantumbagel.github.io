@@ -2,12 +2,12 @@
 lang = "en"
 
 [meta]
-description = "Julian Reder, Computer Engineering Student @ NCSU."
+description = "Julian Reder — Computer Engineering and Statistics student at NC State. AERPAW developer working on drones and ADS-B; technical intern at Merrill Lynch."
 favicon = "pfp.webp"
 
 [user]
 name = "Julian Reder"
-headline = "Computer Engineering Student @ NCSU"
+headline = "Computer Engineering & Statistics Student @ NCSU"
 profile_image = "pfp.webp"
 
 [user.social]
@@ -32,54 +32,63 @@ tools = "Tools"
 [contact]
 form_action = "https://formspree.io/f/moqgwdop"
 submit_label = "Send Message"
+intro = "I'm looking for internships and research roles in embedded systems, backend infrastructure, and anything where messy real-world data has to become a reliable system. Use the form below, or reach me on GitHub, LinkedIn, or Discord."
 
 [footer]
 text = "Made with <3 by @quantumbagel, not AI."
 
 [content]
 about = [
-  "Hello! I'm <strong class='text-gray-800 dark:text-white'>Julian Reder</strong>, a programmer and student at North Carolina State University. I've had a passion for learning and developing my entire life and wanted to collect my projects and skills in one centralized place. This website has a brief overview of my projects and skillset, as well as a contact form. It's also a template, see the project on GitHub to see how to use it yourself ^w^",
-  "Hopefully you find something interesting here! Feel free to reach out if you want to chat about anything or have questions about my projects or experience."
+  "Hello! I'm <strong class='text-gray-800 dark:text-white'>Julian Reder</strong>, a Computer Engineering and Statistics student at North Carolina State University. I develop research software for AERPAW, NC State's aerial wireless testbed — aircraft tracking, drone camera systems, and flight-control libraries — and recently finished a technical internship with the Bell, Bell & Cronlund Group at Merrill Lynch, working on an internal calculations platform that supports $500M+ in assets under management.",
+  "I like making hardware, radio, and backend services agree with each other. If you want to talk internships, research, or any of the projects below — or drones, Factorio, or cats — the contact form is at the bottom."
 ]
 
 taglines = [
   "is a Computer Engineering and Statistics student @ NCSU",
-  "does things differently",
+  "builds drone and aircraft tracking systems",
   "likes drones :D",
   "is an open source enthusiast",
   "has three cats :3",
   "is always learning",
-  "would like a job 🥺",
   "plays Factorio",
-  "makes stuff work",
   "is a little bit weird",
   "no actually a lot weird"
 ]
 
 
 [[experiences]]
-title = "Financial Services Technical Intern, The Bell, Bell & Cronlund Group @ Merrill Lynch Wealth Management"
+title = "Technical Intern, Bell, Bell & Cronlund Group @ Merrill Lynch Wealth Management"
 link = "https://advisor.ml.com/sites/nc/raleigh-nc/bellbellcronlund"
 date = "May 2026 - August 2026"
-description = "This summer, I am working with the Bell, Bell, and Cronlund Group within Merrill to improve their internal calculations platform responsible for $500M+ in assets under management."
+description = """Worked on an internal calculations platform used for <strong>$500M+</strong> in assets under management.
+<ul class='list-disc pl-5 mt-2 space-y-1'>
+<li>Shipped <strong>ML-Ticker</strong>, a Python CLI for querying FactSet FQL snapshot and historical data</li>
+<li>Added a sandboxed formula engine with DAG-based dependency checks and Pydantic config validation</li>
+<li>Exported results as colorized terminal tables and styled Excel workbooks</li>
+</ul>"""
 
 [[experiences]]
-title = "North Carolina State University (GPA: 4.0)"
+title = "B.S. Computer Engineering and Statistics, North Carolina State University"
 link = "https://ncsu.edu"
 date = "Fall 2025 - Present"
-description = "I am currently enrolled in the Computer Engineering and Statistics departments at North Carolina State University. I am pursuing a Bachelor's in Statistics and Computer Engineering."
+description = "Pursuing a dual Bachelor's in Computer Engineering and Statistics (GPA: 4.0)."
 
 [[experiences]]
 title = "Developer @ AERPAW"
 link = "https://aerpaw.org"
 date = "Summer 2023 - Present"
-description = "I have had the pleasure to work with Dr. Mihail Sichitiu at the Aerial Experimentation and Research Platform for Advanced Wireless at North Carolina State University for a couple of years now. I have built several interesting projects including a plane tracker and a drone flight recorder."
+description = """Developer on NC State's Aerial Experimentation and Research Platform for Advanced Wireless, working with Dr. Mihail Sichitiu on flight software, telemetry, and tracking systems.
+<ul class='list-disc pl-5 mt-2 space-y-1'>
+<li>Built <strong>PyAerial</strong>, an ADS-B/Mode-S aircraft tracker with geofenced alerting over Kafka</li>
+<li>Built <strong>DroneTracker</strong>, which aims AXIS PTZ cameras at live drone GPS telemetry</li>
+<li>Migrated <strong>aerpawlib</strong> from unmaintained DroneKit/pymavlink onto MAVSDK so experiments can use current MAVLink features</li>
+</ul>"""
 
 [[experiences]]
-title = "Wake Tech Community College: (GPA: 3.8)"
+title = "A.S., Wake Technical Community College"
 link = "https://waketech.edu"
 date = "Fall 2023 - Spring 2025"
-description = "This was my first experience taking college coursework. I graduated with multiple appearances on the Dean's List, membership in the Beta Alpha chapter of the Phi Theta Kappa honor society, and an Associate in Science degree."
+description = "Associate in Science. Multiple Dean's List terms and membership in the Beta Alpha chapter of Phi Theta Kappa (GPA: 3.8)."
 
 [[skills.languages]]
 name = "Python"
@@ -94,7 +103,7 @@ name = "C/C++"
 icon = "devicon-cplusplus-plain"
 level = "Advanced"
 start_date = "2023-01-01"
-details = "I've used C/C++ in performance-critical sections and systems programming where high execution speeds or direct hardware controls are needed. I have a lot of experience with Arduino and microcontrollers, as well as JIT compilation for Python code.>"
+details = "I've used C/C++ in performance-critical sections and systems programming where high execution speeds or direct hardware controls are needed. I have a lot of experience with Arduino and microcontrollers, as well as JIT compilation for Python code."
 projects = ["Arduino", "Python compiler extensions for AERPAW", "JIT compilation for performance-critical Python code"]
 
 [[skills.languages]]
@@ -102,7 +111,7 @@ name = "JavaScript"
 icon = "devicon-javascript-plain"
 level = "Advanced"
 start_date = "2023-01-01"
-details = "I've used JavaScript to implement client-side interactive elements and interface logic on web pages. Some examples:<ul class='list-disc pl-5 mt-2 space-y-1'><li><strong>Portfolio Website (v3):</strong> Building dynamic client-side filtering and overlay layouts</li><li><strong>finiteCraft:</strong> Constructing DOM scraping scripts</li><li><strong>Telemetry Dashboards:</strong> Designing interactive visualization systems</li></ul>"
+details = "I've used JavaScript to implement client-side interactive elements and interface logic on web pages. Some examples:<ul class='list-disc pl-5 mt-2 space-y-1'><li><strong>Portfolio Website (v3):</strong> Building dynamic client-side filtering and overlay layouts</li><li><strong>finiteCraft:</strong> Constructing DOM scraping scripts</li></ul>"
 projects = ["Portfolio Website (v3)", "finiteCraft"]
 
 [[skills.languages]]
@@ -110,7 +119,7 @@ name = "Java"
 icon = "devicon-java-plain"
 level = "Competent"
 start_date = "2022-01-01"
-details = "I've used Java in a pretty limited fashion outside of class. My main project using Java was the Statify Minecraft plugin, where I developed server-side Minecraft plugin using SpigotMC to expose Minecraft's statistics to the server and players."
+details = "I've used Java in a pretty limited fashion outside of class. My main project using Java was the Statify Minecraft plugin, where I developed a server-side Minecraft plugin using SpigotMC to expose Minecraft's statistics to the server and players."
 projects = ["Statify"]
 
 [[skills.languages]]
@@ -146,14 +155,6 @@ details = "I've used Docker to containerize multi-service applications, ensuring
 projects = ["PyAerial", "DroneTracker", "Piranha", "Strife", "discord.py-template"]
 
 [[skills.tools]]
-name = "JetBrains Suite"
-icon = "devicon-jetbrains-plain"
-level = "Expert"
-start_date = "2021-01-01"
-details = "I've used the JetBrains Suite of IDEs to debug and profile complex codebases across multiple stacks. Some examples:<ul class='list-disc pl-5 mt-2 space-y-1'><li><strong>All Projects:</strong> Using PyCharm to step through multi-threaded environments</li><li><strong>C++ Development:</strong> Using CLion to profile memory usage and trace performance bottlenecks</li><li><strong>Java Integration:</strong> Inspecting remote database schemas and JVM bytecode within IntelliJ IDEA</li></ul>"
-projects = ["All Projects"]
-
-[[skills.tools]]
 name = "Git"
 icon = "devicon-git-plain"
 level = "Advanced"
@@ -166,18 +167,18 @@ name = "Selenium / Web Scraping"
 icon = "globe"
 level = "Advanced"
 start_date = "2024-01-01"
-details = "I'm really good at using Selenium to scrape large amounts of data. Some examples:<ul class='list-disc pl-5 mt-2 space-y-1'><li><strong>finiteCraft:</strong> Automating browser sessions to discover crafting recipes</li><li><strong>Worker Threads:</strong> Spawning headless Chromium instances to scrap pages</li><li><strong>Proxy Rotation:</strong> Managing rotating proxy pools to avoid request rate limits</li></ul>"
+details = "I've used Selenium and Playwright to scrape and automate browser workflows. Some examples:<ul class='list-disc pl-5 mt-2 space-y-1'><li><strong>finiteCraft:</strong> Automating browser sessions to discover crafting recipes</li><li><strong>Worker Threads:</strong> Spawning headless Chromium instances to scrape pages</li><li><strong>Proxy Rotation:</strong> Managing rotating proxy pools to stay under request rate limits</li></ul>"
 projects = ["finiteCraft"]
 
-[[skills.technologies]] # done
+[[skills.technologies]]
 name = "OpenAPI"
 icon = "braces"
 level = "Advanced"
 start_date = "2024-01-01"
-details = "I've used OpenAPI schemas to design structured schemas and write API documentation. Projects I've used this skill for: <ul class='list-disc pl-5 mt-2 space-y-1'><li><strong>PyAerial:</strong> Designing a REST APIs that external tools can use to interface with the program</li><li><strong>finiteCraft:</strong> Writing documentation for a hacky static API using Github Pages</li></ul>"
+details = "I've used OpenAPI schemas to design structured APIs and write API documentation. Projects I've used this skill for: <ul class='list-disc pl-5 mt-2 space-y-1'><li><strong>PyAerial:</strong> Designing REST APIs that external tools can use to interface with the program</li><li><strong>Triggered:</strong> Documenting a programmable trigger/action API for Discord automation</li></ul>"
 projects = ["PyAerial", "Triggered"]
 
-[[skills.technologies]] # Done
+[[skills.technologies]]
 name = "SQL"
 icon = "database"
 level = "Advanced"
@@ -185,7 +186,7 @@ start_date = "2022-01-01"
 details = "After some time using the significantly simpler database MongoDB, I began to use more traditional SQL-like databases (MySQL, PostgreSQL) as storage methods for my more complicated applications. Some examples of this: <ul class='list-disc pl-5 mt-2 space-y-1'><li><strong>Strife:</strong> Designing robust repository patterns and migration flows using asyncpg and PostgreSQL</li><li><strong>Triggered:</strong> Storing custom event triggers and role permissions</li><li><strong>Statify:</strong> Aggregating server-wide statistics and leaderboards, and aggressive indexing to optimize queries.</li></ul>"
 projects = ["Strife", "Triggered", "Statify"]
 
-[[skills.technologies]] # done
+[[skills.technologies]]
 name = "MongoDB"
 icon = "devicon-mongodb-plain"
 level = "Advanced"
@@ -193,7 +194,7 @@ start_date = "2024-01-01"
 details = "MongoDB was the first database that I used, which is reflected in the projects I used it for. Some of the stronger examples:<ul class='list-disc pl-5 mt-2 space-y-1'><li><strong>PyAerial:</strong> Storing raw, high-frequency aircraft coordinates in real-time</li><li><strong>finiteCraft:</strong> Mapping the element crafting paths in a graph-like structure</li></ul>"
 projects = ["PyAerial", "finiteCraft"]
 
-[[skills.technologies]] # Done
+[[skills.technologies]]
 name = "Kafka"
 icon = "devicon-apachekafka-original"
 level = "Advanced"
@@ -206,7 +207,7 @@ name = "discord.py"
 icon = "discord"
 level = "Expert"
 start_date = "2022-01-01"
-details = "I've used discord.py to develop a variety of bots and even a modular bot templates. Work I've done:<ul class='list-disc pl-5 mt-2 space-y-1'><li><strong>discord.py-template:</strong>A modular bot framework with hot-reloading cog engines</li><li><strong>Strife / Piranha:</strong> Designing interactive games with a custom interaction router</li><li><strong>Triggered:</strong>A full trigger-based automation system entirely within Discord</li></ul>"
+details = "I've used discord.py to develop a variety of bots and even a modular bot template. Work I've done:<ul class='list-disc pl-5 mt-2 space-y-1'><li><strong>discord.py-template:</strong> A modular bot framework with hot-reloading cog engines</li><li><strong>Strife / Piranha:</strong> Designing interactive games with a custom interaction router</li><li><strong>Triggered:</strong> A full trigger-based automation system entirely within Discord</li></ul>"
 projects = ["Piranha", "Triggered", "Strife", "discord.py-template"]
 
 [[skills.technologies]]
@@ -223,122 +224,30 @@ category = "aerpaw"
 image = "https://placehold.co/400x250/3498DB/FFFFFF?text=PyAerial"
 title = "PyAerial"
 date = "2024 - Present"
-description = "A high-performance ADS-B and Mode-S aircraft tracking system developed for the AERPAW research platform."
-details = "PyAerial is a comprehensive ADS-B tracking solution developed for the AERPAW research platform at NC State. It provides real-time aircraft position tracking, historical data storage, and geofenced alerting. It is designed to be modular and extensible, allowing for integration with additional data sources and early-warning systems."
-features = ["15% percent faster collision detection", "92% fewer false positives", "Detailed flight tracking in MongoDB", "Docker containerized deployment", "Kafka notification integration", "Compatibility with commonly used geofence file formats"]
+description = "ADS-B and Mode-S aircraft tracking for AERPAW: live positions, geofenced alerts, and Kafka/MongoDB backends."
+details = "PyAerial is the ADS-B/Mode-S tracker I built for AERPAW at NC State (successor to airstrik.py). It decodes 1090 MHz transponder traffic, stores flight history, and fires programmable alerts when aircraft enter user-defined geofences. The stack is modular so extra data sources (OpenSky, dump1090, RTL-SDR) and notification backends can be swapped in."
+features = ["15% faster collision detection", "92% fewer false positives", "Flight history in MongoDB", "Dockerized deployment", "Kafka notification integration", "Common geofence file formats"]
 link = "https://github.com/quantumbagel/PyAerial"
 skills = ["Python", "Kafka", "MongoDB", "RTL-SDR", "Docker", "ADS-B / Mode-S", "OpenAPI", "Shapely", "Geospatial Analysis"]
-
-[[projects]]
-category = "discord-bots"
-image = "https://placehold.co/400x250/2ECC71/FFFFFF?text=Piranha"
-title = "Piranha [unmaintained]"
-date = "2022"
-description = "A feature-rich Discord bot that integrates the Stockfish chess engine to let users play chess directly in chat."
-details = "A Python-based Discord bot designed for chess enthusiasts. It interfaces with the Stockfish engine to support multiple difficulty levels, game history tracking, and player statistics."
-features = ["Play chess against AI or friends", "Multiple difficulty levels via Stockfish", "Game history and statistics", "Docker deployment support"]
-skills = ["Python", "discord.py", "Stockfish", "Docker", "Algorithms"]
-
-[[projects]]
-category = "collabs"
-image = "https://placehold.co/400x250/E74C3C/FFFFFF?text=finiteCraft"
-title = "finiteCraft"
-date = "2024 [unmaintained]"
-description = "A high-performance scraping and recipe discovery pathfinder for the Infinite Craft game."
-details = "finiteCraft is a multi-threaded scraping and optimization project designed to automate recipe discovery in Neal Agarwal's Infinite Craft. It utilizes distributed rotating proxies to bypass rate limits and implements pathfinding algorithms to compute optimal crafting trees."
-features = ["Multi-threaded recipe scraping", "Rotating proxy integration", "MongoDB database for element relationships", "Tree-search pathfinding for optimal recipe discovery"]
-link = "https://github.com/finiteCraft/finiteCraft"
-skills = ["Python", "Playwright / Selenium", "Web Scraping", "Proxy Rotation", "MongoDB", "Pathfinding Algorithms"]
 
 [[projects]]
 category = "aerpaw"
 image = "https://placehold.co/400x250/9B59B6/FFFFFF?text=DroneTracker"
 title = "DroneTracker"
 date = "2024 - Present"
-description = "A real-time computer vision and PTZ camera tracking system for AERPAW drones."
-details = "DroneTracker controls pan-tilt-zoom (PTZ) AXIS cameras using the VAPIX API to track flying drones in real-time. The system calculates tracking angles using drone GPS coordinates received over Kafka and automatically adjusts camera orientation and zoom to keep the target centered."
-features = ["PTZ camera control using AXIS VAPIX protocol", "Real-time coordinate-to-angle mathematical conversion", "Telemetry consumption over Kafka", "Dockerized deployment for field execution"]
+description = "Keeps AXIS PTZ cameras locked on AERPAW drones using live GPS telemetry over Kafka."
+details = "DroneTracker drives pan-tilt-zoom AXIS cameras over the VAPIX API so a flying drone stays in frame. It converts GPS coordinates from Kafka into pan/tilt/zoom commands and updates the camera continuously for field operations."
+features = ["PTZ camera control using AXIS VAPIX protocol", "Real-time coordinate-to-angle conversion", "Telemetry consumption over Kafka", "Dockerized deployment for field execution"]
 link = "https://github.com/quantumbagel/DroneTracker"
 skills = ["Python", "VAPIX (PTZ Camera API)", "Kafka", "Docker", "Trigonometry", "Linux/Unix"]
-
-[[projects]]
-category = "discord-bots"
-image = "https://placehold.co/400x250/F1C40F/FFFFFF?text=Triggered"
-title = "Triggered"
-date = "2023 - 2024 [unmaintained]"
-description = "A programmable IFTTT-style automation and utility bot for Discord server administrators."
-details = "Triggered is a customizable Discord bot that provides administrators with a flexible event-driven automation framework. It allows creating custom triggers (e.g., messages, user joins) and corresponding actions, backed by a relational database."
-features = ["Custom trigger/action system", "Programmable API", "MySQL database for persistence", "Extensive customization options"]
-link = "https://github.com/quantumbagel/Triggered"
-skills = ["Python", "discord.py", "MySQL", "Database Design", "API Integration", "OpenAPI"]
-
-[[projects]]
-category = "discord-bots"
-image = "https://placehold.co/400x250/F1C40F/FFFFFF?text=Strife"
-title = "Strife"
-date = "2026 - Present"
-description = "A high-performance Discord bot hosting interactive multiplayer games with a custom interaction router, session lifecycle management, and PostgreSQL database integration."
-details = "Strife is a modern, modular Discord bot built with discord.py and asyncpg designed to host competitive multiplayer games like Mafia and Tic-Tac-Toe. It features an advanced session and lobby matchmaking lifecycle, dynamic UI components rendered with custom emojis, a sandboxed game simulation engine, and database-driven game history and player profile services."
-features = [
-  "Modular lobby matchmaking and session lifecycle management",
-  "High-performance PostgreSQL database backend with repository patterns and migrator",
-  "Custom interaction routing and payload caching to support complex game inputs",
-  "Interactive multiplayer games including Tic-Tac-Toe and Mafia",
-  "Comprehensive game replays, moves history tracking, and player profiles"
-]
-skills = ["Python", "discord.py", "PostgreSQL", "Database Design", "Pydantic", "Software Architecture", "Docker", "asyncpg"]
-
-[[projects]]
-category = "solo"
-image = "https://placehold.co/400x250/3498DB/FFFFFF?text=Statify"
-title = "Statify"
-date = "2022 [unmaintained]"
-description = "A server-side Minecraft plugin for advanced statistic aggregation and database-driven leaderboards."
-details = "Statify is a lightweight, server-side SpigotMC plugin designed to aggregate, query, and visualize player statistics by providing a /stat command. It supports complex mathematical queries and integrates with relational databases to maintain customizable leaderboards."
-features = ["Advanced server-wide statistic aggregation", "SpigotMC API integration for Minecraft event handling", "Relational database support (MySQL/PostgreSQL)", "Customizable leaderboard layouts"]
-link = "https://github.com/quantumbagel/Statify"
-skills = ["Java", "SpigotMC API", "MySQL / PostgreSQL", "Database Design"]
-
-[[projects]]
-category = "solo"
-image = "https://placehold.co/400x250/2ECC71/FFFFFF?text=Molotov"
-title = "Molotov"
-date = "2022"
-description = "A screen-scraping and automated keyboard injection bot for the jklm.fun word game Bomb Party."
-details = "Molotov is a high-speed automation bot for the word game Bomb Party on jklm.fun. It utilizes mss for ultra-fast desktop screen capture, analyzes pixel colors to track game state and active turns, and simulates human typing using PyAutoGUI to inject optimal words from an indexed dictionary database. It also chooses words based on a scoring heuristic to maximize points for the bonus hearts mechanic and can fake typing to bypass bot detection."
-features = ["High-speed screen capturing via mss", "Pixel-color game state tracking", "Simulated human typing delays via PyAutoGUI", "Indexed dictionary database for instantaneous word lookup"]
-link = "https://github.com/quantumbagel/Molotov"
-skills = ["Python", "PyAutoGUI", "Image Manipulation", "Algorithms"]
-
-[[projects]]
-category = "discord-bots"
-image = "https://placehold.co/400x250/9B59B6/FFFFFF?text=discord.py+template"
-title = "discord.py-template"
-date = "2025 - Present"
-description = "A feature-rich template for developing modern discord.py bots."
-details = "A template for discord.py (v2.0+) bots. It includes hot-reloading cogs with automatic failure rollback, centralized YAML configuration, standardized embed generators, and structured multi-destination logging. Other features soon to be added include an integrated UI library using Discord Components V2 and a built-in command-line interface for bot management."
-features = ["Dynamic failure management", "Global error handling and automatic crash logging", "Easy to use and build off of with centralized configuration"]
-link = "https://github.com/quantumbagel/discord.py-template"
-skills = ["Python", "discord.py", "YAML", "Software Architecture", "Docker"]
-
-[[projects]]
-category = "collabs"
-image = "https://placehold.co/400x250/1ABC9C/FFFFFF?text=Chess-Challenge"
-title = "Chess-Challenge"
-date = "2023 [unmaintained]"
-description = "A compact C# chess bot developed for Sebastian Lague's tiny chess bot competition."
-details = "A miniature chess engine written in C# (.NET 6.0) under strict size/token constraints. This tiny little botiImplements search algorithms, move valuation, and game state optimizations within a 1024-token budget. 1 token represented any one unit of code, including keywords, operators, and identifiers. The bot was tested against Stockfish and achieved an ELO rating of ~1500-2000."
-features = ["Minimax search with alpha-beta pruning", "Quiescence search", "~1500-2000 ELO [tested against Stockfish]", "Heavy optimization"]
-link = "https://github.com/quantumbagel/Chess-Challenge"
-skills = ["C#", ".NET", "Algorithms", "Optimization"]
 
 [[projects]]
 category = "aerpaw"
 image = "https://placehold.co/400x250/F1C40F/FFFFFF?text=aerpawlib"
 title = "aerpawlib"
 date = "2025 - Present"
-description = "A high-level MAVLink and MAVSDK abstraction framework for drone flight experimentation."
-details = "aerpawlib is a Python framework that abstracts complex low-level MAVLink and MAVSDK protocols into a clean, scriptable API for drone flight control. It is designed to help researchers safely write, simulate, and deploy multi-vehicle drone experiments on the AERPAW testbed. My work on this project was migrating it to use the MAVSDK library instead of pymavlink/DroneKit because of the latter's lack of active development and support for modern MAVLink features."
+description = "A Python API over MAVLink/MAVSDK so researchers can script multi-vehicle drone experiments on AERPAW."
+details = "aerpawlib hides low-level MAVLink and MAVSDK behind a scriptable API for drone flight control on the AERPAW testbed. My contribution was migrating it off pymavlink/DroneKit onto MAVSDK, because DroneKit is unmaintained and missing modern MAVLink features."
 features = ["High-level drone control API", "MAVLink/MAVSDK abstraction", "Simplified experiment development", "AERPAW platform integration"]
 link = "https://github.com/aerpaw/aerpawlib"
 skills = ["Python", "MAVSDK / MAVLink", "ArduPilot", "Drone Flight Control", "API Design", "Network Protocols"]
@@ -348,19 +257,80 @@ category = "ml"
 image = "https://placehold.co/400x250/34495E/FFFFFF?text=ML-Ticker"
 title = "ML-Ticker"
 date = "2026 - Present"
-description = "A financial query utility with a sandboxed formula engine, developed for Merrill Lynch."
-details = "ML-Ticker is a Python command-line tool built for Merrill Lynch to query FactSet FQL API data. It uses a sandboxed Python formula engine to compute post-query custom metrics, features an automatic dependency DAG, validates configuration files via Pydantic, and outputs colorized terminal tables or styled Excel spreadsheets."
+description = "A FactSet-backed financial query CLI with a sandboxed formula engine, built for Merrill Lynch."
+details = "ML-Ticker is a Python command-line tool I built during my Merrill internship to query FactSet FQL snapshot and historical data. A sandboxed Python formula engine computes post-query custom metrics, an automatic dependency DAG plus Pydantic validation catch bad configs, and output goes to colorized terminal tables or styled Excel sheets."
 features = ["FactSet FQL API integration for snapshot and historical timeseries data", "Sandboxed Python formula engine for post-query custom metrics", "Dependency validation using directed acyclic graphs (DAGs) and Pydantic", "Colorized terminal tables and styled multi-sheet Excel spreadsheet export"]
 link = "https://github.com/quantumbagel/ML-Ticker"
 skills = ["Python", "FactSet FQL API", "Pydantic", "openpyxl (Excel)", "DAGs / Dependency Graphs", "CLI Development"]
+
+[[projects]]
+category = "discord-bots"
+image = "https://placehold.co/400x250/F1C40F/FFFFFF?text=Strife"
+title = "Strife"
+date = "2026 - Present"
+description = "A thread-based Discord gaming platform with lobbies, match history, and a PostgreSQL backend."
+details = "Strife is a rewrite of PlayCord: start a lobby with /play, play in a public game thread, then rematch, replay, or check a profile. It uses discord.py and asyncpg, with session/lobby lifecycle, a sandboxed game engine, and database-backed history. Launch games include Tic-Tac-Toe, Connect Four, Chess, Coup, Mafia, Spyfall, and Liar's Dice."
+features = [
+  "Lobby matchmaking and session lifecycle in Discord threads",
+  "PostgreSQL backend with repository patterns and migrations",
+  "Custom interaction routing for complex game inputs",
+  "Tic-Tac-Toe, Connect Four, Chess, Coup, Mafia, Spyfall, and Liar's Dice",
+  "Match replays, move history, and player profiles"
+]
+link = "https://github.com/quantumbagel/Strife"
+skills = ["Python", "discord.py", "PostgreSQL", "Database Design", "Pydantic", "Software Architecture", "Docker", "asyncpg"]
+
+[[projects]]
+category = "discord-bots"
+image = "https://placehold.co/400x250/9B59B6/FFFFFF?text=discord.py+template"
+title = "discord.py-template"
+date = "2025 - Present"
+description = "A starter template for modern discord.py bots: hot-reload cogs, YAML config, and structured logging."
+details = "A template for discord.py (v2.0+) bots. It includes hot-reloading cogs with automatic failure rollback, centralized YAML configuration, standardized embed generators, and structured multi-destination logging. Planned additions include an integrated UI library using Discord Components V2 and a built-in CLI for bot management."
+features = ["Dynamic failure management", "Global error handling and automatic crash logging", "Easy to use and build off of with centralized configuration"]
+link = "https://github.com/quantumbagel/discord.py-template"
+skills = ["Python", "discord.py", "YAML", "Software Architecture", "Docker"]
+
+[[projects]]
+category = "collabs"
+image = "https://placehold.co/400x250/1ABC9C/FFFFFF?text=Chess-Challenge"
+title = "Chess-Challenge"
+date = "2023 (unmaintained)"
+description = "A compact C# chess bot for Sebastian Lague's tiny chess bot competition, written under a 1024-token budget."
+details = "A miniature chess engine written in C# (.NET 6.0) under strict size/token constraints. It implements search, move valuation, and game-state optimizations within a 1024-token budget (1 token = any one unit of code, including keywords, operators, and identifiers). In engine tests it landed around 1500–2000 ELO."
+features = ["Minimax search with alpha-beta pruning", "Quiescence search", "Estimated 1500–2000 ELO in engine tests", "Heavy size-budget optimization"]
+link = "https://github.com/quantumbagel/Chess-Challenge"
+skills = ["C#", ".NET", "Algorithms", "Optimization"]
+
+[[projects]]
+category = "discord-bots"
+image = "https://placehold.co/400x250/F1C40F/FFFFFF?text=Triggered"
+title = "Triggered"
+date = "2023 - 2024 (unmaintained)"
+description = "An IFTTT-style automation bot for Discord: custom triggers, actions, and a MySQL backend."
+details = "Triggered gives server admins an event-driven automation framework. You define triggers (messages, joins, and so on) and the actions they should fire, persisted in a relational database."
+features = ["Custom trigger/action system", "Programmable API", "MySQL database for persistence", "Extensive customization options"]
+link = "https://github.com/quantumbagel/Triggered"
+skills = ["Python", "discord.py", "MySQL", "Database Design", "API Integration", "OpenAPI"]
+
+[[projects]]
+category = "collabs"
+image = "https://placehold.co/400x250/E74C3C/FFFFFF?text=finiteCraft"
+title = "finiteCraft"
+date = "2024 (unmaintained)"
+description = "A collaborative recipe crawler and pathfinder for Neal Agarwal's Infinite Craft."
+details = "finiteCraft maps Infinite Craft's element graph: multi-threaded browser automation discovers recipes, stores relationships in MongoDB, and pathfinding computes efficient crafting trees for a target element. Rotating proxies kept the crawler under the game's rate limits."
+features = ["Multi-threaded recipe scraping", "Rotating proxy integration", "MongoDB graph of element relationships", "Tree-search pathfinding for recipe discovery"]
+link = "https://github.com/finiteCraft/finiteCraft"
+skills = ["Python", "Playwright / Selenium", "Web Scraping", "Proxy Rotation", "MongoDB", "Pathfinding Algorithms"]
 
 [[projects]]
 category = "solo"
 image = "https://placehold.co/400x250/2C3E50/FFFFFF?text=Portfolio+V3"
 title = "Portfolio Website (v3)"
 date = "2026 - Present"
-description = "The third iteration of my personal developer portfolio website, built with Python, Tailwind CSS, and Bootstrap Icons."
-details = "A clean, fast, and responsive static website generated using a custom Python script. Features a dark/light mode toggle, dynamic client-side filtering, and search functionality for projects."
+description = "This site: a TOML-driven static generator with Tailwind, project filters, and light/dark mode."
+details = "A static site generated by a custom Python script from site.toml and HTML templates. It is also a reusable template — fork the GitHub repo if you want the same layout with your own content."
 features = [
   "Static site generation via custom Python script",
   "Tailwind CSS styling with dynamic dark/light mode support",
@@ -369,6 +339,38 @@ features = [
 ]
 link = "https://github.com/quantumbagel/quantumbagel.github.io"
 skills = ["Python", "JavaScript", "Git"]
+
+[[projects]]
+category = "solo"
+image = "https://placehold.co/400x250/3498DB/FFFFFF?text=Statify"
+title = "Statify"
+date = "2022 (unmaintained)"
+description = "A SpigotMC plugin for aggregating Minecraft player stats and database-backed leaderboards."
+details = "Statify is a lightweight server-side SpigotMC plugin that aggregates, queries, and visualizes player statistics through a /stat command. It supports mathematical queries and stores customizable leaderboards in a relational database."
+features = ["Advanced server-wide statistic aggregation", "SpigotMC API integration for Minecraft event handling", "Relational database support (MySQL/PostgreSQL)", "Customizable leaderboard layouts"]
+link = "https://github.com/quantumbagel/Statify"
+skills = ["Java", "SpigotMC API", "MySQL / PostgreSQL", "Database Design"]
+
+[[projects]]
+category = "discord-bots"
+image = "https://placehold.co/400x250/2ECC71/FFFFFF?text=Piranha"
+title = "Piranha"
+date = "2022 (unmaintained)"
+description = "A Discord chess bot that talks to Stockfish so people can play in chat against AI or each other."
+details = "A Python Discord bot for chess in chat. It interfaces with Stockfish for multiple difficulty levels, and tracks game history and player statistics."
+features = ["Play chess against AI or friends", "Multiple difficulty levels via Stockfish", "Game history and statistics", "Docker deployment support"]
+skills = ["Python", "discord.py", "Stockfish", "Docker", "Algorithms"]
+
+[[projects]]
+category = "solo"
+image = "https://placehold.co/400x250/2ECC71/FFFFFF?text=Molotov"
+title = "Molotov"
+date = "2022"
+description = "A screen-capture word bot for Bomb Party on jklm.fun: pixel sampling, dictionary lookup, and timed typing."
+details = "Molotov is an automation experiment for the word game Bomb Party. It uses mss for fast desktop capture, reads pixel colors to detect turns, and types candidate words from an indexed dictionary. A scoring heuristic prefers words that help the bonus-hearts mechanic."
+features = ["High-speed screen capturing via mss", "Pixel-color game state tracking", "Simulated human typing delays via PyAutoGUI", "Indexed dictionary database for instantaneous word lookup"]
+link = "https://github.com/quantumbagel/Molotov"
+skills = ["Python", "PyAutoGUI", "Image Manipulation", "Algorithms"]
 
 [[project_filters]]
 key = "all"
@@ -397,4 +399,4 @@ label = "Collaborations"
 
 
 [redirects]
-resume = "https://docs.google.com/document/d/1gq5sdEZpf0Aa72OVL7mjcgrHgKJGtB1S-MCWjtZQWz8/edit"
+resume = "https://docs.google.com/document/d/1gq5sdEZpf0Aa72OVL7mjcgrHgKJGtB1S-MCWjtZQWz8/preview"

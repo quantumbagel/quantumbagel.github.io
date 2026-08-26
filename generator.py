@@ -439,6 +439,7 @@ def build_index_context(config: dict[str, Any]) -> dict[str, Any]:
     contact = {
         "form_action": "",
         "submit_label": "Send Message",
+        "intro": "",
         **config.get("contact", {}),
     }
 
