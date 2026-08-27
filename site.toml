@@ -2,7 +2,7 @@
 lang = "en"
 
 [meta]
-description = "Julian Reder — Computer Engineering and Statistics student at NC State. AERPAW developer working on drones and ADS-B; technical intern at Merrill Lynch."
+description = "Julian Reder — Computer Engineering and Statistics student at NC State."
 favicon = "pfp.webp"
 
 [user]
@@ -27,12 +27,11 @@ no_projects = "No projects found matching your criteria."
 [skills_categories]
 languages = "Languages"
 technologies = "Technologies"
-tools = "Tools"
 
 [contact]
 form_action = "https://formspree.io/f/moqgwdop"
 submit_label = "Send Message"
-intro = "I'm looking for internships and research roles in embedded systems, backend infrastructure, and anything where messy real-world data has to become a reliable system. Use the form below, or reach me on GitHub, LinkedIn, or Discord."
+intro = "I'm looking for internships and research roles in embedded systems, backend infrastructure, and anything where messy data has to become a functional system. Use the form below, or reach me on GitHub, LinkedIn, or Discord."
 
 [footer]
 text = "Made with <3 by @quantumbagel, not AI."
@@ -62,7 +61,7 @@ link = "https://advisor.ml.com/sites/nc/raleigh-nc/bellbellcronlund"
 date = "May 2026 - August 2026"
 description = """Worked on an internal calculations platform used for <strong>$500M+</strong> in assets under management.
 <ul class='list-disc pl-5 mt-2 space-y-1'>
-<li>Shipped <strong>ML-Ticker</strong>, a Python CLI for querying FactSet FQL snapshot and historical data</li>
+<li>Created <strong>ML-Ticker</strong>, a Python CLI for querying FactSet FQL snapshot and historical data</li>
 <li>Added a sandboxed formula engine with DAG-based dependency checks and Pydantic config validation</li>
 <li>Exported results as colorized terminal tables and styled Excel workbooks</li>
 </ul>"""
@@ -154,7 +153,7 @@ start_date = "2023-01-01"
 details = "I've used Docker to containerize multi-service applications, ensuring consistent execution across development and production environments. Some examples:<ul class='list-disc pl-5 mt-2 space-y-1'><li><strong>PyAerial:</strong> Containerizing multi-container architectures combining database and telemetry services</li><li><strong>discord.py-template:</strong> Creating optimized multi-stage build files to minimize production footprint</li><li><strong>Strife:</strong> Configuring network isolation for microservices and Docker Compose deployment</li></ul>"
 projects = ["PyAerial", "DroneTracker", "Piranha", "Strife", "discord.py-template"]
 
-[[skills.tools]]
+[[skills.technologies]]
 name = "Git"
 icon = "devicon-git-plain"
 level = "Advanced"
