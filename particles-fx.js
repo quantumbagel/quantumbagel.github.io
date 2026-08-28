@@ -8,9 +8,11 @@
         const orbitSystems = [];
         const orbitDrawBuf = [];
         const stars = [];
+        let starWarp = 0;
         const epicycles = [];
         const harmonics = [];
         const auroraLayers = [];
+        const auroraRumples = [];
         const pendulums = [];
         const crystals = [];
         const boids = [];
@@ -87,15 +89,25 @@
                     const dy = a.y - b.y;
                     const min = ra + radiusOf(b);
                     const distSq = dx * dx + dy * dy;
-                    if (distSq >= min * min || distSq < 0.01) {
+                    if (distSq >= min * min) {
                         continue;
                     }
-                    const dist = Math.sqrt(distSq);
+                    let dist = Math.sqrt(distSq);
+                    let nx;
+                    let ny;
+                    if (distSq < 0.0001) {
+                        const ang = (i + 1) * 2.399963 + j;
+                        nx = Math.cos(ang);
+                        ny = Math.sin(ang);
+                        dist = 0.01;
+                    } else {
+                        nx = dx / dist;
+                        ny = dy / dist;
+                    }
                     const overlap = (min - dist) / min;
                     const push = overlap * overlap * force * frame;
-                    const inv = 1 / dist;
-                    const px = dx * inv * push;
-                    const py = dy * inv * push;
+                    const px = nx * push;
+                    const py = ny * push;
                     a.x += px;
                     a.y += py;
                     b.x -= px;
@@ -438,7 +450,7 @@
             const connectSq = connectDist * connectDist;
             const hoverConnect = 86 * S.params.network.links;
             const hoverSq = hoverConnect * hoverConnect;
-            const sep = 44;
+            const sep = 62;
             const sepSq = sep * sep;
             const mouseR = S.MOUSE_RADIUS * S.params.network.mouse;
             const mouseSq = mouseR * mouseR;
@@ -460,8 +472,9 @@
                         if (distSq < mouseSq && distSq > 0.01) {
                             const dist = Math.sqrt(distSq);
                             const f = 1 - dist / mouseR;
-                            p.vx += (dx / dist) * f * 0.9 * frame * S.params.network.mouse;
-                            p.vy += (dy / dist) * f * 0.9 * frame * S.params.network.mouse;
+                            const push = f * f * 0.28 * frame * S.params.network.mouse;
+                            p.vx += (dx / dist) * push;
+                            p.vy += (dy / dist) * push;
                             p.highlighted = true;
                             p.opacity += (Math.min(0.9, p.baseOpacity + f * 0.5) - p.opacity) * damp.opacityIn;
                         } else {
@@ -527,19 +540,33 @@
                             const distSq = dx * dx + dy * dy;
                             const hoverPair = p1.highlighted || p2.highlighted;
                             const maxSq = hoverPair ? hoverSq : connectSq;
+                            if (distSq < sepSq && !p1.dragging && !p2.dragging) {
+                                let dist = Math.sqrt(Math.max(distSq, 0.0001));
+                                let nx;
+                                let ny;
+                                if (distSq < 0.0001) {
+                                    const ang = (p1.id + 1) * 2.399963 + p2.id;
+                                    nx = Math.cos(ang);
+                                    ny = Math.sin(ang);
+                                } else {
+                                    nx = dx / dist;
+                                    ny = dy / dist;
+                                }
+                                const overlap = (sep - dist) / sep;
+                                const push = (overlap * 0.7 + overlap * overlap * 1.8) * frame;
+                                p1.x += nx * push;
+                                p1.y += ny * push;
+                                p2.x -= nx * push;
+                                p2.y -= ny * push;
+                                p1.vx += nx * push * 0.4;
+                                p1.vy += ny * push * 0.4;
+                                p2.vx -= nx * push * 0.4;
+                                p2.vy -= ny * push * 0.4;
+                            }
                             if (distSq >= maxSq || distSq < 0.01) {
                                 continue;
                             }
                             const dist = Math.sqrt(distSq);
-                            if (distSq < sepSq && !p1.dragging && !p2.dragging) {
-                                const overlap = (sep - dist) / sep;
-                                const push = overlap * overlap * 0.55 * frame;
-                                const inv = 1 / dist;
-                                p1.x += dx * inv * push;
-                                p1.y += dy * inv * push;
-                                p2.x -= dx * inv * push;
-                                p2.y -= dy * inv * push;
-                            }
                             S.ctx.strokeStyle = hoverPair ? S.accentColorStr : S.particleColorStr;
                             S.ctx.globalAlpha = (1 - dist / Math.sqrt(maxSq)) * (hoverPair ? vis.hoverBondAlpha : vis.bondAlpha);
                             S.ctx.beginPath();
@@ -630,6 +657,15 @@
 
             for (let i = 0; i < orbitSystems.length; i++) {
                 const sys = orbitSystems[i];
+                if (animate) {
+                    for (let r = 0; r < sys.rings.length; r++) {
+                        const ring = sys.rings[r];
+                        ring.twist += ring.twistSpeed * speedMul * frame;
+                        for (let e = 0; e < ring.phases.length; e++) {
+                            ring.phases[e] += ring.speed * speedMul * frame;
+                        }
+                    }
+                }
                 const originY = sys.y - scrollY;
                 const visR = sys.radius * spread + 36;
                 if (originY < -visR || originY > viewHeight + visR) {
@@ -641,9 +677,6 @@
 
                 for (let r = 0; r < sys.rings.length; r++) {
                     const ring = sys.rings[r];
-                    if (animate) {
-                        ring.twist += ring.twistSpeed * speedMul * frame;
-                    }
                     const rad = ring.radius * spread;
                     S.ctx.strokeStyle = ringColor;
                     S.ctx.lineWidth = ring.band ? 2.1 : sys.hero ? 1.05 : 0.8;
@@ -689,9 +722,6 @@
                     const ring = sys.rings[r];
                     const rad = ring.radius * spread;
                     for (let e = 0; e < ring.phases.length; e++) {
-                        if (animate) {
-                            ring.phases[e] += ring.speed * speedMul * frame;
-                        }
                         const local = transformOrbitLocal(rad, ring.phases[e], ring.tilt, ring.twist, sys.rotX, sys.rotY);
                         const proj = projectOrbitPoint(local.x, local.y, local.z, sys.x, originY);
                         orbitDrawBuf.push({
@@ -739,6 +769,7 @@
             star.z = fromFar ? 1 : rng.next() * 0.82 + 0.16;
             star.pz = star.z;
             star.hot = rng.next() < 0.08;
+            star.boost = 0;
             star.sx = 0;
             star.sy = 0;
             return star;
@@ -746,6 +777,7 @@
 
         const initStars = () => {
             stars.length = 0;
+            starWarp = 0;
             const rng = S.createRng();
             const count = getStarCount();
             for (let i = 0; i < count; i++) {
@@ -758,7 +790,7 @@
             const rng = S.createRng();
             if (stars.length < target) {
                 while (stars.length < target) {
-                    stars.push(resetStar({ x: 0, y: 0, z: 1, pz: 1, hot: false, sx: 0, sy: 0 }, rng, false));
+                    stars.push(resetStar({ x: 0, y: 0, z: 1, pz: 1, hot: false, boost: 0, sx: 0, sy: 0 }, rng, false));
                 }
             } else if (stars.length > target) {
                 stars.length = target;
@@ -773,11 +805,23 @@
             const focal = Math.min(S.width, S.height) * 0.62;
             const rng = S.createRng();
             S.ctx.lineCap = "round";
+            if (animate) {
+                starWarp *= Math.pow(0.92, frame);
+                if (starWarp < 0.002) {
+                    starWarp = 0;
+                }
+            }
             for (let i = 0; i < stars.length; i++) {
                 const star = stars[i];
                 star.pz = star.z;
                 if (animate) {
-                    star.z -= speed * (0.45 + star.z);
+                    if (star.boost > 0.002) {
+                        star.boost *= Math.pow(0.9, frame);
+                    } else {
+                        star.boost = 0;
+                    }
+                    const rush = 1 + starWarp * 1.6 + star.boost * 1.8;
+                    star.z -= speed * (0.45 + star.z) * rush;
                 }
                 if (star.z <= 0.045) {
                     resetStar(star, rng, true);
@@ -796,7 +840,7 @@
                 const depth = 1 - star.z;
                 S.ctx.globalAlpha = 0.32 + depth * 0.68;
                 if (streak > 0.04 && animate) {
-                    const pk = focal / Math.max(star.pz, star.z + speed);
+                    const pk = focal / Math.max(star.pz, star.z);
                     S.ctx.strokeStyle = star.hot ? S.accentColorStr : S.particleColorStr;
                     S.ctx.lineWidth = 0.7 + depth * 2.2 * streak;
                     S.ctx.beginPath();
@@ -812,6 +856,13 @@
         };
 
         const pushPath = (path, x, y, maxPts) => {
+            if (path.length >= 2) {
+                const dx = x - path[path.length - 2];
+                const dy = y - path[path.length - 1];
+                if (dx * dx + dy * dy > 90 * 90) {
+                    path.length = 0;
+                }
+            }
             path.push(x, y);
             const cap = (maxPts || PATH_CAP) * 2;
             if (path.length > cap) {
@@ -1002,6 +1053,7 @@
                     py: rng.next() * Math.PI * 2,
                     t: rng.next() * 18,
                     kick: 0,
+                    unwind: 0,
                     path: [],
                     accent: rng.next() < 0.45,
                     dragging: false,
@@ -1027,33 +1079,46 @@
             for (let i = 0; i < harmonics.length; i++) {
                 const h = harmonics[i];
                 if (animate && !h.dragging) {
+                    h.vx *= Math.pow(0.985, frame);
+                    h.vy *= Math.pow(0.985, frame);
+                    const mag = Math.hypot(h.vx, h.vy);
+                    if (mag > 0.55) {
+                        h.vx = (h.vx / mag) * 0.55;
+                        h.vy = (h.vy / mag) * 0.55;
+                    }
                     h.x += h.vx * frame;
                     h.y += h.vy * frame;
-                    bounceBounds(h, Math.max(h.ax, h.ay) * 0.35 + 18);
+                    bounceBounds(h, Math.max(h.ax, h.ay) * 0.55 + 16);
                 }
             }
             if (animate) {
-                separateBodies(harmonics, (h) => Math.max(h.ax, h.ay) + 12, frame, 0.45);
+                separateBodies(harmonics, () => 26, frame, 0.32);
             }
             for (let i = 0; i < harmonics.length; i++) {
                 const h = harmonics[i];
-                const vis = h.y - scrollY;
-                if (vis < -140 || vis > viewHeight + 140) {
-                    if (animate) {
-                        h.t += speed * frame;
-                        h.kick *= 0.985;
-                    }
-                    continue;
-                }
                 if (animate) {
-                    h.t += speed * frame;
-                    h.kick *= 0.985;
-                    const amp = Math.min(1.3, Math.exp(-decay * h.t) + (h.kick || 0));
-                    const x = h.x + Math.sin(h.wx * h.t + h.px) * h.ax * amp;
-                    const y = h.y + Math.sin(h.wy * h.t + h.py) * h.ay * amp;
-                    if (amp > 0.035) {
-                        pushPath(h.path, x, y, PATH_CAP);
+                    if (h.unwind > 0.002 && h.t > 55) {
+                        h.t += (55 - h.t) * (1 - Math.pow(0.88, frame * h.unwind));
+                        h.unwind *= Math.pow(0.91, frame);
+                    } else {
+                        h.unwind = 0;
                     }
+                    h.t += speed * frame;
+                    h.kick *= Math.pow(0.985, frame);
+                    if (h.kick < 0.002) {
+                        h.kick = 0;
+                    }
+                    const amp = Math.min(1.15, Math.exp(-decay * h.t) + (h.kick || 0));
+                    h.penX = h.x + Math.sin(h.wx * h.t + h.px) * h.ax * amp;
+                    h.penY = h.y + Math.sin(h.wy * h.t + h.py) * h.ay * amp;
+                    if (amp > 0.02) {
+                        pushPath(h.path, h.penX, h.penY, PATH_CAP);
+                    }
+                }
+                const vis = h.y - scrollY;
+                const pad = Math.max(h.ax, h.ay) + 28;
+                if (vis < -pad || vis > viewHeight + pad) {
+                    continue;
                 }
                 drawFadePath(h.path, h.accent ? S.accentColorStr : S.particleColorStr, 0.5, 1.05, scrollY);
             }
@@ -1061,6 +1126,7 @@
 
         const initAurora = () => {
             auroraLayers.length = 0;
+            auroraRumples.length = 0;
             const rng = S.createRng();
             const n = getAuroraCount();
             for (let i = 0; i < n; i++) {
@@ -1090,25 +1156,61 @@
         const tickAurora = (frame, animate) => {
             const speed = S.params.aurora.speed;
             const spread = S.params.aurora.spread;
-            const mx = S.mouse.x > -500 ? (S.mouse.x / Math.max(S.width, 1) - 0.5) : 0;
-            const my = S.mouse.y > -500 ? (S.mouse.y / Math.max(S.height, 1) - 0.5) : 0;
+            const mouseActive = S.mouse.x > -500 && S.mouse.y > -500;
+            const mX = S.mouse.x;
+            const mY = S.mouse.y;
+            if (animate) {
+                for (let r = auroraRumples.length - 1; r >= 0; r--) {
+                    const rumple = auroraRumples[r];
+                    rumple.life -= 0.008 * frame;
+                    rumple.grow = Math.min(1, rumple.grow + 0.16 * frame);
+                    rumple.sigma += 0.55 * frame;
+                    rumple.amp *= Math.pow(0.978, frame);
+                    rumple.phase += rumple.w * frame;
+                    if (rumple.life <= 0 || Math.abs(rumple.amp) < 0.8) {
+                        auroraRumples.splice(r, 1);
+                    }
+                }
+            }
             S.ctx.lineCap = "round";
+            S.ctx.lineJoin = "round";
             for (let i = 0; i < auroraLayers.length; i++) {
                 const layer = auroraLayers[i];
                 if (animate) {
                     layer.p1 += layer.w1 * speed * frame;
                     layer.p2 += layer.w2 * speed * frame;
                 }
-                const baseY = S.height * (0.18 + layer.y * 0.62) + my * 30;
+                const baseY = S.height * (0.18 + layer.y * 0.62);
                 S.ctx.strokeStyle = layer.accent ? S.accentColorStr : S.particleColorStr;
                 S.ctx.lineWidth = layer.width;
                 S.ctx.globalAlpha = 0.16 + (i / Math.max(auroraLayers.length, 1)) * 0.16;
                 S.ctx.beginPath();
                 for (let x = 0; x <= S.width; x += 5) {
-                    const y =
+                    let y =
                         baseY +
-                        Math.sin(x * layer.f1 + layer.p1 + mx * 1.4) * layer.a1 * spread +
-                        Math.sin(x * layer.f2 + layer.p2 - mx) * layer.a2 * spread;
+                        Math.sin(x * layer.f1 + layer.p1) * layer.a1 * spread +
+                        Math.sin(x * layer.f2 + layer.p2) * layer.a2 * spread;
+                    if (mouseActive) {
+                        const dx = x - mX;
+                        const dy = baseY - mY;
+                        const dSq = dx * dx + dy * dy;
+                        const radius = 190;
+                        if (dSq < radius * radius) {
+                            const fall = 1 - Math.sqrt(dSq) / radius;
+                            y += (mY - baseY) * fall * fall * 0.55;
+                            y += Math.sin(dx * 0.045) * 10 * fall;
+                        }
+                    }
+                    for (let r = 0; r < auroraRumples.length; r++) {
+                        const rumple = auroraRumples[r];
+                        const dx = x - rumple.x;
+                        const dy = baseY - rumple.y;
+                        const sigmaY = rumple.sigma * 1.15 + 36;
+                        const fallX = Math.exp(-(dx * dx) / (2 * rumple.sigma * rumple.sigma));
+                        const fallY = Math.exp(-(dy * dy) / (2 * sigmaY * sigmaY));
+                        const wrinkle = 1 + 0.55 * Math.sin(dx * rumple.freq + rumple.phase);
+                        y += rumple.amp * rumple.life * rumple.grow * fallX * fallY * wrinkle;
+                    }
                     if (x === 0) {
                         S.ctx.moveTo(x, y);
                     } else {
@@ -1237,12 +1339,13 @@
             }
             for (let i = 0; i < pendulums.length; i++) {
                 const p = pendulums[i];
-                const vis = p.y - scrollY;
-                if (vis < -160 || vis > viewHeight + 160) {
-                    continue;
-                }
                 if (animate) {
                     pushPath(p.path, p.x2, p.y2, PATH_CAP);
+                }
+                const vis = p.y - scrollY;
+                const pad = p.l1 + p.l2 + 24;
+                if (vis < -pad || vis > viewHeight + pad) {
+                    continue;
                 }
                 drawFadePath(p.path, p.accent ? S.accentColorStr : S.particleColorStr, 0.42, 1, scrollY);
                 S.ctx.strokeStyle = S.particleColorStr;
@@ -2124,9 +2227,11 @@
                 netParticles.length = 0;
                 orbitSystems.length = 0;
                 stars.length = 0;
+                starWarp = 0;
                 epicycles.length = 0;
                 harmonics.length = 0;
                 auroraLayers.length = 0;
+                auroraRumples.length = 0;
                 pendulums.length = 0;
                 crystals.length = 0;
                 boids.length = 0;
@@ -2237,6 +2342,7 @@
                 if (mode === "stars") {
                     const sx = clickX;
                     const sy = clickY - window.scrollY;
+                    starWarp = Math.min(1, starWarp + 0.55);
                     for (let i = 0; i < stars.length; i++) {
                         const star = stars[i];
                         const dx = star.sx - sx;
@@ -2244,9 +2350,7 @@
                         const distSq = dx * dx + dy * dy;
                         if (distSq < radius * radius) {
                             const force = 1 - Math.sqrt(Math.max(distSq, 0.01)) / radius;
-                            star.z = Math.max(0.05, star.z - (0.18 + force * 0.5) * (0.4 + rng.next()));
-                            star.hot = true;
-                        } else if (rng.next() < 0.1) {
+                            star.boost = Math.min(1.6, (star.boost || 0) + 0.35 + force * 0.7);
                             star.hot = true;
                         }
                     }
@@ -2256,11 +2360,7 @@
                     for (let i = 0; i < epicycles.length; i++) {
                         blastItem(epicycles[i], (sys, force) => {
                             for (let a = 0; a < sys.arms.length; a++) {
-                                sys.arms[a].p += (rng.next() - 0.5) * 1.8 * force;
-                                sys.arms[a].w += (rng.next() - 0.5) * 0.012 * force;
-                            }
-                            if (force > 0.25) {
-                                sys.path.length = 0;
+                                sys.arms[a].w += (rng.next() - 0.5) * 0.04 * force;
                             }
                         });
                     }
@@ -2268,22 +2368,49 @@
                 }
                 if (mode === "harmonograph") {
                     for (let i = 0; i < harmonics.length; i++) {
-                        blastItem(harmonics[i], (h, force) => {
-                            h.t = Math.max(0, h.t * (1 - 0.9 * force));
-                            h.kick = Math.min(0.6, (h.kick || 0) + 0.18 + force * 0.4);
-                        });
+                        const h = harmonics[i];
+                        const dx = h.x - clickX;
+                        const dy = h.y - clickY;
+                        const distSq = dx * dx + dy * dy;
+                        if (distSq >= radius * radius || distSq <= 0.01) {
+                            continue;
+                        }
+                        const dist = Math.sqrt(distSq);
+                        const force = 1 - dist / radius;
+                        h.unwind = Math.min(1, (h.unwind || 0) + 0.35 + force * 0.65);
+                        h.kick = Math.min(0.28, (h.kick || 0) + 0.03 + force * 0.1);
                     }
                     return true;
                 }
                 if (mode === "aurora") {
-                    const ny = (clickY - window.scrollY) / Math.max(S.height, 1);
-                    for (let i = 0; i < auroraLayers.length; i++) {
-                        const layer = auroraLayers[i];
-                        const near = 1 - Math.min(1, Math.abs((0.18 + layer.y * 0.62) - ny) * 2.2);
-                        const amp = 0.45 + near * 2.2;
-                        layer.p1 += (rng.next() - 0.5) * amp;
-                        layer.p2 += (rng.next() - 0.5) * amp;
+                    const sx = clickX;
+                    const sy = clickY - window.scrollY;
+                    const sign = rng.next() < 0.5 ? -1 : 1;
+                    if (auroraRumples.length > 10) {
+                        auroraRumples.splice(0, auroraRumples.length - 10);
                     }
+                    auroraRumples.push({
+                        x: sx,
+                        y: sy,
+                        amp: (70 + rng.next() * 50) * sign,
+                        sigma: 55 + rng.next() * 35,
+                        freq: 0.028 + rng.next() * 0.03,
+                        phase: rng.next() * Math.PI * 2,
+                        w: 0.07 + rng.next() * 0.1,
+                        life: 1,
+                        grow: 0,
+                    });
+                    auroraRumples.push({
+                        x: sx + (rng.next() - 0.5) * 28,
+                        y: sy + (rng.next() - 0.5) * 18,
+                        amp: (28 + rng.next() * 22) * -sign,
+                        sigma: 22 + rng.next() * 16,
+                        freq: 0.07 + rng.next() * 0.06,
+                        phase: rng.next() * Math.PI * 2,
+                        w: 0.12 + rng.next() * 0.16,
+                        life: 1,
+                        grow: 0,
+                    });
                     return true;
                 }
                 if (mode === "pendulum") {
@@ -2342,24 +2469,6 @@
                     return true;
                 }
                 if (mode === "rain") {
-                    const sx = clickX;
-                    const sy = clickY - window.scrollY;
-                    const row = Math.floor(sy / Math.max(rainCell, 1));
-                    for (let i = 0; i < rainCols.length; i++) {
-                        const col = rainCols[i];
-                        const dx = Math.abs(col.x - sx);
-                        if (dx > 150) {
-                            continue;
-                        }
-                        const force = 1 - Math.min(1, dx / 150);
-                        col.wait = 0;
-                        col.speed = Math.min(0.55, col.speed + 0.08 + force * 0.18);
-                        col.head = row - 1;
-                        const burst = 3 + ((rng.next() * 5 * force) | 0);
-                        for (let b = 0; b < burst; b++) {
-                            rainStamp(col, row + b - 1, 1);
-                        }
-                    }
                     return true;
                 }
                 if (mode === "life") {
