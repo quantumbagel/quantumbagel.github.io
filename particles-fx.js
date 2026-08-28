@@ -16,7 +16,10 @@
         const boids = [];
         const fieldParticles = [];
         const rainCols = [];
+        let rainRows = 0;
+        let rainCell = 15;
         const PATH_CAP = 360;
+        let quietSpawn = false;
         const netGrid = {
             cellSize: 88,
             cols: 1,
@@ -190,7 +193,7 @@
             const area = S.width * S.docHeight;
             const mobile = S.width < S.MOBILE_BREAKPOINT ? 0.5 : 1;
             const density = 0.00017 * S.params.network.density * (S.reducedMotion ? 0.38 : 1) * mobile;
-            return Math.min(1100, Math.max(S.reducedMotion ? 90 : 160, Math.floor(area * density)));
+            return Math.min(1600, Math.max(S.reducedMotion ? 40 : 70, Math.floor(area * density)));
         };
 
         class NetParticle {
@@ -220,7 +223,7 @@
         const initNetwork = () => {
             netParticles.length = 0;
             const count = getNetworkCount();
-            const fadeIn = !S.reducedMotion;
+            const fadeIn = !quietSpawn && !S.reducedMotion;
             for (let i = 0; i < count; i++) {
                 netParticles.push(new NetParticle(i, fadeIn));
             }
@@ -296,11 +299,11 @@
             const densityMul = S.params.orbits.density;
             if (S.width < S.MOBILE_BREAKPOINT) {
                 const perView = S.reducedMotion ? 5 : 8;
-                return Math.min(72, Math.max(perView, Math.round(perView * pages * densityMul)));
+                return Math.min(96, Math.max(2, Math.round(perView * pages * densityMul)));
             }
             const area = S.width * S.docHeight;
-            const density = 0.000042 * (S.reducedMotion ? 0.45 : 1) * densityMul;
-            return Math.min(130, Math.max(S.reducedMotion ? 12 : 24, Math.floor(area * density)));
+            const density = 0.000032 * (S.reducedMotion ? 0.45 : 1) * densityMul;
+            return Math.min(220, Math.max(S.reducedMotion ? 6 : 10, Math.floor(area * density)));
         };
 
         const projectOrbitPoint = (px, py, pz, ox, oy) => {
@@ -396,7 +399,7 @@
         const initOrbits = () => {
             orbitSystems.length = 0;
             const count = getOrbitCount();
-            const fadeIn = !S.reducedMotion;
+            const fadeIn = !quietSpawn && !S.reducedMotion;
             for (let i = 0; i < count; i++) {
                 orbitSystems.push(new OrbitSystem(i, fadeIn));
             }
@@ -725,7 +728,7 @@
             }
             const mobile = S.width < S.MOBILE_BREAKPOINT ? 0.55 : 1;
             const n = Math.floor(520 * S.params.stars.density * mobile * (S.reducedMotion ? 0.4 : 1));
-            return Math.min(900, Math.max(S.reducedMotion ? 110 : 240, n));
+            return Math.min(1200, Math.max(S.reducedMotion ? 50 : 90, n));
         };
 
         const resetStar = (star, rng, fromFar) => {
@@ -835,17 +838,18 @@
             const pages = Math.max(1, S.docHeight / Math.max(S.height, 1));
             const mobile = S.width < S.MOBILE_BREAKPOINT ? 0.65 : 1;
             const n = Math.round(perView * pages * (densityMul || 1) * mobile * (S.reducedMotion ? 0.5 : 1));
-            return Math.min(maxTotal, Math.max(S.reducedMotion ? Math.max(2, (perView * 0.5) | 0) : perView, n));
+            const minN = Math.max(1, Math.round(perView * (S.reducedMotion ? 0.2 : 0.28)));
+            return Math.min(maxTotal, Math.max(minN, n));
         };
 
-        const getEpicycleCount = () => pagesCount(12, 160, S.params.epicycles.density);
-        const getHarmonicCount = () => pagesCount(12, 140, S.params.harmonograph.density);
-        const getPendulumCount = () => pagesCount(11, 120, S.params.pendulum.density);
-        const getCrystalCount = () => pagesCount(14, 150, S.params.crystal.density);
-        const getFlockCount = () => pagesCount(110, 900, S.params.flock.density);
-        const getFieldCount = () => pagesCount(180, 1400, S.params.field.density);
-        const getAuroraCount = () => Math.min(22, Math.max(8, Math.round(12 * S.params.aurora.density * (S.reducedMotion ? 0.5 : 1))));
-        const getRainCount = () => Math.min(170, Math.max(28, Math.round((S.width / 12) * S.params.rain.density * (S.width < S.MOBILE_BREAKPOINT ? 0.7 : 1))));
+        const getEpicycleCount = () => pagesCount(12, 240, S.params.epicycles.density);
+        const getHarmonicCount = () => pagesCount(12, 220, S.params.harmonograph.density);
+        const getPendulumCount = () => pagesCount(11, 200, S.params.pendulum.density);
+        const getCrystalCount = () => pagesCount(14, 240, S.params.crystal.density);
+        const getFlockCount = () => pagesCount(110, 1400, S.params.flock.density);
+        const getFieldCount = () => pagesCount(180, 2200, S.params.field.density);
+        const getAuroraCount = () => Math.min(28, Math.max(3, Math.round(10 * S.params.aurora.density * (S.reducedMotion ? 0.5 : 1))));
+        const getRainCount = () => Math.min(280, Math.max(10, Math.round((S.width / 12) * S.params.rain.density * (S.width < S.MOBILE_BREAKPOINT ? 0.7 : 1))));
 
         const scaleDocY = (items, previousDocHeight) => {
             if (previousDocHeight > 0 && Math.abs(S.docHeight - previousDocHeight) > 30) {
@@ -994,7 +998,8 @@
                     wy: 0.013 + rng.next() * 0.022,
                     px: rng.next() * Math.PI * 2,
                     py: rng.next() * Math.PI * 2,
-                    t: rng.next() * 40,
+                    t: rng.next() * 18,
+                    kick: 0,
                     path: [],
                     accent: rng.next() < 0.45,
                     dragging: false,
@@ -1034,21 +1039,19 @@
                 if (vis < -140 || vis > viewHeight + 140) {
                     if (animate) {
                         h.t += speed * frame;
+                        h.kick *= 0.985;
                     }
                     continue;
                 }
                 if (animate) {
                     h.t += speed * frame;
-                    const damp = Math.exp(-decay * h.t);
-                    if (damp < 0.08) {
-                        h.t = 0;
-                        h.path.length = 0;
-                        h.px = Math.random() * Math.PI * 2;
-                        h.py = Math.random() * Math.PI * 2;
+                    h.kick *= 0.985;
+                    const amp = Math.min(1.3, Math.exp(-decay * h.t) + (h.kick || 0));
+                    const x = h.x + Math.sin(h.wx * h.t + h.px) * h.ax * amp;
+                    const y = h.y + Math.sin(h.wy * h.t + h.py) * h.ay * amp;
+                    if (amp > 0.035) {
+                        pushPath(h.path, x, y, PATH_CAP);
                     }
-                    const x = h.x + Math.sin(h.wx * h.t + h.px) * h.ax * Math.max(damp, 0.08);
-                    const y = h.y + Math.sin(h.wy * h.t + h.py) * h.ay * Math.max(damp, 0.08);
-                    pushPath(h.path, x, y, PATH_CAP);
                 }
                 drawFadePath(h.path, h.accent ? S.accentColorStr : S.particleColorStr, 0.5, 1.05, scrollY);
             }
@@ -1658,63 +1661,352 @@
             }
         };
 
-        const RAIN_GLYPHS = "01.-/\\|";
+        const RAIN_GLYPHS = "0123456789ABCDEF<>/\\|=+*#$%-.:";
+        const rainGlyph = (rng) => RAIN_GLYPHS.charAt(((rng ? rng.next() : Math.random()) * RAIN_GLYPHS.length) | 0);
+
+        const rainStamp = (col, row, life) => {
+            if (row < 0 || row >= col.glyphs.length) {
+                return;
+            }
+            col.glyphs[row] = rainGlyph();
+            col.life[row] = life == null ? 1 : life;
+        };
+
         const initRain = () => {
             rainCols.length = 0;
             const rng = S.createRng();
+            rainCell = 15;
+            rainRows = Math.max(10, Math.ceil(S.height / rainCell) + 1);
             const n = getRainCount();
-            const gap = Math.max(10, S.width / n);
+            const gap = Math.max(rainCell, S.width / Math.max(n, 1));
             for (let i = 0; i < n; i++) {
-                const len = 12 + ((rng.next() * 14) | 0);
-                const glyphs = [];
-                for (let g = 0; g < len; g++) {
-                    glyphs.push(RAIN_GLYPHS.charAt((rng.next() * RAIN_GLYPHS.length) | 0));
+                const glyphs = new Array(rainRows);
+                const life = new Float32Array(rainRows);
+                for (let r = 0; r < rainRows; r++) {
+                    glyphs[r] = rainGlyph(rng);
+                    life[r] = 0;
+                }
+                const head = rng.next() * (rainRows + 8) - 4;
+                const trail = 7 + ((rng.next() * 10) | 0);
+                const headRow = Math.floor(head);
+                for (let t = 0; t < trail; t++) {
+                    const row = headRow - t;
+                    if (row >= 0 && row < rainRows) {
+                        glyphs[row] = rainGlyph(rng);
+                        life[row] = Math.max(0.08, 1 - t / trail);
+                    }
                 }
                 rainCols.push({
-                    x: (i + 0.5) * gap + (rng.next() - 0.5) * 6,
-                    y: rng.next() * S.height,
-                    speed: 1.1 + rng.next() * 1.8,
+                    x: (i + 0.5) * gap,
                     glyphs,
-                    head: rng.next() < 0.2,
+                    life,
+                    head,
+                    speed: 0.09 + rng.next() * 0.16,
+                    accent: rng.next() < 0.28,
+                    wait: 0,
                 });
             }
         };
 
         const adjustRain = () => {
-            if (Math.abs(rainCols.length - getRainCount()) > 2) {
+            const rows = Math.max(10, Math.ceil(S.height / rainCell) + 1);
+            if (rainCols.length !== getRainCount() || rainRows !== rows) {
                 initRain();
             }
         };
 
         const tickRain = (frame, animate) => {
-            const speed = S.params.rain.speed;
-            const lenMul = S.params.rain.length;
-            S.ctx.font = "12px ui-monospace, SFMono-Regular, Menlo, monospace";
+            const speedMul = S.params.rain.speed;
+            const lenMul = Math.max(0.35, S.params.rain.length);
+            const cell = rainCell;
+            const rows = rainRows;
+            const decay = Math.pow(0.84, frame / lenMul);
+            S.ctx.font = "13px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace";
             S.ctx.textAlign = "center";
             S.ctx.textBaseline = "top";
             for (let i = 0; i < rainCols.length; i++) {
                 const col = rainCols[i];
                 if (animate) {
-                    col.y += col.speed * speed * frame * 1.8;
+                    if (col.wait > 0) {
+                        col.wait -= frame;
+                    } else {
+                        const prev = col.head;
+                        col.head += col.speed * speedMul * frame * 1.25;
+                        const from = Math.floor(prev);
+                        const to = Math.floor(col.head);
+                        if (to > from) {
+                            for (let r = from + 1; r <= to; r++) {
+                                rainStamp(col, r, 1);
+                            }
+                        }
+                        if (col.head >= rows) {
+                            col.head = -4 - Math.random() * 12;
+                            col.wait = 4 + Math.random() * 18;
+                            col.speed = 0.09 + Math.random() * 0.16;
+                        }
+                    }
+                    const flicker = 0.035 * frame;
+                    for (let r = 0; r < rows; r++) {
+                        const a = col.life[r];
+                        if (a <= 0) {
+                            continue;
+                        }
+                        const next = a * decay;
+                        col.life[r] = next < 0.03 ? 0 : next;
+                        if (next > 0.08 && Math.random() < flicker) {
+                            col.glyphs[r] = rainGlyph();
+                        }
+                    }
                 }
-                const step = 14 * lenMul;
-                const total = col.glyphs.length * step;
-                if (col.y - total > S.height) {
-                    col.y = -(Math.random() * 80 + 20);
-                }
-                for (let g = 0; g < col.glyphs.length; g++) {
-                    const gy = col.y - g * step;
-                    if (gy < -16 || gy > S.height + 16) {
+                const headRow = Math.floor(col.head);
+                for (let r = 0; r < rows; r++) {
+                    const a = col.life[r];
+                    if (a <= 0) {
                         continue;
                     }
-                    const head = g === 0;
-                    S.ctx.globalAlpha = head ? 0.85 : Math.max(0.12, 0.55 - g * 0.06);
-                    S.ctx.fillStyle = head || col.head ? S.accentColorStr : S.particleColorStr;
-                    S.ctx.fillText(col.glyphs[g], col.x, gy);
+                    const gy = r * cell;
+                    if (gy > S.height + 4) {
+                        continue;
+                    }
+                    const isHead = r === headRow && col.wait <= 0;
+                    S.ctx.globalAlpha = isHead ? Math.min(0.92, 0.55 + a * 0.4) : 0.12 + a * 0.5;
+                    S.ctx.fillStyle = isHead || (col.accent && a > 0.72) ? S.accentColorStr : S.particleColorStr;
+                    S.ctx.fillText(col.glyphs[r], col.x, gy);
                 }
             }
         };
 
+        const LIFE_GLIDER = [
+            [0, 1],
+            [1, 2],
+            [2, 0],
+            [2, 1],
+            [2, 2],
+        ];
+        const LIFE_RPENT = [
+            [1, 0],
+            [2, 0],
+            [0, 1],
+            [1, 1],
+            [1, 2],
+        ];
+        const LIFE_LWSS = [
+            [0, 1],
+            [0, 3],
+            [1, 0],
+            [2, 0],
+            [3, 0],
+            [3, 3],
+            [4, 0],
+            [4, 1],
+            [4, 2],
+        ];
+        const life = {
+            cols: 0,
+            rows: 0,
+            cur: null,
+            next: null,
+            age: null,
+            acc: 0,
+        };
+
+        const lifeCellSize = () => {
+            const size = (S.params.life && S.params.life.size) || 1;
+            return Math.max(5, Math.round(10 / Math.max(0.45, size)));
+        };
+
+        const lifeIndex = (x, y) => {
+            const cols = life.cols;
+            const rows = life.rows;
+            let gx = x % cols;
+            let gy = y % rows;
+            if (gx < 0) gx += cols;
+            if (gy < 0) gy += rows;
+            return gy * cols + gx;
+        };
+
+        const lifeSet = (x, y, alive) => {
+            if (!life.cur) {
+                return;
+            }
+            const i = lifeIndex(x, y);
+            life.cur[i] = alive ? 1 : 0;
+            if (alive) {
+                life.age[i] = 1;
+            }
+        };
+
+        const stampLife = (pattern, ox, oy, rot) => {
+            for (let i = 0; i < pattern.length; i++) {
+                let px = pattern[i][0];
+                let py = pattern[i][1];
+                if (rot === 1) {
+                    const t = px;
+                    px = -py;
+                    py = t;
+                } else if (rot === 2) {
+                    px = -px;
+                    py = -py;
+                } else if (rot === 3) {
+                    const t = px;
+                    px = py;
+                    py = -t;
+                }
+                lifeSet(ox + px, oy + py, true);
+            }
+        };
+
+        const seedLife = () => {
+            if (!life.cur) {
+                return;
+            }
+            const rng = S.createRng();
+            const n = life.cols * life.rows;
+            const fill = Math.min(0.32, 0.11 * S.params.life.density);
+            life.cur.fill(0);
+            life.age.fill(0);
+            for (let i = 0; i < n; i++) {
+                if (rng.next() < fill) {
+                    life.cur[i] = 1;
+                    life.age[i] = 1 + ((rng.next() * 10) | 0);
+                }
+            }
+            const stamps = 6 + ((rng.next() * 8 * S.params.life.density) | 0);
+            for (let s = 0; s < stamps; s++) {
+                const ox = (rng.next() * life.cols) | 0;
+                const oy = (rng.next() * life.rows) | 0;
+                const rot = (rng.next() * 4) | 0;
+                const pick = rng.next();
+                if (pick < 0.4) {
+                    stampLife(LIFE_GLIDER, ox, oy, rot);
+                } else if (pick < 0.75) {
+                    stampLife(LIFE_RPENT, ox, oy, rot);
+                } else {
+                    stampLife(LIFE_LWSS, ox, oy, rot);
+                }
+            }
+            life.acc = 0;
+        };
+
+        const rebuildLife = (reseed) => {
+            const cell = lifeCellSize();
+            const cols = Math.max(24, Math.ceil(S.width / cell));
+            const rows = Math.max(16, Math.ceil(S.height / cell));
+            if (!reseed && life.cur && life.cols === cols && life.rows === rows) {
+                return;
+            }
+            life.cols = cols;
+            life.rows = rows;
+            const n = cols * rows;
+            life.cur = new Uint8Array(n);
+            life.next = new Uint8Array(n);
+            life.age = new Uint8Array(n);
+            seedLife();
+        };
+
+        const initLife = () => {
+            rebuildLife(true);
+        };
+
+        const adjustLife = () => {
+            rebuildLife(false);
+        };
+
+        const stepLife = () => {
+            const cols = life.cols;
+            const rows = life.rows;
+            const cur = life.cur;
+            const next = life.next;
+            const age = life.age;
+            for (let y = 0; y < rows; y++) {
+                const y0 = y === 0 ? rows - 1 : y - 1;
+                const y2 = y === rows - 1 ? 0 : y + 1;
+                const r0 = y0 * cols;
+                const r1 = y * cols;
+                const r2 = y2 * cols;
+                for (let x = 0; x < cols; x++) {
+                    const x0 = x === 0 ? cols - 1 : x - 1;
+                    const x2 = x === cols - 1 ? 0 : x + 1;
+                    const neighbors =
+                        cur[r0 + x0] +
+                        cur[r0 + x] +
+                        cur[r0 + x2] +
+                        cur[r1 + x0] +
+                        cur[r1 + x2] +
+                        cur[r2 + x0] +
+                        cur[r2 + x] +
+                        cur[r2 + x2];
+                    const i = r1 + x;
+                    const alive = cur[i];
+                    const live = alive ? neighbors === 2 || neighbors === 3 : neighbors === 3;
+                    next[i] = live ? 1 : 0;
+                    if (live) {
+                        age[i] = alive ? (age[i] < 254 ? age[i] + 1 : 254) : 1;
+                    } else {
+                        age[i] = 0;
+                    }
+                }
+            }
+            life.cur = next;
+            life.next = cur;
+        };
+
+        const stampLifeAt = (px, py, rng) => {
+            if (!life.cur || life.cols < 2) {
+                return;
+            }
+            const gx = Math.round((px / Math.max(S.width, 1)) * life.cols);
+            const gy = Math.round((py / Math.max(S.height, 1)) * life.rows);
+            const rot = (rng.next() * 4) | 0;
+            stampLife(LIFE_RPENT, gx, gy, rot);
+            stampLife(LIFE_GLIDER, gx + 4, gy - 2, rot);
+            const soup = 8 + ((rng.next() * 10) | 0);
+            for (let i = 0; i < soup; i++) {
+                lifeSet(gx + ((rng.next() * 7) | 0) - 3, gy + ((rng.next() * 7) | 0) - 3, true);
+            }
+            if (rng.next() < 0.45) {
+                stampLife(LIFE_LWSS, gx - 6, gy + 3, (rot + 1) & 3);
+            }
+        };
+
+        const tickLife = (frame, animate) => {
+            if (!life.cur) {
+                initLife();
+            }
+            if (animate) {
+                life.acc += frame * S.params.life.speed;
+                while (life.acc >= 7.5) {
+                    life.acc -= 7.5;
+                    stepLife();
+                }
+            }
+            const cols = life.cols;
+            const rows = life.rows;
+            const cur = life.cur;
+            const age = life.age;
+            const cw = S.width / cols;
+            const ch = S.height / rows;
+            const pad = Math.max(1, Math.min(cw, ch) * 0.12);
+            for (let y = 0; y < rows; y++) {
+                const row = y * cols;
+                const y0 = (y * ch + pad) | 0;
+                const y1 = ((y + 1) * ch - pad) | 0;
+                const h = Math.max(1, y1 - y0);
+                for (let x = 0; x < cols; x++) {
+                    const i = row + x;
+                    if (!cur[i]) {
+                        continue;
+                    }
+                    const x0 = (x * cw + pad) | 0;
+                    const x1 = ((x + 1) * cw - pad) | 0;
+                    const w = Math.max(1, x1 - x0);
+                    const young = age[i] < 6;
+                    S.ctx.globalAlpha = young ? 0.72 : 0.28 + Math.min(0.34, age[i] * 0.012);
+                    S.ctx.fillStyle = young ? S.accentColorStr : S.particleColorStr;
+                    S.ctx.fillRect(x0, y0, w, h);
+                }
+            }
+        };
 
         return {
             clear() {
@@ -1729,19 +2021,31 @@
                 boids.length = 0;
                 fieldParticles.length = 0;
                 rainCols.length = 0;
+                life.cur = null;
+                life.next = null;
+                life.age = null;
+                life.cols = 0;
+                life.rows = 0;
+                life.acc = 0;
             },
-            init(mode) {
-                if (mode === "network") initNetwork();
-                else if (mode === "orbits") initOrbits();
-                else if (mode === "stars") initStars();
-                else if (mode === "epicycles") initEpicycles();
-                else if (mode === "harmonograph") initHarmonics();
-                else if (mode === "aurora") initAurora();
-                else if (mode === "pendulum") initPendulums();
-                else if (mode === "crystal") initCrystals();
-                else if (mode === "flock") initFlock();
-                else if (mode === "field") initField();
-                else if (mode === "rain") initRain();
+            init(mode, opts) {
+                quietSpawn = !!(opts && opts.quiet);
+                try {
+                    if (mode === "network") initNetwork();
+                    else if (mode === "orbits") initOrbits();
+                    else if (mode === "stars") initStars();
+                    else if (mode === "epicycles") initEpicycles();
+                    else if (mode === "harmonograph") initHarmonics();
+                    else if (mode === "aurora") initAurora();
+                    else if (mode === "pendulum") initPendulums();
+                    else if (mode === "crystal") initCrystals();
+                    else if (mode === "flock") initFlock();
+                    else if (mode === "field") initField();
+                    else if (mode === "rain") initRain();
+                    else if (mode === "life") initLife();
+                } finally {
+                    quietSpawn = false;
+                }
             },
             adjust(mode, previousWidth, previousDocHeight) {
                 if (mode === "network") adjustNetwork(previousWidth, previousDocHeight);
@@ -1755,6 +2059,7 @@
                 else if (mode === "flock") adjustFlock(previousWidth, previousDocHeight);
                 else if (mode === "field") adjustField(previousWidth, previousDocHeight);
                 else if (mode === "rain") adjustRain();
+                else if (mode === "life") adjustLife();
             },
             tick(mode, frame, damp, scrollY, viewHeight, mouseAbsX, mouseAbsY, mouseActive, animate) {
                 if (mode === "network") tickNetwork(frame, damp, scrollY, viewHeight, mouseAbsX, mouseAbsY, mouseActive, animate);
@@ -1768,9 +2073,10 @@
                 else if (mode === "flock") tickFlock(frame, scrollY, viewHeight, mouseAbsX, mouseAbsY, mouseActive, animate);
                 else if (mode === "field") tickField(frame, scrollY, viewHeight, animate);
                 else if (mode === "rain") tickRain(frame, animate);
+                else if (mode === "life") tickLife(frame, animate);
             },
             hitTest(mode, absX, absY) {
-                if (mode === "stars" || mode === "aurora" || mode === "rain" || mode === "field") {
+                if (mode === "stars" || mode === "aurora" || mode === "rain" || mode === "field" || mode === "life") {
                     return null;
                 }
                 if (mode === "network") {
@@ -1850,12 +2156,8 @@
                 if (mode === "harmonograph") {
                     for (let i = 0; i < harmonics.length; i++) {
                         blastItem(harmonics[i], (h, force) => {
-                            h.t = 0;
-                            h.path.length = 0;
-                            h.wx *= 0.7 + rng.next() * 0.6 * force;
-                            h.wy *= 0.7 + rng.next() * 0.6 * force;
-                            h.px += (rng.next() - 0.5) * force * 1.2;
-                            h.py += (rng.next() - 0.5) * force * 1.2;
+                            h.t = Math.max(0, h.t * (1 - 0.9 * force));
+                            h.kick = Math.min(0.6, (h.kick || 0) + 0.18 + force * 0.4);
                         });
                     }
                     return true;
@@ -1922,16 +2224,26 @@
                 if (mode === "rain") {
                     const sx = clickX;
                     const sy = clickY - window.scrollY;
+                    const row = Math.floor(sy / Math.max(rainCell, 1));
                     for (let i = 0; i < rainCols.length; i++) {
                         const col = rainCols[i];
                         const dx = Math.abs(col.x - sx);
-                        const dy = Math.abs(col.y - sy);
-                        if (dx < 110 || (dx < 160 && dy < 220)) {
-                            const force = 1 - Math.min(1, dx / 160);
-                            col.speed += (1.2 + rng.next() * 2.4) * force;
-                            col.y += rng.next() * 55 * force;
+                        if (dx > 150) {
+                            continue;
+                        }
+                        const force = 1 - Math.min(1, dx / 150);
+                        col.wait = 0;
+                        col.speed = Math.min(0.55, col.speed + 0.08 + force * 0.18);
+                        col.head = row - 1;
+                        const burst = 3 + ((rng.next() * 5 * force) | 0);
+                        for (let b = 0; b < burst; b++) {
+                            rainStamp(col, row + b - 1, 1);
                         }
                     }
+                    return true;
+                }
+                if (mode === "life") {
+                    stampLifeAt(clickX, clickY - window.scrollY, rng);
                     return true;
                 }
                 return false;

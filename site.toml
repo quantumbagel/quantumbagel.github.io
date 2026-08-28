@@ -31,7 +31,7 @@ technologies = "Technologies"
 [contact]
 form_action = "https://formspree.io/f/moqgwdop"
 submit_label = "Send Message"
-intro = "I'm looking for internships and research roles in embedded systems, backend infrastructure, and anything where messy data has to become a functional system. Use the form below, or reach me on GitHub, LinkedIn, or Discord."
+intro = "I'm looking for internships and research roles in embedded systems, backend infrastructure, and really anything that requires problem solving. Use the form below, or reach me on GitHub, LinkedIn, or Discord."
 
 [footer]
 text = "Made with <3 by @quantumbagel, not AI."
@@ -39,7 +39,7 @@ text = "Made with <3 by @quantumbagel, not AI."
 [content]
 about = [
   "Hello! I'm <strong class='text-gray-800 dark:text-white'>Julian Reder</strong>, a Computer Engineering and Statistics student at North Carolina State University. I develop research software for AERPAW, NC State's aerial wireless testbed (aircraft tracking, drone camera systems, and flight-control libraries), and recently finished a technical internship with the Bell, Bell & Cronlund Group at Merrill Lynch, working on an internal calculations platform that supports $500M+ in assets under management.",
-  "I like making hardware, radio, and backend services agree with each other. If you want to talk internships, research, or any of the projects below, my contact form is at the bottom."
+  "I like making difference things agree with each other. If you want to talk internships, research, or any of the projects below, my contact form is at the bottom. This website also has some pretty fun simulations you can play with, just click the 'FX' button in the top row to customize and change it!"
 ]
 
 taglines = [

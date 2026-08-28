@@ -36,6 +36,7 @@
         "flock",
         "field",
         "rain",
+        "life",
     ];
     const MODE_LABELS = {
         molecules: "Molecules",
@@ -50,6 +51,7 @@
         flock: "Flock",
         field: "Field",
         rain: "Rain",
+        life: "Life",
     };
     const MODE_HINTS = {
         molecules: "Drag molecules anywhere, and click empty space to scatter them.",
@@ -57,13 +59,14 @@
         orbits: "Would be a real shame if something happened in 22 minutes.",
         stars: "*copyrighted music plays*",
         epicycles: "Fourier wheels drawing a path",
-        harmonograph: "Traces that slowly decay. Click to retune.",
+        harmonograph: "Traces that slowly decay. Click to add force.",
         aurora: "Move the pointer to warp the curtain. Click to rumple it.",
         pendulum: "Just some double pendulums. Click to yeet.",
         crystal: "3D lattices. You can yeet them.",
         flock: "Peer pressure be like",
         field: "Particles on a field. Click to blow wind.",
         rain: "l33t hack3r",
+        life: "Conway's Game of Life, my favorite simulation :D",
     };
     const DEFAULT_PARAMS = {
         frost: 0.7,
@@ -79,6 +82,7 @@
         flock: { density: 1, speed: 1, cohesion: 1 },
         field: { density: 1, speed: 1, swirl: 1 },
         rain: { density: 1, speed: 1, length: 1 },
+        life: { density: 1, speed: 1, size: 1 },
     };
     const PARAM_FIELDS = {
         molecules: [
@@ -142,6 +146,11 @@
             { key: "density", label: "Density", min: 0.4, max: 2.4, step: 0.05 },
             { key: "speed", label: "Speed", min: 0.3, max: 2.4, step: 0.05 },
             { key: "length", label: "Length", min: 0.45, max: 2, step: 0.05 },
+        ],
+        life: [
+            { key: "density", label: "Density", min: 0.4, max: 2.4, step: 0.05 },
+            { key: "speed", label: "Speed", min: 0.2, max: 2.6, step: 0.05 },
+            { key: "size", label: "Size", min: 0.55, max: 1.8, step: 0.05 },
         ],
     };
 
@@ -1141,12 +1150,12 @@
             const densityMul = params.molecules.density;
             if (width < MOBILE_BREAKPOINT) {
                 const perView = reducedMotion ? 6 : 12;
-                return Math.min(320, Math.max(perView, Math.round(perView * pages * densityMul)));
+                return Math.min(360, Math.max(3, Math.round(perView * pages * densityMul)));
             }
             const area = width * docHeight;
             const densityFactor = reducedMotion ? 0.45 : 1;
-            const density = 0.000068 * densityFactor * densityMul;
-            return Math.min(320, Math.max(reducedMotion ? 20 : 36, Math.floor(area * density)));
+            const density = 0.00005 * densityFactor * densityMul;
+            return Math.min(420, Math.max(reducedMotion ? 8 : 14, Math.floor(area * density)));
         };
 
         class Molecule {
@@ -1570,10 +1579,10 @@
             }
         };
 
-        const initMolecules = () => {
+        const initMolecules = (opts) => {
             molecules.length = 0;
             const targetCount = getTargetCount();
-            const fadeIn = !reducedMotion;
+            const fadeIn = !(opts && opts.quiet) && !reducedMotion;
             for (let i = 0; i < targetCount; i++) {
                 const mol = new Molecule(i, fadeIn);
                 findOpenPosition(mol, createRng());
@@ -1922,19 +1931,28 @@
             }
         };
 
-        const applyLiveParams = () => {
+        const applyLiveParams = (changedKey) => {
             applyFrost();
             if (!enabled) {
                 return;
             }
+            const rebuild = changedKey === "density" || (mode === "life" && changedKey === "size");
             if (mode === "molecules") {
                 for (let i = 0; i < molecules.length; i++) {
                     molecules[i].applySizeAndSpin();
                 }
-                adjustMolecules(width, docHeight);
-            } else {
-                fx.adjust(mode, width, docHeight);
+                if (rebuild) {
+                    initMolecules({ quiet: true });
+                } else {
+                    adjustMolecules(width, docHeight);
+                }
+                return;
             }
+            if (rebuild) {
+                fx.init(mode, { quiet: true });
+                return;
+            }
+            fx.adjust(mode, width, docHeight);
         };
 
         const formatParam = (value) => {
@@ -2030,7 +2048,7 @@
                     readout.textContent = formatParam(value);
                 }
                 persistParams();
-                applyLiveParams();
+                applyLiveParams(input.dataset.key);
             });
             panelEl.addEventListener("click", (event) => {
                 event.stopPropagation();
