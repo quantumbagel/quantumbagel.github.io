@@ -6,6 +6,7 @@
     const BG_PARAMS_KEY = "particle-background-params";
     const BG_RANDOM_KEY = "particle-background-random";
     const MOBILE_BREAKPOINT = 768;
+    const REF_VIEW_AREA = 1280 * 800;
     const CANVAS_FADE_MS = 450;
     const MOUSE_RADIUS = 170;
     const BLAST_RADIUS = 420;
@@ -30,7 +31,6 @@
         "orbits",
         "stars",
         "epicycles",
-        "harmonograph",
         "aurora",
         "pendulum",
         "crystal",
@@ -45,7 +45,6 @@
         orbits: "Orbits",
         stars: "Stars",
         epicycles: "Epicycles",
-        harmonograph: "Harmonic",
         aurora: "Aurora",
         pendulum: "Pendulum",
         crystal: "Crystal",
@@ -60,7 +59,6 @@
         orbits: "Would be a real shame if something happened in 22 minutes.",
         stars: "*copyrighted music plays*",
         epicycles: "Fourier wheels drawing a path",
-        harmonograph: "Traces that slowly decay. Click to add force.",
         aurora: "Move the pointer to warp the curtain. Click to rumple it.",
         pendulum: "Just some double pendulums. Click to yeet.",
         crystal: "3D lattices. You can yeet them.",
@@ -74,84 +72,79 @@
         molecules: { density: 1, size: 1, spin: 1, mouse: 1 },
         network: { density: 1, links: 1, speed: 1, mouse: 1 },
         orbits: { density: 1, speed: 1, spread: 1 },
-        stars: { density: 1, speed: 1, streak: 0.7 },
+        stars: { density: 1, speed: 1, streak: 0.75 },
         epicycles: { density: 1, speed: 1, arms: 1 },
-        harmonograph: { density: 1, speed: 1, decay: 0.55 },
         aurora: { density: 1, speed: 1, spread: 1 },
         pendulum: { density: 1, speed: 1, energy: 1 },
         crystal: { density: 1, speed: 1, size: 1 },
         flock: { density: 1, speed: 1, cohesion: 1 },
         field: { density: 1, speed: 1, swirl: 1 },
-        rain: { density: 1, speed: 1.4, length: 1.55 },
+        rain: { density: 1, speed: 1.5, length: 1.5 },
         life: { density: 1, speed: 1, size: 1 },
     };
+    const P = (key, label, min, max) => ({ key, label, min, max, step: 0.25 });
     const PARAM_FIELDS = {
         molecules: [
-            { key: "density", label: "Density", min: 0.35, max: 4, step: 0.05 },
-            { key: "size", label: "Size", min: 0.6, max: 1.8, step: 0.05 },
-            { key: "spin", label: "Spin", min: 0, max: 2.5, step: 0.05 },
-            { key: "mouse", label: "Mouse", min: 0, max: 2, step: 0.05 },
+            P("density", "Density", 0.25, 8),
+            P("size", "Size", 0.25, 4),
+            P("spin", "Spin", 0, 4),
+            P("mouse", "Mouse", 0, 4),
         ],
         network: [
-            { key: "density", label: "Density", min: 0.4, max: 2, step: 0.05 },
-            { key: "links", label: "Links", min: 0.45, max: 2, step: 0.05 },
-            { key: "speed", label: "Speed", min: 0.3, max: 2.2, step: 0.05 },
-            { key: "mouse", label: "Mouse", min: 0, max: 2, step: 0.05 },
+            P("density", "Density", 0.25, 8),
+            P("links", "Links", 0.25, 4),
+            P("speed", "Speed", 0.25, 4),
+            P("mouse", "Mouse", 0, 4),
         ],
         orbits: [
-            { key: "density", label: "Density", min: 0.4, max: 2.4, step: 0.05 },
-            { key: "speed", label: "Speed", min: 0.15, max: 2.4, step: 0.05 },
-            { key: "spread", label: "Spread", min: 0.55, max: 2.2, step: 0.05 },
+            P("density", "Density", 0.25, 8),
+            P("speed", "Speed", 0.25, 4),
+            P("spread", "Spread", 0.25, 4),
         ],
         stars: [
-            { key: "density", label: "Density", min: 0.4, max: 2.4, step: 0.05 },
-            { key: "speed", label: "Speed", min: 0.2, max: 2.6, step: 0.05 },
-            { key: "streak", label: "Streak", min: 0, max: 1, step: 0.05 },
+            P("density", "Density", 0.25, 8),
+            P("speed", "Speed", 0.25, 4),
+            P("streak", "Streak", 0, 2),
         ],
         epicycles: [
-            { key: "density", label: "Density", min: 0.4, max: 2.2, step: 0.05 },
-            { key: "speed", label: "Speed", min: 0.2, max: 2.4, step: 0.05 },
-            { key: "arms", label: "Arms", min: 0.5, max: 1.8, step: 0.05 },
-        ],
-        harmonograph: [
-            { key: "density", label: "Density", min: 0.4, max: 2.2, step: 0.05 },
-            { key: "speed", label: "Speed", min: 0.2, max: 2.4, step: 0.05 },
-            { key: "decay", label: "Decay", min: 0.15, max: 1, step: 0.05 },
+            P("density", "Density", 0.25, 8),
+            P("speed", "Speed", 0.25, 4),
+            P("arms", "Arms", 0.25, 4),
         ],
         aurora: [
-            { key: "density", label: "Density", min: 0.4, max: 2.2, step: 0.05 },
-            { key: "speed", label: "Speed", min: 0.2, max: 2.4, step: 0.05 },
-            { key: "spread", label: "Spread", min: 0.5, max: 2, step: 0.05 },
+            P("density", "Density", 0.25, 8),
+            P("speed", "Speed", 0.25, 4),
+            P("spread", "Spread", 0.25, 4),
         ],
         pendulum: [
-            { key: "density", label: "Density", min: 0.4, max: 2.2, step: 0.05 },
-            { key: "speed", label: "Speed", min: 0.2, max: 2.4, step: 0.05 },
-            { key: "energy", label: "Energy", min: 0.4, max: 2, step: 0.05 },
+            P("density", "Density", 0.25, 8),
+            P("speed", "Speed", 0.25, 4),
+            P("energy", "Energy", 0.25, 4),
         ],
         crystal: [
-            { key: "density", label: "Density", min: 0.4, max: 2.2, step: 0.05 },
-            { key: "speed", label: "Speed", min: 0.15, max: 2.4, step: 0.05 },
-            { key: "size", label: "Size", min: 0.55, max: 1.8, step: 0.05 },
+            P("density", "Density", 0.25, 8),
+            P("speed", "Speed", 0.25, 4),
+            P("size", "Size", 0.25, 4),
         ],
         flock: [
-            { key: "density", label: "Density", min: 0.4, max: 2.4, step: 0.05 },
-            { key: "speed", label: "Speed", min: 0.3, max: 2.2, step: 0.05 },
-            { key: "cohesion", label: "Cohesion", min: 0.2, max: 2, step: 0.05 },
+            P("density", "Density", 0.25, 8),
+            P("speed", "Speed", 0.25, 4),
+            P("cohesion", "Cohesion", 0.25, 4),
         ],
         field: [
-            { key: "density", label: "Density", min: 0.4, max: 2.4, step: 0.05 },
-            { key: "speed", label: "Speed", min: 0.3, max: 2.2, step: 0.05 },
-            { key: "swirl", label: "Swirl", min: 0.2, max: 2.2, step: 0.05 },
+            P("density", "Density", 0.25, 8),
+            P("speed", "Speed", 0.25, 4),
+            P("swirl", "Swirl", 0.25, 4),
         ],
         rain: [
-            { key: "density", label: "Density", min: 0.4, max: 2.4, step: 0.05 },
-            { key: "speed", label: "Speed", min: 0.3, max: 2.4, step: 0.05 },
-            { key: "length", label: "Length", min: 0.45, max: 2, step: 0.05 },
+            P("density", "Density", 0.25, 8),
+            P("speed", "Speed", 0.25, 4),
+            P("length", "Length", 0.25, 4),
         ],
         life: [
-            { key: "density", label: "Density", min: 0.4, max: 2.4, step: 0.05 },
-            { key: "speed", label: "Speed", min: 0.2, max: 2.6, step: 0.05 },
-            { key: "size", label: "Size", min: 0.55, max: 1.8, step: 0.05 },
+            P("density", "Density", 0.25, 8),
+            P("speed", "Speed", 0.25, 4),
+            P("size", "Size", 0.25, 4),
         ],
     };
 
@@ -221,6 +214,13 @@
         return Math.min(max, Math.max(min, value));
     }
 
+    function paramIsOverCap(field, value) {
+        if (!field || typeof value !== "number" || !Number.isFinite(value)) {
+            return false;
+        }
+        return value > field.max + 1e-6 || value < field.min - 1e-6;
+    }
+
     function readStoredMode() {
         const stored = localStorage.getItem(BG_MODE_KEY);
         if (MODES.indexOf(stored) >= 0) {
@@ -259,8 +259,8 @@
             if (!raw || typeof raw !== "object") {
                 return merged;
             }
-            if (typeof raw.frost === "number") {
-                merged.frost = clamp(raw.frost, 0, 1);
+            if (typeof raw.frost === "number" && Number.isFinite(raw.frost)) {
+                merged.frost = raw.frost;
             }
             for (let i = 0; i < MODES.length; i++) {
                 const key = MODES[i];
@@ -271,8 +271,8 @@
                 const fields = PARAM_FIELDS[key];
                 for (let f = 0; f < fields.length; f++) {
                     const field = fields[f];
-                    if (typeof src[field.key] === "number") {
-                        merged[key][field.key] = clamp(src[field.key], field.min, field.max);
+                    if (typeof src[field.key] === "number" && Number.isFinite(src[field.key])) {
+                        merged[key][field.key] = src[field.key];
                     }
                 }
             }
@@ -1161,6 +1161,21 @@
                 blast() { return false; },
             };
 
+        const viewAreaScale = () => (Math.max(width, 1) * Math.max(height, 1)) / REF_VIEW_AREA;
+        const COUNT_CAP = 3000;
+
+        const clampCount = (n, minN, maxN) => {
+            if (!Number.isFinite(n)) {
+                return minN;
+            }
+            const v = Math.round(n);
+            if (v < minN) {
+                return minN;
+            }
+            const cap = maxN == null ? COUNT_CAP : maxN;
+            return v > cap ? cap : v;
+        };
+
         const getTargetCount = () => {
             if (!enabled) {
                 return 0;
@@ -1168,14 +1183,15 @@
             const viewH = Math.max(height, 1);
             const pages = Math.max(1, docHeight / viewH);
             const densityMul = params.molecules.density;
+            const areaScale = viewAreaScale();
             if (width < MOBILE_BREAKPOINT) {
                 const perView = reducedMotion ? 6 : 12;
-                return Math.min(360, Math.max(3, Math.round(perView * pages * densityMul)));
+                return clampCount(perView * pages * areaScale * densityMul, 3, COUNT_CAP);
             }
             const area = width * docHeight;
             const densityFactor = reducedMotion ? 0.45 : 1;
             const density = 0.00005 * densityFactor * densityMul;
-            return Math.min(420, Math.max(reducedMotion ? 8 : 14, Math.floor(area * density)));
+            return clampCount(area * density, reducedMotion ? 8 : 14, COUNT_CAP);
         };
 
         class Molecule {
@@ -1249,7 +1265,7 @@
             }
 
             enforceBounds() {
-                const pad = this.radius * 0.35;
+                const pad = Math.min(this.radius * 0.35, Math.max(8, Math.min(width, height) * 0.1));
                 if (this.x < pad) {
                     this.x = pad;
                     if (this.vx < 0) {
@@ -2013,7 +2029,28 @@
 
         const paramRow = (label, value, min, max, step, scope, key) => {
             const keyAttr = key ? ` data-key="${key}"` : "";
-            return `<div class="bg-sim-row"><span>${label}</span><input type="range" min="${min}" max="${max}" step="${step}" value="${value}" data-scope="${scope}"${keyAttr}><input type="number" min="${min}" max="${max}" step="any" inputmode="decimal" value="${formatParam(value)}" data-scope="${scope}"${keyAttr}></div>`;
+            const warn = paramIsOverCap({ min, max }, value);
+            const rangeVal = clamp(value, min, max);
+            const warnClass = warn ? " bg-sim-row-warn" : "";
+            const title = warn ? ' title="Above the supported range — may be slow or unstable."' : "";
+            return `<div class="bg-sim-row${warnClass}"${title}><span data-label="${label}">${label}<span class="bg-sim-warn-mark">!</span></span><input type="range" min="${min}" max="${max}" step="${step}" value="${rangeVal}" data-scope="${scope}"${keyAttr}><input type="number" step="any" inputmode="decimal" value="${formatParam(value)}" data-scope="${scope}"${keyAttr}></div>`;
+        };
+
+        const syncParamRowWarn = (row, bounds, value) => {
+            if (!row || !bounds) {
+                return;
+            }
+            const warn = paramIsOverCap(bounds, value);
+            row.classList.toggle("bg-sim-row-warn", warn);
+            if (warn) {
+                row.setAttribute("title", "Above the supported range — may be slow or unstable.");
+            } else {
+                row.removeAttribute("title");
+            }
+            const label = row.querySelector("span[data-label]");
+            if (label && !label.dataset.label) {
+                label.dataset.label = label.textContent.replace(/\s*!$/, "").trim();
+            }
         };
 
         const setParamValue = (scope, key, value, sourceInput, commit) => {
@@ -2021,7 +2058,7 @@
             if (!bounds) {
                 return;
             }
-            const next = clamp(value, bounds.min, bounds.max);
+            const next = value;
             if (scope === "frost") {
                 params.frost = next;
             } else {
@@ -2029,10 +2066,11 @@
             }
             const row = sourceInput && sourceInput.parentElement;
             if (row) {
+                syncParamRowWarn(row, bounds, next);
                 const range = row.querySelector('input[type="range"]');
                 const number = row.querySelector('input[type="number"]');
-                if (range && range !== sourceInput) {
-                    range.value = String(next);
+                if (range) {
+                    range.value = String(clamp(next, bounds.min, bounds.max));
                 }
                 if (number && (commit || number !== sourceInput)) {
                     number.value = formatParam(next);
@@ -2061,7 +2099,37 @@
             const randomNote = randomMode
                 ? `<p class="bg-sim-note">Random is on, so a new simulation is picked each visit.</p>`
                 : "";
-            panelEl.innerHTML = `<div class="bg-sim-head"><strong>Background</strong><span class="bg-sim-tools"><button type="button" class="bg-sim-close" data-action="toggle" aria-pressed="${enabled ? "true" : "false"}">${enabled ? "On" : "Off"}</button><button type="button" class="bg-sim-close" data-action="random" aria-pressed="${randomMode ? "true" : "false"}">Random</button><button type="button" class="bg-sim-close" data-action="close" aria-label="Close">X</button></span></div><div class="bg-sim-modes">${modesHtml}</div>${rows}<p class="bg-sim-hint">${MODE_HINTS[mode]}</p>${randomNote}`;
+            panelEl.innerHTML = `<div class="bg-sim-head"><strong>Background</strong><span class="bg-sim-tools"><button type="button" class="bg-sim-close" data-action="toggle" aria-pressed="${enabled ? "true" : "false"}">${enabled ? "On" : "Off"}</button><button type="button" class="bg-sim-close" data-action="random" aria-pressed="${randomMode ? "true" : "false"}">Random</button><button type="button" class="bg-sim-close" data-action="again">Again</button><button type="button" class="bg-sim-close" data-action="reset">Reset</button><button type="button" class="bg-sim-close" data-action="close" aria-label="Close">X</button></span></div><div class="bg-sim-modes">${modesHtml}</div>${rows}<p class="bg-sim-hint">${MODE_HINTS[mode]}</p>${randomNote}`;
+        };
+
+        const copyDefaultParams = () => {
+            const next = { frost: DEFAULT_PARAMS.frost };
+            for (let i = 0; i < MODES.length; i++) {
+                const key = MODES[i];
+                next[key] = { ...DEFAULT_PARAMS[key] };
+            }
+            return next;
+        };
+
+        const restartBackground = () => {
+            if (!enabled) {
+                return;
+            }
+            lastFrameTime = 0;
+            initCurrentMode(true);
+            if (reducedMotion) {
+                drawStatic();
+                return;
+            }
+            scheduleNextFrame();
+        };
+
+        const resetBackground = () => {
+            params = copyDefaultParams();
+            persistParams();
+            renderPanel();
+            applyFrost();
+            restartBackground();
         };
 
         const setMode = (nextMode) => {
@@ -2154,6 +2222,10 @@
                         toggleEnabled();
                     } else if (action === "random") {
                         setRandomMode(!randomMode);
+                    } else if (action === "again") {
+                        restartBackground();
+                    } else if (action === "reset") {
+                        resetBackground();
                     }
                     return;
                 }

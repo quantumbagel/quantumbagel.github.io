@@ -10,7 +10,6 @@
         const stars = [];
         let starWarp = 0;
         const epicycles = [];
-        const harmonics = [];
         const auroraLayers = [];
         const auroraRumples = [];
         const pendulums = [];
@@ -40,30 +39,58 @@
         };
 
         const bounceBounds = (item, pad) => {
-            const p = pad == null ? 24 : pad;
-            if (typeof item.vx !== "number" || typeof item.vy !== "number") {
+            if (item.dragging || typeof item.vx !== "number" || typeof item.vy !== "number") {
                 return;
             }
-            if (item.x < p) {
-                item.x = p;
+            const damp = 0.85;
+            let px = pad == null ? 8 : pad;
+            let py = pad == null ? 8 : pad;
+            const maxPx = Math.max(8, S.width * 0.1);
+            const maxPy = Math.max(8, Math.min(S.height, S.docHeight) * 0.1);
+            if (px > maxPx) {
+                px = maxPx;
+            }
+            if (py > maxPy) {
+                py = maxPy;
+            }
+            if (px * 2 > S.width - 8) {
+                px = Math.max(4, S.width * 0.15);
+            }
+            if (py * 2 > S.docHeight - 8) {
+                py = Math.max(4, S.docHeight * 0.15);
+            }
+            if (item.x < px) {
+                item.x = px;
                 if (item.vx < 0) {
-                    item.vx = -item.vx * 0.85;
+                    item.vx = -item.vx * damp;
                 }
-            } else if (item.x > S.width - p) {
-                item.x = S.width - p;
+                if (typeof item.baseVx === "number" && item.baseVx < 0) {
+                    item.baseVx = -item.baseVx;
+                }
+            } else if (item.x > S.width - px) {
+                item.x = S.width - px;
                 if (item.vx > 0) {
-                    item.vx = -item.vx * 0.85;
+                    item.vx = -item.vx * damp;
+                }
+                if (typeof item.baseVx === "number" && item.baseVx > 0) {
+                    item.baseVx = -item.baseVx;
                 }
             }
-            if (item.y < p) {
-                item.y = p;
+            if (item.y < py) {
+                item.y = py;
                 if (item.vy < 0) {
-                    item.vy = -item.vy * 0.85;
+                    item.vy = -item.vy * damp;
                 }
-            } else if (item.y > S.docHeight - p) {
-                item.y = S.docHeight - p;
+                if (typeof item.baseVy === "number" && item.baseVy < 0) {
+                    item.baseVy = -item.baseVy;
+                }
+            } else if (item.y > S.docHeight - py) {
+                item.y = S.docHeight - py;
                 if (item.vy > 0) {
-                    item.vy = -item.vy * 0.85;
+                    item.vy = -item.vy * damp;
+                }
+                if (typeof item.baseVy === "number" && item.baseVy > 0) {
+                    item.baseVy = -item.baseVy;
                 }
             }
         };
@@ -200,6 +227,34 @@
             }
         };
 
+        const REF_VIEW_AREA = 1280 * 800;
+        const COUNT_CAPS = {
+            network: 10000,
+            orbits: 1000,
+            stars: 8000,
+            epicycles: 600,
+            pendulum: 400,
+            crystal: 600,
+            flock: 10000,
+            field: 12000,
+            aurora: 64,
+            rain: 1500,
+            life: 200000,
+        };
+        const viewAreaScale = () => (Math.max(S.width, 1) * Math.max(S.height, 1)) / REF_VIEW_AREA;
+
+        const clampCount = (n, minN, maxN) => {
+            if (!Number.isFinite(n)) {
+                return minN;
+            }
+            const v = Math.round(n);
+            if (v < minN) {
+                return minN;
+            }
+            const cap = maxN == null ? 10000 : maxN;
+            return v > cap ? cap : v;
+        };
+
         const getNetworkCount = () => {
             if (!S.enabled) {
                 return 0;
@@ -207,7 +262,7 @@
             const area = S.width * S.docHeight;
             const mobile = S.width < S.MOBILE_BREAKPOINT ? 0.5 : 1;
             const density = 0.00017 * S.params.network.density * (S.reducedMotion ? 0.38 : 1) * mobile;
-            return Math.min(1600, Math.max(S.reducedMotion ? 40 : 70, Math.floor(area * density)));
+            return clampCount(area * density, S.reducedMotion ? 40 : 70, COUNT_CAPS.network);
         };
 
         class NetParticle {
@@ -311,17 +366,19 @@
             const viewH = Math.max(S.height, 1);
             const pages = Math.max(1, S.docHeight / viewH);
             const densityMul = S.params.orbits.density;
+            const areaScale = viewAreaScale();
             if (S.width < S.MOBILE_BREAKPOINT) {
                 const perView = S.reducedMotion ? 5 : 8;
-                return Math.min(96, Math.max(2, Math.round(perView * pages * densityMul)));
+                return clampCount(perView * pages * areaScale * densityMul, 2, COUNT_CAPS.orbits);
             }
             const area = S.width * S.docHeight;
             const density = 0.000032 * (S.reducedMotion ? 0.45 : 1) * densityMul;
-            return Math.min(220, Math.max(S.reducedMotion ? 6 : 10, Math.floor(area * density)));
+            return clampCount(area * density, S.reducedMotion ? 6 : 10, COUNT_CAPS.orbits);
         };
 
         const projectOrbitPoint = (px, py, pz, ox, oy) => {
-            const persp = S.FOCAL / (S.FOCAL + S.DEPTH_OFFSET + pz);
+            const denom = Math.max(28, S.FOCAL + S.DEPTH_OFFSET + pz);
+            const persp = S.FOCAL / denom;
             return {
                 x: ox + px * persp,
                 y: oy + py * persp,
@@ -487,20 +544,7 @@
                     }
                     p.x += p.vx * frame;
                     p.y += p.vy * frame;
-                    if (p.x < 0) {
-                        p.x = 0;
-                        p.vx = Math.abs(p.vx) * 0.85;
-                    } else if (p.x > S.width) {
-                        p.x = S.width;
-                        p.vx = -Math.abs(p.vx) * 0.85;
-                    }
-                    if (p.y < 0) {
-                        p.y = 0;
-                        p.vy = Math.abs(p.vy) * 0.85;
-                    } else if (p.y > S.docHeight) {
-                        p.y = S.docHeight;
-                        p.vy = -Math.abs(p.vy) * 0.85;
-                    }
+                    bounceBounds(p, 8);
                 } else if (p.dragging) {
                     p.highlighted = true;
                     p.opacity = Math.min(0.95, p.baseOpacity + 0.4);
@@ -578,6 +622,12 @@
                 }
             }
 
+            if (animate) {
+                for (let i = 0; i < netParticles.length; i++) {
+                    bounceBounds(netParticles[i], 8);
+                }
+            }
+
             for (let i = 0; i < netParticles.length; i++) {
                 const p = netParticles[i];
                 const sy = p.y - scrollY;
@@ -629,21 +679,6 @@
                     sys.rotY += sys.rotYSpeed * speedMul * frame;
                     sys.x += sys.vx * frame;
                     sys.y += sys.vy * frame;
-                    const pad = 28;
-                    if (sys.x < pad) {
-                        sys.x = pad;
-                        sys.vx = Math.abs(sys.vx) * 0.85;
-                    } else if (sys.x > S.width - pad) {
-                        sys.x = S.width - pad;
-                        sys.vx = -Math.abs(sys.vx) * 0.85;
-                    }
-                    if (sys.y < pad) {
-                        sys.y = pad;
-                        sys.vy = Math.abs(sys.vy) * 0.85;
-                    } else if (sys.y > S.docHeight - pad) {
-                        sys.y = S.docHeight - pad;
-                        sys.vy = -Math.abs(sys.vy) * 0.85;
-                    }
                 } else if (sys.dragging) {
                     sys.highlight += (1 - sys.highlight) * damp.opacityIn;
                     if (animate) {
@@ -653,6 +688,9 @@
             }
             if (animate) {
                 separateBodies(orbitSystems, (sys) => sys.radius * spread * 0.58, frame, 0.52);
+                for (let i = 0; i < orbitSystems.length; i++) {
+                    bounceBounds(orbitSystems[i], 28);
+                }
             }
 
             for (let i = 0; i < orbitSystems.length; i++) {
@@ -729,7 +767,7 @@
                             z: local.z,
                             x: proj.x,
                             y: proj.y,
-                            r: (ring.hetero ? 2.8 : 2.2) * proj.p * (sys.hero ? 1.15 : 1),
+                            r: Math.max(0.2, (ring.hetero ? 2.8 : 2.2) * proj.p * (sys.hero ? 1.15 : 1)),
                             hetero: ring.hetero,
                             p: proj.p,
                         });
@@ -747,7 +785,7 @@
                         S.ctx.globalAlpha = alpha * (0.7 + depth * 0.3);
                         S.ctx.fillStyle = item.hetero || sys.highlight > 0.5 ? S.accentColorStr : S.particleColorStr;
                         S.ctx.beginPath();
-                        S.ctx.arc(item.x, item.y, item.r, 0, Math.PI * 2);
+                        S.ctx.arc(item.x, item.y, Math.max(0.2, item.r), 0, Math.PI * 2);
                         S.ctx.fill();
                     }
                 }
@@ -759,8 +797,9 @@
                 return 0;
             }
             const mobile = S.width < S.MOBILE_BREAKPOINT ? 0.55 : 1;
-            const n = Math.floor(520 * S.params.stars.density * mobile * (S.reducedMotion ? 0.4 : 1));
-            return Math.min(1200, Math.max(S.reducedMotion ? 50 : 90, n));
+            const areaScale = viewAreaScale();
+            const n = 520 * areaScale * S.params.stars.density * mobile * (S.reducedMotion ? 0.4 : 1);
+            return clampCount(n, S.reducedMotion ? 50 : 90, COUNT_CAPS.stars);
         };
 
         const resetStar = (star, rng, fromFar) => {
@@ -887,22 +926,29 @@
             S.ctx.stroke();
         };
 
-        const pagesCount = (perView, maxTotal, densityMul) => {
+        const pagesCount = (perView, densityMul, maxN) => {
             const pages = Math.max(1, S.docHeight / Math.max(S.height, 1));
             const mobile = S.width < S.MOBILE_BREAKPOINT ? 0.65 : 1;
-            const n = Math.round(perView * pages * (densityMul || 1) * mobile * (S.reducedMotion ? 0.5 : 1));
-            const minN = Math.max(1, Math.round(perView * (S.reducedMotion ? 0.2 : 0.28)));
-            return Math.min(maxTotal, Math.max(minN, n));
+            const areaScale = viewAreaScale();
+            const n = perView * pages * areaScale * (densityMul || 1) * mobile * (S.reducedMotion ? 0.5 : 1);
+            const minN = Math.max(1, Math.round(perView * (S.reducedMotion ? 0.2 : 0.25)));
+            return clampCount(n, minN, maxN);
         };
 
-        const getEpicycleCount = () => pagesCount(12, 240, S.params.epicycles.density);
-        const getHarmonicCount = () => pagesCount(12, 220, S.params.harmonograph.density);
-        const getPendulumCount = () => pagesCount(11, 200, S.params.pendulum.density);
-        const getCrystalCount = () => pagesCount(14, 240, S.params.crystal.density);
-        const getFlockCount = () => pagesCount(110, 1400, S.params.flock.density);
-        const getFieldCount = () => pagesCount(170, 2000, S.params.field.density);
-        const getAuroraCount = () => Math.min(28, Math.max(3, Math.round(10 * S.params.aurora.density * (S.reducedMotion ? 0.5 : 1))));
-        const getRainCount = () => Math.min(280, Math.max(10, Math.round((S.width / 12) * S.params.rain.density * (S.width < S.MOBILE_BREAKPOINT ? 0.7 : 1))));
+        const getEpicycleCount = () => pagesCount(12, S.params.epicycles.density, COUNT_CAPS.epicycles);
+        const getPendulumCount = () => pagesCount(12, S.params.pendulum.density, COUNT_CAPS.pendulum);
+        const getCrystalCount = () => pagesCount(12, S.params.crystal.density, COUNT_CAPS.crystal);
+        const getFlockCount = () => pagesCount(100, S.params.flock.density, COUNT_CAPS.flock);
+        const getFieldCount = () => pagesCount(160, S.params.field.density, COUNT_CAPS.field);
+        const getAuroraCount = () => {
+            const n = 10 * Math.sqrt(viewAreaScale()) * S.params.aurora.density * (S.reducedMotion ? 0.5 : 1);
+            return clampCount(n, 3, COUNT_CAPS.aurora);
+        };
+        const getRainCount = () => {
+            const mobile = S.width < S.MOBILE_BREAKPOINT ? 0.7 : 1;
+            const n = (S.width / 12) * S.params.rain.density * mobile;
+            return clampCount(n, 10, COUNT_CAPS.rain);
+        };
 
         const scaleDocY = (items, previousDocHeight) => {
             if (previousDocHeight > 0 && Math.abs(S.docHeight - previousDocHeight) > 30) {
@@ -979,11 +1025,13 @@
                 if (animate && !sys.dragging) {
                     sys.x += sys.vx * frame;
                     sys.y += sys.vy * frame;
-                    bounceBounds(sys, Math.max(24, sys.radius * 0.25));
                 }
             }
             if (animate) {
                 separateBodies(epicycles, (sys) => sys.radius * 0.5 + 16, frame, 0.48);
+                for (let i = 0; i < epicycles.length; i++) {
+                    bounceBounds(epicycles[i], Math.max(16, epicycles[i].radius * 0.2));
+                }
             }
             for (let i = 0; i < epicycles.length; i++) {
                 const sys = epicycles[i];
@@ -1032,95 +1080,6 @@
                 S.ctx.beginPath();
                 S.ctx.arc(px, py - scrollY, 2.2, 0, Math.PI * 2);
                 S.ctx.fill();
-            }
-        };
-
-        const initHarmonics = () => {
-            harmonics.length = 0;
-            const rng = S.createRng();
-            const n = getHarmonicCount();
-            for (let i = 0; i < n; i++) {
-                harmonics.push({
-                    x: 40 + rng.next() * Math.max(1, S.width - 80),
-                    y: 40 + rng.next() * Math.max(1, S.docHeight - 80),
-                    vx: (rng.next() - 0.5) * 0.07,
-                    vy: (rng.next() - 0.5) * 0.07,
-                    ax: 40 + rng.next() * 70,
-                    ay: 30 + rng.next() * 55,
-                    wx: 0.011 + rng.next() * 0.02,
-                    wy: 0.013 + rng.next() * 0.022,
-                    px: rng.next() * Math.PI * 2,
-                    py: rng.next() * Math.PI * 2,
-                    t: rng.next() * 18,
-                    kick: 0,
-                    unwind: 0,
-                    path: [],
-                    accent: rng.next() < 0.45,
-                    dragging: false,
-                });
-            }
-            placeApart(harmonics, (h) => Math.max(h.ax, h.ay) + 16, rng);
-        };
-
-        const adjustHarmonics = (pw, ph) => {
-            scaleDocX(harmonics, pw);
-            scaleDocY(harmonics, ph);
-            const target = getHarmonicCount();
-            if (harmonics.length < target) {
-                initHarmonics();
-            } else if (harmonics.length > target) {
-                harmonics.length = target;
-            }
-        };
-
-        const tickHarmonics = (frame, scrollY, viewHeight, animate) => {
-            const speed = S.params.harmonograph.speed;
-            const decay = 0.0009 + (1 - S.params.harmonograph.decay) * 0.0028;
-            for (let i = 0; i < harmonics.length; i++) {
-                const h = harmonics[i];
-                if (animate && !h.dragging) {
-                    h.vx *= Math.pow(0.985, frame);
-                    h.vy *= Math.pow(0.985, frame);
-                    const mag = Math.hypot(h.vx, h.vy);
-                    if (mag > 0.55) {
-                        h.vx = (h.vx / mag) * 0.55;
-                        h.vy = (h.vy / mag) * 0.55;
-                    }
-                    h.x += h.vx * frame;
-                    h.y += h.vy * frame;
-                    bounceBounds(h, Math.max(h.ax, h.ay) * 0.55 + 16);
-                }
-            }
-            if (animate) {
-                separateBodies(harmonics, () => 26, frame, 0.32);
-            }
-            for (let i = 0; i < harmonics.length; i++) {
-                const h = harmonics[i];
-                if (animate) {
-                    if (h.unwind > 0.002 && h.t > 55) {
-                        h.t += (55 - h.t) * (1 - Math.pow(0.88, frame * h.unwind));
-                        h.unwind *= Math.pow(0.91, frame);
-                    } else {
-                        h.unwind = 0;
-                    }
-                    h.t += speed * frame;
-                    h.kick *= Math.pow(0.985, frame);
-                    if (h.kick < 0.002) {
-                        h.kick = 0;
-                    }
-                    const amp = Math.min(1.15, Math.exp(-decay * h.t) + (h.kick || 0));
-                    h.penX = h.x + Math.sin(h.wx * h.t + h.px) * h.ax * amp;
-                    h.penY = h.y + Math.sin(h.wy * h.t + h.py) * h.ay * amp;
-                    if (amp > 0.02) {
-                        pushPath(h.path, h.penX, h.penY, PATH_CAP);
-                    }
-                }
-                const vis = h.y - scrollY;
-                const pad = Math.max(h.ax, h.ay) + 28;
-                if (vis < -pad || vis > viewHeight + pad) {
-                    continue;
-                }
-                drawFadePath(h.path, h.accent ? S.accentColorStr : S.particleColorStr, 0.5, 1.05, scrollY);
             }
         };
 
@@ -1260,31 +1219,110 @@
             }
         };
 
+        const PEND_W_MAX = 8;
+        const PEND_V_MAX = 3.5;
+        const PEND_AW_MAX = 40;
+
+        const wrapAngle = (a) => {
+            const tau = Math.PI * 2;
+            a = a % tau;
+            if (a > Math.PI) {
+                a -= tau;
+            } else if (a < -Math.PI) {
+                a += tau;
+            }
+            return a;
+        };
+
+        const revivePendulum = (p) => {
+            if (!Number.isFinite(p.x) || !Number.isFinite(p.y)) {
+                p.x = 40 + Math.random() * Math.max(1, S.width - 80);
+                p.y = 50 + Math.random() * Math.max(1, S.docHeight - 120);
+            }
+            p.vx = 0;
+            p.vy = 0;
+            p.w1 = (Math.random() - 0.5) * 0.08;
+            p.w2 = (Math.random() - 0.5) * 0.08;
+            p.a1 = Math.PI * (0.6 + Math.random() * 0.8);
+            p.a2 = Math.PI * (0.4 + Math.random() * 1.1);
+            p.path.length = 0;
+        };
+
+        const stepPendulum = (p, g, dt) => {
+            const a1 = p.a1;
+            const a2 = p.a2;
+            const w1 = p.w1;
+            const w2 = p.w2;
+            const l1 = p.l1;
+            const l2 = p.l2;
+            const den = Math.max(1.05, 2 - Math.cos(2 * (a1 - a2)));
+            let aw1 = (-g * (2 * Math.sin(a1) - Math.sin(a1 - 2 * a2)) - 2 * Math.sin(a1 - a2) * (w2 * w2 * l2 + w1 * w1 * l1 * Math.cos(a1 - a2))) / (l1 * den);
+            let aw2 = (2 * Math.sin(a1 - a2) * (w1 * w1 * l1 + g * Math.cos(a1) + w2 * w2 * l2 * Math.cos(a1 - a2))) / (l2 * den);
+            if (!Number.isFinite(aw1)) {
+                aw1 = 0;
+            } else if (aw1 > PEND_AW_MAX) {
+                aw1 = PEND_AW_MAX;
+            } else if (aw1 < -PEND_AW_MAX) {
+                aw1 = -PEND_AW_MAX;
+            }
+            if (!Number.isFinite(aw2)) {
+                aw2 = 0;
+            } else if (aw2 > PEND_AW_MAX) {
+                aw2 = PEND_AW_MAX;
+            } else if (aw2 < -PEND_AW_MAX) {
+                aw2 = -PEND_AW_MAX;
+            }
+            p.w1 = (p.w1 + aw1 * dt) * 0.9992;
+            p.w2 = (p.w2 + aw2 * dt) * 0.9992;
+            if (p.w1 > PEND_W_MAX) {
+                p.w1 = PEND_W_MAX;
+            } else if (p.w1 < -PEND_W_MAX) {
+                p.w1 = -PEND_W_MAX;
+            }
+            if (p.w2 > PEND_W_MAX) {
+                p.w2 = PEND_W_MAX;
+            } else if (p.w2 < -PEND_W_MAX) {
+                p.w2 = -PEND_W_MAX;
+            }
+            p.a1 = wrapAngle(p.a1 + p.w1 * dt);
+            p.a2 = wrapAngle(p.a2 + p.w2 * dt);
+        };
+
         const tickPendulums = (frame, scrollY, viewHeight, animate) => {
-            const speed = S.params.pendulum.speed;
+            const speed = Math.max(0.05, S.params.pendulum.speed);
             const g = 0.28 * S.params.pendulum.energy;
-            const dt = 0.16 * frame * speed;
+            const steps = Math.max(2, Math.min(8, Math.ceil(speed * 3)));
+            const dt = (0.14 * frame * speed) / steps;
             for (let i = 0; i < pendulums.length; i++) {
                 const p = pendulums[i];
                 if (animate && !p.dragging) {
+                    p.vx *= 0.995;
+                    p.vy *= 0.995;
+                    if (p.vx > PEND_V_MAX) {
+                        p.vx = PEND_V_MAX;
+                    } else if (p.vx < -PEND_V_MAX) {
+                        p.vx = -PEND_V_MAX;
+                    }
+                    if (p.vy > PEND_V_MAX) {
+                        p.vy = PEND_V_MAX;
+                    } else if (p.vy < -PEND_V_MAX) {
+                        p.vy = -PEND_V_MAX;
+                    }
                     p.x += p.vx * frame;
                     p.y += p.vy * frame;
-                    bounceBounds(p, p.l1 + p.l2 + 8);
-                    const a1 = p.a1;
-                    const a2 = p.a2;
-                    const w1 = p.w1;
-                    const w2 = p.w2;
-                    const l1 = p.l1;
-                    const l2 = p.l2;
-                    const den = 2 - Math.cos(2 * (a1 - a2));
-                    const aw1 = (-g * (2 * Math.sin(a1) - Math.sin(a1 - 2 * a2)) - 2 * Math.sin(a1 - a2) * (w2 * w2 * l2 + w1 * w1 * l1 * Math.cos(a1 - a2))) / (l1 * den);
-                    const aw2 = (2 * Math.sin(a1 - a2) * (w1 * w1 * l1 + g * Math.cos(a1) + w2 * w2 * l2 * Math.cos(a1 - a2))) / (l2 * den);
-                    p.w1 += aw1 * dt;
-                    p.w2 += aw2 * dt;
-                    p.w1 *= 0.9992;
-                    p.w2 *= 0.9992;
-                    p.a1 += p.w1 * dt;
-                    p.a2 += p.w2 * dt;
+                    for (let s = 0; s < steps; s++) {
+                        stepPendulum(p, g, dt);
+                    }
+                    if (
+                        !Number.isFinite(p.x) ||
+                        !Number.isFinite(p.y) ||
+                        !Number.isFinite(p.a1) ||
+                        !Number.isFinite(p.a2) ||
+                        !Number.isFinite(p.w1) ||
+                        !Number.isFinite(p.w2)
+                    ) {
+                        revivePendulum(p);
+                    }
                 }
                 p.x1 = p.x + Math.sin(p.a1) * p.l1;
                 p.y1 = p.y + Math.cos(p.a1) * p.l1;
@@ -1309,7 +1347,7 @@
                             const dx = pairs[k][0] - pairs[k][2];
                             const dy = pairs[k][1] - pairs[k][3];
                             const distSq = dx * dx + dy * dy;
-                            if (distSq >= bobRSq || distSq < 0.01) {
+                            if (!Number.isFinite(distSq) || distSq >= bobRSq || distSq < 0.01) {
                                 continue;
                             }
                             const dist = Math.sqrt(distSq);
@@ -1336,9 +1374,33 @@
                         }
                     }
                 }
+                for (let i = 0; i < pendulums.length; i++) {
+                    const p = pendulums[i];
+                    if (p.w1 > PEND_W_MAX) {
+                        p.w1 = PEND_W_MAX;
+                    } else if (p.w1 < -PEND_W_MAX) {
+                        p.w1 = -PEND_W_MAX;
+                    }
+                    if (p.w2 > PEND_W_MAX) {
+                        p.w2 = PEND_W_MAX;
+                    } else if (p.w2 < -PEND_W_MAX) {
+                        p.w2 = -PEND_W_MAX;
+                    }
+                    bounceBounds(p, 32);
+                    if (!Number.isFinite(p.x) || !Number.isFinite(p.y) || !Number.isFinite(p.a1) || !Number.isFinite(p.a2)) {
+                        revivePendulum(p);
+                    }
+                    p.x1 = p.x + Math.sin(p.a1) * p.l1;
+                    p.y1 = p.y + Math.cos(p.a1) * p.l1;
+                    p.x2 = p.x1 + Math.sin(p.a2) * p.l2;
+                    p.y2 = p.y1 + Math.cos(p.a2) * p.l2;
+                }
             }
             for (let i = 0; i < pendulums.length; i++) {
                 const p = pendulums[i];
+                if (!Number.isFinite(p.x) || !Number.isFinite(p.x2) || !Number.isFinite(p.y2)) {
+                    continue;
+                }
                 if (animate) {
                     pushPath(p.path, p.x2, p.y2, PATH_CAP);
                 }
@@ -1448,20 +1510,6 @@
                     c.rotZ += c.rotVz * speed * frame;
                     c.x += c.vx * frame;
                     c.y += c.vy * frame;
-                    if (c.x < 24) {
-                        c.x = 24;
-                        c.vx = Math.abs(c.vx);
-                    } else if (c.x > S.width - 24) {
-                        c.x = S.width - 24;
-                        c.vx = -Math.abs(c.vx);
-                    }
-                    if (c.y < 24) {
-                        c.y = 24;
-                        c.vy = Math.abs(c.vy);
-                    } else if (c.y > S.docHeight - 24) {
-                        c.y = S.docHeight - 24;
-                        c.vy = -Math.abs(c.vy);
-                    }
                     if (mouseActive) {
                         const dx = mouseAbsX - c.x;
                         const dy = mouseAbsY - c.y;
@@ -1484,6 +1532,9 @@
             }
             if (animate) {
                 separateBodies(crystals, (c) => 32 * c.scale * size + 12, frame, 0.5);
+                for (let i = 0; i < crystals.length; i++) {
+                    bounceBounds(crystals[i], 24);
+                }
             }
             for (let i = 0; i < crystals.length; i++) {
                 const c = crystals[i];
@@ -1665,16 +1716,7 @@
                     }
                     b.x += b.vx * frame * speed;
                     b.y += b.vy * frame * speed;
-                    if (b.x < 0) {
-                        b.x += S.width;
-                    } else if (b.x > S.width) {
-                        b.x -= S.width;
-                    }
-                    if (b.y < 0) {
-                        b.y += S.docHeight;
-                    } else if (b.y > S.docHeight) {
-                        b.y -= S.docHeight;
-                    }
+                    bounceBounds(b, 8);
                 }
             }
             S.ctx.lineCap = "round";
@@ -1815,22 +1857,8 @@
                     const oy = p.y;
                     p.x += p.vx * frame * 1.85;
                     p.y += p.vy * frame * 1.85;
+                    bounceBounds(p, 8);
                     p.life += frame;
-                    let wrapped = false;
-                    if (p.x < 0) {
-                        p.x += S.width;
-                        wrapped = true;
-                    } else if (p.x > S.width) {
-                        p.x -= S.width;
-                        wrapped = true;
-                    }
-                    if (p.y < 0) {
-                        p.y += S.docHeight;
-                        wrapped = true;
-                    } else if (p.y > S.docHeight) {
-                        p.y -= S.docHeight;
-                        wrapped = true;
-                    }
                     if (p.life > p.maxLife) {
                         p.x = Math.random() * S.width;
                         p.y = Math.random() * S.docHeight;
@@ -1839,7 +1867,7 @@
                         p.life = 0;
                         p.maxLife = 90 + Math.random() * 110;
                         resetFieldPath(p);
-                    } else if (wrapped || Math.abs(p.x - ox) > 70 || Math.abs(p.y - oy) > 70) {
+                    } else if (Math.abs(p.x - ox) > 70 || Math.abs(p.y - oy) > 70) {
                         resetFieldPath(p);
                     } else {
                         pushPath(p.path, p.x, p.y, FIELD_TRAIL);
@@ -2026,7 +2054,7 @@
 
         const lifeCellSize = () => {
             const size = (S.params.life && S.params.life.size) || 1;
-            return Math.max(5, Math.round(10 / Math.max(0.45, size)));
+            return Math.max(0.25, 10 / Math.max(0.05, size));
         };
 
         const lifeIndex = (x, y) => {
@@ -2076,7 +2104,7 @@
             }
             const rng = S.createRng();
             const n = life.cols * life.rows;
-            const fill = Math.min(0.32, 0.11 * S.params.life.density);
+            const fill = Math.max(0, Math.min(1, 0.11 * S.params.life.density));
             life.cur.fill(0);
             life.age.fill(0);
             for (let i = 0; i < n; i++) {
@@ -2104,8 +2132,14 @@
 
         const rebuildLife = (reseed) => {
             const cell = lifeCellSize();
-            const cols = Math.max(24, Math.ceil(S.width / cell));
-            const rows = Math.max(16, Math.ceil(S.height / cell));
+            let cols = Math.max(24, Math.ceil(S.width / cell));
+            let rows = Math.max(16, Math.ceil(S.height / cell));
+            const cells = cols * rows;
+            if (cells > COUNT_CAPS.life) {
+                const scale = Math.sqrt(cells / COUNT_CAPS.life);
+                cols = Math.max(24, Math.floor(cols / scale));
+                rows = Math.max(16, Math.floor(rows / scale));
+            }
             if (!reseed && life.cur && life.cols === cols && life.rows === rows) {
                 return;
             }
@@ -2229,7 +2263,6 @@
                 stars.length = 0;
                 starWarp = 0;
                 epicycles.length = 0;
-                harmonics.length = 0;
                 auroraLayers.length = 0;
                 auroraRumples.length = 0;
                 pendulums.length = 0;
@@ -2253,7 +2286,6 @@
                     else if (mode === "orbits") initOrbits();
                     else if (mode === "stars") initStars();
                     else if (mode === "epicycles") initEpicycles();
-                    else if (mode === "harmonograph") initHarmonics();
                     else if (mode === "aurora") initAurora();
                     else if (mode === "pendulum") initPendulums();
                     else if (mode === "crystal") initCrystals();
@@ -2270,7 +2302,6 @@
                 else if (mode === "orbits") adjustOrbits(previousWidth, previousDocHeight);
                 else if (mode === "stars") adjustStars();
                 else if (mode === "epicycles") adjustEpicycles(previousWidth, previousDocHeight);
-                else if (mode === "harmonograph") adjustHarmonics(previousWidth, previousDocHeight);
                 else if (mode === "aurora") adjustAurora();
                 else if (mode === "pendulum") adjustPendulums(previousWidth, previousDocHeight);
                 else if (mode === "crystal") adjustCrystals(previousWidth, previousDocHeight);
@@ -2284,7 +2315,6 @@
                 else if (mode === "orbits") tickOrbits(frame, damp, scrollY, viewHeight, mouseAbsX, mouseAbsY, mouseActive, animate);
                 else if (mode === "stars") tickStars(frame, animate);
                 else if (mode === "epicycles") tickEpicycles(frame, scrollY, viewHeight, animate);
-                else if (mode === "harmonograph") tickHarmonics(frame, scrollY, viewHeight, animate);
                 else if (mode === "aurora") tickAurora(frame, animate);
                 else if (mode === "pendulum") tickPendulums(frame, scrollY, viewHeight, animate);
                 else if (mode === "crystal") tickCrystals(frame, scrollY, viewHeight, mouseAbsX, mouseAbsY, mouseActive, animate);
@@ -2305,9 +2335,6 @@
                 }
                 if (mode === "epicycles") {
                     return nearestHit(epicycles, absX, absY, (sys) => sys.radius * 0.7 + 22, 28);
-                }
-                if (mode === "harmonograph") {
-                    return nearestHit(harmonics, absX, absY, (h) => Math.max(h.ax, h.ay) + 20, 28);
                 }
                 if (mode === "pendulum") {
                     return nearestHit(pendulums, absX, absY, () => 26, 26);
@@ -2363,22 +2390,6 @@
                                 sys.arms[a].w += (rng.next() - 0.5) * 0.04 * force;
                             }
                         });
-                    }
-                    return true;
-                }
-                if (mode === "harmonograph") {
-                    for (let i = 0; i < harmonics.length; i++) {
-                        const h = harmonics[i];
-                        const dx = h.x - clickX;
-                        const dy = h.y - clickY;
-                        const distSq = dx * dx + dy * dy;
-                        if (distSq >= radius * radius || distSq <= 0.01) {
-                            continue;
-                        }
-                        const dist = Math.sqrt(distSq);
-                        const force = 1 - dist / radius;
-                        h.unwind = Math.min(1, (h.unwind || 0) + 0.35 + force * 0.65);
-                        h.kick = Math.min(0.28, (h.kick || 0) + 0.03 + force * 0.1);
                     }
                     return true;
                 }
