@@ -138,7 +138,7 @@
             z-index: 60;
             right: 1rem;
             bottom: 1rem;
-            width: min(24rem, calc(100vw - 2rem));
+            width: min(26rem, calc(100vw - 2rem));
             max-height: min(38rem, calc(100dvh - 2rem));
             overflow: auto;
             padding: 1rem;
@@ -179,6 +179,12 @@
             cursor: pointer;
             padding: 0 0.45rem;
             line-height: 1.45;
+            white-space: nowrap;
+        }
+
+        .bg-sim-close[data-action="toggle"] {
+            min-width: calc(3ch + 0.9rem);
+            text-align: center;
         }
 
         .bg-sim-head {
@@ -187,14 +193,17 @@
             justify-content: space-between;
             gap: 0.75rem;
             margin-bottom: 0.75rem;
+            flex-wrap: wrap;
         }
 
         .bg-sim-tools {
             display: flex;
             align-items: center;
             gap: 0.45rem;
-            flex-wrap: wrap;
+            flex-wrap: nowrap;
+            flex-shrink: 0;
             justify-content: flex-end;
+            margin-left: auto;
         }
 
         .bg-sim-mode[aria-pressed="true"],
