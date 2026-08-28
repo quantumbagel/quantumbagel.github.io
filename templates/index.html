@@ -181,7 +181,24 @@
             line-height: 1.45;
         }
 
-        .bg-sim-mode[aria-pressed="true"] {
+        .bg-sim-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .bg-sim-tools {
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .bg-sim-mode[aria-pressed="true"],
+        .bg-sim-close[aria-pressed="true"] {
             background: var(--color-accent);
             color: var(--color-global-bg);
             border-color: var(--color-accent);
@@ -189,7 +206,7 @@
 
         .bg-sim-row {
             display: grid;
-            grid-template-columns: 4.5rem 1fr 2.2rem;
+            grid-template-columns: 4.5rem 1fr 3.6rem;
             gap: 0.55rem;
             align-items: center;
             margin-top: 0.65rem;
@@ -200,9 +217,38 @@
             accent-color: var(--color-accent);
         }
 
+        .bg-sim-row input[type="number"] {
+            width: 100%;
+            padding: 0.15rem 0.3rem;
+            border: 1px solid color-mix(in oklch, var(--color-global-text) 18%, transparent);
+            background: transparent;
+            color: inherit;
+            font: inherit;
+            text-align: right;
+            -moz-appearance: textfield;
+            appearance: textfield;
+        }
+
+        .bg-sim-row input[type="number"]::-webkit-inner-spin-button,
+        .bg-sim-row input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .bg-sim-row input[type="number"]:focus {
+            outline: none;
+            border-color: var(--color-accent);
+        }
+
         .bg-sim-hint {
             margin: 0.85rem 0 0;
             color: color-mix(in oklch, var(--color-global-text) 62%, transparent);
+            line-height: 1.45;
+        }
+
+        .bg-sim-note {
+            margin: 0.4rem 0 0;
+            color: color-mix(in oklch, var(--color-global-text) 48%, transparent);
             line-height: 1.45;
         }
     </style>
@@ -235,11 +281,8 @@
                 <button id="theme-toggle" class="text-zinc-500 hover:text-accent transition-colors cursor-pointer" aria-label="Toggle Theme">
                     Theme/<i id="theme-toggle-icon" class="bi bi-moon inline-block align-middle pointer-events-none ml-0.5"></i>
                 </button>
-                <button id="particle-toggle" class="text-zinc-500 hover:text-accent transition-colors cursor-pointer" aria-label="Background: On">
+                <button id="particle-toggle" class="text-zinc-500 hover:text-accent transition-colors cursor-pointer" aria-label="Background: On" aria-expanded="false" aria-controls="bg-sim-panel">
                     Background/○
-                </button>
-                <button id="bg-sim-toggle" class="text-zinc-500 hover:text-accent transition-colors cursor-pointer" aria-label="Background effects" aria-expanded="false" aria-controls="bg-sim-panel">
-                    FX/
                 </button>
             </div>
         </header>

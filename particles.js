@@ -4,6 +4,7 @@
     const BG_ENABLED_KEY = "particle-background-enabled";
     const BG_MODE_KEY = "particle-background-mode";
     const BG_PARAMS_KEY = "particle-background-params";
+    const BG_RANDOM_KEY = "particle-background-random";
     const MOBILE_BREAKPOINT = 768;
     const CANVAS_FADE_MS = 450;
     const MOUSE_RADIUS = 170;
@@ -22,7 +23,7 @@
     const CONTENT_MAX_WIDTH = 768;
     const GUTTER_MIN_WIDTH = 900;
     const INTERACTIVE_SELECTOR =
-        "a, button, input, textarea, select, label, [role='button'], .project-card, .modal-close-btn, #bg-sim-panel, #bg-sim-toggle";
+        "a, button, input, textarea, select, label, [role='button'], .project-card, .modal-close-btn, #bg-sim-panel, #particle-toggle";
     const MODES = [
         "molecules",
         "network",
@@ -64,7 +65,7 @@
         pendulum: "Just some double pendulums. Click to yeet.",
         crystal: "3D lattices. You can yeet them.",
         flock: "Peer pressure be like",
-        field: "Particles on a field. Click to blow wind.",
+        field: "Streamlines on a vector field. Move the pointer to stir, click to blow a gust.",
         rain: "l33t hack3r",
         life: "Conway's Game of Life, my favorite simulation :D",
     };
@@ -81,7 +82,7 @@
         crystal: { density: 1, speed: 1, size: 1 },
         flock: { density: 1, speed: 1, cohesion: 1 },
         field: { density: 1, speed: 1, swirl: 1 },
-        rain: { density: 1, speed: 1, length: 1 },
+        rain: { density: 1, speed: 1.4, length: 1.55 },
         life: { density: 1, speed: 1, size: 1 },
     };
     const PARAM_FIELDS = {
@@ -226,6 +227,25 @@
             return stored;
         }
         return "molecules";
+    }
+
+    function readStoredRandom() {
+        const stored = localStorage.getItem(BG_RANDOM_KEY);
+        if (stored === "off" || stored === "false") {
+            return false;
+        }
+        return true;
+    }
+
+    function pickRandomMode(exclude) {
+        if (MODES.length <= 1) {
+            return MODES[0];
+        }
+        let next = MODES[(Math.random() * MODES.length) | 0];
+        if (next === exclude) {
+            next = MODES[(MODES.indexOf(next) + 1 + ((Math.random() * (MODES.length - 1)) | 0)) % MODES.length];
+        }
+        return next;
     }
 
     function readStoredParams() {
@@ -983,7 +1003,6 @@
         }
 
         const toggleButton = options.toggleButton || document.getElementById("particle-toggle");
-        const fxButton = options.fxButton || document.getElementById("bg-sim-toggle");
         const sitePanel = document.getElementById("site-panel");
         const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
         const ctx = canvas.getContext("2d");
@@ -1010,7 +1029,8 @@
         let isPageVisible = !document.hidden;
         let reducedMotion = reducedMotionQuery.matches;
         let enabled = readStoredEnabled();
-        let mode = readStoredMode();
+        let randomMode = readStoredRandom();
+        let mode = randomMode ? pickRandomMode() : readStoredMode();
         let params = readStoredParams();
         let particleColorStr = "";
         let accentColorStr = "";
@@ -1909,7 +1929,10 @@
             }
             persistTimer = setTimeout(() => {
                 localStorage.setItem(BG_PARAMS_KEY, JSON.stringify(params));
-                localStorage.setItem(BG_MODE_KEY, mode);
+                localStorage.setItem(BG_RANDOM_KEY, randomMode ? "on" : "off");
+                if (!randomMode) {
+                    localStorage.setItem(BG_MODE_KEY, mode);
+                }
             }, 80);
         };
 
@@ -1962,6 +1985,63 @@
             return value.toFixed(2).replace(/0+$/, "").replace(/\.$/, "");
         };
 
+        const paramBounds = (scope, key) => {
+            if (scope === "frost") {
+                return { min: 0, max: 1, step: 0.05 };
+            }
+            const fields = PARAM_FIELDS[scope];
+            if (!fields) {
+                return null;
+            }
+            for (let i = 0; i < fields.length; i++) {
+                if (fields[i].key === key) {
+                    return fields[i];
+                }
+            }
+            return null;
+        };
+
+        const currentParamValue = (scope, key) => {
+            if (scope === "frost") {
+                return params.frost;
+            }
+            if (scope && key && params[scope]) {
+                return params[scope][key];
+            }
+            return null;
+        };
+
+        const paramRow = (label, value, min, max, step, scope, key) => {
+            const keyAttr = key ? ` data-key="${key}"` : "";
+            return `<div class="bg-sim-row"><span>${label}</span><input type="range" min="${min}" max="${max}" step="${step}" value="${value}" data-scope="${scope}"${keyAttr}><input type="number" min="${min}" max="${max}" step="any" inputmode="decimal" value="${formatParam(value)}" data-scope="${scope}"${keyAttr}></div>`;
+        };
+
+        const setParamValue = (scope, key, value, sourceInput, commit) => {
+            const bounds = paramBounds(scope, key);
+            if (!bounds) {
+                return;
+            }
+            const next = clamp(value, bounds.min, bounds.max);
+            if (scope === "frost") {
+                params.frost = next;
+            } else {
+                params[scope][key] = next;
+            }
+            const row = sourceInput && sourceInput.parentElement;
+            if (row) {
+                const range = row.querySelector('input[type="range"]');
+                const number = row.querySelector('input[type="number"]');
+                if (range && range !== sourceInput) {
+                    range.value = String(next);
+                }
+                if (number && (commit || number !== sourceInput)) {
+                    number.value = formatParam(next);
+                }
+            }
+            persistParams();
+            applyLiveParams(key);
+        };
+
         const renderPanel = () => {
             if (!panelEl) {
                 return;
@@ -1973,13 +2053,15 @@
                 const pressed = id === mode ? "true" : "false";
                 modesHtml += `<button type="button" class="bg-sim-mode" data-mode="${id}" aria-pressed="${pressed}">${MODE_LABELS[id]}</button>`;
             }
-            let rows = `<div class="bg-sim-row"><span>Frost</span><input type="range" min="0" max="1" step="0.05" value="${params.frost}" data-scope="frost"><span>${formatParam(params.frost)}</span></div>`;
+            let rows = paramRow("Frost", params.frost, 0, 1, 0.05, "frost");
             for (let i = 0; i < fields.length; i++) {
                 const field = fields[i];
-                const value = params[mode][field.key];
-                rows += `<div class="bg-sim-row"><span>${field.label}</span><input type="range" min="${field.min}" max="${field.max}" step="${field.step}" value="${value}" data-scope="${mode}" data-key="${field.key}"><span>${formatParam(value)}</span></div>`;
+                rows += paramRow(field.label, params[mode][field.key], field.min, field.max, field.step, mode, field.key);
             }
-            panelEl.innerHTML = `<div style="display:flex;align-items:center;justify-content:space-between;gap:0.75rem;margin-bottom:0.75rem;"><strong>Background</strong><span style="display:flex;align-items:center;gap:0.45rem;"><span>${enabled ? "On" : "Off"}</span><button type="button" class="bg-sim-close" data-action="close" aria-label="Close">X</button></span></div><div class="bg-sim-modes">${modesHtml}</div>${rows}<p class="bg-sim-hint">${MODE_HINTS[mode]}</p>`;
+            const randomNote = randomMode
+                ? `<p class="bg-sim-note">Random is on, so a new simulation is picked each visit.</p>`
+                : "";
+            panelEl.innerHTML = `<div class="bg-sim-head"><strong>Background</strong><span class="bg-sim-tools"><button type="button" class="bg-sim-close" data-action="toggle" aria-pressed="${enabled ? "true" : "false"}">${enabled ? "On" : "Off"}</button><button type="button" class="bg-sim-close" data-action="random" aria-pressed="${randomMode ? "true" : "false"}">Random</button><button type="button" class="bg-sim-close" data-action="close" aria-label="Close">X</button></span></div><div class="bg-sim-modes">${modesHtml}</div>${rows}<p class="bg-sim-hint">${MODE_HINTS[mode]}</p>${randomNote}`;
         };
 
         const setMode = (nextMode) => {
@@ -1990,7 +2072,7 @@
             mode = nextMode;
             persistParams();
             renderPanel();
-            updateFxLabel();
+            updateToggleLabel();
             if (!enabled) {
                 return;
             }
@@ -2003,22 +2085,12 @@
             scheduleNextFrame();
         };
 
-        const updateFxLabel = () => {
-            if (!fxButton) {
-                return;
-            }
-            const open = panelEl && !panelEl.hidden;
-            fxButton.textContent = open ? "FX/●" : "FX/";
-            fxButton.setAttribute("aria-expanded", open ? "true" : "false");
-            fxButton.setAttribute("aria-label", `Background effects, ${MODE_LABELS[mode]}`);
-        };
-
         const setPanelOpen = (open) => {
             if (!panelEl) {
                 return;
             }
             panelEl.hidden = !open;
-            updateFxLabel();
+            updateToggleLabel();
         };
 
         const ensurePanel = () => {
@@ -2032,23 +2104,44 @@
             panelEl.setAttribute("role", "dialog");
             panelEl.setAttribute("aria-label", "Background effects");
             document.body.appendChild(panelEl);
-            panelEl.addEventListener("input", (event) => {
+            const handleParamField = (event, commit) => {
                 const input = event.target;
-                if (!(input instanceof HTMLInputElement) || input.type !== "range") {
+                if (!(input instanceof HTMLInputElement) || (input.type !== "range" && input.type !== "number")) {
                     return;
                 }
-                const value = Number(input.value);
-                if (input.dataset.scope === "frost") {
-                    params.frost = value;
-                } else if (input.dataset.scope && input.dataset.key) {
-                    params[input.dataset.scope][input.dataset.key] = value;
+                const scope = input.dataset.scope;
+                const key = input.dataset.key;
+                const raw = input.value.trim();
+                if (input.type === "number" && !commit && (raw === "" || raw === "-" || raw === "." || raw === "-.")) {
+                    return;
                 }
-                const readout = input.parentElement && input.parentElement.querySelector("span:last-child");
-                if (readout) {
-                    readout.textContent = formatParam(value);
+                const value = Number(raw);
+                if (!Number.isFinite(value)) {
+                    if (commit) {
+                        const current = currentParamValue(scope, key);
+                        if (typeof current === "number") {
+                            input.value = formatParam(current);
+                        }
+                    }
+                    return;
                 }
-                persistParams();
-                applyLiveParams(input.dataset.key);
+                setParamValue(scope, key, value, input, commit || input.type === "range");
+            };
+            panelEl.addEventListener("input", (event) => {
+                handleParamField(event, false);
+            });
+            panelEl.addEventListener("change", (event) => {
+                handleParamField(event, true);
+            });
+            panelEl.addEventListener("keydown", (event) => {
+                if (event.key !== "Enter") {
+                    return;
+                }
+                const input = event.target;
+                if (input instanceof HTMLInputElement && input.type === "number") {
+                    handleParamField(event, true);
+                    input.blur();
+                }
             });
             panelEl.addEventListener("click", (event) => {
                 event.stopPropagation();
@@ -2057,6 +2150,10 @@
                     const action = actionBtn.getAttribute("data-action");
                     if (action === "close") {
                         setPanelOpen(false);
+                    } else if (action === "toggle") {
+                        toggleEnabled();
+                    } else if (action === "random") {
+                        setRandomMode(!randomMode);
                     }
                     return;
                 }
@@ -2195,13 +2292,27 @@
             setEnabled(!enabled);
         };
 
+        const setRandomMode = (nextRandom) => {
+            randomMode = !!nextRandom;
+            persistParams();
+            if (randomMode) {
+                setMode(pickRandomMode(mode));
+                return;
+            }
+            localStorage.setItem(BG_MODE_KEY, mode);
+            renderPanel();
+        };
+
         const updateToggleLabel = () => {
             if (!toggleButton) {
                 return;
             }
+            const open = panelEl && !panelEl.hidden;
             const dot = enabled ? "○" : "●";
             toggleButton.textContent = `Background/${dot}`;
             toggleButton.setAttribute("aria-label", `Background: ${enabled ? "On" : "Off"}`);
+            toggleButton.setAttribute("aria-expanded", open ? "true" : "false");
+            toggleButton.setAttribute("aria-controls", "bg-sim-panel");
         };
 
         const initializeParticlesWhenReady = async () => {
@@ -2454,13 +2565,7 @@
         window.addEventListener("pointercancel", finishPointer);
 
         if (toggleButton) {
-            toggleButton.addEventListener("click", () => {
-                toggleEnabled();
-            });
-        }
-
-        if (fxButton) {
-            fxButton.addEventListener("click", (e) => {
+            toggleButton.addEventListener("click", (e) => {
                 e.stopPropagation();
                 ensurePanel();
                 renderPanel();
