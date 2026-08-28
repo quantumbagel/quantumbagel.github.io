@@ -52,18 +52,18 @@
         rain: "Rain",
     };
     const MODE_HINTS = {
-        molecules: "Drag molecules anywhere. Spawn + adds more in view. Click empty space to scatter them.",
-        network: "Drag a node. Click empty space to pulse the field.",
-        orbits: "3D atoms and miniature solar systems. Drag a nucleus. Click to perturb orbits.",
-        stars: "Warp-speed starfield. Move the pointer to steer. Click to flare.",
-        epicycles: "Fourier wheels drawing a path. Drag a center. Click to reseed nearby arms.",
-        harmonograph: "Lissajous traces that slowly decay and restart. Drag one. Click to retune.",
-        aurora: "Stacked sine sheets. Move the pointer to warp the curtain. Click to rumple it.",
-        pendulum: "Chaotic double pendulums. Drag a pivot. Click to kick nearby bobs.",
-        crystal: "Rotating 3D lattices. Drag a crystal. Click to spin.",
-        flock: "Boids. Drag one bird; the flock notices. Click to scatter.",
-        field: "Particles on a flow field. Click to gust.",
-        rain: "Falling code and Morse. Click to burst a downpour.",
+        molecules: "Drag molecules anywhere, and click empty space to scatter them.",
+        network: "The original background. it's pretty cool.",
+        orbits: "Would be a real shame if something happened in 22 minutes.",
+        stars: "*copyrighted music plays*",
+        epicycles: "Fourier wheels drawing a path",
+        harmonograph: "Traces that slowly decay. Click to retune.",
+        aurora: "Move the pointer to warp the curtain. Click to rumple it.",
+        pendulum: "Just some double pendulums. Click to yeet.",
+        crystal: "3D lattices. You can yeet them.",
+        flock: "Peer pressure be like",
+        field: "Particles on a field. Click to blow wind.",
+        rain: "l33t hack3r",
     };
     const DEFAULT_PARAMS = {
         frost: 0.7,
@@ -1937,37 +1937,6 @@
             }
         };
 
-        const spawnMolecules = (count) => {
-            if (!enabled || mode !== "molecules") {
-                return;
-            }
-            const field = PARAM_FIELDS.molecules[0];
-            params.molecules.density = clamp(params.molecules.density + 0.35, field.min, field.max);
-            const before = molecules.length;
-            adjustMolecules(width, docHeight);
-            const scrollY = window.scrollY;
-            const rng = createRng();
-            const hardCap = 320;
-            let added = molecules.length - before;
-            if (added === 0 && molecules.length < hardCap) {
-                let maxId = molecules.reduce((max, p) => (p.id > max ? p.id : max), -1);
-                const extra = Math.min(count, hardCap - molecules.length);
-                for (let i = 0; i < extra; i++) {
-                    const mol = new Molecule(maxId + 1 + i, true);
-                    molecules.push(mol);
-                    added += 1;
-                }
-            }
-            const start = molecules.length - added;
-            for (let i = Math.max(before, start); i < molecules.length; i++) {
-                molecules[i].x = 36 + rng.next() * Math.max(1, width - 72);
-                molecules[i].y = scrollY + 48 + rng.next() * Math.max(1, height - 96);
-                molecules[i].lane = 0;
-            }
-            persistParams();
-            renderPanel();
-        };
-
         const formatParam = (value) => {
             if (Math.abs(value - Math.round(value)) < 0.001) {
                 return String(Math.round(value));
@@ -1992,11 +1961,7 @@
                 const value = params[mode][field.key];
                 rows += `<div class="bg-sim-row"><span>${field.label}</span><input type="range" min="${field.min}" max="${field.max}" step="${field.step}" value="${value}" data-scope="${mode}" data-key="${field.key}"><span>${formatParam(value)}</span></div>`;
             }
-            const spawn =
-                mode === "molecules"
-                    ? `<button type="button" class="bg-sim-mode" data-action="spawn" style="margin-top:0.8rem;width:100%;">Spawn +</button>`
-                    : "";
-            panelEl.innerHTML = `<div style="display:flex;align-items:center;justify-content:space-between;gap:0.75rem;margin-bottom:0.75rem;"><strong>Background</strong><span style="display:flex;align-items:center;gap:0.45rem;"><span>${enabled ? "On" : "Off"}</span><button type="button" class="bg-sim-close" data-action="close" aria-label="Close">X</button></span></div><div class="bg-sim-modes">${modesHtml}</div>${rows}${spawn}<p class="bg-sim-hint">${MODE_HINTS[mode]}</p>`;
+            panelEl.innerHTML = `<div style="display:flex;align-items:center;justify-content:space-between;gap:0.75rem;margin-bottom:0.75rem;"><strong>Background</strong><span style="display:flex;align-items:center;gap:0.45rem;"><span>${enabled ? "On" : "Off"}</span><button type="button" class="bg-sim-close" data-action="close" aria-label="Close">X</button></span></div><div class="bg-sim-modes">${modesHtml}</div>${rows}<p class="bg-sim-hint">${MODE_HINTS[mode]}</p>`;
         };
 
         const setMode = (nextMode) => {
@@ -2072,9 +2037,7 @@
                 const actionBtn = event.target.closest("[data-action]");
                 if (actionBtn) {
                     const action = actionBtn.getAttribute("data-action");
-                    if (action === "spawn") {
-                        spawnMolecules(8);
-                    } else if (action === "close") {
+                    if (action === "close") {
                         setPanelOpen(false);
                     }
                     return;
