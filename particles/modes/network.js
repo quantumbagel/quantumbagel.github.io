@@ -36,11 +36,11 @@ export function create(S) {
             const rng = S.createRng();
             this.x = rng.next() * S.width;
             this.y = rng.next() * S.docHeight;
-            const speed = 0.28 * S.params.network.speed;
-            this.baseVx = (rng.next() - 0.5) * speed;
-            this.baseVy = (rng.next() - 0.5) * speed;
-            this.vx = this.baseVx;
-            this.vy = this.baseVy;
+            this.baseVx = (rng.next() - 0.5) * 0.28;
+            this.baseVy = (rng.next() - 0.5) * 0.28;
+            const speed = S.params.network.speed;
+            this.vx = this.baseVx * speed;
+            this.vy = this.baseVy * speed;
             this.radius = rng.next() * 1.4 + 0.9;
             const vis = S.colors.visibility;
             this.baseOpacity = rng.next() * vis.moleculeOpacityRange + vis.moleculeOpacityMin + 0.08;

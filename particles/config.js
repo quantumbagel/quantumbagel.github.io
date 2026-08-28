@@ -86,7 +86,7 @@ export const DEFAULT_PARAMS = {
     life: { density: 1, speed: 1, size: 1 },
 };
 
-const P = (key, label, min, max) => ({ key, label, min, max, step: 0.25 });
+const P = (key, label, min, max, extra) => ({ key, label, min, max, step: 0.25, ...extra });
 
 export const PARAM_FIELDS = {
     molecules: [
@@ -148,7 +148,7 @@ export const PARAM_FIELDS = {
     ],
     life: [
         P("density", "Density", 0.25, 8),
-        P("speed", "Speed", 0.25, 4),
+        P("speed", "Speed", 0, 4, { floor: 0 }),
         P("size", "Size", 0.25, 4),
     ],
 };

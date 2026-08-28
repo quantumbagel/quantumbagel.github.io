@@ -135,8 +135,11 @@ export function create(S) {
                     }
                 }
                 const mag = Math.hypot(p.vx, p.vy);
-                const maxS = 3.8 * speed;
-                if (mag > maxS) {
+                const maxS = 3.8 * Math.abs(speed);
+                if (maxS < 1e-8) {
+                    p.vx = 0;
+                    p.vy = 0;
+                } else if (mag > maxS) {
                     p.vx = (p.vx / mag) * maxS;
                     p.vy = (p.vy / mag) * maxS;
                 }

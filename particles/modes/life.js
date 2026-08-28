@@ -224,7 +224,7 @@ export function create(S) {
             initLife();
         }
         if (animate) {
-            life.acc += frame * S.params.life.speed;
+            life.acc += frame * Math.max(0, S.params.life.speed);
             while (life.acc >= 7.5) {
                 life.acc -= 7.5;
                 stepLife();

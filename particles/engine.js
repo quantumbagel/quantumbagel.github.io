@@ -474,13 +474,14 @@ export function initParticleBackground(canvas, options) {
         return null;
     };
 
-    const paramRow = (label, value, min, max, step, scope, key) => {
+    const paramRow = (label, value, min, max, step, scope, key, floor) => {
         const keyAttr = key ? ` data-key="${key}"` : "";
         const warn = paramIsOverCap({ min, max }, value);
         const rangeVal = clamp(value, min, max);
         const warnClass = warn ? " bg-sim-row-warn" : "";
         const title = warn ? ' title="Above the supported range — may be slow or unstable."' : "";
-        return `<div class="bg-sim-row${warnClass}"${title}><span data-label="${label}">${label}<span class="bg-sim-warn-mark">!</span></span><input type="range" min="${min}" max="${max}" step="${step}" value="${rangeVal}" data-scope="${scope}"${keyAttr}><input type="number" step="any" inputmode="decimal" value="${formatParam(value)}" data-scope="${scope}"${keyAttr}></div>`;
+        const numMin = floor != null ? ` min="${floor}"` : "";
+        return `<div class="bg-sim-row${warnClass}"${title}><span data-label="${label}">${label}<span class="bg-sim-warn-mark">!</span></span><input type="range" min="${min}" max="${max}" step="${step}" value="${rangeVal}" data-scope="${scope}"${keyAttr}><input type="number" step="any" inputmode="decimal"${numMin} value="${formatParam(value)}" data-scope="${scope}"${keyAttr}></div>`;
     };
 
     const syncParamRowWarn = (row, bounds, value) => {
@@ -501,6 +502,9 @@ export function initParticleBackground(canvas, options) {
         if (!bounds) {
             return;
         }
+        if (typeof bounds.floor === "number" && value < bounds.floor) {
+            value = bounds.floor;
+        }
         if (scope === "frost") {
             params.frost = value;
         } else {
@@ -514,7 +518,7 @@ export function initParticleBackground(canvas, options) {
             if (range) {
                 range.value = String(clamp(value, bounds.min, bounds.max));
             }
-            if (number && (commit || number !== sourceInput)) {
+            if (number && (commit || number !== sourceInput || Number(number.value) !== value)) {
                 number.value = formatParam(value);
             }
         }
@@ -536,7 +540,7 @@ export function initParticleBackground(canvas, options) {
         let rows = paramRow("Frost", params.frost, 0, 1, 0.05, "frost");
         for (let i = 0; i < fields.length; i++) {
             const field = fields[i];
-            rows += paramRow(field.label, params[mode][field.key], field.min, field.max, field.step, mode, field.key);
+            rows += paramRow(field.label, params[mode][field.key], field.min, field.max, field.step, mode, field.key, field.floor);
         }
         const randomNote = randomMode
             ? `<p class="bg-sim-note">Random is on, so a new simulation is picked each visit.</p>`
@@ -619,11 +623,9 @@ export function initParticleBackground(canvas, options) {
     const setRandomMode = (nextRandom) => {
         randomMode = !!nextRandom;
         persistParams();
-        if (randomMode) {
-            setMode(pickRandomMode(mode));
-            return;
+        if (!randomMode) {
+            localStorage.setItem(BG_MODE_KEY, mode);
         }
-        localStorage.setItem(BG_MODE_KEY, mode);
         renderPanel();
     };
 

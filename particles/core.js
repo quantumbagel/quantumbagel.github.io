@@ -123,7 +123,8 @@ export function readStoredParams() {
             for (let f = 0; f < fields.length; f++) {
                 const field = fields[f];
                 if (typeof src[field.key] === "number" && Number.isFinite(src[field.key])) {
-                    merged[key][field.key] = src[field.key];
+                    const next = src[field.key];
+                    merged[key][field.key] = typeof field.floor === "number" && next < field.floor ? field.floor : next;
                 }
             }
         }
@@ -205,11 +206,12 @@ export function pagesCount(S, perView, densityMul, maxN) {
     return clampCount(n, minN, maxN);
 }
 
-export function bounceBounds(S, item, pad) {
+export function bounceBounds(S, item, pad, velSign) {
     if (item.dragging || typeof item.vx !== "number" || typeof item.vy !== "number") {
         return;
     }
     const damp = 0.85;
+    const sign = velSign < 0 ? -1 : 1;
     let px = pad == null ? 8 : pad;
     let py = pad == null ? 8 : pad;
     const maxPx = Math.max(8, S.width * 0.1);
@@ -228,35 +230,35 @@ export function bounceBounds(S, item, pad) {
     }
     if (item.x < px) {
         item.x = px;
-        if (item.vx < 0) {
+        if (item.vx * sign < 0) {
             item.vx = -item.vx * damp;
         }
-        if (typeof item.baseVx === "number" && item.baseVx < 0) {
+        if (typeof item.baseVx === "number" && item.baseVx * sign < 0) {
             item.baseVx = -item.baseVx;
         }
     } else if (item.x > S.width - px) {
         item.x = S.width - px;
-        if (item.vx > 0) {
+        if (item.vx * sign > 0) {
             item.vx = -item.vx * damp;
         }
-        if (typeof item.baseVx === "number" && item.baseVx > 0) {
+        if (typeof item.baseVx === "number" && item.baseVx * sign > 0) {
             item.baseVx = -item.baseVx;
         }
     }
     if (item.y < py) {
         item.y = py;
-        if (item.vy < 0) {
+        if (item.vy * sign < 0) {
             item.vy = -item.vy * damp;
         }
-        if (typeof item.baseVy === "number" && item.baseVy < 0) {
+        if (typeof item.baseVy === "number" && item.baseVy * sign < 0) {
             item.baseVy = -item.baseVy;
         }
     } else if (item.y > S.docHeight - py) {
         item.y = S.docHeight - py;
-        if (item.vy > 0) {
+        if (item.vy * sign > 0) {
             item.vy = -item.vy * damp;
         }
-        if (typeof item.baseVy === "number" && item.baseVy > 0) {
+        if (typeof item.baseVy === "number" && item.baseVy * sign > 0) {
             item.baseVy = -item.baseVy;
         }
     }
@@ -521,7 +523,7 @@ export function createQuality() {
 
 export function bindWorldHelpers(S) {
     return {
-        bounceBounds: (item, pad) => bounceBounds(S, item, pad),
+        bounceBounds: (item, pad, velSign) => bounceBounds(S, item, pad, velSign),
         placeApart: (items, radiusOf, rng) => placeApart(S, items, radiusOf, rng),
         rebuildHashGrid: (grid, items, cellSize, getXY) => rebuildHashGrid(S, grid, items, cellSize, getXY),
         scaleDocX: (items, previousWidth) => scaleDocX(S, items, previousWidth),

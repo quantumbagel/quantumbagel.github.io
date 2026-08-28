@@ -131,9 +131,10 @@ export function create(S) {
     };
 
     const tickPendulums = (frame, scrollY, viewHeight, animate) => {
-        const speed = Math.max(0.05, S.params.pendulum.speed);
+        const speed = S.params.pendulum.speed;
+        const speedAbs = Math.abs(speed);
         const g = 0.28 * S.params.pendulum.energy;
-        const steps = Math.max(2, Math.min(8, Math.ceil(speed * 3)));
+        const steps = Math.max(2, Math.min(8, Math.ceil(Math.max(speedAbs, 0.05) * 3)));
         const dt = (0.14 * frame * speed) / steps;
         for (let i = 0; i < pendulums.length; i++) {
             const p = pendulums[i];

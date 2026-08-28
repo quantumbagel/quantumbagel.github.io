@@ -105,9 +105,17 @@ export function create(S) {
                         for (let r = from + 1; r <= to; r++) {
                             rainStamp(col, r, 1);
                         }
+                    } else if (to < from) {
+                        for (let r = from - 1; r >= to; r--) {
+                            rainStamp(col, r, 1);
+                        }
                     }
-                    if (col.head >= rows) {
+                    if (speedMul >= 0 && col.head >= rows) {
                         col.head = -4 - Math.random() * 12;
+                        col.wait = 1.5 + Math.random() * 9;
+                        col.speed = 0.16 + Math.random() * 0.24;
+                    } else if (speedMul < 0 && col.head < -1) {
+                        col.head = rows + 4 + Math.random() * 12;
                         col.wait = 1.5 + Math.random() * 9;
                         col.speed = 0.16 + Math.random() * 0.24;
                     }

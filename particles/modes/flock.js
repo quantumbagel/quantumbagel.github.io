@@ -135,14 +135,17 @@ export function create(S) {
                     }
                 }
                 const mag = Math.hypot(b.vx, b.vy) || 1;
-                const maxS = 1.8 * speed;
-                if (mag > maxS) {
+                const maxS = 1.8 * Math.abs(speed);
+                if (maxS < 1e-8) {
+                    b.vx = 0;
+                    b.vy = 0;
+                } else if (mag > maxS) {
                     b.vx = (b.vx / mag) * maxS;
                     b.vy = (b.vy / mag) * maxS;
                 }
                 b.x += b.vx * frame * speed;
                 b.y += b.vy * frame * speed;
-                bounceBounds(b, 8);
+                bounceBounds(b, 8, speed < 0 ? -1 : 1);
             }
         }
         S.ctx.lineCap = "round";
@@ -152,7 +155,7 @@ export function create(S) {
             if (sy < -visPad || sy > viewHeight + visPad) {
                 continue;
             }
-            const ang = Math.atan2(b.vy, b.vx);
+            const ang = Math.atan2(b.vy, b.vx) + (speed < 0 ? Math.PI : 0);
             S.ctx.globalAlpha = 0.55;
             S.ctx.strokeStyle = S.particleColorStr;
             S.ctx.fillStyle = S.particleColorStr;
