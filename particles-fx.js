@@ -24,6 +24,164 @@
             cells: [[]],
             occupied: [],
         };
+        const flockGrid = {
+            cellSize: 92,
+            cols: 1,
+            rows: 1,
+            cells: [[]],
+            occupied: [],
+        };
+
+        const bounceBounds = (item, pad) => {
+            const p = pad == null ? 24 : pad;
+            if (typeof item.vx !== "number" || typeof item.vy !== "number") {
+                return;
+            }
+            if (item.x < p) {
+                item.x = p;
+                if (item.vx < 0) {
+                    item.vx = -item.vx * 0.85;
+                }
+            } else if (item.x > S.width - p) {
+                item.x = S.width - p;
+                if (item.vx > 0) {
+                    item.vx = -item.vx * 0.85;
+                }
+            }
+            if (item.y < p) {
+                item.y = p;
+                if (item.vy < 0) {
+                    item.vy = -item.vy * 0.85;
+                }
+            } else if (item.y > S.docHeight - p) {
+                item.y = S.docHeight - p;
+                if (item.vy > 0) {
+                    item.vy = -item.vy * 0.85;
+                }
+            }
+        };
+
+        const separateBodies = (items, radiusOf, frame, strength) => {
+            const n = items.length;
+            if (n < 2) {
+                return;
+            }
+            const force = strength == null ? 0.42 : strength;
+            for (let i = 0; i < n; i++) {
+                const a = items[i];
+                if (a.dragging) {
+                    continue;
+                }
+                const ra = radiusOf(a);
+                for (let j = i + 1; j < n; j++) {
+                    const b = items[j];
+                    if (b.dragging) {
+                        continue;
+                    }
+                    const dx = a.x - b.x;
+                    const dy = a.y - b.y;
+                    const min = ra + radiusOf(b);
+                    const distSq = dx * dx + dy * dy;
+                    if (distSq >= min * min || distSq < 0.01) {
+                        continue;
+                    }
+                    const dist = Math.sqrt(distSq);
+                    const overlap = (min - dist) / min;
+                    const push = overlap * overlap * force * frame;
+                    const inv = 1 / dist;
+                    const px = dx * inv * push;
+                    const py = dy * inv * push;
+                    a.x += px;
+                    a.y += py;
+                    b.x -= px;
+                    b.y -= py;
+                    if (typeof a.vx === "number" && typeof b.vx === "number") {
+                        a.vx += px * 0.22;
+                        a.vy += py * 0.22;
+                        b.vx -= px * 0.22;
+                        b.vy -= py * 0.22;
+                    }
+                }
+            }
+        };
+
+        const placeApart = (items, radiusOf, rng) => {
+            for (let i = 0; i < items.length; i++) {
+                const a = items[i];
+                const ra = radiusOf(a);
+                const pad = Math.max(18, Math.min(ra, 56));
+                for (let attempt = 0; attempt < 16; attempt++) {
+                    let ok = true;
+                    for (let j = 0; j < i; j++) {
+                        const b = items[j];
+                        const dx = a.x - b.x;
+                        const dy = a.y - b.y;
+                        const need = ra + radiusOf(b);
+                        if (dx * dx + dy * dy < need * need) {
+                            ok = false;
+                            break;
+                        }
+                    }
+                    if (ok) {
+                        break;
+                    }
+                    a.x = pad + rng.next() * Math.max(1, S.width - pad * 2);
+                    a.y = pad + rng.next() * Math.max(1, S.docHeight - pad * 2);
+                }
+            }
+        };
+
+        const nearestHit = (items, absX, absY, radiusOf, minR) => {
+            let best = null;
+            let bestD = 1e9;
+            const floorR = minR == null ? 18 : minR;
+            for (let i = 0; i < items.length; i++) {
+                const it = items[i];
+                const dx = it.x - absX;
+                const dy = it.y - absY;
+                const r = Math.max(floorR, radiusOf ? radiusOf(it) : floorR);
+                const d = dx * dx + dy * dy;
+                if (d < r * r && d < bestD) {
+                    bestD = d;
+                    best = it;
+                }
+            }
+            return best;
+        };
+
+        const rebuildHashGrid = (grid, items, cellSize, getXY) => {
+            const cell = cellSize || grid.cellSize;
+            grid.cellSize = cell;
+            grid.cols = Math.max(1, Math.ceil(S.width / cell));
+            grid.rows = Math.max(1, Math.ceil(S.docHeight / cell));
+            const count = grid.cols * grid.rows;
+            if (grid.cells.length !== count) {
+                grid.cells = new Array(count);
+                for (let i = 0; i < count; i++) {
+                    grid.cells[i] = [];
+                }
+            } else {
+                for (let i = 0; i < grid.occupied.length; i++) {
+                    grid.cells[grid.occupied[i]].length = 0;
+                }
+            }
+            grid.occupied.length = 0;
+            for (let i = 0; i < items.length; i++) {
+                const item = items[i];
+                const pos = getXY ? getXY(item) : item;
+                let cx = (pos.x / cell) | 0;
+                let cy = (pos.y / cell) | 0;
+                if (cx < 0) cx = 0;
+                else if (cx >= grid.cols) cx = grid.cols - 1;
+                if (cy < 0) cy = 0;
+                else if (cy >= grid.rows) cy = grid.rows - 1;
+                const index = cy * grid.cols + cx;
+                if (grid.cells[index].length === 0) {
+                    grid.occupied.push(index);
+                }
+                grid.cells[index].push(item);
+            }
+        };
 
         const getNetworkCount = () => {
             if (!S.enabled) {
@@ -31,8 +189,8 @@
             }
             const area = S.width * S.docHeight;
             const mobile = S.width < S.MOBILE_BREAKPOINT ? 0.5 : 1;
-            const density = 0.00013 * S.params.network.density * (S.reducedMotion ? 0.38 : 1) * mobile;
-            return Math.min(820, Math.max(S.reducedMotion ? 70 : 120, Math.floor(area * density)));
+            const density = 0.00017 * S.params.network.density * (S.reducedMotion ? 0.38 : 1) * mobile;
+            return Math.min(1100, Math.max(S.reducedMotion ? 90 : 160, Math.floor(area * density)));
         };
 
         class NetParticle {
@@ -137,12 +295,12 @@
             const pages = Math.max(1, S.docHeight / viewH);
             const densityMul = S.params.orbits.density;
             if (S.width < S.MOBILE_BREAKPOINT) {
-                const perView = S.reducedMotion ? 3 : 5;
-                return Math.min(48, Math.max(perView, Math.round(perView * pages * densityMul)));
+                const perView = S.reducedMotion ? 5 : 8;
+                return Math.min(72, Math.max(perView, Math.round(perView * pages * densityMul)));
             }
             const area = S.width * S.docHeight;
-            const density = 0.000028 * (S.reducedMotion ? 0.45 : 1) * densityMul;
-            return Math.min(80, Math.max(S.reducedMotion ? 8 : 16, Math.floor(area * density)));
+            const density = 0.000042 * (S.reducedMotion ? 0.45 : 1) * densityMul;
+            return Math.min(130, Math.max(S.reducedMotion ? 12 : 24, Math.floor(area * density)));
         };
 
         const projectOrbitPoint = (px, py, pz, ox, oy) => {
@@ -213,10 +371,10 @@
                 const vis = S.colors.visibility;
                 this.baseOpacity = vis.moleculeOpacityMin + rng.next() * vis.moleculeOpacityRange + 0.14;
                 this.opacity = fadeIn ? 0 : this.baseOpacity;
-                const ringCount = this.hero ? 4 + ((rng.next() * 3) | 0) : 2 + ((rng.next() * 3) | 0);
+                const ringCount = this.hero ? 5 + ((rng.next() * 3) | 0) : 3 + ((rng.next() * 3) | 0);
                 this.rings = [];
                 for (let i = 0; i < ringCount; i++) {
-                    const electronCount = i === 0 ? 2 + ((rng.next() * 2) | 0) : 1 + ((rng.next() * 2) | 0);
+                    const electronCount = i === 0 ? 3 + ((rng.next() * 2) | 0) : 2 + ((rng.next() * 3) | 0);
                     const phases = [];
                     for (let e = 0; e < electronCount; e++) {
                         phases.push((e / electronCount) * Math.PI * 2 + rng.next() * 0.4);
@@ -242,6 +400,7 @@
             for (let i = 0; i < count; i++) {
                 orbitSystems.push(new OrbitSystem(i, fadeIn));
             }
+            placeApart(orbitSystems, (sys) => sys.radius * S.params.orbits.spread * 0.55, S.createRng());
         };
 
         const adjustOrbits = (previousWidth, previousDocHeight) => {
@@ -274,7 +433,7 @@
             const connectSq = connectDist * connectDist;
             const hoverConnect = 86 * S.params.network.links;
             const hoverSq = hoverConnect * hoverConnect;
-            const sep = 36;
+            const sep = 44;
             const sepSq = sep * sep;
             const mouseR = S.MOUSE_RADIUS * S.params.network.mouse;
             const mouseSq = mouseR * mouseR;
@@ -369,7 +528,7 @@
                             const dist = Math.sqrt(distSq);
                             if (distSq < sepSq && !p1.dragging && !p2.dragging) {
                                 const overlap = (sep - dist) / sep;
-                                const push = overlap * overlap * 0.3 * frame;
+                                const push = overlap * overlap * 0.55 * frame;
                                 const inv = 1 / dist;
                                 p1.x += dx * inv * push;
                                 p1.y += dy * inv * push;
@@ -459,7 +618,13 @@
                         sys.rotY += 0.012 * speedMul * frame;
                     }
                 }
+            }
+            if (animate) {
+                separateBodies(orbitSystems, (sys) => sys.radius * spread * 0.58, frame, 0.52);
+            }
 
+            for (let i = 0; i < orbitSystems.length; i++) {
+                const sys = orbitSystems[i];
                 const originY = sys.y - scrollY;
                 const visR = sys.radius * spread + 36;
                 if (originY < -visR || originY > viewHeight + visR) {
@@ -559,8 +724,8 @@
                 return 0;
             }
             const mobile = S.width < S.MOBILE_BREAKPOINT ? 0.55 : 1;
-            const n = Math.floor(340 * S.params.stars.density * mobile * (S.reducedMotion ? 0.4 : 1));
-            return Math.min(560, Math.max(S.reducedMotion ? 80 : 160, n));
+            const n = Math.floor(520 * S.params.stars.density * mobile * (S.reducedMotion ? 0.4 : 1));
+            return Math.min(900, Math.max(S.reducedMotion ? 110 : 240, n));
         };
 
         const resetStar = (star, rng, fromFar) => {
@@ -569,6 +734,8 @@
             star.z = fromFar ? 1 : rng.next() * 0.82 + 0.16;
             star.pz = star.z;
             star.hot = rng.next() < 0.08;
+            star.sx = 0;
+            star.sy = 0;
             return star;
         };
 
@@ -577,7 +744,7 @@
             const rng = S.createRng();
             const count = getStarCount();
             for (let i = 0; i < count; i++) {
-                stars.push(resetStar({ x: 0, y: 0, z: 1, pz: 1, hot: false }, rng, false));
+                stars.push(resetStar({ x: 0, y: 0, z: 1, pz: 1, hot: false, sx: 0, sy: 0 }, rng, false));
             }
         };
 
@@ -586,7 +753,7 @@
             const rng = S.createRng();
             if (stars.length < target) {
                 while (stars.length < target) {
-                    stars.push(resetStar({ x: 0, y: 0, z: 1, pz: 1, hot: false }, rng, false));
+                    stars.push(resetStar({ x: 0, y: 0, z: 1, pz: 1, hot: false, sx: 0, sy: 0 }, rng, false));
                 }
             } else if (stars.length > target) {
                 stars.length = target;
@@ -613,6 +780,8 @@
                 const k = focal / star.z;
                 const x = cx + star.x * k;
                 const y = cy + star.y * k;
+                star.sx = x;
+                star.sy = y;
                 if (x < -40 || x > S.width + 40 || y < -40 || y > S.height + 40) {
                     if (animate) {
                         resetStar(star, rng, true);
@@ -669,14 +838,14 @@
             return Math.min(maxTotal, Math.max(S.reducedMotion ? Math.max(2, (perView * 0.5) | 0) : perView, n));
         };
 
-        const getEpicycleCount = () => pagesCount(5, 70, S.params.epicycles.density);
-        const getHarmonicCount = () => pagesCount(5, 60, S.params.harmonograph.density);
-        const getPendulumCount = () => pagesCount(5, 50, S.params.pendulum.density);
-        const getCrystalCount = () => pagesCount(5, 60, S.params.crystal.density);
-        const getFlockCount = () => pagesCount(70, 700, S.params.flock.density);
-        const getFieldCount = () => pagesCount(110, 900, S.params.field.density);
-        const getAuroraCount = () => Math.min(14, Math.max(4, Math.round(7 * S.params.aurora.density * (S.reducedMotion ? 0.5 : 1))));
-        const getRainCount = () => Math.min(90, Math.max(18, Math.round((S.width / 18) * S.params.rain.density * (S.width < S.MOBILE_BREAKPOINT ? 0.7 : 1))));
+        const getEpicycleCount = () => pagesCount(12, 160, S.params.epicycles.density);
+        const getHarmonicCount = () => pagesCount(12, 140, S.params.harmonograph.density);
+        const getPendulumCount = () => pagesCount(11, 120, S.params.pendulum.density);
+        const getCrystalCount = () => pagesCount(14, 150, S.params.crystal.density);
+        const getFlockCount = () => pagesCount(110, 900, S.params.flock.density);
+        const getFieldCount = () => pagesCount(180, 1400, S.params.field.density);
+        const getAuroraCount = () => Math.min(22, Math.max(8, Math.round(12 * S.params.aurora.density * (S.reducedMotion ? 0.5 : 1))));
+        const getRainCount = () => Math.min(170, Math.max(28, Math.round((S.width / 12) * S.params.rain.density * (S.width < S.MOBILE_BREAKPOINT ? 0.7 : 1))));
 
         const scaleDocY = (items, previousDocHeight) => {
             if (previousDocHeight > 0 && Math.abs(S.docHeight - previousDocHeight) > 30) {
@@ -705,7 +874,7 @@
             const rng = S.createRng();
             const n = getEpicycleCount();
             for (let i = 0; i < n; i++) {
-                const armN = 3 + ((rng.next() * 3 * S.params.epicycles.arms) | 0);
+                const armN = 4 + ((rng.next() * 3 * S.params.epicycles.arms) | 0);
                 const arms = [];
                 let rSum = 0;
                 for (let a = 0; a < armN; a++) {
@@ -720,12 +889,18 @@
                 epicycles.push({
                     x: 40 + rng.next() * Math.max(1, S.width - 80),
                     y: 40 + rng.next() * Math.max(1, S.docHeight - 80),
+                    vx: (rng.next() - 0.5) * 0.08,
+                    vy: (rng.next() - 0.5) * 0.08,
                     arms,
                     path: [],
                     radius: rSum,
                     accent: rng.next() < 0.4,
+                    dragging: false,
+                    tipX: 0,
+                    tipY: 0,
                 });
             }
+            placeApart(epicycles, (sys) => sys.radius * 0.55 + 18, rng);
         };
 
         const adjustEpicycles = (pw, ph) => {
@@ -744,12 +919,21 @@
             S.ctx.lineCap = "round";
             for (let i = 0; i < epicycles.length; i++) {
                 const sys = epicycles[i];
+                if (animate && !sys.dragging) {
+                    sys.x += sys.vx * frame;
+                    sys.y += sys.vy * frame;
+                    bounceBounds(sys, Math.max(24, sys.radius * 0.25));
+                }
+            }
+            if (animate) {
+                separateBodies(epicycles, (sys) => sys.radius * 0.5 + 16, frame, 0.48);
+            }
+            for (let i = 0; i < epicycles.length; i++) {
+                const sys = epicycles[i];
                 let x = sys.x;
                 let y = sys.y;
                 const sy0 = sys.y - scrollY;
-                if (sy0 < -sys.radius - 40 || sy0 > viewHeight + sys.radius + 40) {
-                    continue;
-                }
+                const offscreen = sy0 < -sys.radius - 40 || sy0 > viewHeight + sys.radius + 40;
                 let px = x;
                 let py = y;
                 for (let a = 0; a < sys.arms.length; a++) {
@@ -759,24 +943,31 @@
                     }
                     const nx = x + Math.cos(arm.p) * arm.r;
                     const ny = y + Math.sin(arm.p) * arm.r;
-                    S.ctx.strokeStyle = S.particleColorStr;
-                    S.ctx.globalAlpha = 0.12;
-                    S.ctx.lineWidth = 0.7;
-                    S.ctx.beginPath();
-                    S.ctx.arc(x - 0, y - scrollY, Math.abs(arm.r), 0, Math.PI * 2);
-                    S.ctx.stroke();
-                    S.ctx.globalAlpha = 0.22;
-                    S.ctx.beginPath();
-                    S.ctx.moveTo(x, y - scrollY);
-                    S.ctx.lineTo(nx, ny - scrollY);
-                    S.ctx.stroke();
+                    if (!offscreen) {
+                        S.ctx.strokeStyle = S.particleColorStr;
+                        S.ctx.globalAlpha = 0.12;
+                        S.ctx.lineWidth = 0.7;
+                        S.ctx.beginPath();
+                        S.ctx.arc(x, y - scrollY, Math.abs(arm.r), 0, Math.PI * 2);
+                        S.ctx.stroke();
+                        S.ctx.globalAlpha = 0.22;
+                        S.ctx.beginPath();
+                        S.ctx.moveTo(x, y - scrollY);
+                        S.ctx.lineTo(nx, ny - scrollY);
+                        S.ctx.stroke();
+                    }
                     x = nx;
                     y = ny;
                     px = nx;
                     py = ny;
                 }
+                sys.tipX = px;
+                sys.tipY = py;
                 if (animate) {
                     pushPath(sys.path, px, py, PATH_CAP);
+                }
+                if (offscreen) {
+                    continue;
                 }
                 drawFadePath(sys.path, sys.accent ? S.accentColorStr : S.particleColorStr, 0.55, 1.15, scrollY);
                 S.ctx.globalAlpha = 0.85;
@@ -795,6 +986,8 @@
                 harmonics.push({
                     x: 40 + rng.next() * Math.max(1, S.width - 80),
                     y: 40 + rng.next() * Math.max(1, S.docHeight - 80),
+                    vx: (rng.next() - 0.5) * 0.07,
+                    vy: (rng.next() - 0.5) * 0.07,
                     ax: 40 + rng.next() * 70,
                     ay: 30 + rng.next() * 55,
                     wx: 0.011 + rng.next() * 0.02,
@@ -804,8 +997,10 @@
                     t: rng.next() * 40,
                     path: [],
                     accent: rng.next() < 0.45,
+                    dragging: false,
                 });
             }
+            placeApart(harmonics, (h) => Math.max(h.ax, h.ay) + 16, rng);
         };
 
         const adjustHarmonics = (pw, ph) => {
@@ -824,8 +1019,22 @@
             const decay = 0.0009 + (1 - S.params.harmonograph.decay) * 0.0028;
             for (let i = 0; i < harmonics.length; i++) {
                 const h = harmonics[i];
+                if (animate && !h.dragging) {
+                    h.x += h.vx * frame;
+                    h.y += h.vy * frame;
+                    bounceBounds(h, Math.max(h.ax, h.ay) * 0.35 + 18);
+                }
+            }
+            if (animate) {
+                separateBodies(harmonics, (h) => Math.max(h.ax, h.ay) + 12, frame, 0.45);
+            }
+            for (let i = 0; i < harmonics.length; i++) {
+                const h = harmonics[i];
                 const vis = h.y - scrollY;
                 if (vis < -140 || vis > viewHeight + 140) {
+                    if (animate) {
+                        h.t += speed * frame;
+                    }
                     continue;
                 }
                 if (animate) {
@@ -913,6 +1122,8 @@
                 pendulums.push({
                     x: 40 + rng.next() * Math.max(1, S.width - 80),
                     y: 50 + rng.next() * Math.max(1, S.docHeight - 120),
+                    vx: (rng.next() - 0.5) * 0.06,
+                    vy: (rng.next() - 0.5) * 0.06,
                     l1: 36 + rng.next() * 22,
                     l2: 28 + rng.next() * 20,
                     a1: Math.PI * (0.6 + rng.next() * 0.8),
@@ -921,8 +1132,14 @@
                     w2: (rng.next() - 0.5) * 0.04,
                     path: [],
                     accent: rng.next() < 0.5,
+                    dragging: false,
+                    x1: 0,
+                    y1: 0,
+                    x2: 0,
+                    y2: 0,
                 });
             }
+            placeApart(pendulums, (p) => p.l1 + p.l2 + 10, rng);
         };
 
         const adjustPendulums = (pw, ph) => {
@@ -942,26 +1159,10 @@
             const dt = 0.16 * frame * speed;
             for (let i = 0; i < pendulums.length; i++) {
                 const p = pendulums[i];
-                const vis = p.y - scrollY;
-                if (vis < -160 || vis > viewHeight + 160) {
-                    if (animate) {
-                        const a1 = p.a1;
-                        const a2 = p.a2;
-                        const w1 = p.w1;
-                        const w2 = p.w2;
-                        const l1 = p.l1;
-                        const l2 = p.l2;
-                        const den = 2 - Math.cos(2 * (a1 - a2));
-                        const aw1 = (-g * (2 * Math.sin(a1) - Math.sin(a1 - 2 * a2)) - 2 * Math.sin(a1 - a2) * (w2 * w2 * l2 + w1 * w1 * l1 * Math.cos(a1 - a2))) / (l1 * den);
-                        const aw2 = (2 * Math.sin(a1 - a2) * (w1 * w1 * l1 + g * Math.cos(a1) + w2 * w2 * l2 * Math.cos(a1 - a2))) / (l2 * den);
-                        p.w1 += aw1 * dt;
-                        p.w2 += aw2 * dt;
-                        p.a1 += p.w1 * dt;
-                        p.a2 += p.w2 * dt;
-                    }
-                    continue;
-                }
-                if (animate) {
+                if (animate && !p.dragging) {
+                    p.x += p.vx * frame;
+                    p.y += p.vy * frame;
+                    bounceBounds(p, p.l1 + p.l2 + 8);
                     const a1 = p.a1;
                     const a2 = p.a2;
                     const w1 = p.w1;
@@ -978,12 +1179,65 @@
                     p.a1 += p.w1 * dt;
                     p.a2 += p.w2 * dt;
                 }
-                const x1 = p.x + Math.sin(p.a1) * p.l1;
-                const y1 = p.y + Math.cos(p.a1) * p.l1;
-                const x2 = x1 + Math.sin(p.a2) * p.l2;
-                const y2 = y1 + Math.cos(p.a2) * p.l2;
+                p.x1 = p.x + Math.sin(p.a1) * p.l1;
+                p.y1 = p.y + Math.cos(p.a1) * p.l1;
+                p.x2 = p.x1 + Math.sin(p.a2) * p.l2;
+                p.y2 = p.y1 + Math.cos(p.a2) * p.l2;
+            }
+            if (animate) {
+                separateBodies(pendulums, (p) => p.l1 * 0.45 + 18, frame, 0.4);
+                const bobR = 9;
+                const bobRSq = bobR * bobR * 4;
+                for (let i = 0; i < pendulums.length; i++) {
+                    const a = pendulums[i];
+                    for (let j = i + 1; j < pendulums.length; j++) {
+                        const b = pendulums[j];
+                        const pairs = [
+                            [a.x1, a.y1, b.x1, b.y1, 1, 1],
+                            [a.x1, a.y1, b.x2, b.y2, 1, 2],
+                            [a.x2, a.y2, b.x1, b.y1, 2, 1],
+                            [a.x2, a.y2, b.x2, b.y2, 2, 2],
+                        ];
+                        for (let k = 0; k < pairs.length; k++) {
+                            const dx = pairs[k][0] - pairs[k][2];
+                            const dy = pairs[k][1] - pairs[k][3];
+                            const distSq = dx * dx + dy * dy;
+                            if (distSq >= bobRSq || distSq < 0.01) {
+                                continue;
+                            }
+                            const dist = Math.sqrt(distSq);
+                            const overlap = (bobR * 2 - dist) / (bobR * 2);
+                            const inv = 1 / dist;
+                            const nx = dx * inv;
+                            const ny = dy * inv;
+                            const torqueA = (pairs[k][0] - a.x) * ny - (pairs[k][1] - a.y) * nx;
+                            const torqueB = (pairs[k][2] - b.x) * ny - (pairs[k][3] - b.y) * nx;
+                            if (pairs[k][4] === 1) {
+                                a.w1 += torqueA * overlap * 0.012;
+                            } else {
+                                a.w2 += torqueA * overlap * 0.016;
+                            }
+                            if (pairs[k][5] === 1) {
+                                b.w1 -= torqueB * overlap * 0.012;
+                            } else {
+                                b.w2 -= torqueB * overlap * 0.016;
+                            }
+                            a.vx += nx * overlap * 0.2;
+                            a.vy += ny * overlap * 0.2;
+                            b.vx -= nx * overlap * 0.2;
+                            b.vy -= ny * overlap * 0.2;
+                        }
+                    }
+                }
+            }
+            for (let i = 0; i < pendulums.length; i++) {
+                const p = pendulums[i];
+                const vis = p.y - scrollY;
+                if (vis < -160 || vis > viewHeight + 160) {
+                    continue;
+                }
                 if (animate) {
-                    pushPath(p.path, x2, y2, PATH_CAP);
+                    pushPath(p.path, p.x2, p.y2, PATH_CAP);
                 }
                 drawFadePath(p.path, p.accent ? S.accentColorStr : S.particleColorStr, 0.42, 1, scrollY);
                 S.ctx.strokeStyle = S.particleColorStr;
@@ -991,17 +1245,17 @@
                 S.ctx.lineWidth = 1;
                 S.ctx.beginPath();
                 S.ctx.moveTo(p.x, p.y - scrollY);
-                S.ctx.lineTo(x1, y1 - scrollY);
-                S.ctx.lineTo(x2, y2 - scrollY);
+                S.ctx.lineTo(p.x1, p.y1 - scrollY);
+                S.ctx.lineTo(p.x2, p.y2 - scrollY);
                 S.ctx.stroke();
                 S.ctx.globalAlpha = 0.8;
                 S.ctx.fillStyle = S.particleColorStr;
                 S.ctx.beginPath();
-                S.ctx.arc(x1, y1 - scrollY, 2.1, 0, Math.PI * 2);
+                S.ctx.arc(p.x1, p.y1 - scrollY, 2.1, 0, Math.PI * 2);
                 S.ctx.fill();
                 S.ctx.fillStyle = p.accent ? S.accentColorStr : S.particleColorStr;
                 S.ctx.beginPath();
-                S.ctx.arc(x2, y2 - scrollY, 2.6, 0, Math.PI * 2);
+                S.ctx.arc(p.x2, p.y2 - scrollY, 2.6, 0, Math.PI * 2);
                 S.ctx.fill();
             }
         };
@@ -1045,8 +1299,8 @@
                 crystals.push({
                     x: 40 + rng.next() * Math.max(1, S.width - 80),
                     y: 40 + rng.next() * Math.max(1, S.docHeight - 80),
-                    vx: (rng.next() - 0.5) * 0.08,
-                    vy: (rng.next() - 0.5) * 0.08,
+                    vx: (rng.next() - 0.5) * 0.09,
+                    vy: (rng.next() - 0.5) * 0.09,
                     rotX: rng.next() * Math.PI,
                     rotY: rng.next() * Math.PI,
                     rotZ: rng.next() * Math.PI,
@@ -1060,6 +1314,7 @@
                     highlight: 0,
                 });
             }
+            placeApart(crystals, (c) => 34 * c.scale * S.params.crystal.size + 10, rng);
         };
 
         const adjustCrystals = (pw, ph) => {
@@ -1118,6 +1373,12 @@
                         c.rotY += 0.02 * speed * frame;
                     }
                 }
+            }
+            if (animate) {
+                separateBodies(crystals, (c) => 32 * c.scale * size + 12, frame, 0.5);
+            }
+            for (let i = 0; i < crystals.length; i++) {
+                const c = crystals[i];
                 const sy = c.y - scrollY;
                 if (sy < -90 || sy > viewHeight + 90) {
                     continue;
@@ -1219,6 +1480,8 @@
             const coh = S.params.flock.cohesion;
             const visPad = 40;
             if (animate) {
+                rebuildHashGrid(flockGrid, boids, 92);
+                const cell = flockGrid.cellSize;
                 for (let i = 0; i < boids.length; i++) {
                     const b = boids[i];
                     if (b.dragging) {
@@ -1231,26 +1494,42 @@
                     let sx = 0;
                     let sy = 0;
                     let n = 0;
-                    for (let j = 0; j < boids.length; j++) {
-                        if (j === i) {
-                            continue;
-                        }
-                        const o = boids[j];
-                        const dx = o.x - b.x;
-                        const dy = o.y - b.y;
-                        const dSq = dx * dx + dy * dy;
-                        if (dSq > 85 * 85 || dSq < 0.01) {
-                            continue;
-                        }
-                        const d = Math.sqrt(dSq);
-                        n += 1;
-                        ax += o.vx;
-                        ay += o.vy;
-                        cx += o.x;
-                        cy += o.y;
-                        if (d < 22) {
-                            sx -= dx / d;
-                            sy -= dy / d;
+                    let bx = (b.x / cell) | 0;
+                    let by = (b.y / cell) | 0;
+                    if (bx < 0) bx = 0;
+                    else if (bx >= flockGrid.cols) bx = flockGrid.cols - 1;
+                    if (by < 0) by = 0;
+                    else if (by >= flockGrid.rows) by = flockGrid.rows - 1;
+                    const xMin = bx > 0 ? bx - 1 : 0;
+                    const xMax = bx + 1 < flockGrid.cols ? bx + 1 : flockGrid.cols - 1;
+                    const yMin = by > 0 ? by - 1 : 0;
+                    const yMax = by + 1 < flockGrid.rows ? by + 1 : flockGrid.rows - 1;
+                    for (let ny = yMin; ny <= yMax; ny++) {
+                        for (let nx = xMin; nx <= xMax; nx++) {
+                            const bucket = flockGrid.cells[ny * flockGrid.cols + nx];
+                            for (let c = 0; c < bucket.length; c++) {
+                                const o = bucket[c];
+                                if (o === b) {
+                                    continue;
+                                }
+                                const dx = o.x - b.x;
+                                const dy = o.y - b.y;
+                                const dSq = dx * dx + dy * dy;
+                                if (dSq > 90 * 90 || dSq < 0.01) {
+                                    continue;
+                                }
+                                const d = Math.sqrt(dSq);
+                                n += 1;
+                                ax += o.vx;
+                                ay += o.vy;
+                                cx += o.x;
+                                cy += o.y;
+                                if (d < 26) {
+                                    const push = (26 - d) / 26;
+                                    sx -= (dx / d) * (0.7 + push * 1.8);
+                                    sy -= (dy / d) * (0.7 + push * 1.8);
+                                }
+                            }
                         }
                     }
                     if (n > 0) {
@@ -1258,8 +1537,8 @@
                         ay = ay / n - b.vy;
                         cx = cx / n - b.x;
                         cy = cy / n - b.y;
-                        b.vx += ax * 0.04 * coh + cx * 0.003 * coh + sx * 0.12;
-                        b.vy += ay * 0.04 * coh + cy * 0.003 * coh + sy * 0.12;
+                        b.vx += ax * 0.04 * coh + cx * 0.003 * coh + sx * 0.16;
+                        b.vy += ay * 0.04 * coh + cy * 0.003 * coh + sy * 0.16;
                     }
                     if (mouseActive) {
                         const dx = mouseAbsX - b.x;
@@ -1319,6 +1598,8 @@
                 fieldParticles.push({
                     x: rng.next() * S.width,
                     y: rng.next() * S.docHeight,
+                    vx: 0,
+                    vy: 0,
                     px: 0,
                     py: 0,
                     life: rng.next(),
@@ -1349,8 +1630,10 @@
                 const fx = Math.sin((p.y * 0.012 + t) * swirl) + Math.cos((p.x * 0.008 - t * 0.7) * swirl);
                 const fy = Math.cos((p.x * 0.012 - t) * swirl) + Math.sin((p.y * 0.009 + t * 0.6) * swirl);
                 if (animate) {
-                    p.x += fx * 1.35 * speed * frame;
-                    p.y += fy * 1.35 * speed * frame;
+                    p.vx *= 0.92;
+                    p.vy *= 0.92;
+                    p.x += fx * 1.35 * speed * frame + p.vx * frame;
+                    p.y += fy * 1.35 * speed * frame + p.vy * frame;
                     p.life += 0.01 * frame;
                     if (p.x < 0) {
                         p.x += S.width;
@@ -1382,7 +1665,7 @@
             const n = getRainCount();
             const gap = Math.max(10, S.width / n);
             for (let i = 0; i < n; i++) {
-                const len = 8 + ((rng.next() * 10) | 0);
+                const len = 12 + ((rng.next() * 14) | 0);
                 const glyphs = [];
                 for (let g = 0; g < len; g++) {
                     glyphs.push(RAIN_GLYPHS.charAt((rng.next() * RAIN_GLYPHS.length) | 0));
@@ -1487,72 +1770,34 @@
                 else if (mode === "rain") tickRain(frame, animate);
             },
             hitTest(mode, absX, absY) {
-                if (mode === "stars" || mode === "aurora" || mode === "rain" || mode === "harmonograph" || mode === "epicycles" || mode === "field") {
+                if (mode === "stars" || mode === "aurora" || mode === "rain" || mode === "field") {
                     return null;
                 }
                 if (mode === "network") {
-                    let best = null;
-                    let bestD = 22 * 22;
-                    for (let i = 0; i < netParticles.length; i++) {
-                        const p = netParticles[i];
-                        const dx = p.x - absX;
-                        const dy = p.y - absY;
-                        const d = dx * dx + dy * dy;
-                        if (d < bestD) {
-                            bestD = d;
-                            best = p;
-                        }
-                    }
-                    return best;
+                    return nearestHit(netParticles, absX, absY, (p) => p.radius * 4 + 18, 32);
                 }
                 if (mode === "orbits") {
-                    let best = null;
-                    let bestD = 1e9;
-                    for (let i = 0; i < orbitSystems.length; i++) {
-                        const sys = orbitSystems[i];
-                        const dx = sys.x - absX;
-                        const dy = sys.y - absY;
-                        const r = sys.radius * S.params.orbits.spread * 0.7 + 14;
-                        const d = dx * dx + dy * dy;
-                        if (d < r * r && d < bestD) {
-                            bestD = d;
-                            best = sys;
-                        }
-                    }
-                    return best;
+                    return nearestHit(orbitSystems, absX, absY, (sys) => sys.radius * S.params.orbits.spread * 0.75 + 16, 28);
+                }
+                if (mode === "epicycles") {
+                    return nearestHit(epicycles, absX, absY, (sys) => sys.radius * 0.7 + 22, 28);
+                }
+                if (mode === "harmonograph") {
+                    return nearestHit(harmonics, absX, absY, (h) => Math.max(h.ax, h.ay) + 20, 28);
+                }
+                if (mode === "pendulum") {
+                    return nearestHit(pendulums, absX, absY, () => 26, 26);
                 }
                 if (mode === "crystal") {
-                    let best = null;
-                    let bestD = 1e9;
-                    for (let i = 0; i < crystals.length; i++) {
-                        const c = crystals[i];
-                        const dx = c.x - absX;
-                        const dy = c.y - absY;
-                        const r = 36 * c.scale * S.params.crystal.size + 12;
-                        const d = dx * dx + dy * dy;
-                        if (d < r * r && d < bestD) {
-                            bestD = d;
-                            best = c;
-                        }
-                    }
-                    return best;
+                    return nearestHit(crystals, absX, absY, (c) => 38 * c.scale * S.params.crystal.size + 14, 28);
                 }
                 if (mode === "flock") {
-                    let best = null;
-                    let bestD = 18 * 18;
-                    for (let i = 0; i < boids.length; i++) {
-                        const b = boids[i];
-                        const d = (b.x - absX) * (b.x - absX) + (b.y - absY) * (b.y - absY);
-                        if (d < bestD) {
-                            bestD = d;
-                            best = b;
-                        }
-                    }
-                    return best;
+                    return nearestHit(boids, absX, absY, () => 26, 26);
                 }
                 return null;
             },
-            blast(mode, rng, blastItem) {
+            blast(mode, rng, blastItem, clickX, clickY) {
+                const radius = 420;
                 if (mode === "network") {
                     for (let i = 0; i < netParticles.length; i++) blastItem(netParticles[i]);
                     return true;
@@ -1571,44 +1816,87 @@
                     return true;
                 }
                 if (mode === "stars") {
+                    const sx = clickX;
+                    const sy = clickY - window.scrollY;
                     for (let i = 0; i < stars.length; i++) {
-                        stars[i].z = Math.max(0.05, stars[i].z - rng.next() * 0.35);
-                        stars[i].hot = rng.next() < 0.35 || stars[i].hot;
+                        const star = stars[i];
+                        const dx = star.sx - sx;
+                        const dy = star.sy - sy;
+                        const distSq = dx * dx + dy * dy;
+                        if (distSq < radius * radius) {
+                            const force = 1 - Math.sqrt(Math.max(distSq, 0.01)) / radius;
+                            star.z = Math.max(0.05, star.z - (0.18 + force * 0.5) * (0.4 + rng.next()));
+                            star.hot = true;
+                        } else if (rng.next() < 0.1) {
+                            star.hot = true;
+                        }
                     }
                     return true;
                 }
                 if (mode === "epicycles") {
                     for (let i = 0; i < epicycles.length; i++) {
-                        const sys = epicycles[i];
-                        for (let a = 0; a < sys.arms.length; a++) {
-                            sys.arms[a].p += (rng.next() - 0.5) * 1.8;
-                            sys.arms[a].w += (rng.next() - 0.5) * 0.01;
-                        }
-                        sys.path.length = 0;
+                        blastItem(epicycles[i], (sys, force) => {
+                            for (let a = 0; a < sys.arms.length; a++) {
+                                sys.arms[a].p += (rng.next() - 0.5) * 1.8 * force;
+                                sys.arms[a].w += (rng.next() - 0.5) * 0.012 * force;
+                            }
+                            if (force > 0.25) {
+                                sys.path.length = 0;
+                            }
+                        });
                     }
                     return true;
                 }
                 if (mode === "harmonograph") {
                     for (let i = 0; i < harmonics.length; i++) {
-                        harmonics[i].t = 0;
-                        harmonics[i].path.length = 0;
-                        harmonics[i].wx *= 0.7 + rng.next() * 0.6;
-                        harmonics[i].wy *= 0.7 + rng.next() * 0.6;
+                        blastItem(harmonics[i], (h, force) => {
+                            h.t = 0;
+                            h.path.length = 0;
+                            h.wx *= 0.7 + rng.next() * 0.6 * force;
+                            h.wy *= 0.7 + rng.next() * 0.6 * force;
+                            h.px += (rng.next() - 0.5) * force * 1.2;
+                            h.py += (rng.next() - 0.5) * force * 1.2;
+                        });
                     }
                     return true;
                 }
                 if (mode === "aurora") {
+                    const ny = (clickY - window.scrollY) / Math.max(S.height, 1);
                     for (let i = 0; i < auroraLayers.length; i++) {
-                        auroraLayers[i].p1 += (rng.next() - 0.5) * 2;
-                        auroraLayers[i].p2 += (rng.next() - 0.5) * 2;
+                        const layer = auroraLayers[i];
+                        const near = 1 - Math.min(1, Math.abs((0.18 + layer.y * 0.62) - ny) * 2.2);
+                        const amp = 0.45 + near * 2.2;
+                        layer.p1 += (rng.next() - 0.5) * amp;
+                        layer.p2 += (rng.next() - 0.5) * amp;
                     }
                     return true;
                 }
                 if (mode === "pendulum") {
                     for (let i = 0; i < pendulums.length; i++) {
-                        blastItem(pendulums[i], (p, force) => {
-                            p.w1 += (rng.next() - 0.5) * force * 0.18;
-                            p.w2 += (rng.next() - 0.5) * force * 0.22;
+                        const p = pendulums[i];
+                        const pts = [p.x, p.y, p.x1, p.y1, p.x2, p.y2];
+                        let bestD = 1e9;
+                        let bx = p.x;
+                        let by = p.y;
+                        for (let k = 0; k < pts.length; k += 2) {
+                            if (typeof pts[k] !== "number") {
+                                continue;
+                            }
+                            const dx = pts[k] - clickX;
+                            const dy = pts[k + 1] - clickY;
+                            const d = dx * dx + dy * dy;
+                            if (d < bestD) {
+                                bestD = d;
+                                bx = pts[k];
+                                by = pts[k + 1];
+                            }
+                        }
+                        const proxy = { x: bx, y: by, vx: p.vx, vy: p.vy };
+                        blastItem(proxy, (_item, force) => {
+                            p.vx = proxy.vx;
+                            p.vy = proxy.vy;
+                            p.w1 += (rng.next() - 0.5) * force * 0.22;
+                            p.w2 += (rng.next() - 0.5) * force * 0.28;
                         });
                     }
                     return true;
@@ -1628,17 +1916,21 @@
                     return true;
                 }
                 if (mode === "field") {
-                    for (let i = 0; i < fieldParticles.length; i++) {
-                        const p = fieldParticles[i];
-                        p.x += (rng.next() - 0.5) * 40;
-                        p.y += (rng.next() - 0.5) * 40;
-                    }
+                    for (let i = 0; i < fieldParticles.length; i++) blastItem(fieldParticles[i]);
                     return true;
                 }
                 if (mode === "rain") {
+                    const sx = clickX;
+                    const sy = clickY - window.scrollY;
                     for (let i = 0; i < rainCols.length; i++) {
-                        rainCols[i].speed += rng.next() * 2.2;
-                        rainCols[i].y += rng.next() * 40;
+                        const col = rainCols[i];
+                        const dx = Math.abs(col.x - sx);
+                        const dy = Math.abs(col.y - sy);
+                        if (dx < 110 || (dx < 160 && dy < 220)) {
+                            const force = 1 - Math.min(1, dx / 160);
+                            col.speed += (1.2 + rng.next() * 2.4) * force;
+                            col.y += rng.next() * 55 * force;
+                        }
                     }
                     return true;
                 }

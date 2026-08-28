@@ -7,7 +7,7 @@
     const MOBILE_BREAKPOINT = 768;
     const CANVAS_FADE_MS = 450;
     const MOUSE_RADIUS = 170;
-    const BLAST_RADIUS = 280;
+    const BLAST_RADIUS = 420;
     const MAX_SPEED = 8;
     const MAX_SPIN = 0.22;
     const REF_FPS = 60;
@@ -56,10 +56,10 @@
         network: "Drag a node. Click empty space to pulse the field.",
         orbits: "3D atoms and miniature solar systems. Drag a nucleus. Click to perturb orbits.",
         stars: "Warp-speed starfield. Move the pointer to steer. Click to flare.",
-        epicycles: "Fourier wheels drawing a path. Click to reseed the arms.",
-        harmonograph: "Lissajous traces that slowly decay and restart. Click to retune.",
-        aurora: "Stacked sine sheets. Move the pointer to warp the curtain.",
-        pendulum: "Chaotic double pendulums. Click to kick a bob.",
+        epicycles: "Fourier wheels drawing a path. Drag a center. Click to reseed nearby arms.",
+        harmonograph: "Lissajous traces that slowly decay and restart. Drag one. Click to retune.",
+        aurora: "Stacked sine sheets. Move the pointer to warp the curtain. Click to rumple it.",
+        pendulum: "Chaotic double pendulums. Drag a pivot. Click to kick nearby bobs.",
         crystal: "Rotating 3D lattices. Drag a crystal. Click to spin.",
         flock: "Boids. Drag one bird; the flock notices. Click to scatter.",
         field: "Particles on a flow field. Click to gust.",
@@ -1028,6 +1028,12 @@
         let hoverGrab = false;
         let pressStartX = 0;
         let pressStartY = 0;
+        let pointerTap = {
+            interactive: true,
+            blasted: false,
+            x: 0,
+            y: 0,
+        };
 
         if (!enabled) {
             canvas.style.opacity = "0";
@@ -1139,8 +1145,8 @@
             }
             const area = width * docHeight;
             const densityFactor = reducedMotion ? 0.45 : 1;
-            const density = 0.00005 * densityFactor * densityMul;
-            return Math.min(240, Math.max(reducedMotion ? 16 : 28, Math.floor(area * density)));
+            const density = 0.000068 * densityFactor * densityMul;
+            return Math.min(320, Math.max(reducedMotion ? 20 : 36, Math.floor(area * density)));
         };
 
         class Molecule {
@@ -1662,14 +1668,14 @@
                     }
                     const dx = a.x - b.x;
                     const dy = a.y - b.y;
-                    const min = (a.radius + b.radius) * 0.72;
+                    const min = (a.radius + b.radius) * 0.88;
                     const distSq = dx * dx + dy * dy;
                     if (distSq >= min * min || distSq < 0.01) {
                         continue;
                     }
                     const dist = Math.sqrt(distSq);
                     const overlap = (min - dist) / min;
-                    const push = overlap * overlap * 0.28 * frame;
+                    const push = overlap * overlap * 0.46 * frame;
                     const inv = 1 / dist;
                     const px = dx * inv * push;
                     const py = dy * inv * push;
@@ -2174,6 +2180,7 @@
             drag.active = false;
             drag.target = null;
             drag.pointerId = null;
+            drag.moved = 0;
             document.body.classList.remove("bg-grabbing");
             return moved > 6;
         };
@@ -2277,21 +2284,17 @@
 
         window.addEventListener("touchend", clearMouse);
 
-        window.addEventListener("click", (e) => {
-            if (e.target.closest(INTERACTIVE_SELECTOR)) {
+        const blastAt = (clickX, clickY) => {
+            if (!enabled || reducedMotion) {
                 return;
             }
-            if (!enabled || reducedMotion || drag.moved > 6) {
-                drag.moved = 0;
-                return;
-            }
-
-            const clickX = e.clientX;
-            const clickY = e.clientY + window.scrollY;
             const blastRadiusSq = BLAST_RADIUS * BLAST_RADIUS;
             const rng = createRng();
 
             const blastItem = (item, extra) => {
+                if (!item || typeof item.x !== "number" || typeof item.y !== "number") {
+                    return;
+                }
                 const dx = item.x - clickX;
                 const dy = item.y - clickY;
                 const distSq = dx * dx + dy * dy;
@@ -2300,16 +2303,20 @@
                 }
                 const dist = Math.sqrt(distSq);
                 const force = (BLAST_RADIUS - dist) / BLAST_RADIUS;
-                const push = force * force * 11;
+                const push = force * force * 14;
                 const inv = 1 / dist;
-                item.vx += dx * inv * push;
-                item.vy += dy * inv * push;
+                if (typeof item.vx === "number") {
+                    item.vx += dx * inv * push;
+                }
+                if (typeof item.vy === "number") {
+                    item.vy += dy * inv * push;
+                }
                 if (extra) {
-                    extra(item, force);
+                    extra(item, force, dx, dy, inv);
                 }
             };
 
-            if (!fx.blast(mode, rng, blastItem)) {
+            if (!fx.blast(mode, rng, blastItem, clickX, clickY)) {
                 for (let i = 0; i < molecules.length; i++) {
                     blastItem(molecules[i], (mol, force) => {
                         mol.rotVx += (rng.next() - 0.5) * force * 0.28;
@@ -2321,6 +2328,20 @@
                     });
                 }
             }
+        };
+
+        window.addEventListener("click", (e) => {
+            if (pointerTap.blasted) {
+                pointerTap.blasted = false;
+                return;
+            }
+            if (e.target.closest(INTERACTIVE_SELECTOR)) {
+                return;
+            }
+            if (!enabled || reducedMotion) {
+                return;
+            }
+            blastAt(e.clientX, e.clientY + window.scrollY);
         });
 
         const themeObserver = new MutationObserver(() => {
@@ -2366,10 +2387,11 @@
         }
 
         window.addEventListener("pointerdown", (e) => {
-            if (!enabled || reducedMotion) {
-                return;
-            }
-            if (e.target.closest(INTERACTIVE_SELECTOR)) {
+            pointerTap.interactive = !!e.target.closest(INTERACTIVE_SELECTOR);
+            pointerTap.blasted = false;
+            pointerTap.x = e.clientX;
+            pointerTap.y = e.clientY;
+            if (!enabled || reducedMotion || pointerTap.interactive) {
                 return;
             }
             const absX = e.clientX;
@@ -2383,18 +2405,16 @@
                 e.preventDefault();
                 return;
             }
-            if (width < GUTTER_MIN_WIDTH) {
-                cancelLongPress();
-                pressStartX = e.clientX;
-                pressStartY = e.clientY;
-                const sx = e.clientX;
-                const sy = e.clientY;
-                const id = e.pointerId;
-                longPressTimer = setTimeout(() => {
-                    longPressTimer = null;
-                    beginDrag(target, sx, sy, id);
-                }, 380);
-            }
+            cancelLongPress();
+            pressStartX = e.clientX;
+            pressStartY = e.clientY;
+            const sx = e.clientX;
+            const sy = e.clientY;
+            const id = e.pointerId;
+            longPressTimer = setTimeout(() => {
+                longPressTimer = null;
+                beginDrag(target, sx, sy, id);
+            }, 380);
         });
 
         window.addEventListener(
@@ -2429,9 +2449,24 @@
             { passive: false }
         );
 
-        const finishPointer = () => {
+        const finishPointer = (e) => {
             cancelLongPress();
-            endDrag();
+            const draggedFar = endDrag();
+            if (!e || e.type === "pointercancel") {
+                pointerTap.blasted = true;
+                return;
+            }
+            if (draggedFar || pointerTap.interactive || pointerTap.blasted) {
+                pointerTap.blasted = true;
+                return;
+            }
+            if (!enabled || reducedMotion) {
+                return;
+            }
+            const x = e.clientX != null ? e.clientX : pointerTap.x;
+            const y = e.clientY != null ? e.clientY : pointerTap.y;
+            blastAt(x, y + window.scrollY);
+            pointerTap.blasted = true;
         };
 
         window.addEventListener("pointerup", finishPointer);
