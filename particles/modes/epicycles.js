@@ -12,7 +12,9 @@ export function create(S) {
     const bounceBounds = H.bounceBounds;
     const separateBodies = H.separateBodies;
     const placeApart = H.placeApart;
-    const nearestHit = H.nearestHit;
+    const nearestHitPoints = H.nearestHitPoints;
+    const coastToCruise = H.coastToCruise;
+    const epiHitPts = [];
     const rebuildHashGrid = H.rebuildHashGrid;
     const scaleDocX = H.scaleDocX;
     const scaleDocY = H.scaleDocY;
@@ -39,11 +41,15 @@ export function create(S) {
                     p: rng.next() * Math.PI * 2,
                 });
             }
+            const evx = (rng.next() - 0.5) * 0.08;
+            const evy = (rng.next() - 0.5) * 0.08;
             epicycles.push({
                 x: 40 + rng.next() * Math.max(1, S.width - 80),
                 y: 40 + rng.next() * Math.max(1, S.docHeight - 80),
-                vx: (rng.next() - 0.5) * 0.08,
-                vy: (rng.next() - 0.5) * 0.08,
+                vx: evx,
+                vy: evy,
+                baseVx: evx,
+                baseVy: evy,
                 arms,
                 path: [],
                 radius: rSum,
@@ -51,6 +57,8 @@ export function create(S) {
                 dragging: false,
                 tipX: 0,
                 tipY: 0,
+                joints: [],
+                highlight: 0,
             });
         }
         placeApart(epicycles, (sys) => sys.radius * 0.55 + 18, rng);
@@ -67,20 +75,44 @@ export function create(S) {
         }
     };
 
-    const tickEpicycles = (frame, scrollY, viewHeight, animate) => {
+    const tickEpicycles = (frame, damp, scrollY, viewHeight, mouseAbsX, mouseAbsY, mouseActive, animate) => {
         const speed = S.params.epicycles.speed;
         S.ctx.lineCap = "round";
         for (let i = 0; i < epicycles.length; i++) {
             const sys = epicycles[i];
             if (animate && !sys.dragging) {
+                coastToCruise(sys, damp, frame, 2.4);
                 sys.x += sys.vx * frame;
                 sys.y += sys.vy * frame;
+                if (mouseActive) {
+                    const dx = mouseAbsX - sys.x;
+                    const dy = mouseAbsY - sys.y;
+                    const reach = sys.radius * 0.9 + 48;
+                    const d = Math.hypot(dx, dy);
+                    if (d < reach && d > 0.01) {
+                        const f = 1 - d / reach;
+                        sys.highlight += (Math.min(1, f * 1.3) - sys.highlight) * 0.14;
+                        sys.vx += (dx / d) * f * f * 0.05 * frame;
+                        sys.vy += (dy / d) * f * f * 0.05 * frame;
+                        for (let a = 0; a < sys.arms.length; a++) {
+                            sys.arms[a].w += (a % 2 === 0 ? 1 : -1) * f * 0.00035 * frame;
+                        }
+                    } else {
+                        sys.highlight *= 0.9;
+                    }
+                } else {
+                    sys.highlight *= 0.9;
+                }
+            } else if (sys.dragging) {
+                sys.highlight = 1;
+            } else {
+                sys.highlight *= 0.9;
             }
         }
         if (animate) {
             separateBodies(epicycles, (sys) => sys.radius * 0.5 + 16, frame, 0.48);
             for (let i = 0; i < epicycles.length; i++) {
-                bounceBounds(epicycles[i], Math.max(16, epicycles[i].radius * 0.2));
+                bounceBounds(epicycles[i], Math.max(18, epicycles[i].radius * 0.35), 1, 0.2);
             }
         }
         for (let i = 0; i < epicycles.length; i++) {
@@ -91,21 +123,25 @@ export function create(S) {
             const offscreen = sy0 < -sys.radius - 40 || sy0 > viewHeight + sys.radius + 40;
             let px = x;
             let py = y;
+            const joints = sys.joints;
+            joints.length = 0;
+            joints.push(x, y);
+            const lit = sys.highlight > 0.35 || sys.dragging;
             for (let a = 0; a < sys.arms.length; a++) {
                 const arm = sys.arms[a];
                 if (animate) {
-                    arm.p += arm.w * speed * frame;
+                    arm.p += arm.w * speed * frame * (sys.dragging ? 1.35 : 1);
                 }
                 const nx = x + Math.cos(arm.p) * arm.r;
                 const ny = y + Math.sin(arm.p) * arm.r;
                 if (!offscreen) {
-                    S.ctx.strokeStyle = S.particleColorStr;
-                    S.ctx.globalAlpha = 0.12;
+                    S.ctx.strokeStyle = lit ? S.accentColorStr : S.particleColorStr;
+                    S.ctx.globalAlpha = 0.12 + sys.highlight * 0.12;
                     S.ctx.lineWidth = 0.7;
                     S.ctx.beginPath();
                     S.ctx.arc(x, y - scrollY, Math.abs(arm.r), 0, Math.PI * 2);
                     S.ctx.stroke();
-                    S.ctx.globalAlpha = 0.22;
+                    S.ctx.globalAlpha = 0.22 + sys.highlight * 0.2;
                     S.ctx.beginPath();
                     S.ctx.moveTo(x, y - scrollY);
                     S.ctx.lineTo(nx, ny - scrollY);
@@ -115,6 +151,7 @@ export function create(S) {
                 y = ny;
                 px = nx;
                 py = ny;
+                joints.push(x, y);
             }
             sys.tipX = px;
             sys.tipY = py;
@@ -124,9 +161,9 @@ export function create(S) {
             if (offscreen) {
                 continue;
             }
-            drawFadePath(sys.path, sys.accent ? S.accentColorStr : S.particleColorStr, 0.55, 1.15, scrollY);
+            drawFadePath(sys.path, sys.accent || lit ? S.accentColorStr : S.particleColorStr, 0.55 + sys.highlight * 0.2, 1.15, scrollY);
             S.ctx.globalAlpha = 0.85;
-            S.ctx.fillStyle = sys.accent ? S.accentColorStr : S.particleColorStr;
+            S.ctx.fillStyle = sys.accent || lit ? S.accentColorStr : S.particleColorStr;
             S.ctx.beginPath();
             S.ctx.arc(px, py - scrollY, 2.2, 0, Math.PI * 2);
             S.ctx.fill();
@@ -137,17 +174,47 @@ export function create(S) {
         clear() { epicycles.length = 0; },
         init() { initEpicycles(); },
         adjust(pw, ph) { adjustEpicycles(pw, ph); },
-        tick(frame, _damp, scrollY, viewHeight, _mx, _my, _ma, animate) {
-            tickEpicycles(frame, scrollY, viewHeight, animate);
+        tick(frame, damp, scrollY, viewHeight, mouseAbsX, mouseAbsY, mouseActive, animate) {
+            tickEpicycles(frame, damp, scrollY, viewHeight, mouseAbsX, mouseAbsY, mouseActive, animate);
         },
         hitTest(absX, absY) {
-            return nearestHit(epicycles, absX, absY, (sys) => sys.radius * 0.7 + 22, 28);
+            return nearestHitPoints(epicycles, absX, absY, (sys) => {
+                const pts = epiHitPts;
+                pts.length = 0;
+                pts.push(sys.x, sys.y, Math.max(28, sys.radius * 0.42 + 18));
+                const joints = sys.joints;
+                if (joints) {
+                    for (let j = 2; j < joints.length; j += 2) {
+                        pts.push(joints[j], joints[j + 1], 22);
+                    }
+                }
+                pts.push(sys.tipX, sys.tipY, 26);
+                return pts;
+            }, 22);
+        },
+        grab(sys) {
+            sys.highlight = 1;
+        },
+        dragMove(sys, _x, _y, vx, vy) {
+            sys.highlight = 1;
+            for (let a = 0; a < sys.arms.length; a++) {
+                sys.arms[a].w += (a % 2 === 0 ? vx : -vy) * 0.0008;
+            }
+        },
+        release(sys, vx, vy) {
+            sys.highlight = 1;
+            const mag = Math.hypot(vx, vy);
+            for (let a = 0; a < sys.arms.length; a++) {
+                sys.arms[a].w += (a % 2 === 0 ? 1 : -1) * mag * 0.012 + vx * 0.004;
+            }
+            sys.path.length = 0;
         },
         blast(rng, blastItem) {
             for (let i = 0; i < epicycles.length; i++) {
                 blastItem(epicycles[i], (sys, force) => {
+                    sys.highlight = Math.min(1, sys.highlight + force);
                     for (let a = 0; a < sys.arms.length; a++) {
-                        sys.arms[a].w += (rng.next() - 0.5) * 0.04 * force;
+                        sys.arms[a].w += (rng.next() - 0.5) * 0.08 * force;
                     }
                 });
             }

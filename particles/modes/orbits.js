@@ -12,11 +12,29 @@ export function create(S) {
     const separateBodies = H.separateBodies;
     const placeApart = H.placeApart;
     const nearestHit = H.nearestHit;
+    const coastToCruise = H.coastToCruise;
     let quietSpawn = false;
     const orbitSystems = [];
     const orbitDrawBuf = [];
     const _local = { x: 0, y: 0, z: 0 };
     const _proj = { x: 0, y: 0, z: 0, p: 1 };
+    const ringLX = [];
+    const ringLY = [];
+    const ringLZ = [];
+
+    const getOrbitFit = () => {
+        const cam = S.FOCAL + S.DEPTH_OFFSET;
+        const zLimit = cam * 0.4;
+        const maxPersp = S.FOCAL / Math.max(48, cam - zLimit);
+        const maxScreenR = Math.min(S.width, S.height) * 0.38;
+        return {
+            cam,
+            zLimit,
+            maxPersp,
+            maxWorldR: maxScreenR / maxPersp,
+            zNear: -cam + 48,
+        };
+    };
 
     const getOrbitCount = () => {
         if (!S.enabled) {
@@ -36,13 +54,64 @@ export function create(S) {
     };
 
     const projectOrbitPoint = (px, py, pz, ox, oy) => {
-        const denom = Math.max(28, S.FOCAL + S.DEPTH_OFFSET + pz);
+        const denom = Math.max(48, S.FOCAL + S.DEPTH_OFFSET + pz);
         const persp = S.FOCAL / denom;
         _proj.x = ox + px * persp;
         _proj.y = oy + py * persp;
         _proj.z = pz;
         _proj.p = persp;
         return _proj;
+    };
+
+    const scaleOrbitZ = (z, zLimit) => {
+        const az = Math.abs(z);
+        if (az <= zLimit) {
+            return z;
+        }
+        return (z / az) * zLimit;
+    };
+
+    const strokeClippedRing = (n, ox, oy, zNear, zLimit, alpha, depthBoost) => {
+        const ctx = S.ctx;
+        let pen = false;
+        ctx.beginPath();
+        for (let s = 0; s <= n; s++) {
+            let z = scaleOrbitZ(ringLZ[s], zLimit);
+            const vis = z > zNear;
+            if (vis) {
+                const proj = projectOrbitPoint(ringLX[s], ringLY[s], z, ox, oy);
+                if (!pen) {
+                    if (s > 0 && scaleOrbitZ(ringLZ[s - 1], zLimit) <= zNear) {
+                        const z0 = scaleOrbitZ(ringLZ[s - 1], zLimit);
+                        const t = (zNear - z0) / (z - z0);
+                        const ix = ringLX[s - 1] + (ringLX[s] - ringLX[s - 1]) * t;
+                        const iy = ringLY[s - 1] + (ringLY[s] - ringLY[s - 1]) * t;
+                        const ip = projectOrbitPoint(ix, iy, zNear + 0.01, ox, oy);
+                        ctx.moveTo(ip.x, ip.y);
+                    } else {
+                        ctx.moveTo(proj.x, proj.y);
+                    }
+                    pen = true;
+                } else {
+                    ctx.lineTo(proj.x, proj.y);
+                }
+            } else if (pen) {
+                const z0 = scaleOrbitZ(ringLZ[s - 1], zLimit);
+                const t = (zNear - z0) / (z - z0);
+                const ix = ringLX[s - 1] + (ringLX[s] - ringLX[s - 1]) * t;
+                const iy = ringLY[s - 1] + (ringLY[s] - ringLY[s - 1]) * t;
+                const ip = projectOrbitPoint(ix, iy, zNear + 0.01, ox, oy);
+                ctx.lineTo(ip.x, ip.y);
+                ctx.globalAlpha = alpha * (0.18 + depthBoost);
+                ctx.stroke();
+                ctx.beginPath();
+                pen = false;
+            }
+        }
+        if (pen) {
+            ctx.globalAlpha = alpha * (0.18 + depthBoost);
+            ctx.stroke();
+        }
     };
 
     const transformOrbitLocal = (r, t, tilt, twist, rotX, rotY) => {
@@ -88,7 +157,7 @@ export function create(S) {
             const rng = S.createRng();
             this.hero = rng.next() < 0.22;
             this.scaleSeed = this.hero ? 1.55 + rng.next() * 0.95 : 0.72 + rng.next() * 0.7;
-            this.radius = (this.hero ? 78 : 48) * this.scaleSeed * S.params.orbits.spread;
+            this.radius = (this.hero ? 78 : 48) * this.scaleSeed;
             const pad = Math.min(this.radius, 56);
             this.lane = 0;
             this.x = pad + rng.next() * Math.max(1, S.width - pad * 2);
@@ -125,6 +194,8 @@ export function create(S) {
                     band: this.hero && i === ringCount - 1 && rng.next() < 0.55,
                 });
             }
+            const outer = this.rings[this.rings.length - 1].radius * S.params.orbits.spread;
+            this.radius = Math.min(outer, getOrbitFit().maxWorldR);
         }
     }
 
@@ -135,7 +206,7 @@ export function create(S) {
         for (let i = 0; i < count; i++) {
             orbitSystems.push(new OrbitSystem(i, fadeIn));
         }
-        placeApart(orbitSystems, (sys) => sys.radius * S.params.orbits.spread * 0.55, S.createRng());
+        placeApart(orbitSystems, (sys) => sys.radius * 0.58, S.createRng());
     };
 
     const adjustOrbits = (previousWidth, previousDocHeight) => {
@@ -177,8 +248,7 @@ export function create(S) {
                 sys.opacity += (sys.baseOpacity - sys.opacity) * damp.fadeIn;
             }
             if (animate && !sys.dragging) {
-                sys.vx += (sys.baseVx - sys.vx) * damp.cruise;
-                sys.vy += (sys.baseVy - sys.vy) * damp.cruise;
+                coastToCruise(sys, damp, frame, 2.2);
                 if (mouseActive) {
                     const dx = mouseAbsX - sys.x;
                     const dy = mouseAbsY - sys.y;
@@ -207,10 +277,17 @@ export function create(S) {
                 }
             }
         }
+        const fit = getOrbitFit();
+        for (let i = 0; i < orbitSystems.length; i++) {
+            const sys = orbitSystems[i];
+            const outer = sys.rings.length ? sys.rings[sys.rings.length - 1].radius * spread : sys.radius;
+            sys.radius = Math.min(outer, fit.maxWorldR);
+            sys.fitMul = outer > 1e-6 ? sys.radius / outer : 1;
+        }
         if (animate) {
-            separateBodies(orbitSystems, (sys) => sys.radius * spread * 0.58, frame, 0.52);
+            separateBodies(orbitSystems, (sys) => sys.radius * 0.58, frame, 0.52);
             for (let i = 0; i < orbitSystems.length; i++) {
-                bounceBounds(orbitSystems[i], 28);
+                bounceBounds(orbitSystems[i], Math.max(28, orbitSystems[i].radius * fit.maxPersp * 0.72), 1, 0.36);
             }
         }
 
@@ -226,52 +303,39 @@ export function create(S) {
                 }
             }
             const originY = sys.y - scrollY;
-            const visR = sys.radius * spread + 36;
+            const visR = sys.radius * fit.maxPersp + 36;
             if (originY < -visR || originY > viewHeight + visR) {
                 continue;
             }
 
             const alpha = sys.opacity * (0.62 + sys.highlight * 0.38);
             const ringColor = sys.highlight > 0.4 ? S.accentColorStr : S.particleColorStr;
+            const fitMul = sys.fitMul || 1;
+            const depthBoost = sys.highlight * 0.2;
 
             for (let r = 0; r < sys.rings.length; r++) {
                 const ring = sys.rings[r];
-                const rad = ring.radius * spread;
+                const rad = ring.radius * spread * fitMul;
                 S.ctx.strokeStyle = ringColor;
                 S.ctx.lineWidth = ring.band ? 2.1 : sys.hero ? 1.05 : 0.8;
-                S.ctx.beginPath();
-                let moved = false;
                 for (let s = 0; s <= samples; s++) {
                     const t = (s / samples) * Math.PI * 2;
                     const local = transformOrbitLocal(rad, t, ring.tilt, ring.twist, sys.rotX, sys.rotY);
-                    const proj = projectOrbitPoint(local.x, local.y, local.z, sys.x, originY);
-                    const depthA = 0.12 + Math.max(0, 0.55 - local.z / 90) * (0.22 + sys.highlight * 0.2);
-                    if (s === 0) {
-                        S.ctx.globalAlpha = alpha * depthA;
-                        S.ctx.moveTo(proj.x, proj.y);
-                        moved = true;
-                    } else {
-                        S.ctx.lineTo(proj.x, proj.y);
-                    }
+                    ringLX[s] = local.x;
+                    ringLY[s] = local.y;
+                    ringLZ[s] = local.z;
                 }
-                if (moved) {
-                    S.ctx.stroke();
-                }
+                strokeClippedRing(samples, sys.x, originY, fit.zNear, fit.zLimit, alpha, depthBoost);
                 if (ring.band) {
                     S.ctx.lineWidth = 0.7;
-                    S.ctx.beginPath();
                     for (let s = 0; s <= samples; s++) {
                         const t = (s / samples) * Math.PI * 2;
                         const local = transformOrbitLocal(rad * 1.08, t, ring.tilt, ring.twist, sys.rotX, sys.rotY);
-                        const proj = projectOrbitPoint(local.x, local.y, local.z, sys.x, originY);
-                        if (s === 0) {
-                            S.ctx.moveTo(proj.x, proj.y);
-                        } else {
-                            S.ctx.lineTo(proj.x, proj.y);
-                        }
+                        ringLX[s] = local.x;
+                        ringLY[s] = local.y;
+                        ringLZ[s] = local.z;
                     }
-                    S.ctx.globalAlpha = alpha * 0.22;
-                    S.ctx.stroke();
+                    strokeClippedRing(samples, sys.x, originY, fit.zNear, fit.zLimit, alpha * 0.55, 0);
                 }
             }
 
@@ -279,13 +343,17 @@ export function create(S) {
             orbitDrawBuf.push({ kind: "nucleus", z: 0, x: sys.x, y: originY, r: (sys.hero ? 6.4 : 4.8) + sys.highlight * 1.6 });
             for (let r = 0; r < sys.rings.length; r++) {
                 const ring = sys.rings[r];
-                const rad = ring.radius * spread;
+                const rad = ring.radius * spread * fitMul;
                 for (let e = 0; e < ring.phases.length; e++) {
                     const local = transformOrbitLocal(rad, ring.phases[e], ring.tilt, ring.twist, sys.rotX, sys.rotY);
-                    const proj = projectOrbitPoint(local.x, local.y, local.z, sys.x, originY);
+                    const z = scaleOrbitZ(local.z, fit.zLimit);
+                    if (z <= fit.zNear) {
+                        continue;
+                    }
+                    const proj = projectOrbitPoint(local.x, local.y, z, sys.x, originY);
                     orbitDrawBuf.push({
                         kind: "electron",
-                        z: local.z,
+                        z,
                         x: proj.x,
                         y: proj.y,
                         r: Math.max(0.2, (ring.hetero ? 2.8 : 2.2) * proj.p * (sys.hero ? 1.15 : 1)),
@@ -324,7 +392,7 @@ export function create(S) {
             tickOrbits(frame, damp, scrollY, viewHeight, mouseAbsX, mouseAbsY, mouseActive, animate);
         },
         hitTest(absX, absY) {
-            return nearestHit(orbitSystems, absX, absY, (sys) => sys.radius * S.params.orbits.spread * 0.75 + 16, 28);
+            return nearestHit(orbitSystems, absX, absY, (sys) => sys.radius * 0.8 + 18, 28);
         },
         blast(rng, blastItem) {
             for (let i = 0; i < orbitSystems.length; i++) {

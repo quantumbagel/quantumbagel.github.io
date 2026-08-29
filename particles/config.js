@@ -9,6 +9,7 @@ export const CANVAS_FADE_MS = 450;
 export const MOUSE_RADIUS = 170;
 export const BLAST_RADIUS = 420;
 export const MAX_SPEED = 8;
+export const LAUNCH_SPEED = 20;
 export const MAX_SPIN = 0.22;
 export const REF_FPS = 60;
 export const BOND = 16;
@@ -56,14 +57,14 @@ export const MODE_LABELS = {
 };
 
 export const MODE_HINTS = {
-    molecules: "Drag molecules anywhere, and click empty space to scatter them.",
+    molecules: "Grab a molecule and fling it. Click empty space to scatter them.",
     network: "The original background. it's pretty cool.",
     orbits: "Would be a real shame if something happened in 22 minutes.",
     stars: "*copyrighted music plays*",
-    epicycles: "Fourier wheels drawing a path",
+    epicycles: "Grab the wheels and throw them. Click to spin the arms.",
     aurora: "Move the pointer to warp the curtain. Click to rumple it.",
-    pendulum: "Just some double pendulums. Click to yeet.",
-    crystal: "3D lattices. You can yeet them.",
+    pendulum: "Drag a bob to wind it up, or toss the whole thing. Click to yeet.",
+    crystal: "Grab a lattice and throw it. Click to scatter them.",
     flock: "Peer pressure be like",
     field: "Streamlines on a vector field. Move the pointer to stir, click to blow a gust.",
     rain: "l33t hack3r",

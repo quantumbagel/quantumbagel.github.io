@@ -206,7 +206,7 @@ export function pagesCount(S, perView, densityMul, maxN) {
     return clampCount(n, minN, maxN);
 }
 
-export function bounceBounds(S, item, pad, velSign) {
+export function bounceBounds(S, item, pad, velSign, maxFrac) {
     if (item.dragging || typeof item.vx !== "number" || typeof item.vy !== "number") {
         return;
     }
@@ -214,8 +214,9 @@ export function bounceBounds(S, item, pad, velSign) {
     const sign = velSign < 0 ? -1 : 1;
     let px = pad == null ? 8 : pad;
     let py = pad == null ? 8 : pad;
-    const maxPx = Math.max(8, S.width * 0.1);
-    const maxPy = Math.max(8, Math.min(S.height, S.docHeight) * 0.1);
+    const frac = maxFrac == null ? 0.1 : maxFrac;
+    const maxPx = Math.max(8, S.width * frac);
+    const maxPy = Math.max(8, Math.min(S.height, S.docHeight) * frac);
     if (px > maxPx) {
         px = maxPx;
     }
@@ -360,6 +361,49 @@ export function nearestHit(items, absX, absY, radiusOf, minR) {
         }
     }
     return best;
+}
+
+export function nearestHitPoints(items, absX, absY, pointsOf, minR) {
+    let best = null;
+    let bestD = 1e9;
+    const floorR = minR == null ? 18 : minR;
+    for (let i = 0; i < items.length; i++) {
+        const it = items[i];
+        const pts = pointsOf(it);
+        if (!pts) {
+            continue;
+        }
+        for (let p = 0; p < pts.length; p += 3) {
+            const dx = pts[p] - absX;
+            const dy = pts[p + 1] - absY;
+            const r = Math.max(floorR, pts[p + 2]);
+            const d = dx * dx + dy * dy;
+            if (d < r * r && d < bestD) {
+                bestD = d;
+                best = it;
+            }
+        }
+    }
+    return best;
+}
+
+export function coastToCruise(item, damp, frame, cruiseMul) {
+    if (typeof item.vx !== "number" || typeof item.vy !== "number") {
+        return;
+    }
+    const cvx = typeof item.baseVx === "number" ? item.baseVx : 0;
+    const cvy = typeof item.baseVy === "number" ? item.baseVy : 0;
+    const spd = Math.hypot(item.vx, item.vy);
+    const cruise = Math.hypot(cvx, cvy);
+    const toss = Math.max(0.55, cruise * (cruiseMul == null ? 2.4 : cruiseMul));
+    if (spd > toss) {
+        const drag = Math.pow(0.994, frame);
+        item.vx *= drag;
+        item.vy *= drag;
+    } else {
+        item.vx += (cvx - item.vx) * damp.cruise;
+        item.vy += (cvy - item.vy) * damp.cruise;
+    }
 }
 
 export function createHashGrid(cellSize) {
@@ -523,7 +567,7 @@ export function createQuality() {
 
 export function bindWorldHelpers(S) {
     return {
-        bounceBounds: (item, pad, velSign) => bounceBounds(S, item, pad, velSign),
+        bounceBounds: (item, pad, velSign, maxFrac) => bounceBounds(S, item, pad, velSign, maxFrac),
         placeApart: (items, radiusOf, rng) => placeApart(S, items, radiusOf, rng),
         rebuildHashGrid: (grid, items, cellSize, getXY) => rebuildHashGrid(S, grid, items, cellSize, getXY),
         scaleDocX: (items, previousWidth) => scaleDocX(S, items, previousWidth),
@@ -534,6 +578,8 @@ export function bindWorldHelpers(S) {
         clampCount,
         separateBodies,
         nearestHit,
+        nearestHitPoints,
+        coastToCruise,
         pushPath,
         createHashGrid,
         COUNT_CAPS,

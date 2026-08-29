@@ -9,12 +9,13 @@ import {
     KIND_C,
     KIND_H,
     KIND_HETERO,
+    LAUNCH_SPEED,
     MAX_SPEED,
     MAX_SPIN,
     MOBILE_BREAKPOINT,
     MOUSE_RADIUS,
 } from "../config.js";
-import { clampCount, getVisibilityProfile, mixRgb, rgbToString, viewAreaScale } from "../core.js";
+import { clampCount, coastToCruise, getVisibilityProfile, mixRgb, rgbToString, viewAreaScale } from "../core.js";
 
 export function create(S) {
     const molecules = [];
@@ -850,17 +851,18 @@ export function create(S) {
                 return;
             }
 
-            this.vx += (this.baseVx - this.vx) * damp.cruise;
-            this.vy += (this.baseVy - this.vy) * damp.cruise;
+            coastToCruise(this, damp, frame, 2.5);
             this.rotVx += (this.baseRotVx - this.rotVx) * damp.spin;
             this.rotVy += (this.baseRotVy - this.rotVy) * damp.spin;
             this.rotVz += (this.baseRotVz - this.rotVz) * damp.spin;
             this.clampSpin();
 
             const speedSq = this.vx * this.vx + this.vy * this.vy;
-            const maxSpeedSq = MAX_SPEED * MAX_SPEED;
+            const tossing = speedSq > (MAX_SPEED * 1.15) * (MAX_SPEED * 1.15);
+            const cap = tossing ? LAUNCH_SPEED : MAX_SPEED;
+            const maxSpeedSq = cap * cap;
             if (speedSq > maxSpeedSq) {
-                const scale = MAX_SPEED / Math.sqrt(speedSq);
+                const scale = cap / Math.sqrt(speedSq);
                 this.vx *= scale;
                 this.vy *= scale;
             }
@@ -925,6 +927,7 @@ export function create(S) {
             const scale = this.scale;
             const originX = this.x;
             const originY = this.y - scrollY;
+            const zLimit = (FOCAL + DEPTH_OFFSET) * 0.58;
 
             for (let i = 0; i < atoms.length; i++) {
                 const a = atoms[i];
@@ -947,10 +950,16 @@ export function create(S) {
                 x = x1;
                 y = y1;
 
-                const perspective = FOCAL / (FOCAL + DEPTH_OFFSET + z);
+                let zSafe = z;
+                if (zSafe < -zLimit) {
+                    zSafe = -zLimit;
+                } else if (zSafe > zLimit) {
+                    zSafe = zLimit;
+                }
+                const perspective = FOCAL / Math.max(48, FOCAL + DEPTH_OFFSET + zSafe);
                 a.sx = originX + x * scale * perspective;
                 a.sy = originY + y * scale * perspective;
-                a.sz = z;
+                a.sz = zSafe;
                 a.sr = ATOM_RADIUS[a.kind] * scale * perspective * (1 + this.highlight * 0.18);
             }
 
@@ -1263,25 +1272,60 @@ export function create(S) {
         hitTest(absX, absY) {
             let best = null;
             let bestD = 1e9;
+            const scrollY = window.scrollY;
+            const sy = absY - scrollY;
             for (let i = 0; i < molecules.length; i++) {
                 const mol = molecules[i];
                 const dx = mol.x - absX;
                 const dy = mol.y - absY;
-                const r = mol.radius * 0.95;
+                const r = mol.radius * 1.12 + 14;
                 const d = dx * dx + dy * dy;
                 if (d < r * r && d < bestD) {
                     bestD = d;
                     best = mol;
                 }
+                const atoms = mol.atoms;
+                for (let a = 0; a < atoms.length; a++) {
+                    const atom = atoms[a];
+                    if (!atom.sr) {
+                        continue;
+                    }
+                    const adx = atom.sx - absX;
+                    const ady = atom.sy - sy;
+                    const ar = Math.max(16, atom.sr * 2.8);
+                    const ad = adx * adx + ady * ady;
+                    if (ad < ar * ar && ad < bestD) {
+                        bestD = ad;
+                        best = mol;
+                    }
+                }
             }
             return best;
+        },
+        grab(mol) {
+            mol.highlight = 1;
+            mol.pulse = Math.min(0.35, mol.pulse + 0.12);
+        },
+        dragMove(mol, _x, _y, vx, vy) {
+            mol.rotVy += vx * 0.01;
+            mol.rotVx -= vy * 0.008;
+            mol.rotVz += vx * 0.004;
+            mol.highlight = 1;
+            mol.pulse = Math.min(0.28, mol.pulse + 0.02);
+        },
+        release(mol, vx, vy) {
+            mol.rotVy += vx * 0.045;
+            mol.rotVx -= vy * 0.035;
+            mol.rotVz += (vx - vy) * 0.02;
+            mol.pulse = Math.min(0.55, mol.pulse + Math.hypot(vx, vy) * 0.04);
+            mol.highlight = 1;
         },
         blast(rng, blastItem) {
             for (let i = 0; i < molecules.length; i++) {
                 blastItem(molecules[i], (mol, force) => {
-                    mol.rotVx += (rng.next() - 0.5) * force * 0.28;
-                    mol.rotVy += (rng.next() - 0.5) * force * 0.32;
-                    mol.rotVz += (rng.next() - 0.5) * force * 0.22;
+                    mol.rotVx += (rng.next() - 0.5) * force * 0.36;
+                    mol.rotVy += (rng.next() - 0.5) * force * 0.4;
+                    mol.rotVz += (rng.next() - 0.5) * force * 0.28;
                     mol.pulse = Math.min(0.55, mol.pulse + force * 0.45);
                     mol.opacity = Math.min(0.9, mol.baseOpacity + force * 0.28);
                     mol.highlight = Math.min(1, mol.highlight + force * 0.8);

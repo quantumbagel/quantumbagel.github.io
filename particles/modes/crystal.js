@@ -13,6 +13,7 @@ export function create(S) {
     const separateBodies = H.separateBodies;
     const placeApart = H.placeApart;
     const nearestHit = H.nearestHit;
+    const coastToCruise = H.coastToCruise;
     const rebuildHashGrid = H.rebuildHashGrid;
     const scaleDocX = H.scaleDocX;
     const scaleDocY = H.scaleDocY;
@@ -59,11 +60,15 @@ export function create(S) {
                     pts.push(raw[p][0] * 11, raw[p][1] * 11, raw[p][2] * 11);
                 }
             }
+            const cvx = (rng.next() - 0.5) * 0.09;
+            const cvy = (rng.next() - 0.5) * 0.09;
             crystals.push({
                 x: 40 + rng.next() * Math.max(1, S.width - 80),
                 y: 40 + rng.next() * Math.max(1, S.docHeight - 80),
-                vx: (rng.next() - 0.5) * 0.09,
-                vy: (rng.next() - 0.5) * 0.09,
+                vx: cvx,
+                vy: cvy,
+                baseVx: cvx,
+                baseVy: cvy,
                 rotX: rng.next() * Math.PI,
                 rotY: rng.next() * Math.PI,
                 rotZ: rng.next() * Math.PI,
@@ -91,13 +96,17 @@ export function create(S) {
         }
     };
 
-    const tickCrystals = (frame, scrollY, viewHeight, mouseAbsX, mouseAbsY, mouseActive, animate) => {
+    const crystalRadius = (c) => 36 * c.scale * S.params.crystal.size + 14;
+
+    const tickCrystals = (frame, damp, scrollY, viewHeight, mouseAbsX, mouseAbsY, mouseActive, animate) => {
         const speed = S.params.crystal.speed;
         const size = S.params.crystal.size;
+        const zLimit = (S.FOCAL + S.DEPTH_OFFSET) * 0.55;
         S.ctx.lineCap = "round";
         for (let i = 0; i < crystals.length; i++) {
             const c = crystals[i];
             if (animate && !c.dragging) {
+                coastToCruise(c, damp, frame, 2.6);
                 c.rotX += c.rotVx * speed * frame;
                 c.rotY += c.rotVy * speed * frame;
                 c.rotZ += c.rotVz * speed * frame;
@@ -107,9 +116,14 @@ export function create(S) {
                     const dx = mouseAbsX - c.x;
                     const dy = mouseAbsY - c.y;
                     const d = Math.hypot(dx, dy);
-                    if (d < 120) {
-                        c.highlight += (1 - c.highlight) * 0.12;
-                        c.rotVy += dx * 0.00002 * frame;
+                    const reach = 150 + crystalRadius(c);
+                    if (d < reach && d > 0.01) {
+                        const f = 1 - d / reach;
+                        c.highlight += (Math.min(1, f * 1.35) - c.highlight) * 0.16;
+                        c.rotVy += dx * 0.00004 * f * frame;
+                        c.rotVx -= dy * 0.00003 * f * frame;
+                        c.vx += (dx / d) * f * f * 0.045 * frame;
+                        c.vy += (dy / d) * f * f * 0.045 * frame;
                     } else {
                         c.highlight *= 0.92;
                     }
@@ -119,14 +133,16 @@ export function create(S) {
             } else if (c.dragging) {
                 c.highlight = 1;
                 if (animate) {
-                    c.rotY += 0.02 * speed * frame;
+                    c.rotY += 0.028 * speed * frame;
+                    c.rotX += c.rotVx * speed * frame;
+                    c.rotZ += c.rotVz * speed * frame;
                 }
             }
         }
         if (animate) {
-            separateBodies(crystals, (c) => 32 * c.scale * size + 12, frame, 0.5);
+            separateBodies(crystals, (c) => crystalRadius(c) * 0.82, frame, 0.5);
             for (let i = 0; i < crystals.length; i++) {
-                bounceBounds(crystals[i], 24);
+                bounceBounds(crystals[i], Math.max(20, crystalRadius(crystals[i]) * 0.45), 1, 0.18);
             }
         }
         for (let i = 0; i < crystals.length; i++) {
@@ -158,7 +174,12 @@ export function create(S) {
                 z = z1;
                 x1 = x * cosZ - y * sinZ;
                 y1 = x * sinZ + y * cosZ;
-                const persp = S.FOCAL / (S.FOCAL + S.DEPTH_OFFSET + z1);
+                if (z1 < -zLimit) {
+                    z1 = -zLimit;
+                } else if (z1 > zLimit) {
+                    z1 = zLimit;
+                }
+                const persp = S.FOCAL / Math.max(48, S.FOCAL + S.DEPTH_OFFSET + z1);
                 proj.push(c.x + x1 * persp, sy + y1 * persp, z1);
             }
             S.ctx.strokeStyle = c.highlight > 0.35 ? S.accentColorStr : S.particleColorStr;
@@ -195,17 +216,33 @@ export function create(S) {
         clear() { crystals.length = 0; },
         init() { initCrystals(); },
         adjust(pw, ph) { adjustCrystals(pw, ph); },
-        tick(frame, _damp, scrollY, viewHeight, mouseAbsX, mouseAbsY, mouseActive, animate) {
-            tickCrystals(frame, scrollY, viewHeight, mouseAbsX, mouseAbsY, mouseActive, animate);
+        tick(frame, damp, scrollY, viewHeight, mouseAbsX, mouseAbsY, mouseActive, animate) {
+            tickCrystals(frame, damp, scrollY, viewHeight, mouseAbsX, mouseAbsY, mouseActive, animate);
         },
         hitTest(absX, absY) {
-            return nearestHit(crystals, absX, absY, (c) => 38 * c.scale * S.params.crystal.size + 14, 28);
+            return nearestHit(crystals, absX, absY, (c) => crystalRadius(c) + 18, 34);
+        },
+        grab(c) {
+            c.highlight = 1;
+        },
+        dragMove(c, _x, _y, vx, vy) {
+            c.rotVy += vx * 0.016;
+            c.rotVx -= vy * 0.012;
+            c.rotVz += vx * 0.005;
+            c.highlight = 1;
+        },
+        release(c, vx, vy) {
+            c.rotVy += vx * 0.055;
+            c.rotVx -= vy * 0.04;
+            c.rotVz += (vx - vy) * 0.02;
+            c.highlight = 1;
         },
         blast(rng, blastItem) {
             for (let i = 0; i < crystals.length; i++) {
                 blastItem(crystals[i], (c, force) => {
-                    c.rotVx += (rng.next() - 0.5) * force * 0.08;
-                    c.rotVy += (rng.next() - 0.5) * force * 0.1;
+                    c.rotVx += (rng.next() - 0.5) * force * 0.14;
+                    c.rotVy += (rng.next() - 0.5) * force * 0.18;
+                    c.rotVz += (rng.next() - 0.5) * force * 0.1;
                     c.highlight = Math.min(1, c.highlight + force);
                 });
             }

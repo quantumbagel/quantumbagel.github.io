@@ -10,7 +10,7 @@ import {
     FOCAL,
     GUTTER_MIN_WIDTH,
     INTERACTIVE_SELECTOR,
-    MAX_SPEED,
+    LAUNCH_SPEED,
     MOBILE_BREAKPOINT,
     MODE_HINTS,
     MODE_LABELS,
@@ -735,6 +735,9 @@ export function initParticleBackground(canvas, options) {
         target.vy = 0;
         document.body.classList.add("bg-grabbing");
         document.body.classList.remove("bg-can-grab");
+        if (currentMode && typeof currentMode.grab === "function") {
+            currentMode.grab(target, clientX, clientY + window.scrollY);
+        }
     };
 
     const moveDrag = (clientX, clientY) => {
@@ -753,6 +756,9 @@ export function initParticleBackground(canvas, options) {
         drag.lastT = now;
         drag.target.x = nx;
         drag.target.y = ny;
+        if (currentMode && typeof currentMode.dragMove === "function") {
+            currentMode.dragMove(drag.target, clientX, clientY + window.scrollY, drag.vx, drag.vy);
+        }
     };
 
     const endDrag = () => {
@@ -763,8 +769,11 @@ export function initParticleBackground(canvas, options) {
         const moved = drag.moved;
         if (target) {
             target.dragging = false;
-            target.vx = clamp(drag.vx, -MAX_SPEED, MAX_SPEED);
-            target.vy = clamp(drag.vy, -MAX_SPEED, MAX_SPEED);
+            target.vx = clamp(drag.vx, -LAUNCH_SPEED, LAUNCH_SPEED);
+            target.vy = clamp(drag.vy, -LAUNCH_SPEED, LAUNCH_SPEED);
+            if (currentMode && typeof currentMode.release === "function") {
+                currentMode.release(target, target.vx, target.vy);
+            }
             if (typeof target.lane === "number") {
                 const contentWidth = Math.min(CONTENT_MAX_WIDTH, width);
                 const gutter = (width - contentWidth) * 0.5;
