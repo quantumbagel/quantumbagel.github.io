@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" data-tone="350">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Triggered — Julian Reder</title>
+    <meta name="description" content="IFTTT-style Discord automation: compose trigger → action rules, persisted in MongoDB.">
+    <link rel="icon" type="image/png" href="../../pfp.webp">
+    <script>
+        (function() {
+            const storedTheme = localStorage.getItem("theme");
+            const preferredTheme = storedTheme || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+            if (preferredTheme === "dark") {
+                document.documentElement.classList.add("dark");
+            } else {
+                document.documentElement.classList.remove("dark");
+            }
+        })();
+    </script>
+    <link href="../../font.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../theme.css">
+</head>
+<body>
+    <canvas id="interactive-bg" aria-hidden="true"></canvas>
+    <div class="shell">
+        <header class="topbar">
+            <a href="../../" class="brand">Julian Reder</a>
+            <span class="muted small topbar-kicker">Discord Bots · 2023 - 2026</span>
+            <span class="grow"></span>
+            <button id="theme-toggle" class="btn small ghost" type="button" aria-label="Toggle theme" aria-pressed="false">Theme</button>
+            <button id="particle-toggle" class="btn small ghost" type="button" aria-label="Background: On" aria-expanded="false" aria-controls="bg-sim-panel">Background</button>
+        </header>
+        <main class="page">
+            <article class="page-card">
+                <header class="page-head">
+                    <h1 class="look-name big">Triggered</h1>
+                    <p class="look-desc">IFTTT-style Discord automation: compose trigger → action rules, persisted in MongoDB.</p>
+                    <div class="look-meta">2023 - 2026</div>
+                    <div class="page-actions">
+                        <a href="https://github.com/quantumbagel/Triggered" target="_blank" rel="noopener noreferrer" class="btn small">View Project ↗</a>
+                        
+                    </div>
+                    <div class="chips"><span class="chip-btn">Python</span><span class="chip-btn">discord.py</span><span class="chip-btn">MongoDB</span><span class="chip-btn">Docker</span></div>
+                </header>
+
+                <figure class="essay-figure"><svg class="diagram" role="img" aria-label="Triggered schematic" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 260" role="img" aria-label="Triggered compose-a-rule pipeline">
+  <style>
+    .fig23-box { fill: none; stroke: currentColor; stroke-width: 1.4; }
+    .fig23-fill { fill: currentColor; fill-opacity: 0.08; }
+    .fig23-t { font: 600 12px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; }
+    .fig23-s { font: 400 10px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; opacity: 0.62; }
+    .fig23-arr { stroke: currentColor; stroke-width: 1.2; fill: none; marker-end: url(#fig23-ah); }
+  </style>
+  <defs>
+    <marker id="fig23-ah" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L8 4 L0 8 z" fill="currentColor"/>
+    </marker>
+  </defs>
+  <rect class="fig23-box fig23-fill" x="16" y="24" width="140" height="56"/>
+  <text class="fig23-t" x="28" y="48">message</text>
+  <rect class="fig23-box fig23-fill" x="16" y="92" width="140" height="56"/>
+  <text class="fig23-t" x="28" y="116">reaction / voice</text>
+  <rect class="fig23-box fig23-fill" x="16" y="160" width="140" height="56"/>
+  <text class="fig23-t" x="28" y="184">role / schedule</text>
+  <rect class="fig23-box fig23-fill" x="196" y="80" width="170" height="80"/>
+  <text class="fig23-t" x="208" y="112">JSON registry</text>
+  <text class="fig23-s" x="208" y="130">trigger to action</text>
+  <rect class="fig23-box fig23-fill" x="406" y="80" width="150" height="80"/>
+  <text class="fig23-t" x="418" y="112">Slash UX</text>
+  <text class="fig23-s" x="418" y="130">validate, autocomplete</text>
+  <rect class="fig23-box fig23-fill" x="596" y="80" width="148" height="80"/>
+  <text class="fig23-t" x="608" y="112">MongoDB</text>
+  <text class="fig23-s" x="608" y="130">per-guild rules</text>
+  <path class="fig23-arr" d="M156 52 H196 V120"/>
+  <path class="fig23-arr" d="M156 120 H196"/>
+  <path class="fig23-arr" d="M156 188 H196 V160"/>
+  <path class="fig23-arr" d="M366 120 H406"/>
+  <path class="fig23-arr" d="M556 120 H596"/>
+</svg><figcaption class="essay-caption">Users compose when → then rules. Triggers and actions load from a JSON registry; Mongo stores the rest.</figcaption></figure>
+
+                <section class="section"><div class="section-head"><h3>Built</h3></div><div class="section-body"><p class="fg-prose">Users compose when/then rules across messages, reactions, voice, roles, and schedules. Triggers and dos load from a JSON registry; slash UX handles validation and autocomplete; permissions are scoped per server. Docker Compose + pytest; the hosted instance is personal, not a product.</p></div></section>
+                
+                
+                
+
+                <section class="section essay-section"><div class="section-head"><h3>IFTTT, but for one guild</h3></div><div class="section-body"><div class="fg-prose"><p>Triggered is Discord automation you compose instead of code. When a message / reaction / voice / role / schedule event fires, a stored rule runs an action. Triggers and dos load from a JSON registry so the slash UX can validate and autocomplete without a hardcoded switch.</p><p>Permissions are scoped per server. Docker Compose + pytest. The hosted instance is personal, not a product.</p></div></div></section><section class="section essay-section"><div class="section-head"><h3>Registry, then persistence</h3></div><div class="section-body"><div class="fg-prose"><p>The useful design choice was making the registry the source of what can exist, and Mongo the source of what this guild actually configured. Autocomplete stays honest. A missing trigger type fails closed instead of executing a half-built rule.</p><p>I would not sell this as a platform. I would show it as the moment I stopped writing one-off cogs for every “if X then Y” request.</p></div><figure class="essay-figure"><svg class="diagram" role="img" aria-label="Registry, then persistence" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 260" role="img" aria-label="Triggered compose-a-rule pipeline">
+  <style>
+    .fig24-box { fill: none; stroke: currentColor; stroke-width: 1.4; }
+    .fig24-fill { fill: currentColor; fill-opacity: 0.08; }
+    .fig24-t { font: 600 12px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; }
+    .fig24-s { font: 400 10px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; opacity: 0.62; }
+    .fig24-arr { stroke: currentColor; stroke-width: 1.2; fill: none; marker-end: url(#fig24-ah); }
+  </style>
+  <defs>
+    <marker id="fig24-ah" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L8 4 L0 8 z" fill="currentColor"/>
+    </marker>
+  </defs>
+  <rect class="fig24-box fig24-fill" x="16" y="24" width="140" height="56"/>
+  <text class="fig24-t" x="28" y="48">message</text>
+  <rect class="fig24-box fig24-fill" x="16" y="92" width="140" height="56"/>
+  <text class="fig24-t" x="28" y="116">reaction / voice</text>
+  <rect class="fig24-box fig24-fill" x="16" y="160" width="140" height="56"/>
+  <text class="fig24-t" x="28" y="184">role / schedule</text>
+  <rect class="fig24-box fig24-fill" x="196" y="80" width="170" height="80"/>
+  <text class="fig24-t" x="208" y="112">JSON registry</text>
+  <text class="fig24-s" x="208" y="130">trigger to action</text>
+  <rect class="fig24-box fig24-fill" x="406" y="80" width="150" height="80"/>
+  <text class="fig24-t" x="418" y="112">Slash UX</text>
+  <text class="fig24-s" x="418" y="130">validate, autocomplete</text>
+  <rect class="fig24-box fig24-fill" x="596" y="80" width="148" height="80"/>
+  <text class="fig24-t" x="608" y="112">MongoDB</text>
+  <text class="fig24-s" x="608" y="130">per-guild rules</text>
+  <path class="fig24-arr" d="M156 52 H196 V120"/>
+  <path class="fig24-arr" d="M156 120 H196"/>
+  <path class="fig24-arr" d="M156 188 H196 V160"/>
+  <path class="fig24-arr" d="M366 120 H406"/>
+  <path class="fig24-arr" d="M556 120 H596"/>
+</svg><figcaption class="essay-caption">Events in, registry in the middle, Mongo for the composed rules.</figcaption></figure></div></section>
+
+                <footer class="page-foot">
+                    <a href="../../#projects" class="btn small">All projects</a>
+                    <a href="https://github.com/quantumbagel/Triggered" target="_blank" rel="noopener noreferrer" class="btn small">View Project ↗</a>
+                </footer>
+            </article>
+        </main>
+    </div>
+    <script type="module" src="../../particles/main.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const themeToggle = document.getElementById("theme-toggle");
+            const setTheme = (theme) => {
+                document.documentElement.classList.toggle("dark", theme === "dark");
+                localStorage.setItem("theme", theme);
+                if (themeToggle) {
+                    themeToggle.setAttribute("aria-pressed", theme === "dark" ? "true" : "false");
+                }
+            };
+            setTheme(document.documentElement.classList.contains("dark") ? "dark" : "light");
+            if (themeToggle) {
+                themeToggle.addEventListener("click", () => {
+                    document.documentElement.classList.add("theme-transitioning");
+                    setTheme(document.documentElement.classList.contains("dark") ? "light" : "dark");
+                    setTimeout(() => document.documentElement.classList.remove("theme-transitioning"), 180);
+                });
+            }
+            const bindParticleUi = (api) => {
+                if (!api) return;
+                document.querySelectorAll("[data-open-sim]").forEach((btn) => {
+                    btn.addEventListener("click", () => {
+                        api.setEnabled(true);
+                        api.openPanel();
+                    });
+                });
+            };
+            if (window.particleApi) bindParticleUi(window.particleApi);
+            else window.addEventListener("particles-ready", (event) => bindParticleUi(event.detail));
+        });
+    </script>
+</body>
+</html>

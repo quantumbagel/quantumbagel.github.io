@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" data-tone="40">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amazon Music Discord RPC — Julian Reder</title>
+    <meta name="description" content="Browser extension plus a Rust native-messaging host that publishes Amazon Music playback as Discord Rich Presence.">
+    <link rel="icon" type="image/png" href="../../pfp.webp">
+    <script>
+        (function() {
+            const storedTheme = localStorage.getItem("theme");
+            const preferredTheme = storedTheme || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+            if (preferredTheme === "dark") {
+                document.documentElement.classList.add("dark");
+            } else {
+                document.documentElement.classList.remove("dark");
+            }
+        })();
+    </script>
+    <link href="../../font.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../theme.css">
+</head>
+<body>
+    <canvas id="interactive-bg" aria-hidden="true"></canvas>
+    <div class="shell">
+        <header class="topbar">
+            <a href="../../" class="brand">Julian Reder</a>
+            <span class="muted small topbar-kicker">Solo Projects · 2026</span>
+            <span class="grow"></span>
+            <button id="theme-toggle" class="btn small ghost" type="button" aria-label="Toggle theme" aria-pressed="false">Theme</button>
+            <button id="particle-toggle" class="btn small ghost" type="button" aria-label="Background: On" aria-expanded="false" aria-controls="bg-sim-panel">Background</button>
+        </header>
+        <main class="page">
+            <article class="page-card">
+                <header class="page-head">
+                    <h1 class="look-name big">Amazon Music Discord RPC</h1>
+                    <p class="look-desc">Browser extension plus a Rust native-messaging host that publishes Amazon Music playback as Discord Rich Presence.</p>
+                    <div class="look-meta">2026</div>
+                    <div class="page-actions">
+                        <span class="chip">Private — architecture only</span>
+                        
+                    </div>
+                    <div class="chips"><span class="chip-btn">JavaScript</span><span class="chip-btn">Rust</span><span class="chip-btn">Discord IPC</span></div>
+                </header>
+
+                <figure class="essay-figure"><svg class="diagram" role="img" aria-label="Amazon Music Discord RPC schematic" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 240" role="img" aria-label="Amazon Music Discord RPC path">
+  <style>
+    .fig21-box { fill: none; stroke: currentColor; stroke-width: 1.4; }
+    .fig21-fill { fill: currentColor; fill-opacity: 0.08; }
+    .fig21-t { font: 600 12px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; }
+    .fig21-s { font: 400 10px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; opacity: 0.62; }
+    .fig21-arr { stroke: currentColor; stroke-width: 1.2; fill: none; marker-end: url(#fig21-ah); }
+  </style>
+  <defs>
+    <marker id="fig21-ah" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L8 4 L0 8 z" fill="currentColor"/>
+    </marker>
+  </defs>
+  <rect class="fig21-box fig21-fill" x="16" y="40" width="170" height="80"/>
+  <text class="fig21-t" x="28" y="72">Amazon Music tab</text>
+  <text class="fig21-s" x="28" y="90">Media Session API</text>
+  <rect class="fig21-box fig21-fill" x="216" y="40" width="170" height="80"/>
+  <text class="fig21-t" x="228" y="72">Extension</text>
+  <text class="fig21-s" x="228" y="90">no DOM scrape</text>
+  <rect class="fig21-box fig21-fill" x="416" y="40" width="150" height="80"/>
+  <text class="fig21-t" x="428" y="72">Rust host</text>
+  <text class="fig21-s" x="428" y="90">native messaging</text>
+  <rect class="fig21-box fig21-fill" x="596" y="40" width="148" height="80"/>
+  <text class="fig21-t" x="608" y="72">Discord IPC</text>
+  <text class="fig21-s" x="608" y="90">Rich Presence</text>
+  <rect class="fig21-box fig21-fill" x="216" y="150" width="350" height="60"/>
+  <text class="fig21-t" x="228" y="176">coalesce + 5 updates / 20s</text>
+  <text class="fig21-s" x="228" y="194">reconnect, Chromium and Firefox</text>
+  <path class="fig21-arr" d="M186 80 H216"/>
+  <path class="fig21-arr" d="M386 80 H416"/>
+  <path class="fig21-arr" d="M566 80 H596"/>
+  <path class="fig21-arr" d="M491 120 V150"/>
+</svg><figcaption class="essay-caption">Media Session in the tab, a Rust native-messaging host, Discord IPC out. No DOM scrape.</figcaption></figure>
+
+                <section class="section"><div class="section-head"><h3>Built</h3></div><div class="section-body"><p class="fg-prose">The extension reads Media Session and first-party Amazon metadata instead of scraping the DOM. A small Rust host speaks Chromium/Firefox native messaging and Discord IPC, with coalesce + rate limits (5 / 20s) and reconnect. Private repository.</p></div></section>
+                
+                
+                
+
+                <section class="section essay-section"><div class="section-head"><h3>Presence without scraping</h3></div><div class="section-body"><div class="fg-prose"><p>Amazon Music Discord RPC is a browser extension plus a Rust native-messaging host. The extension reads the Media Session API and first-party Amazon metadata. It does not scrape the DOM. The host speaks Chromium and Firefox native messaging on one side and Discord IPC on the other.</p><p>Private repository. The interesting part is the process boundary, not a screenshot of a Discord popup.</p></div></div></section><section class="section essay-section"><div class="section-head"><h3>The host is the product</h3></div><div class="section-body"><div class="fg-prose"><p>JS in a tab cannot talk Discord IPC cleanly. Native messaging is the boring, correct pipe. The Rust host coalesces updates, rate-limits them (5 / 20s), and reconnects. If you skip those, you either get rate-limited by Discord or you flicker the presence on every progress tick.</p><p>I wanted a small native binary I could reason about, not another Electron tray app.</p></div><figure class="essay-figure"><svg class="diagram" role="img" aria-label="The host is the product" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 240" role="img" aria-label="Amazon Music Discord RPC path">
+  <style>
+    .fig22-box { fill: none; stroke: currentColor; stroke-width: 1.4; }
+    .fig22-fill { fill: currentColor; fill-opacity: 0.08; }
+    .fig22-t { font: 600 12px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; }
+    .fig22-s { font: 400 10px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; opacity: 0.62; }
+    .fig22-arr { stroke: currentColor; stroke-width: 1.2; fill: none; marker-end: url(#fig22-ah); }
+  </style>
+  <defs>
+    <marker id="fig22-ah" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L8 4 L0 8 z" fill="currentColor"/>
+    </marker>
+  </defs>
+  <rect class="fig22-box fig22-fill" x="16" y="40" width="170" height="80"/>
+  <text class="fig22-t" x="28" y="72">Amazon Music tab</text>
+  <text class="fig22-s" x="28" y="90">Media Session API</text>
+  <rect class="fig22-box fig22-fill" x="216" y="40" width="170" height="80"/>
+  <text class="fig22-t" x="228" y="72">Extension</text>
+  <text class="fig22-s" x="228" y="90">no DOM scrape</text>
+  <rect class="fig22-box fig22-fill" x="416" y="40" width="150" height="80"/>
+  <text class="fig22-t" x="428" y="72">Rust host</text>
+  <text class="fig22-s" x="428" y="90">native messaging</text>
+  <rect class="fig22-box fig22-fill" x="596" y="40" width="148" height="80"/>
+  <text class="fig22-t" x="608" y="72">Discord IPC</text>
+  <text class="fig22-s" x="608" y="90">Rich Presence</text>
+  <rect class="fig22-box fig22-fill" x="216" y="150" width="350" height="60"/>
+  <text class="fig22-t" x="228" y="176">coalesce + 5 updates / 20s</text>
+  <text class="fig22-s" x="228" y="194">reconnect, Chromium and Firefox</text>
+  <path class="fig22-arr" d="M186 80 H216"/>
+  <path class="fig22-arr" d="M386 80 H416"/>
+  <path class="fig22-arr" d="M566 80 H596"/>
+  <path class="fig22-arr" d="M491 120 V150"/>
+</svg><figcaption class="essay-caption">Tab → extension → Rust host → Discord. The rate limit is part of the diagram.</figcaption></figure></div></section>
+
+                <footer class="page-foot">
+                    <a href="../../#projects" class="btn small">All projects</a>
+                    <span class="chip">Private — architecture only</span>
+                </footer>
+            </article>
+        </main>
+    </div>
+    <script type="module" src="../../particles/main.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const themeToggle = document.getElementById("theme-toggle");
+            const setTheme = (theme) => {
+                document.documentElement.classList.toggle("dark", theme === "dark");
+                localStorage.setItem("theme", theme);
+                if (themeToggle) {
+                    themeToggle.setAttribute("aria-pressed", theme === "dark" ? "true" : "false");
+                }
+            };
+            setTheme(document.documentElement.classList.contains("dark") ? "dark" : "light");
+            if (themeToggle) {
+                themeToggle.addEventListener("click", () => {
+                    document.documentElement.classList.add("theme-transitioning");
+                    setTheme(document.documentElement.classList.contains("dark") ? "light" : "dark");
+                    setTimeout(() => document.documentElement.classList.remove("theme-transitioning"), 180);
+                });
+            }
+            const bindParticleUi = (api) => {
+                if (!api) return;
+                document.querySelectorAll("[data-open-sim]").forEach((btn) => {
+                    btn.addEventListener("click", () => {
+                        api.setEnabled(true);
+                        api.openPanel();
+                    });
+                });
+            };
+            if (window.particleApi) bindParticleUi(window.particleApi);
+            else window.addEventListener("particles-ready", (event) => bindParticleUi(event.detail));
+        });
+    </script>
+</body>
+</html>

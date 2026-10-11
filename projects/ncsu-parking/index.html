@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" data-tone="80">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NCSU Parking — Julian Reder</title>
+    <meta name="description" content="Campus parking forecast: public occupancy + events into Postgres, a strong seasonal baseline, and per-lot XGBoost only when it beats that baseline.">
+    <link rel="icon" type="image/png" href="../../pfp.webp">
+    <script>
+        (function() {
+            const storedTheme = localStorage.getItem("theme");
+            const preferredTheme = storedTheme || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+            if (preferredTheme === "dark") {
+                document.documentElement.classList.add("dark");
+            } else {
+                document.documentElement.classList.remove("dark");
+            }
+        })();
+    </script>
+    <link href="../../font.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../theme.css">
+</head>
+<body>
+    <canvas id="interactive-bg" aria-hidden="true"></canvas>
+    <div class="shell">
+        <header class="topbar">
+            <a href="../../" class="brand">Julian Reder</a>
+            <span class="muted small topbar-kicker">Solo Projects · 2026</span>
+            <span class="grow"></span>
+            <button id="theme-toggle" class="btn small ghost" type="button" aria-label="Toggle theme" aria-pressed="false">Theme</button>
+            <button id="particle-toggle" class="btn small ghost" type="button" aria-label="Background: On" aria-expanded="false" aria-controls="bg-sim-panel">Background</button>
+        </header>
+        <main class="page">
+            <article class="page-card">
+                <header class="page-head">
+                    <h1 class="look-name big">NCSU Parking</h1>
+                    <p class="look-desc">Campus parking forecast: public occupancy + events into Postgres, a strong seasonal baseline, and per-lot XGBoost only when it beats that baseline.</p>
+                    <div class="look-meta">2026</div>
+                    <div class="page-actions">
+                        <span class="chip">Private — architecture only</span>
+                        
+                    </div>
+                    <div class="chips"><span class="chip-btn">Python</span><span class="chip-btn">PostgreSQL</span><span class="chip-btn">XGBoost</span><span class="chip-btn">pandas</span><span class="chip-btn">Streamlit</span><span class="chip-btn">Docker</span></div>
+                </header>
+
+                <figure class="essay-figure"><svg class="diagram" role="img" aria-label="NCSU Parking schematic" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 280" role="img" aria-label="NCSU parking forecast with baseline gate">
+  <style>
+    .fig19-box { fill: none; stroke: currentColor; stroke-width: 1.4; }
+    .fig19-fill { fill: currentColor; fill-opacity: 0.08; }
+    .fig19-t { font: 600 12px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; }
+    .fig19-s { font: 400 10px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; opacity: 0.62; }
+    .fig19-arr { stroke: currentColor; stroke-width: 1.2; fill: none; marker-end: url(#fig19-ah); }
+  </style>
+  <defs>
+    <marker id="fig19-ah" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L8 4 L0 8 z" fill="currentColor"/>
+    </marker>
+  </defs>
+  <rect class="fig19-box fig19-fill" x="16" y="24" width="150" height="64"/>
+  <text class="fig19-t" x="28" y="50">Occupancy API</text>
+  <text class="fig19-s" x="28" y="68">delta snapshots</text>
+  <rect class="fig19-box fig19-fill" x="16" y="108" width="150" height="64"/>
+  <text class="fig19-t" x="28" y="134">Campus events</text>
+  <text class="fig19-s" x="28" y="152">haversine radius</text>
+  <rect class="fig19-box fig19-fill" x="196" y="64" width="160" height="80"/>
+  <text class="fig19-t" x="208" y="96">Postgres</text>
+  <text class="fig19-s" x="208" y="114">5-min grid, lags</text>
+  <rect class="fig19-box fig19-fill" x="386" y="24" width="160" height="70"/>
+  <text class="fig19-t" x="398" y="52">Hour-of-week</text>
+  <text class="fig19-s" x="398" y="70">median baseline</text>
+  <rect class="fig19-box fig19-fill" x="386" y="114" width="160" height="70"/>
+  <text class="fig19-t" x="398" y="142">XGBoost</text>
+  <text class="fig19-s" x="398" y="160">kept only if better MAE</text>
+  <rect class="fig19-box fig19-fill" x="576" y="64" width="168" height="80"/>
+  <text class="fig19-t" x="588" y="96">Streamlit</text>
+  <text class="fig19-s" x="588" y="114">never loads XGBoost</text>
+  <rect class="fig19-box fig19-fill" x="196" y="200" width="350" height="56"/>
+  <text class="fig19-t" x="208" y="226">8 horizons</text>
+  <text class="fig19-s" x="208" y="244">15 min to 24 h, academic-calendar flags</text>
+  <path class="fig19-arr" d="M166 56 H196 V104"/>
+  <path class="fig19-arr" d="M166 140 H196"/>
+  <path class="fig19-arr" d="M356 104 H386 V59"/>
+  <path class="fig19-arr" d="M356 104 H386 V149"/>
+  <path class="fig19-arr" d="M546 59 H576 V104"/>
+  <path class="fig19-arr" d="M546 149 H576 V104"/>
+  <path class="fig19-arr" d="M276 144 V200"/>
+</svg><figcaption class="essay-caption">Occupancy + events into Postgres. XGBoost only ships if it beats an hour-of-week median.</figcaption></figure>
+
+                <section class="section"><div class="section-head"><h3>Built</h3></div><div class="section-body"><p class="fg-prose">A personal forecasting stack for NC State lots. A collector polls the public occupancy API (delta snapshots) and campus events into Postgres; features include 5-minute grids, lags, rolling stats, haversine event radii, and academic-calendar flags. An hour-of-week median is always fit; per-lot XGBoost is kept only if it beats that baseline on validation MAE, across eight horizons from 15 minutes to 24 hours. Training is a separate file-based job so the Streamlit app never loads XGBoost. Private repository — architecture only.</p></div></section>
+                
+                
+                
+
+                <section class="section essay-section"><div class="section-head"><h3>A forecast that can lose</h3></div><div class="section-body"><div class="fg-prose"><p>NCSU Parking is a personal stack for campus lots. The public occupancy API and campus events go into Postgres. Features are boring on purpose: 5-minute grids, lags, rolling stats, haversine event radii, academic-calendar flags. Eight horizons, 15 minutes to 24 hours.</p><p>Private repository — architecture only. I am not publishing lot-level error tables I cannot stand behind in public.</p></div></div></section><section class="section essay-section"><div class="section-head"><h3>Baseline first</h3></div><div class="section-body"><div class="fg-prose"><p>An hour-of-week median is always fit. Per-lot XGBoost is kept only if it beats that baseline on validation MAE. Most “ML parking” demos skip this gate and then look clever on a Tuesday at 10:00, when the median already knew.</p><p>Training is a separate file-based job. The Streamlit app never loads XGBoost. That is not a performance trick. It is how I keep a dashboard from importing a model that failed the gate.</p></div><figure class="essay-figure"><svg class="diagram" role="img" aria-label="Baseline first" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 280" role="img" aria-label="NCSU parking forecast with baseline gate">
+  <style>
+    .fig20-box { fill: none; stroke: currentColor; stroke-width: 1.4; }
+    .fig20-fill { fill: currentColor; fill-opacity: 0.08; }
+    .fig20-t { font: 600 12px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; }
+    .fig20-s { font: 400 10px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; opacity: 0.62; }
+    .fig20-arr { stroke: currentColor; stroke-width: 1.2; fill: none; marker-end: url(#fig20-ah); }
+  </style>
+  <defs>
+    <marker id="fig20-ah" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L8 4 L0 8 z" fill="currentColor"/>
+    </marker>
+  </defs>
+  <rect class="fig20-box fig20-fill" x="16" y="24" width="150" height="64"/>
+  <text class="fig20-t" x="28" y="50">Occupancy API</text>
+  <text class="fig20-s" x="28" y="68">delta snapshots</text>
+  <rect class="fig20-box fig20-fill" x="16" y="108" width="150" height="64"/>
+  <text class="fig20-t" x="28" y="134">Campus events</text>
+  <text class="fig20-s" x="28" y="152">haversine radius</text>
+  <rect class="fig20-box fig20-fill" x="196" y="64" width="160" height="80"/>
+  <text class="fig20-t" x="208" y="96">Postgres</text>
+  <text class="fig20-s" x="208" y="114">5-min grid, lags</text>
+  <rect class="fig20-box fig20-fill" x="386" y="24" width="160" height="70"/>
+  <text class="fig20-t" x="398" y="52">Hour-of-week</text>
+  <text class="fig20-s" x="398" y="70">median baseline</text>
+  <rect class="fig20-box fig20-fill" x="386" y="114" width="160" height="70"/>
+  <text class="fig20-t" x="398" y="142">XGBoost</text>
+  <text class="fig20-s" x="398" y="160">kept only if better MAE</text>
+  <rect class="fig20-box fig20-fill" x="576" y="64" width="168" height="80"/>
+  <text class="fig20-t" x="588" y="96">Streamlit</text>
+  <text class="fig20-s" x="588" y="114">never loads XGBoost</text>
+  <rect class="fig20-box fig20-fill" x="196" y="200" width="350" height="56"/>
+  <text class="fig20-t" x="208" y="226">8 horizons</text>
+  <text class="fig20-s" x="208" y="244">15 min to 24 h, academic-calendar flags</text>
+  <path class="fig20-arr" d="M166 56 H196 V104"/>
+  <path class="fig20-arr" d="M166 140 H196"/>
+  <path class="fig20-arr" d="M356 104 H386 V59"/>
+  <path class="fig20-arr" d="M356 104 H386 V149"/>
+  <path class="fig20-arr" d="M546 59 H576 V104"/>
+  <path class="fig20-arr" d="M546 149 H576 V104"/>
+  <path class="fig20-arr" d="M276 144 V200"/>
+</svg><figcaption class="essay-caption">The interesting box is the one that can discard the model.</figcaption></figure></div></section><section class="section essay-section"><div class="section-head"><h3>What the events actually add</h3></div><div class="section-body"><div class="fg-prose"><p>A football Saturday is not a residual you invent after the fact. Events are collected with the occupancy, given a radius, and become features. If they do not beat the seasonal median, they do not get to stay either.</p><p>The lesson I wanted on the page: a model that is not allowed to lose is not a forecast.</p></div></div></section>
+
+                <footer class="page-foot">
+                    <a href="../../#projects" class="btn small">All projects</a>
+                    <span class="chip">Private — architecture only</span>
+                </footer>
+            </article>
+        </main>
+    </div>
+    <script type="module" src="../../particles/main.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const themeToggle = document.getElementById("theme-toggle");
+            const setTheme = (theme) => {
+                document.documentElement.classList.toggle("dark", theme === "dark");
+                localStorage.setItem("theme", theme);
+                if (themeToggle) {
+                    themeToggle.setAttribute("aria-pressed", theme === "dark" ? "true" : "false");
+                }
+            };
+            setTheme(document.documentElement.classList.contains("dark") ? "dark" : "light");
+            if (themeToggle) {
+                themeToggle.addEventListener("click", () => {
+                    document.documentElement.classList.add("theme-transitioning");
+                    setTheme(document.documentElement.classList.contains("dark") ? "light" : "dark");
+                    setTimeout(() => document.documentElement.classList.remove("theme-transitioning"), 180);
+                });
+            }
+            const bindParticleUi = (api) => {
+                if (!api) return;
+                document.querySelectorAll("[data-open-sim]").forEach((btn) => {
+                    btn.addEventListener("click", () => {
+                        api.setEnabled(true);
+                        api.openPanel();
+                    });
+                });
+            };
+            if (window.particleApi) bindParticleUi(window.particleApi);
+            else window.addEventListener("particles-ready", (event) => bindParticleUi(event.detail));
+        });
+    </script>
+</body>
+</html>

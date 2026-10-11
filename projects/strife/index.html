@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" data-tone="300">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strife — Julian Reder</title>
+    <meta name="description" content="Discord game platform: threaded matches, plugin games, Postgres history, crash-safe live resume. PlayCord rewrite.">
+    <link rel="icon" type="image/png" href="../../pfp.webp">
+    <script>
+        (function() {
+            const storedTheme = localStorage.getItem("theme");
+            const preferredTheme = storedTheme || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+            if (preferredTheme === "dark") {
+                document.documentElement.classList.add("dark");
+            } else {
+                document.documentElement.classList.remove("dark");
+            }
+        })();
+    </script>
+    <link href="../../font.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../theme.css">
+</head>
+<body>
+    <canvas id="interactive-bg" aria-hidden="true"></canvas>
+    <div class="shell">
+        <header class="topbar">
+            <a href="../../" class="brand">Julian Reder</a>
+            <span class="muted small topbar-kicker">Discord Bots · 2026 - Present</span>
+            <span class="grow"></span>
+            <button id="theme-toggle" class="btn small ghost" type="button" aria-label="Toggle theme" aria-pressed="false">Theme</button>
+            <button id="particle-toggle" class="btn small ghost" type="button" aria-label="Background: On" aria-expanded="false" aria-controls="bg-sim-panel">Background</button>
+        </header>
+        <main class="page">
+            <article class="page-card">
+                <header class="page-head">
+                    <h1 class="look-name big">Strife</h1>
+                    <p class="look-desc">Discord game platform: threaded matches, plugin games, Postgres history, crash-safe live resume. PlayCord rewrite.</p>
+                    <div class="look-meta">2026 - Present</div>
+                    <div class="page-actions">
+                        <a href="https://github.com/quantumbagel/Strife" target="_blank" rel="noopener noreferrer" class="btn small">View Project ↗</a>
+                        
+                    </div>
+                    <div class="chips"><span class="chip-btn">Python</span><span class="chip-btn">discord.py</span><span class="chip-btn">PostgreSQL</span><span class="chip-btn">asyncpg</span><span class="chip-btn">Pydantic</span><span class="chip-btn">Docker</span></div>
+                </header>
+
+                <figure class="essay-figure"><svg class="diagram" role="img" aria-label="Strife schematic" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 280" role="img" aria-label="Strife host architecture">
+  <style>
+    .fig17-box { fill: none; stroke: currentColor; stroke-width: 1.4; }
+    .fig17-fill { fill: currentColor; fill-opacity: 0.08; }
+    .fig17-t { font: 600 12px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; }
+    .fig17-s { font: 400 10px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; opacity: 0.62; }
+    .fig17-arr { stroke: currentColor; stroke-width: 1.2; fill: none; marker-end: url(#fig17-ah); }
+  </style>
+  <defs>
+    <marker id="fig17-ah" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L8 4 L0 8 z" fill="currentColor"/>
+    </marker>
+  </defs>
+  <rect class="fig17-box fig17-fill" x="20" y="28" width="160" height="70"/>
+  <text class="fig17-t" x="36" y="56">Discord thread</text>
+  <text class="fig17-s" x="36" y="74">slash, components</text>
+  <rect class="fig17-box fig17-fill" x="220" y="28" width="160" height="70"/>
+  <text class="fig17-t" x="236" y="56">Host</text>
+  <text class="fig17-s" x="236" y="74">lobby, session, routing</text>
+  <rect class="fig17-box fig17-fill" x="420" y="28" width="160" height="70"/>
+  <text class="fig17-t" x="436" y="56">play()</text>
+  <text class="fig17-s" x="436" y="74">live = replay = CLI</text>
+  <rect class="fig17-box fig17-fill" x="620" y="28" width="120" height="70"/>
+  <text class="fig17-t" x="636" y="56">Plugin</text>
+  <text class="fig17-s" x="636" y="74">GameContext</text>
+  <rect class="fig17-box fig17-fill" x="220" y="150" width="160" height="70"/>
+  <text class="fig17-t" x="236" y="178">Move log</text>
+  <text class="fig17-s" x="236" y="196">append-only, resume</text>
+  <rect class="fig17-box fig17-fill" x="420" y="150" width="320" height="70"/>
+  <text class="fig17-t" x="436" y="178">PostgreSQL 16</text>
+  <text class="fig17-s" x="436" y="196">matches, players, live integrity</text>
+  <path class="fig17-arr" d="M180 63 H220"/>
+  <path class="fig17-arr" d="M380 63 H420"/>
+  <path class="fig17-arr" d="M580 63 H620"/>
+  <path class="fig17-arr" d="M300 98 V150"/>
+  <path class="fig17-arr" d="M380 185 H420"/>
+</svg><figcaption class="essay-caption">A Discord thread is just a view. play() is the same function for live, replay, and CLI.</figcaption></figure>
+
+                <section class="section"><div class="section-head"><h3>Built</h3></div><div class="section-body"><p class="fg-prose">Slash lobbies, matches in threads, and a plugin API so the same <code>play()</code> runs live, in replay, and on a CLI. Postgres 16 holds guilds, matches, the move log, and live-match integrity. Games are in-process plugins — fault isolation, not a security sandbox. Builtins: Tic-Tac-Toe, Connect Four, Chess (incl. Chess960), Coup, Mafia, Spyfall, Liar's Dice.</p></div></section>
+                <section class="section"><div class="section-head"><h3>Hard parts</h3></div><div class="section-body"><ul class="fg-list"><li>Live matches resume after a restart by replaying the move log; abandon if the plugin build changed.</li><li>Lobby/thread timeouts and signed msgpack <code>custom_id</code> routing were the long tail.</li><li>Hang caps and a thread pool keep a stuck <code>play()</code> off the event loop.</li><li>Public invite exists; the bot is not hosted yet.</li></ul></div></section>
+                <section class="section"><div class="section-head"><h3>Learned</h3></div><div class="section-body"><p class="fg-prose">A game host is a durability problem: deterministic simulation, an append-only log, and 'live' as a first-class match state.</p></div></section>
+                <section class="section"><div class="section-head"><h3>Also</h3></div><div class="section-body"><ul class="fg-list"><li>Seven builtin games plus git-installable plugins</li><li>Postgres migrations through live-match integrity constraints</li><li>Replay / CLI / live share one play() implementation</li><li>Docker Compose self-host; ~27k LOC in the bot package</li></ul></div></section>
+
+                <section class="section essay-section"><div class="section-head"><h3>A game host, not a chess bot</h3></div><div class="section-body"><div class="fg-prose"><p>Strife is a rewrite of PlayCord: slash lobbies, matches in threads, and a plugin API so the same <code>play()</code> runs live, in replay, and on a CLI. Games are in-process plugins — fault isolation, not a security sandbox. I keep saying that because “sandbox” is the word people want and not the thing I built.</p><p>Builtins: Tic-Tac-Toe, Connect Four, Chess (including Chess960), Coup, Mafia, Spyfall, Liar's Dice. Plugins can be git-installed. Public invite exists; the bot is not hosted yet. Docker Compose is how you run it.</p></div></div></section><section class="section essay-section"><div class="section-head"><h3>Durability is the product</h3></div><div class="section-body"><div class="fg-prose"><p>Postgres 16 holds guilds, matches, the move log, and live-match integrity. A restart resumes a live match by replaying the log. If the plugin build changed, it abandons instead of lying. That is the whole trick: deterministic simulation plus an append-only log, with “live” as a first-class match state.</p><p>The long tail was not the games. It was lobby/thread timeouts, signed msgpack <code>custom_id</code> routing, hang caps, and a thread pool so a stuck <code>play()</code> stays off the event loop. About 27k LOC in the bot package, most of it host machinery.</p></div><figure class="essay-figure"><svg class="diagram" role="img" aria-label="Durability is the product" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 280" role="img" aria-label="Strife host architecture">
+  <style>
+    .fig18-box { fill: none; stroke: currentColor; stroke-width: 1.4; }
+    .fig18-fill { fill: currentColor; fill-opacity: 0.08; }
+    .fig18-t { font: 600 12px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; }
+    .fig18-s { font: 400 10px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; opacity: 0.62; }
+    .fig18-arr { stroke: currentColor; stroke-width: 1.2; fill: none; marker-end: url(#fig18-ah); }
+  </style>
+  <defs>
+    <marker id="fig18-ah" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L8 4 L0 8 z" fill="currentColor"/>
+    </marker>
+  </defs>
+  <rect class="fig18-box fig18-fill" x="20" y="28" width="160" height="70"/>
+  <text class="fig18-t" x="36" y="56">Discord thread</text>
+  <text class="fig18-s" x="36" y="74">slash, components</text>
+  <rect class="fig18-box fig18-fill" x="220" y="28" width="160" height="70"/>
+  <text class="fig18-t" x="236" y="56">Host</text>
+  <text class="fig18-s" x="236" y="74">lobby, session, routing</text>
+  <rect class="fig18-box fig18-fill" x="420" y="28" width="160" height="70"/>
+  <text class="fig18-t" x="436" y="56">play()</text>
+  <text class="fig18-s" x="436" y="74">live = replay = CLI</text>
+  <rect class="fig18-box fig18-fill" x="620" y="28" width="120" height="70"/>
+  <text class="fig18-t" x="636" y="56">Plugin</text>
+  <text class="fig18-s" x="636" y="74">GameContext</text>
+  <rect class="fig18-box fig18-fill" x="220" y="150" width="160" height="70"/>
+  <text class="fig18-t" x="236" y="178">Move log</text>
+  <text class="fig18-s" x="236" y="196">append-only, resume</text>
+  <rect class="fig18-box fig18-fill" x="420" y="150" width="320" height="70"/>
+  <text class="fig18-t" x="436" y="178">PostgreSQL 16</text>
+  <text class="fig18-s" x="436" y="196">matches, players, live integrity</text>
+  <path class="fig18-arr" d="M180 63 H220"/>
+  <path class="fig18-arr" d="M380 63 H420"/>
+  <path class="fig18-arr" d="M580 63 H620"/>
+  <path class="fig18-arr" d="M300 98 V150"/>
+  <path class="fig18-arr" d="M380 185 H420"/>
+</svg><figcaption class="essay-caption">Discord is I/O. Postgres is memory. play() is the game.</figcaption></figure></div></section><section class="section essay-section"><div class="section-head"><h3>What I would not hide in a cog</h3></div><div class="section-body"><div class="fg-prose"><p>Piranha was the earlier chess bot: one file, Stockfish, a PNG board server. Fine for a weekend. Useless as a platform. The moment you want Coup and Chess to share resume, you need a host, not another cog.</p><p>I would still not call the plugin loader a sandbox. Process isolation is a different project. This one is honest about the boundary it actually has.</p></div></div></section>
+
+                <footer class="page-foot">
+                    <a href="../../#projects" class="btn small">All projects</a>
+                    <a href="https://github.com/quantumbagel/Strife" target="_blank" rel="noopener noreferrer" class="btn small">View Project ↗</a>
+                </footer>
+            </article>
+        </main>
+    </div>
+    <script type="module" src="../../particles/main.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const themeToggle = document.getElementById("theme-toggle");
+            const setTheme = (theme) => {
+                document.documentElement.classList.toggle("dark", theme === "dark");
+                localStorage.setItem("theme", theme);
+                if (themeToggle) {
+                    themeToggle.setAttribute("aria-pressed", theme === "dark" ? "true" : "false");
+                }
+            };
+            setTheme(document.documentElement.classList.contains("dark") ? "dark" : "light");
+            if (themeToggle) {
+                themeToggle.addEventListener("click", () => {
+                    document.documentElement.classList.add("theme-transitioning");
+                    setTheme(document.documentElement.classList.contains("dark") ? "light" : "dark");
+                    setTimeout(() => document.documentElement.classList.remove("theme-transitioning"), 180);
+                });
+            }
+            const bindParticleUi = (api) => {
+                if (!api) return;
+                document.querySelectorAll("[data-open-sim]").forEach((btn) => {
+                    btn.addEventListener("click", () => {
+                        api.setEnabled(true);
+                        api.openPanel();
+                    });
+                });
+            };
+            if (window.particleApi) bindParticleUi(window.particleApi);
+            else window.addEventListener("particles-ready", (event) => bindParticleUi(event.detail));
+        });
+    </script>
+</body>
+</html>

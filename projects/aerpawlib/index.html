@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" data-tone="199">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>aerpawlib — Julian Reder</title>
+    <meta name="description" content="Official vehicle-control library for AERPAW, NC State's NSF testbed for 5G/6G and autonomous aircraft.">
+    <link rel="icon" type="image/png" href="../../pfp.webp">
+    <script>
+        (function() {
+            const storedTheme = localStorage.getItem("theme");
+            const preferredTheme = storedTheme || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+            if (preferredTheme === "dark") {
+                document.documentElement.classList.add("dark");
+            } else {
+                document.documentElement.classList.remove("dark");
+            }
+        })();
+    </script>
+    <link href="../../font.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../theme.css">
+</head>
+<body>
+    <canvas id="interactive-bg" aria-hidden="true"></canvas>
+    <div class="shell">
+        <header class="topbar">
+            <a href="../../" class="brand">Julian Reder</a>
+            <span class="muted small topbar-kicker">AERPAW · 2025 - Present</span>
+            <span class="grow"></span>
+            <button id="theme-toggle" class="btn small ghost" type="button" aria-label="Toggle theme" aria-pressed="false">Theme</button>
+            <button id="particle-toggle" class="btn small ghost" type="button" aria-label="Background: On" aria-expanded="false" aria-controls="bg-sim-panel">Background</button>
+        </header>
+        <main class="page">
+            <article class="page-card">
+                <header class="page-head">
+                    <h1 class="look-name big">aerpawlib</h1>
+                    <p class="look-desc">Official vehicle-control library for AERPAW, NC State's NSF testbed for 5G/6G and autonomous aircraft.</p>
+                    <div class="look-meta">2025 - Present</div>
+                    <div class="page-actions">
+                        <a href="https://github.com/AERPAW/aerpawlib" target="_blank" rel="noopener noreferrer" class="btn small">View Project ↗</a>
+                        
+                    </div>
+                    <div class="chips"><span class="chip-btn">Python</span><span class="chip-btn">MAVSDK / MAVLink</span><span class="chip-btn">ArduPilot</span><span class="chip-btn">asyncio / gRPC</span><span class="chip-btn">ZeroMQ</span><span class="chip-btn">pytest</span><span class="chip-btn">SITL</span></div>
+                </header>
+
+                <figure class="essay-figure"><svg class="diagram" role="img" aria-label="aerpawlib schematic" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 340" role="img" aria-label="aerpawlib stack from experiment script to ArduPilot">
+  <style>
+    .fig7-box { fill: none; stroke: currentColor; stroke-width: 1.4; }
+    .fig7-fill { fill: currentColor; fill-opacity: 0.08; }
+    .fig7-t { font: 600 12px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; }
+    .fig7-s { font: 400 10px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; opacity: 0.62; }
+    .fig7-arr { stroke: currentColor; stroke-width: 1.2; fill: none; marker-end: url(#fig7-ah); }
+  </style>
+  <defs>
+    <marker id="fig7-ah" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L8 4 L0 8 z" fill="currentColor"/>
+    </marker>
+  </defs>
+  <rect class="fig7-box fig7-fill" x="20" y="24" width="160" height="64"/>
+  <text class="fig7-t" x="36" y="50">Experiment script</text>
+  <text class="fig7-s" x="36" y="68">Runner / StateMachine</text>
+  <rect class="fig7-box fig7-fill" x="220" y="24" width="160" height="64"/>
+  <text class="fig7-t" x="236" y="50">aerpawlib v1 / v2</text>
+  <text class="fig7-s" x="236" y="68">Vehicle, can_*, ZMQ</text>
+  <rect class="fig7-box fig7-fill" x="420" y="24" width="160" height="64"/>
+  <text class="fig7-t" x="436" y="50">MAVSDK + gRPC</text>
+  <text class="fig7-s" x="436" y="68">mavsdk_server</text>
+  <rect class="fig7-box fig7-fill" x="580" y="24" width="160" height="64"/>
+  <text class="fig7-t" x="596" y="50">MAVLink filter</text>
+  <text class="fig7-s" x="596" y="68">takeoff land goto yaw</text>
+  <rect class="fig7-box fig7-fill" x="580" y="140" width="160" height="64"/>
+  <text class="fig7-t" x="596" y="166">Cube Orange</text>
+  <text class="fig7-s" x="596" y="184">ArduPilot, LAM6/SAM4</text>
+  <rect class="fig7-box fig7-fill" x="220" y="140" width="160" height="64"/>
+  <text class="fig7-t" x="236" y="166">Safety checker</text>
+  <text class="fig7-s" x="236" y="184">KML geofence, C-VM</text>
+  <rect class="fig7-box fig7-fill" x="20" y="140" width="160" height="64"/>
+  <text class="fig7-t" x="36" y="166">SITL tests</text>
+  <text class="fig7-s" x="36" y="184">Copter + Rover</text>
+  <rect class="fig7-box fig7-fill" x="220" y="252" width="360" height="56"/>
+  <text class="fig7-t" x="236" y="276">ZMQ proxy 5570 / 5571</text>
+  <text class="fig7-s" x="236" y="294">JSON control plane, wait_for_peers</text>
+  <path class="fig7-arr" d="M180 56 H220"/>
+  <path class="fig7-arr" d="M380 56 H420"/>
+  <path class="fig7-arr" d="M580 88 V140"/>
+  <path class="fig7-arr" d="M300 88 V140"/>
+  <path class="fig7-arr" d="M100 204 V280 H220"/>
+  <path class="fig7-arr" d="M300 204 V252"/>
+</svg><figcaption class="essay-caption">Experiment script → aerpawlib → MAVSDK → the testbed MAVLink filter → Cube Orange / ArduPilot.</figcaption></figure>
+
+                <section class="section"><div class="section-head"><h3>Built</h3></div><div class="section-body"><p class="fg-prose">I maintain <a href='https://github.com/AERPAW/aerpawlib' class='text-link hover:underline'>AERPAW/aerpawlib</a> — the Python API experimenters use to fly LAM6/SAM4 UAVs and the rover. I moved it from DroneKit onto MAVSDK, kept the v1 Runner/StateMachine surface, and added a v2 async API. Current release is 1.4.11.</p></div></section>
+                <section class="section"><div class="section-head"><h3>Hard parts</h3></div><div class="section-body"><ul class="fg-list"><li>Testbed MAVLink filter only allows takeoff, land, goto, and yaw (20–100 m takeoff, land within 5 m of home).</li><li><code>SET_MODE</code> is blocked; GUIDED has to be held with <code>MAV_CMD_DO_SET_MODE</code>. LOITER drops the E-VM link.</li><li>Safety checker belongs on the C-VM, not localhost or the OEO console.</li><li>Timed <code>set_velocity</code> was killing newer commands; bearings ignored latitude (~51° vs 45° at 35.7°N).</li><li>Multi-vehicle ZMQ dropped transitions until JSON + ACK + <code>wait_for_peers</code>.</li></ul></div></section>
+                <section class="section"><div class="section-head"><h3>Learned</h3></div><div class="section-body"><ul class="fg-list"><li>The filter defines the API as much as the SDK does.</li><li>SITL is necessary and not sufficient.</li><li>A compat layer plus a second API beats a flag-day rewrite.</li></ul></div></section>
+                <section class="section"><div class="section-head"><h3>Also</h3></div><div class="section-body"><ul class="fg-list"><li>Primary maintainer of the official AERPAW.org library (v1 + v2 on MAVSDK 3.17)</li><li>Safety checker with KML geofences, fail-closed command validation, success-only RTL</li><li>ZMQ XSUB/XPUB proxy for multi-vehicle scripts (ports 5570/5571, JSON control plane)</li><li>ArduPilot SITL + MAVSDK integration tests; CI on Python 3.10–3.14</li><li>Docs at aerpaw.github.io/aerpawlib</li></ul></div></section>
+
+                <section class="section essay-section"><div class="section-head"><h3>The platform</h3></div><div class="section-body"><div class="fg-prose"><p>AERPAW — Aerial Experimentation and Research Platform for Advanced Wireless — is NC State's NSF PAWR testbed. The public line is that it is the first platform built to study 5G/6G together with autonomous aircraft. The vehicles experimenters actually fly are the LAM6 and SAM4 multicopters and a rover, all on Cube Orange running ArduPilot, speaking MAVLink v2. Portable radio nodes (SDRs on the large vehicles, lighter radios on SAM4) are the payload. Experiment VMs start through <code>startexperiment.sh</code> → <code>startVehicle.sh</code>.</p><p>A MAVLink filter sits between experimenter code and the autopilot. Only takeoff, land, simple goto, and yaw go through. Takeoff is 20–100 m. Landing has to be within 5 m of the takeoff point. Gotos are checked against the field geofence; the rover also has no-go zones for creeks. Status messages flow the other way unrestricted. That filter is the real API.</p></div></div></section><section class="section essay-section"><div class="section-head"><h3>What I maintain</h3></div><div class="section-body"><div class="fg-prose"><p>The original aerpawlib was John Kesler's DroneKit / pymavlink library: experimenters wrote Runner and StateMachine scripts, asyncio in the background, QGroundControl <code>.plan</code> files for waypoints. I am a listed co-author and the primary maintainer of the official <a href="https://github.com/AERPAW/aerpawlib">AERPAW/aerpawlib</a> tree. Current release is 1.4.11.</p><p>I migrated the library onto MAVSDK so vehicle firmware can move without monkey-patching Python. v1 keeps the old surface — DroneKit-shaped telemetry wrappers, a dual asyncio/gRPC loop so existing sync-looking scripts still run. v2 is the API I wanted: <code>VehicleTask</code>, <code>can_takeoff</code> / <code>can_goto</code> / <code>can_land</code>, one event loop. I also own the SITL harness, the CLI, the docs, and the 1.4.x series that made this survive the live E-VM / C-VM filter.</p></div></div></section><section class="section essay-section"><div class="section-head"><h3>What the filter taught the API</h3></div><div class="section-body"><div class="fg-prose"><code>SET_MODE</code> is not on the allow-list. <code>MAV_CMD_DO_SET_MODE</code> is. <code>action.hold()</code> / LOITER severs the E-VM link, so GUIDED has to be held with raw MAVLink. The safety checker has to talk to this node's C-VM, not localhost and not the OEO console — that bug shipped and got reverted in 1.4.7–1.4.8. Auto RTL runs only after a successful mission; abort used to fly home at <code>home.alt ≈ 0</code> and get rejected by the 20 m minimum.
+<p>Smaller, uglier ones: timed <code>set_velocity</code> loops cancelled the next command; geodesic bearings ignored latitude (about 51° vs 45° at Lake Wheeler); <code>ExternalProcess</code> dropped stdin/stdout files. Multi-vehicle ZMQ started as fire-and-forget PUB/SUB. It drops transitions. The control plane is now JSON with ACK, HELLO, and <code>wait_for_peers</code> on ports 5570/5571.</p></div><figure class="essay-figure"><svg class="diagram" role="img" aria-label="What the filter taught the API" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 320" role="img" aria-label="AERPAW MAVLink filter allow-list">
+  <style>
+    .fig8-box { fill: none; stroke: currentColor; stroke-width: 1.4; }
+    .fig8-fill { fill: currentColor; fill-opacity: 0.08; }
+    .fig8-ok { fill: currentColor; fill-opacity: 0.14; }
+    .fig8-no { fill: none; stroke: currentColor; stroke-dasharray: 4 3; }
+    .fig8-t { font: 600 12px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; }
+    .fig8-s { font: 400 10px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; opacity: 0.62; }
+    .fig8-arr { stroke: currentColor; stroke-width: 1.2; fill: none; marker-end: url(#fig8-ah); }
+  </style>
+  <defs>
+    <marker id="fig8-ah" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L8 4 L0 8 z" fill="currentColor"/>
+    </marker>
+  </defs>
+  <rect class="fig8-box fig8-fill" x="16" y="24" width="150" height="64"/>
+  <text class="fig8-t" x="28" y="50">E-VM script</text>
+  <text class="fig8-s" x="28" y="68">aerpawlib commands</text>
+  <rect class="fig8-box fig8-ok" x="200" y="16" width="360" height="200"/>
+  <text class="fig8-t" x="216" y="40">MAVLink filter (allow-list)</text>
+  <text class="fig8-s" x="216" y="58">takeoff 20-100 m, land &lt;=5 m of home</text>
+  <rect class="fig8-box fig8-fill" x="220" y="76" width="150" height="48"/>
+  <text class="fig8-t" x="232" y="96">takeoff / land</text>
+  <text class="fig8-s" x="232" y="112">goto, yaw</text>
+  <rect class="fig8-box fig8-fill" x="388" y="76" width="150" height="48"/>
+  <text class="fig8-t" x="400" y="96">status out</text>
+  <text class="fig8-s" x="400" y="112">unrestricted</text>
+  <rect class="fig8-box fig8-no" x="220" y="140" width="318" height="56"/>
+  <text class="fig8-t" x="232" y="164">blocked: SET_MODE, LOITER</text>
+  <text class="fig8-s" x="232" y="182">GUIDED via MAV_CMD_DO_SET_MODE</text>
+  <rect class="fig8-box fig8-fill" x="596" y="24" width="148" height="64"/>
+  <text class="fig8-t" x="608" y="50">Cube Orange</text>
+  <text class="fig8-s" x="608" y="68">ArduPilot, MAVLink v2</text>
+  <rect class="fig8-box fig8-fill" x="200" y="240" width="360" height="60"/>
+  <text class="fig8-t" x="216" y="266">C-VM safety checker</text>
+  <text class="fig8-s" x="216" y="284">KML geofence on this node</text>
+  <path class="fig8-arr" d="M166 56 H200"/>
+  <path class="fig8-arr" d="M560 56 H596"/>
+  <path class="fig8-arr" d="M380 216 V240"/>
+</svg><figcaption class="essay-caption">The allow-list is the API. Status comes back unrestricted; SET_MODE and LOITER do not go through.</figcaption></figure></div></section><section class="section essay-section"><div class="section-head"><h3>How I know it works</h3></div><div class="section-body"><p class="fg-prose">Unit tests run on Python 3.10–3.14 in CI. Integration tests start ArduCopter and Rover SITL plus mavsdk_server and reset the vehicles between cases. MAVProxy will block if stdout is a pipe — the suite has to run with capture off. Docs live at aerpaw.github.io/aerpawlib. The useful lesson is boring: SITL is necessary and not sufficient. The filter wins arguments.</p></div></section>
+
+                <footer class="page-foot">
+                    <a href="../../#projects" class="btn small">All projects</a>
+                    <a href="https://github.com/AERPAW/aerpawlib" target="_blank" rel="noopener noreferrer" class="btn small">View Project ↗</a>
+                </footer>
+            </article>
+        </main>
+    </div>
+    <script type="module" src="../../particles/main.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const themeToggle = document.getElementById("theme-toggle");
+            const setTheme = (theme) => {
+                document.documentElement.classList.toggle("dark", theme === "dark");
+                localStorage.setItem("theme", theme);
+                if (themeToggle) {
+                    themeToggle.setAttribute("aria-pressed", theme === "dark" ? "true" : "false");
+                }
+            };
+            setTheme(document.documentElement.classList.contains("dark") ? "dark" : "light");
+            if (themeToggle) {
+                themeToggle.addEventListener("click", () => {
+                    document.documentElement.classList.add("theme-transitioning");
+                    setTheme(document.documentElement.classList.contains("dark") ? "light" : "dark");
+                    setTimeout(() => document.documentElement.classList.remove("theme-transitioning"), 180);
+                });
+            }
+            const bindParticleUi = (api) => {
+                if (!api) return;
+                document.querySelectorAll("[data-open-sim]").forEach((btn) => {
+                    btn.addEventListener("click", () => {
+                        api.setEnabled(true);
+                        api.openPanel();
+                    });
+                });
+            };
+            if (window.particleApi) bindParticleUi(window.particleApi);
+            else window.addEventListener("particles-ready", (event) => bindParticleUi(event.detail));
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" data-tone="199">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Website (v3) — Julian Reder</title>
+    <meta name="description" content="This site: TOML-driven static generator plus twelve background simulations you can grab and tune.">
+    <link rel="icon" type="image/png" href="../../pfp.webp">
+    <script>
+        (function() {
+            const storedTheme = localStorage.getItem("theme");
+            const preferredTheme = storedTheme || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+            if (preferredTheme === "dark") {
+                document.documentElement.classList.add("dark");
+            } else {
+                document.documentElement.classList.remove("dark");
+            }
+        })();
+    </script>
+    <link href="../../font.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../theme.css">
+</head>
+<body>
+    <canvas id="interactive-bg" aria-hidden="true"></canvas>
+    <div class="shell">
+        <header class="topbar">
+            <a href="../../" class="brand">Julian Reder</a>
+            <span class="muted small topbar-kicker">Solo Projects · 2026 - Present</span>
+            <span class="grow"></span>
+            <button id="theme-toggle" class="btn small ghost" type="button" aria-label="Toggle theme" aria-pressed="false">Theme</button>
+            <button id="particle-toggle" class="btn small ghost" type="button" aria-label="Background: On" aria-expanded="false" aria-controls="bg-sim-panel">Background</button>
+        </header>
+        <main class="page">
+            <article class="page-card">
+                <header class="page-head">
+                    <h1 class="look-name big">Portfolio Website (v3)</h1>
+                    <p class="look-desc">This site: TOML-driven static generator plus twelve background simulations you can grab and tune.</p>
+                    <div class="look-meta">2026 - Present</div>
+                    <div class="page-actions">
+                        <a href="https://github.com/quantumbagel/quantumbagel.github.io" target="_blank" rel="noopener noreferrer" class="btn small">View Project ↗</a>
+                        <button type="button" data-open-sim class="btn small">Open the simulations</button>
+                    </div>
+                    <div class="chips"><span class="chip-btn">Python</span><span class="chip-btn">JavaScript</span><span class="chip-btn">Canvas</span></div>
+                </header>
+
+                <figure class="essay-figure"><svg class="diagram" role="img" aria-label="Portfolio Website (v3) schematic" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 220" role="img" aria-label="Portfolio generator and simulation engine">
+  <style>
+    .fig25-box { fill: none; stroke: currentColor; stroke-width: 1.4; }
+    .fig25-fill { fill: currentColor; fill-opacity: 0.08; }
+    .fig25-t { font: 600 12px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; }
+    .fig25-s { font: 400 10px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; opacity: 0.62; }
+    .fig25-arr { stroke: currentColor; stroke-width: 1.2; fill: none; marker-end: url(#fig25-ah); }
+  </style>
+  <defs>
+    <marker id="fig25-ah" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L8 4 L0 8 z" fill="currentColor"/>
+    </marker>
+  </defs>
+  <rect class="fig25-box fig25-fill" x="20" y="36" width="160" height="70"/>
+  <text class="fig25-t" x="36" y="64">site.toml</text>
+  <text class="fig25-s" x="36" y="82">essays, projects</text>
+  <rect class="fig25-box fig25-fill" x="220" y="36" width="160" height="70"/>
+  <text class="fig25-t" x="236" y="64">generator.py</text>
+  <text class="fig25-s" x="236" y="82">HTML pages + media</text>
+  <rect class="fig25-box fig25-fill" x="420" y="36" width="160" height="70"/>
+  <text class="fig25-t" x="436" y="64">GitHub Pages</text>
+  <text class="fig25-s" x="436" y="82">static index + essays</text>
+  <rect class="fig25-box fig25-fill" x="220" y="136" width="360" height="60"/>
+  <text class="fig25-t" x="236" y="162">Canvas engine, 12 modes</text>
+  <text class="fig25-s" x="236" y="180">molecules, orbits, life, aurora, flock</text>
+  <path class="fig25-arr" d="M180 71 H220"/>
+  <path class="fig25-arr" d="M380 71 H420"/>
+  <path class="fig25-arr" d="M300 106 V136"/>
+</svg><figcaption class="essay-caption">site.toml is the content. generator.py writes the homepage and the essay pages. The canvas is its own engine.</figcaption></figure>
+
+                <section class="section"><div class="section-head"><h3>Built</h3></div><div class="section-body"><p class="fg-prose">Content lives in <code>site.toml</code>, templates render it, GitHub Pages serves it. The background is its own engine — twelve modes with pointer interaction and a live parameter panel.</p></div></section>
+                <section class="section"><div class="section-head"><h3>Hard parts</h3></div><div class="section-body"><ul class="fg-list"><li>Keep the sim smooth behind a frosted column.</li><li>Honor reduced motion; persist mode and params.</li><li>Do not steal pointer events from the page.</li></ul></div></section>
+                <section class="section"><div class="section-head"><h3>Learned</h3></div><div class="section-body"><p class="fg-prose">A portfolio is more convincing when the page itself is something you can operate.</p></div></section>
+                <section class="section"><div class="section-head"><h3>Also</h3></div><div class="section-body"><ul class="fg-list"><li>Custom Python static generator from TOML + HTML partials</li><li>Light/dark theme, section deep links, contact form</li><li>Interactive background simulations with a live control panel</li></ul></div></section>
+
+                <section class="section essay-section"><div class="section-head"><h3>A site that is also a thing</h3></div><div class="section-body"><div class="fg-prose"><p>This page is generated. Content lives in <code>site.toml</code>, templates render it, GitHub Pages serves it. Featured projects get a teaser on the homepage and a longer essay at <code>/projects/{slug}/</code>. I would rather maintain TOML than a CMS.</p><p>The background is a separate engine: twelve modes, pointer interaction, a live parameter panel, reduced-motion support, and persistence in localStorage. Click Background in the header.</p></div></div></section><section class="section essay-section"><div class="section-head"><h3>What I keep fighting</h3></div><div class="section-body"><div class="fg-prose"><p>The sim has to stay smooth behind a frosted column, honor reduced motion, and not steal pointer events from the page. Module init also has to boot without racing <code>DOMContentLoaded</code> — that one actually broke the particles.</p><p>A portfolio is more convincing when the page itself is something you can operate, and when the writeups are willing to say what the repo actually contains.</p></div><figure class="essay-figure"><svg class="diagram" role="img" aria-label="What I keep fighting" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 220" role="img" aria-label="Portfolio generator and simulation engine">
+  <style>
+    .fig26-box { fill: none; stroke: currentColor; stroke-width: 1.4; }
+    .fig26-fill { fill: currentColor; fill-opacity: 0.08; }
+    .fig26-t { font: 600 12px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; }
+    .fig26-s { font: 400 10px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; opacity: 0.62; }
+    .fig26-arr { stroke: currentColor; stroke-width: 1.2; fill: none; marker-end: url(#fig26-ah); }
+  </style>
+  <defs>
+    <marker id="fig26-ah" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L8 4 L0 8 z" fill="currentColor"/>
+    </marker>
+  </defs>
+  <rect class="fig26-box fig26-fill" x="20" y="36" width="160" height="70"/>
+  <text class="fig26-t" x="36" y="64">site.toml</text>
+  <text class="fig26-s" x="36" y="82">essays, projects</text>
+  <rect class="fig26-box fig26-fill" x="220" y="36" width="160" height="70"/>
+  <text class="fig26-t" x="236" y="64">generator.py</text>
+  <text class="fig26-s" x="236" y="82">HTML pages + media</text>
+  <rect class="fig26-box fig26-fill" x="420" y="36" width="160" height="70"/>
+  <text class="fig26-t" x="436" y="64">GitHub Pages</text>
+  <text class="fig26-s" x="436" y="82">static index + essays</text>
+  <rect class="fig26-box fig26-fill" x="220" y="136" width="360" height="60"/>
+  <text class="fig26-t" x="236" y="162">Canvas engine, 12 modes</text>
+  <text class="fig26-s" x="236" y="180">molecules, orbits, life, aurora, flock</text>
+  <path class="fig26-arr" d="M180 71 H220"/>
+  <path class="fig26-arr" d="M380 71 H420"/>
+  <path class="fig26-arr" d="M300 106 V136"/>
+</svg><figcaption class="essay-caption">Content in, static HTML out, canvas beside it — not inside the generator.</figcaption></figure></div></section>
+
+                <footer class="page-foot">
+                    <a href="../../#projects" class="btn small">All projects</a>
+                    <a href="https://github.com/quantumbagel/quantumbagel.github.io" target="_blank" rel="noopener noreferrer" class="btn small">View Project ↗</a>
+                </footer>
+            </article>
+        </main>
+    </div>
+    <script type="module" src="../../particles/main.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const themeToggle = document.getElementById("theme-toggle");
+            const setTheme = (theme) => {
+                document.documentElement.classList.toggle("dark", theme === "dark");
+                localStorage.setItem("theme", theme);
+                if (themeToggle) {
+                    themeToggle.setAttribute("aria-pressed", theme === "dark" ? "true" : "false");
+                }
+            };
+            setTheme(document.documentElement.classList.contains("dark") ? "dark" : "light");
+            if (themeToggle) {
+                themeToggle.addEventListener("click", () => {
+                    document.documentElement.classList.add("theme-transitioning");
+                    setTheme(document.documentElement.classList.contains("dark") ? "light" : "dark");
+                    setTimeout(() => document.documentElement.classList.remove("theme-transitioning"), 180);
+                });
+            }
+            const bindParticleUi = (api) => {
+                if (!api) return;
+                document.querySelectorAll("[data-open-sim]").forEach((btn) => {
+                    btn.addEventListener("click", () => {
+                        api.setEnabled(true);
+                        api.openPanel();
+                    });
+                });
+            };
+            if (window.particleApi) bindParticleUi(window.particleApi);
+            else window.addEventListener("particles-ready", (event) => bindParticleUi(event.detail));
+        });
+    </script>
+</body>
+</html>

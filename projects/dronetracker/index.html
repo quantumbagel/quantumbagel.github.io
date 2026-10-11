@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en" data-tone="29">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DroneTracker — Julian Reder</title>
+    <meta name="description" content="Aims AXIS Q-8615E PTZ cameras at AERPAW UAVs from Kafka GPS/velocity and records the flight over VAPIX.">
+    <link rel="icon" type="image/png" href="../../pfp.webp">
+    <script>
+        (function() {
+            const storedTheme = localStorage.getItem("theme");
+            const preferredTheme = storedTheme || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+            if (preferredTheme === "dark") {
+                document.documentElement.classList.add("dark");
+            } else {
+                document.documentElement.classList.remove("dark");
+            }
+        })();
+    </script>
+    <link href="../../font.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../theme.css">
+</head>
+<body>
+    <canvas id="interactive-bg" aria-hidden="true"></canvas>
+    <div class="shell">
+        <header class="topbar">
+            <a href="../../" class="brand">Julian Reder</a>
+            <span class="muted small topbar-kicker">AERPAW · 2024 - Present</span>
+            <span class="grow"></span>
+            <button id="theme-toggle" class="btn small ghost" type="button" aria-label="Toggle theme" aria-pressed="false">Theme</button>
+            <button id="particle-toggle" class="btn small ghost" type="button" aria-label="Background: On" aria-expanded="false" aria-controls="bg-sim-panel">Background</button>
+        </header>
+        <main class="page">
+            <article class="page-card">
+                <header class="page-head">
+                    <h1 class="look-name big">DroneTracker</h1>
+                    <p class="look-desc">Aims AXIS Q-8615E PTZ cameras at AERPAW UAVs from Kafka GPS/velocity and records the flight over VAPIX.</p>
+                    <div class="look-meta">2024 - Present</div>
+                    <div class="page-actions">
+                        <a href="https://github.com/quantumbagel/DroneTracker" target="_blank" rel="noopener noreferrer" class="btn small">View Project ↗</a>
+                        
+                    </div>
+                    <div class="chips"><span class="chip-btn">Python</span><span class="chip-btn">VAPIX</span><span class="chip-btn">Kafka</span><span class="chip-btn">geopy</span><span class="chip-btn">Docker</span><span class="chip-btn">Linux/Unix</span></div>
+                </header>
+
+                <figure class="essay-figure"><svg class="diagram" role="img" aria-label="DroneTracker schematic" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 340" role="img" aria-label="DroneTracker camera-to-UAV aiming geometry">
+  <style>
+    .fig12-line { stroke: currentColor; stroke-width: 1.3; fill: none; }
+    .fig12-dash { stroke-dasharray: 5 4; }
+    .fig12-t { font: 600 12px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; }
+    .fig12-s { font: 400 10px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; opacity: 0.62; }
+    .fig12-fill { fill: currentColor; fill-opacity: 0.1; }
+    .fig12-box { fill: none; stroke: currentColor; stroke-width: 1.4; }
+  </style>
+  <rect class="fig12-box fig12-fill" x="16" y="16" width="200" height="56"/>
+  <text class="fig12-t" x="28" y="40">AXIS Q-8615E</text>
+  <text class="fig12-s" x="28" y="56">site pose in YAML</text>
+  <path class="fig12-line" d="M80 280 L80 120"/>
+  <path class="fig12-line fig12-dash" d="M80 280 L420 70"/>
+  <path class="fig12-line fig12-dash" d="M80 280 L620 40"/>
+  <polygon points="68,280 92,280 80,252" fill="currentColor"/>
+  <circle cx="420" cy="70" r="7" fill="none" stroke="currentColor" stroke-width="1.4"/>
+  <path class="fig12-line" d="M410 70 h20 M420 60 v20"/>
+  <text class="fig12-t" x="436" y="66">UAV now</text>
+  <text class="fig12-s" x="436" y="82">lat lon alt</text>
+  <circle cx="620" cy="40" r="5" fill="currentColor"/>
+  <text class="fig12-t" x="632" y="36">lead</text>
+  <text class="fig12-s" x="632" y="52">NEU velocity</text>
+  <text class="fig12-s" x="96" y="200">tilt = elevation</text>
+  <text class="fig12-s" x="220" y="250">pan = spherical bearing</text>
+  <text class="fig12-s" x="300" y="140">zoom = FOV(range, size) to 0-9999</text>
+  <path class="fig12-line" d="M80 280 H300"/>
+  <text class="fig12-s" x="88" y="300">camera north-offset wraps into AXIS +/-180</text>
+  <rect class="fig12-box fig12-fill" x="480" y="250" width="260" height="70"/>
+  <text class="fig12-t" x="496" y="278">VAPIX</text>
+  <text class="fig12-s" x="496" y="296">ptz.cgi, record.cgi, export.mkv</text>
+</svg><figcaption class="essay-caption">Camera at a known site pose. UAV GPS/velocity in. Pan, tilt, and zoom are geometry before they are HTTP.</figcaption></figure>
+
+                <section class="section"><div class="section-head"><h3>Built</h3></div><div class="section-body"><p class="fg-prose">Dockerized field service: Kafka position/velocity in, VAPIX pan/tilt/zoom out, recordings to the camera SD card as Matroska. Stock sensecam-control had PTZ but not record, so I forked <a href='https://github.com/quantumbagel/sensecam-control-record' class='text-link hover:underline'>sensecam-control-record</a> for start/stop/export. YAML holds site pose, FOV scale, and drone size; dry-run works without a camera.</p></div></section>
+                <section class="section"><div class="section-head"><h3>Hard parts</h3></div><div class="section-body"><ul class="fg-list"><li>Pan is a spherical bearing; tilt is elevation; zoom maps a Q-8615E FOV model into 0–9999 steps.</li><li>Camera north-offset has to wrap into AXIS ±180° pan.</li><li>Optional velocity lead: NEU vs a possible NED convention (sign-flip on vz).</li><li>Minimum pan/zoom steps so the PTZ is not spammed; stale telemetry parks the camera.</li></ul></div></section>
+                <section class="section"><div class="section-head"><h3>Learned</h3></div><div class="section-body"><p class="fg-prose">Closing a telemetry bus onto a physical PTZ is as much field ops as math: Digest-auth CGI, host-network Docker, and a library that can actually start a recording.</p></div></section>
+                <section class="section"><div class="section-head"><h3>Also</h3></div><div class="section-body"><ul class="fg-list"><li>Geodetic → pan/tilt/zoom for AXIS Q-8615E, including FOV calibration</li><li>Kafka data, command, and output topics; packet-timeout deactivate</li><li>VAPIX recording start/stop/export via a forked sensecam-control</li><li>Docker Compose, host networking, recordings volume, dry-run mode</li></ul></div></section>
+
+                <section class="section essay-section"><div class="section-head"><h3>The job</h3></div><div class="section-body"><div class="fg-prose"><p>DroneTracker keeps an AXIS Q-8615E pointed at an AERPAW UAV and records the pass. Positions and velocities arrive on Kafka. Commands leave over VAPIX. Recordings land on the camera SD card as Matroska. The repo is <a href="https://github.com/quantumbagel/DroneTracker">quantumbagel/DroneTracker</a>.</p><p>This is the featured project that actually uses Kafka. PyAerial does not. I keep saying that because the AERPAW-adjacent repos share a vocabulary and not a stack.</p></div></div></section><section class="section essay-section"><div class="section-head"><h3>Geometry before CGI</h3></div><div class="section-body"><div class="fg-prose"><p>Pan is a spherical bearing from the camera to the aircraft. Tilt is elevation. Zoom is a Q-8615E field-of-view model mapped into 0–9999 steps, using slant range and a configured drone size. YAML holds site pose, FOV scale, and that size. If those numbers are wrong, VAPIX will faithfully stare at the wrong sky.</p><p>Camera north-offset has to wrap into AXIS ±180° pan. Optional velocity lead is NEU; a NED source will look fine until vz is the wrong sign. I forked <a href="https://github.com/quantumbagel/sensecam-control-record">sensecam-control-record</a> because stock sensecam-control could PTZ and could not start a recording.</p></div><figure class="essay-figure"><svg class="diagram" role="img" aria-label="Geometry before CGI" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 340" role="img" aria-label="DroneTracker camera-to-UAV aiming geometry">
+  <style>
+    .fig13-line { stroke: currentColor; stroke-width: 1.3; fill: none; }
+    .fig13-dash { stroke-dasharray: 5 4; }
+    .fig13-t { font: 600 12px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; }
+    .fig13-s { font: 400 10px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; opacity: 0.62; }
+    .fig13-fill { fill: currentColor; fill-opacity: 0.1; }
+    .fig13-box { fill: none; stroke: currentColor; stroke-width: 1.4; }
+  </style>
+  <rect class="fig13-box fig13-fill" x="16" y="16" width="200" height="56"/>
+  <text class="fig13-t" x="28" y="40">AXIS Q-8615E</text>
+  <text class="fig13-s" x="28" y="56">site pose in YAML</text>
+  <path class="fig13-line" d="M80 280 L80 120"/>
+  <path class="fig13-line fig13-dash" d="M80 280 L420 70"/>
+  <path class="fig13-line fig13-dash" d="M80 280 L620 40"/>
+  <polygon points="68,280 92,280 80,252" fill="currentColor"/>
+  <circle cx="420" cy="70" r="7" fill="none" stroke="currentColor" stroke-width="1.4"/>
+  <path class="fig13-line" d="M410 70 h20 M420 60 v20"/>
+  <text class="fig13-t" x="436" y="66">UAV now</text>
+  <text class="fig13-s" x="436" y="82">lat lon alt</text>
+  <circle cx="620" cy="40" r="5" fill="currentColor"/>
+  <text class="fig13-t" x="632" y="36">lead</text>
+  <text class="fig13-s" x="632" y="52">NEU velocity</text>
+  <text class="fig13-s" x="96" y="200">tilt = elevation</text>
+  <text class="fig13-s" x="220" y="250">pan = spherical bearing</text>
+  <text class="fig13-s" x="300" y="140">zoom = FOV(range, size) to 0-9999</text>
+  <path class="fig13-line" d="M80 280 H300"/>
+  <text class="fig13-s" x="88" y="300">camera north-offset wraps into AXIS +/-180</text>
+  <rect class="fig13-box fig13-fill" x="480" y="250" width="260" height="70"/>
+  <text class="fig13-t" x="496" y="278">VAPIX</text>
+  <text class="fig13-s" x="496" y="296">ptz.cgi, record.cgi, export.mkv</text>
+</svg><figcaption class="essay-caption">The useful diagram is the triangle, not the Kafka topic list.</figcaption></figure></div></section><section class="section essay-section"><div class="section-head"><h3>Field ops is the other half</h3></div><div class="section-body"><div class="fg-prose"><p>Kafka lag looks like a tracking bug. A stale packet is a confident wrong pan, so a timeout parks the camera instead of chasing history. Minimum pan/zoom steps exist because command spam does not slew the head faster — it makes it hunt. Digest-auth CGI, host-network Docker, and a dry-run mode without a camera are how this survives a field day.</p><p>Closing a telemetry bus onto a physical PTZ is as much ops as math. The library either starts a recording or it does not. There is no dashboard that makes a bad bearing look good.</p></div><figure class="essay-figure"><svg class="diagram" role="img" aria-label="Field ops is the other half" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 300" role="img" aria-label="DroneTracker geodetic aiming geometry">
+  <style>
+    .fig14-box { fill: none; stroke: currentColor; stroke-width: 1.4; }
+    .fig14-fill { fill: currentColor; fill-opacity: 0.08; }
+    .fig14-t { font: 600 12px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; }
+    .fig14-s { font: 400 10px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; opacity: 0.62; }
+    .fig14-arr { stroke: currentColor; stroke-width: 1.2; fill: none; marker-end: url(#fig14-ah); }
+    .fig14-dash { stroke-dasharray: 4 3; }
+  </style>
+  <defs>
+    <marker id="fig14-ah" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L8 4 L0 8 z" fill="currentColor"/>
+    </marker>
+  </defs>
+  <rect class="fig14-box fig14-fill" x="20" y="30" width="170" height="72"/>
+  <text class="fig14-t" x="36" y="58">Kafka telemetry</text>
+  <text class="fig14-s" x="36" y="76">lat lon alt vx vy vz</text>
+  <rect class="fig14-box fig14-fill" x="230" y="30" width="170" height="72"/>
+  <text class="fig14-t" x="246" y="58">Geodesy</text>
+  <text class="fig14-s" x="246" y="76">bearing, range, elev</text>
+  <rect class="fig14-box fig14-fill" x="440" y="30" width="170" height="72"/>
+  <text class="fig14-t" x="456" y="58">Lead + offset</text>
+  <text class="fig14-s" x="456" y="76">NEU, +/-180 wrap</text>
+  <rect class="fig14-box fig14-fill" x="230" y="150" width="170" height="72"/>
+  <text class="fig14-t" x="246" y="178">Zoom model</text>
+  <text class="fig14-s" x="246" y="196">Q-8615E FOV to 0-9999</text>
+  <rect class="fig14-box fig14-fill" x="440" y="150" width="290" height="72"/>
+  <text class="fig14-t" x="456" y="178">AXIS VAPIX</text>
+  <text class="fig14-s" x="456" y="196">ptz.cgi, record.cgi, export.mkv</text>
+  <path class="fig14-arr" d="M190 66 H230"/>
+  <path class="fig14-arr" d="M400 66 H440"/>
+  <path class="fig14-arr" d="M315 102 V150"/>
+  <path class="fig14-arr" d="M400 186 H440"/>
+  <path class="fig14-arr fig14-dash" d="M525 102 V150"/>
+</svg><figcaption class="essay-caption">Kafka in, VAPIX out. Everything in the middle is geodesy and a camera model.</figcaption></figure></div></section>
+
+                <footer class="page-foot">
+                    <a href="../../#projects" class="btn small">All projects</a>
+                    <a href="https://github.com/quantumbagel/DroneTracker" target="_blank" rel="noopener noreferrer" class="btn small">View Project ↗</a>
+                </footer>
+            </article>
+        </main>
+    </div>
+    <script type="module" src="../../particles/main.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const themeToggle = document.getElementById("theme-toggle");
+            const setTheme = (theme) => {
+                document.documentElement.classList.toggle("dark", theme === "dark");
+                localStorage.setItem("theme", theme);
+                if (themeToggle) {
+                    themeToggle.setAttribute("aria-pressed", theme === "dark" ? "true" : "false");
+                }
+            };
+            setTheme(document.documentElement.classList.contains("dark") ? "dark" : "light");
+            if (themeToggle) {
+                themeToggle.addEventListener("click", () => {
+                    document.documentElement.classList.add("theme-transitioning");
+                    setTheme(document.documentElement.classList.contains("dark") ? "light" : "dark");
+                    setTimeout(() => document.documentElement.classList.remove("theme-transitioning"), 180);
+                });
+            }
+            const bindParticleUi = (api) => {
+                if (!api) return;
+                document.querySelectorAll("[data-open-sim]").forEach((btn) => {
+                    btn.addEventListener("click", () => {
+                        api.setEnabled(true);
+                        api.openPanel();
+                    });
+                });
+            };
+            if (window.particleApi) bindParticleUi(window.particleApi);
+            else window.addEventListener("particles-ready", (event) => bindParticleUi(event.detail));
+        });
+    </script>
+</body>
+</html>

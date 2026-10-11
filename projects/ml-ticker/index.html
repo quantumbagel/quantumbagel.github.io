@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" data-tone="145">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML-Ticker — Julian Reder</title>
+    <meta name="description" content="FactSet FQL CLI with a restricted formula language and DAG-ordered metrics. Merrill Lynch internship; private repo.">
+    <link rel="icon" type="image/png" href="../../pfp.webp">
+    <script>
+        (function() {
+            const storedTheme = localStorage.getItem("theme");
+            const preferredTheme = storedTheme || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+            if (preferredTheme === "dark") {
+                document.documentElement.classList.add("dark");
+            } else {
+                document.documentElement.classList.remove("dark");
+            }
+        })();
+    </script>
+    <link href="../../font.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../theme.css">
+</head>
+<body>
+    <canvas id="interactive-bg" aria-hidden="true"></canvas>
+    <div class="shell">
+        <header class="topbar">
+            <a href="../../" class="brand">Julian Reder</a>
+            <span class="muted small topbar-kicker">Merrill Lynch · 2026</span>
+            <span class="grow"></span>
+            <button id="theme-toggle" class="btn small ghost" type="button" aria-label="Toggle theme" aria-pressed="false">Theme</button>
+            <button id="particle-toggle" class="btn small ghost" type="button" aria-label="Background: On" aria-expanded="false" aria-controls="bg-sim-panel">Background</button>
+        </header>
+        <main class="page">
+            <article class="page-card">
+                <header class="page-head">
+                    <h1 class="look-name big">ML-Ticker</h1>
+                    <p class="look-desc">FactSet FQL CLI with a restricted formula language and DAG-ordered metrics. Merrill Lynch internship; private repo.</p>
+                    <div class="look-meta">2026</div>
+                    <div class="page-actions">
+                        <span class="chip">Private — architecture only</span>
+                        
+                    </div>
+                    <div class="chips"><span class="chip-btn">Python</span><span class="chip-btn">FactSet FQL</span><span class="chip-btn">Pydantic</span><span class="chip-btn">pandas</span><span class="chip-btn">openpyxl</span><span class="chip-btn">Typer</span><span class="chip-btn">DAGs</span></div>
+                </header>
+
+                <figure class="essay-figure"><svg class="diagram" role="img" aria-label="ML-Ticker schematic" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 260" role="img" aria-label="ML-Ticker plan fetch derive export pipeline">
+  <style>
+    .fig15-box { fill: none; stroke: currentColor; stroke-width: 1.4; }
+    .fig15-fill { fill: currentColor; fill-opacity: 0.08; }
+    .fig15-t { font: 600 12px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; }
+    .fig15-s { font: 400 10px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; opacity: 0.62; }
+    .fig15-arr { stroke: currentColor; stroke-width: 1.2; fill: none; marker-end: url(#fig15-ah); }
+  </style>
+  <defs>
+    <marker id="fig15-ah" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L8 4 L0 8 z" fill="currentColor"/>
+    </marker>
+  </defs>
+  <rect class="fig15-box fig15-fill" x="16" y="40" width="130" height="70"/>
+  <text class="fig15-t" x="28" y="68">YAML config</text>
+  <text class="fig15-s" x="28" y="86">Pydantic forbid</text>
+  <rect class="fig15-box fig15-fill" x="166" y="40" width="130" height="70"/>
+  <text class="fig15-t" x="178" y="68">Validate</text>
+  <text class="fig15-s" x="178" y="86">AST, DAG, typos</text>
+  <rect class="fig15-box fig15-fill" x="316" y="40" width="130" height="70"/>
+  <text class="fig15-t" x="328" y="68">Planner</text>
+  <text class="fig15-s" x="328" y="86">batch FQL calls</text>
+  <rect class="fig15-box fig15-fill" x="466" y="40" width="130" height="70"/>
+  <text class="fig15-t" x="478" y="68">FactSet FPE</text>
+  <text class="fig15-s" x="478" y="86">snapshot / series</text>
+  <rect class="fig15-box fig15-fill" x="166" y="154" width="130" height="70"/>
+  <text class="fig15-t" x="178" y="182">Sandbox eval</text>
+  <text class="fig15-s" x="178" y="200">topo order, N/A</text>
+  <rect class="fig15-box fig15-fill" x="316" y="154" width="280" height="70"/>
+  <text class="fig15-t" x="328" y="182">Export</text>
+  <text class="fig15-s" x="328" y="200">Rich tables, Excel, JSON, FDT</text>
+  <path class="fig15-arr" d="M146 75 H166"/>
+  <path class="fig15-arr" d="M296 75 H316"/>
+  <path class="fig15-arr" d="M446 75 H466"/>
+  <path class="fig15-arr" d="M231 110 V154"/>
+  <path class="fig15-arr" d="M296 189 H316"/>
+</svg><figcaption class="essay-caption">Validate the config language, plan the FQL batches, then derive. No public repo — architecture only.</figcaption></figure>
+
+                <section class="section"><div class="section-head"><h3>Built</h3></div><div class="section-body"><p class="fg-prose">Python CLI for equity research: FactSet FQL snapshots or timeseries, YAML/Pydantic configs, a sandboxed formula engine, and Rich/Excel export. A planner batches FQL calls, then Python metrics run in topological order. FDT mode scores a name against peers into Bull/Base/Bear multiples.</p></div></section>
+                <section class="section"><div class="section-head"><h3>Hard parts</h3></div><div class="section-body"><ul class="fg-list"><li>Formulas needed to be useful without becoming a code-execution hole (AST denylist + allowlisted builtins).</li><li>Interdependent metrics: DAG, cycle path, typo suggestions — before any FactSet call.</li><li>Missing FQL values become typed N/As instead of poisoning a sheet.</li><li>Holdings vs timeseries needed different config models; some formulas need a second-pass fetch.</li><li>Runs only inside FactSet's Programmatic Environment.</li></ul></div></section>
+                <section class="section"><div class="section-head"><h3>Learned</h3></div><div class="section-body"><p class="fg-prose">Treat research tooling as a product: validate the config language first, then plan → fetch → derive → export.</p></div></section>
+                <section class="section"><div class="section-head"><h3>Also</h3></div><div class="section-body"><ul class="fg-list"><li>Holdings, timeseries, validate, list, and FDT commands (packaged CLI, v0.3.0)</li><li>AST-gated formula language + topological evaluation (no NetworkX)</li><li>Pydantic configs with cycle checks and typo suggestions</li><li>Rich terminal tables and multi-sheet Excel with hidden helper metrics</li></ul></div></section>
+
+                <section class="section essay-section"><div class="section-head"><h3>What I can say</h3></div><div class="section-body"><div class="fg-prose"><p>ML-Ticker was internship work at Merrill Lynch: a Python CLI against FactSet FQL, used on a calculations platform that sits on <strong>$500M+</strong> AUM. There is no public GitHub link. I am not going to describe internal tickers, entitlements, or anything that looks like a leak dressed up as a portfolio bullet.</p><p>What I will describe is the shape of the system, because that shape is the work.</p></div></div></section><section class="section essay-section"><div class="section-head"><h3>Sandbox, then graph</h3></div><div class="section-body"><div class="fg-prose"><p>FQL is powerful and easy to get wrong. The CLI takes YAML/Pydantic configs (extra fields forbidden), validates a restricted formula language, plans the FactSet calls, then evaluates Python metrics in topological order. Holdings and timeseries are different config models. Some formulas need a second-pass fetch. FDT mode scores a name against peers into Bull / Base / Bear multiples.</p><p>It only runs inside FactSet's Programmatic Environment. That is a real constraint, not a footnote.</p></div><figure class="essay-figure"><svg class="diagram" role="img" aria-label="Sandbox, then graph" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 260" role="img" aria-label="ML-Ticker plan fetch derive export pipeline">
+  <style>
+    .fig16-box { fill: none; stroke: currentColor; stroke-width: 1.4; }
+    .fig16-fill { fill: currentColor; fill-opacity: 0.08; }
+    .fig16-t { font: 600 12px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; }
+    .fig16-s { font: 400 10px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; opacity: 0.62; }
+    .fig16-arr { stroke: currentColor; stroke-width: 1.2; fill: none; marker-end: url(#fig16-ah); }
+  </style>
+  <defs>
+    <marker id="fig16-ah" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L8 4 L0 8 z" fill="currentColor"/>
+    </marker>
+  </defs>
+  <rect class="fig16-box fig16-fill" x="16" y="40" width="130" height="70"/>
+  <text class="fig16-t" x="28" y="68">YAML config</text>
+  <text class="fig16-s" x="28" y="86">Pydantic forbid</text>
+  <rect class="fig16-box fig16-fill" x="166" y="40" width="130" height="70"/>
+  <text class="fig16-t" x="178" y="68">Validate</text>
+  <text class="fig16-s" x="178" y="86">AST, DAG, typos</text>
+  <rect class="fig16-box fig16-fill" x="316" y="40" width="130" height="70"/>
+  <text class="fig16-t" x="328" y="68">Planner</text>
+  <text class="fig16-s" x="328" y="86">batch FQL calls</text>
+  <rect class="fig16-box fig16-fill" x="466" y="40" width="130" height="70"/>
+  <text class="fig16-t" x="478" y="68">FactSet FPE</text>
+  <text class="fig16-s" x="478" y="86">snapshot / series</text>
+  <rect class="fig16-box fig16-fill" x="166" y="154" width="130" height="70"/>
+  <text class="fig16-t" x="178" y="182">Sandbox eval</text>
+  <text class="fig16-s" x="178" y="200">topo order, N/A</text>
+  <rect class="fig16-box fig16-fill" x="316" y="154" width="280" height="70"/>
+  <text class="fig16-t" x="328" y="182">Export</text>
+  <text class="fig16-s" x="328" y="200">Rich tables, Excel, JSON, FDT</text>
+  <path class="fig16-arr" d="M146 75 H166"/>
+  <path class="fig16-arr" d="M296 75 H316"/>
+  <path class="fig16-arr" d="M446 75 H466"/>
+  <path class="fig16-arr" d="M231 110 V154"/>
+  <path class="fig16-arr" d="M296 189 H316"/>
+</svg><figcaption class="essay-caption">Plan → fetch → derive → export. Details stop at the box.</figcaption></figure></div></section><section class="section essay-section"><div class="section-head"><h3>Why the AST and the DAG</h3></div><div class="section-body"><div class="fg-prose"><p>Formulas had to be useful without becoming a code-execution hole: AST denylist, allowlisted builtins, no NetworkX. Interdependent metrics get a DAG, a cycle path, and typo suggestions — before any FactSet call. Missing FQL values become typed N/As instead of poisoning a sheet. Export is Rich tables, multi-sheet Excel with hidden helper metrics, JSON.</p><p>The failures that hurt were type failures that looked like data failures. Making the graph refuse a silent coerce was more useful than a prettier command. Treat research tooling as a product: validate the language first.</p></div></div></section>
+
+                <footer class="page-foot">
+                    <a href="../../#projects" class="btn small">All projects</a>
+                    <span class="chip">Private — architecture only</span>
+                </footer>
+            </article>
+        </main>
+    </div>
+    <script type="module" src="../../particles/main.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const themeToggle = document.getElementById("theme-toggle");
+            const setTheme = (theme) => {
+                document.documentElement.classList.toggle("dark", theme === "dark");
+                localStorage.setItem("theme", theme);
+                if (themeToggle) {
+                    themeToggle.setAttribute("aria-pressed", theme === "dark" ? "true" : "false");
+                }
+            };
+            setTheme(document.documentElement.classList.contains("dark") ? "dark" : "light");
+            if (themeToggle) {
+                themeToggle.addEventListener("click", () => {
+                    document.documentElement.classList.add("theme-transitioning");
+                    setTheme(document.documentElement.classList.contains("dark") ? "light" : "dark");
+                    setTimeout(() => document.documentElement.classList.remove("theme-transitioning"), 180);
+                });
+            }
+            const bindParticleUi = (api) => {
+                if (!api) return;
+                document.querySelectorAll("[data-open-sim]").forEach((btn) => {
+                    btn.addEventListener("click", () => {
+                        api.setEnabled(true);
+                        api.openPanel();
+                    });
+                });
+            };
+            if (window.particleApi) bindParticleUi(window.particleApi);
+            else window.addEventListener("particles-ready", (event) => bindParticleUi(event.detail));
+        });
+    </script>
+</body>
+</html>

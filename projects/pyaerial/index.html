@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en" data-tone="250">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PyAerial — Julian Reder</title>
+    <meta name="description" content="Mode S / ADS-B tracker for AERPAW: dump1090 ingest, polygon geofences, Redis live state, SQLite history, React radar.">
+    <link rel="icon" type="image/png" href="../../pfp.webp">
+    <script>
+        (function() {
+            const storedTheme = localStorage.getItem("theme");
+            const preferredTheme = storedTheme || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+            if (preferredTheme === "dark") {
+                document.documentElement.classList.add("dark");
+            } else {
+                document.documentElement.classList.remove("dark");
+            }
+        })();
+    </script>
+    <link href="../../font.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../theme.css">
+</head>
+<body>
+    <canvas id="interactive-bg" aria-hidden="true"></canvas>
+    <div class="shell">
+        <header class="topbar">
+            <a href="../../" class="brand">Julian Reder</a>
+            <span class="muted small topbar-kicker">AERPAW · 2024 - Present</span>
+            <span class="grow"></span>
+            <button id="theme-toggle" class="btn small ghost" type="button" aria-label="Toggle theme" aria-pressed="false">Theme</button>
+            <button id="particle-toggle" class="btn small ghost" type="button" aria-label="Background: On" aria-expanded="false" aria-controls="bg-sim-panel">Background</button>
+        </header>
+        <main class="page">
+            <article class="page-card">
+                <header class="page-head">
+                    <h1 class="look-name big">PyAerial</h1>
+                    <p class="look-desc">Mode S / ADS-B tracker for AERPAW: dump1090 ingest, polygon geofences, Redis live state, SQLite history, React radar.</p>
+                    <div class="look-meta">2024 - Present</div>
+                    <div class="page-actions">
+                        <a href="https://github.com/quantumbagel/PyAerial" target="_blank" rel="noopener noreferrer" class="btn small">View Project ↗</a>
+                        
+                    </div>
+                    <div class="chips"><span class="chip-btn">Python</span><span class="chip-btn">pyModeS</span><span class="chip-btn">Shapely</span><span class="chip-btn">Redis</span><span class="chip-btn">SQLite</span><span class="chip-btn">FastAPI</span><span class="chip-btn">React</span><span class="chip-btn">Docker</span><span class="chip-btn">RTL-SDR</span><span class="chip-btn">ADS-B / Mode-S</span></div>
+                </header>
+
+                <figure class="essay-figure"><svg class="diagram" role="img" aria-label="PyAerial schematic" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 300" role="img" aria-label="PyAerial ingest to radar pipeline">
+  <style>
+    .fig9-box { fill: none; stroke: currentColor; stroke-width: 1.4; }
+    .fig9-fill { fill: currentColor; fill-opacity: 0.08; }
+    .fig9-t { font: 600 12px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; }
+    .fig9-s { font: 400 10px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; opacity: 0.62; }
+    .fig9-arr { stroke: currentColor; stroke-width: 1.2; fill: none; marker-end: url(#fig9-ah); }
+  </style>
+  <defs>
+    <marker id="fig9-ah" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L8 4 L0 8 z" fill="currentColor"/>
+    </marker>
+  </defs>
+  <rect class="fig9-box fig9-fill" x="16" y="28" width="140" height="70"/>
+  <text class="fig9-t" x="28" y="56">RTL-SDR</text>
+  <text class="fig9-s" x="28" y="74">dump1090 AVR/Beast</text>
+  <rect class="fig9-box fig9-fill" x="176" y="28" width="140" height="70"/>
+  <text class="fig9-t" x="188" y="56">Engine</text>
+  <text class="fig9-s" x="188" y="74">merge, pyModeS</text>
+  <rect class="fig9-box fig9-fill" x="336" y="28" width="140" height="70"/>
+  <text class="fig9-t" x="348" y="56">Kinematics</text>
+  <text class="fig9-s" x="348" y="74">Kalman, ETA</text>
+  <rect class="fig9-box fig9-fill" x="496" y="28" width="140" height="70"/>
+  <text class="fig9-t" x="508" y="56">Geofence</text>
+  <text class="fig9-s" x="508" y="74">Shapely, KML</text>
+  <rect class="fig9-box fig9-fill" x="176" y="150" width="140" height="70"/>
+  <text class="fig9-t" x="188" y="178">Redis live</text>
+  <text class="fig9-s" x="188" y="196">tracker owns keys</text>
+  <rect class="fig9-box fig9-fill" x="336" y="150" width="140" height="70"/>
+  <text class="fig9-t" x="348" y="178">SQLite WAL</text>
+  <text class="fig9-s" x="348" y="196">flight history</text>
+  <rect class="fig9-box fig9-fill" x="496" y="150" width="248" height="70"/>
+  <text class="fig9-t" x="508" y="178">Portal, FastAPI + React</text>
+  <text class="fig9-s" x="508" y="196">WebSocket radar, Beast, webhooks</text>
+  <path class="fig9-arr" d="M156 63 H176"/>
+  <path class="fig9-arr" d="M316 63 H336"/>
+  <path class="fig9-arr" d="M476 63 H496"/>
+  <path class="fig9-arr" d="M246 98 V150"/>
+  <path class="fig9-arr" d="M406 98 V150"/>
+  <path class="fig9-arr" d="M316 185 H336"/>
+  <path class="fig9-arr" d="M476 185 H496"/>
+</svg><figcaption class="essay-caption">dump1090 → pyModeS / merge → kinematics → Shapely geofences → Redis live + SQLite history → FastAPI / React radar.</figcaption></figure>
+
+                <section class="section"><div class="section-head"><h3>Built</h3></div><div class="section-body"><p class="fg-prose">I wrote PyAerial as the successor to <a href='https://github.com/quantumbagel/airstrik.py' class='text-link hover:underline'>airstrik.py</a>. It decodes ADS-B with pyModeS, evaluates Shapely geofences, and splits tracking (<code>pyaerial run</code>) from a read-only portal (<code>pyaerial web</code>). airstrik used circular filters, MongoDB, and Kafka; this stack is Redis + SQLite + webhooks.</p></div></section>
+                <section class="section"><div class="section-head"><h3>Hard parts</h3></div><div class="section-body"><ul class="fg-list"><li>CPR decode needs a home reference that is not the geofence, plus 0.5° jump rejection.</li><li>Multi-receiver merge on RSSI and Hamming distance; heading ranges wrap.</li><li>Curved ETA can miss a fence when the turn circle blows up — take min(curved, straight).</li><li>Dwell/hysteresis so brief constraint matches do not spam.</li><li>Portal is read-only; the tracker claims Redis with a heartbeat.</li></ul></div></section>
+                <section class="section"><div class="section-head"><h3>Learned</h3></div><div class="section-body"><ul class="fg-list"><li>ADS-B is a wire-format problem before it is a map problem.</li><li>Live vs history wants two stores, not one database doing both.</li><li>Geofence rules should be explicit (alt, speed, ETA) — not implicit 'inside the polygon.'</li></ul></div></section>
+                <section class="section"><div class="section-head"><h3>Also</h3></div><div class="section-body"><ul class="fg-list"><li>Shapely polygons from inline rings, KML/KMZ, or GeoJSON</li><li>Straight-line and curved ETA; optional Kalman-smoothed velocity</li><li>FastAPI + React (Leaflet/MapLibre) radar UI; Beast re-export</li><li>Docker Compose with optional RTL-SDR / dump1090 profile</li><li>CI on Python 3.11/3.12 and the web toolchain</li></ul></div></section>
+
+                <section class="section essay-section"><div class="section-head"><h3>Why it exists</h3></div><div class="section-body"><div class="fg-prose"><p>AERPAW needed to see aircraft that were not ours. Experiment UAVs speak MAVLink through the filter. Everything else in the airspace shows up as Mode S / ADS-B. PyAerial is the tracker I wrote for that: decode the beacon, decide whether it matters, and show it live.</p><p>It replaces <a href="https://github.com/quantumbagel/airstrik.py">airstrik.py</a>. That older private repo used circular filters, MongoDB, and Kafka. This one does not. Current PyAerial is Redis + SQLite + webhooks + a read-only portal. If a writeup still says Kafka on this repo, it is describing the wrong codebase.</p></div></div></section><section class="section essay-section"><div class="section-head"><h3>Ingest, then two stores</h3></div><div class="section-body"><div class="fg-prose"><code>pyaerial run</code> is the tracker. It reads dump1090 AVR/Beast (RTL-SDR optional), decodes with pyModeS, merges overlapping receivers on RSSI and Hamming distance, and writes two places: Redis for now, SQLite WAL for after. The tracker claims Redis with a heartbeat so a second process cannot pretend to own the live keys.
+<p><code>pyaerial web</code> is a different process on purpose. FastAPI + React (Leaflet / MapLibre) is read-only. It can re-export Beast, fire webhooks, and draw the radar. It does not decode. That split is the whole architecture: a hung portal cannot stall CPR.</p></div><figure class="essay-figure"><svg class="diagram" role="img" aria-label="Ingest, then two stores" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 300" role="img" aria-label="PyAerial ingest to radar pipeline">
+  <style>
+    .fig10-box { fill: none; stroke: currentColor; stroke-width: 1.4; }
+    .fig10-fill { fill: currentColor; fill-opacity: 0.08; }
+    .fig10-t { font: 600 12px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; }
+    .fig10-s { font: 400 10px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; opacity: 0.62; }
+    .fig10-arr { stroke: currentColor; stroke-width: 1.2; fill: none; marker-end: url(#fig10-ah); }
+  </style>
+  <defs>
+    <marker id="fig10-ah" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L8 4 L0 8 z" fill="currentColor"/>
+    </marker>
+  </defs>
+  <rect class="fig10-box fig10-fill" x="16" y="28" width="140" height="70"/>
+  <text class="fig10-t" x="28" y="56">RTL-SDR</text>
+  <text class="fig10-s" x="28" y="74">dump1090 AVR/Beast</text>
+  <rect class="fig10-box fig10-fill" x="176" y="28" width="140" height="70"/>
+  <text class="fig10-t" x="188" y="56">Engine</text>
+  <text class="fig10-s" x="188" y="74">merge, pyModeS</text>
+  <rect class="fig10-box fig10-fill" x="336" y="28" width="140" height="70"/>
+  <text class="fig10-t" x="348" y="56">Kinematics</text>
+  <text class="fig10-s" x="348" y="74">Kalman, ETA</text>
+  <rect class="fig10-box fig10-fill" x="496" y="28" width="140" height="70"/>
+  <text class="fig10-t" x="508" y="56">Geofence</text>
+  <text class="fig10-s" x="508" y="74">Shapely, KML</text>
+  <rect class="fig10-box fig10-fill" x="176" y="150" width="140" height="70"/>
+  <text class="fig10-t" x="188" y="178">Redis live</text>
+  <text class="fig10-s" x="188" y="196">tracker owns keys</text>
+  <rect class="fig10-box fig10-fill" x="336" y="150" width="140" height="70"/>
+  <text class="fig10-t" x="348" y="178">SQLite WAL</text>
+  <text class="fig10-s" x="348" y="196">flight history</text>
+  <rect class="fig10-box fig10-fill" x="496" y="150" width="248" height="70"/>
+  <text class="fig10-t" x="508" y="178">Portal, FastAPI + React</text>
+  <text class="fig10-s" x="508" y="196">WebSocket radar, Beast, webhooks</text>
+  <path class="fig10-arr" d="M156 63 H176"/>
+  <path class="fig10-arr" d="M316 63 H336"/>
+  <path class="fig10-arr" d="M476 63 H496"/>
+  <path class="fig10-arr" d="M246 98 V150"/>
+  <path class="fig10-arr" d="M406 98 V150"/>
+  <path class="fig10-arr" d="M316 185 H336"/>
+  <path class="fig10-arr" d="M476 185 H496"/>
+</svg><figcaption class="essay-caption">Tracker owns Redis. Portal reads. Kafka and Mongo are the old airstrik.py box.</figcaption></figure></div></section><section class="section essay-section"><div class="section-head"><h3>CPR is not a map problem</h3></div><div class="section-body"><div class="fg-prose"><p>Compact Position Reporting needs a reference that is not the geofence. If you use the polygon as home, a receiver on the wrong side of the field decodes a plausible-looking ghost. I keep a separate home, reject 0.5° jumps, and treat heading ranges as wrapping — 350° to 10° is a 20° sector, not a 340° one.</p><p>Geofences are Shapely polygons from inline rings, KML/KMZ, or GeoJSON. A match is not “inside the polygon.” Rules are explicit: altitude, speed, and ETA. Curved ETA can blow up when the turn circle is huge, so the gate is <code>min(curved, straight)</code>. Dwell / hysteresis exist so a one-sample graze does not page Discord.</p></div><figure class="essay-figure"><svg class="diagram" role="img" aria-label="CPR is not a map problem" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 300" role="img" aria-label="PyAerial CPR decode and geofence evaluation">
+  <style>
+    .fig11-box { fill: none; stroke: currentColor; stroke-width: 1.4; }
+    .fig11-fill { fill: currentColor; fill-opacity: 0.08; }
+    .fig11-t { font: 600 12px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; }
+    .fig11-s { font: 400 10px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; opacity: 0.62; }
+    .fig11-arr { stroke: currentColor; stroke-width: 1.2; fill: none; marker-end: url(#fig11-ah); }
+    .fig11-poly { fill: currentColor; fill-opacity: 0.1; stroke: currentColor; stroke-width: 1.3; }
+    .fig11-dot { fill: currentColor; }
+  </style>
+  <defs>
+    <marker id="fig11-ah" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L8 4 L0 8 z" fill="currentColor"/>
+    </marker>
+  </defs>
+  <rect class="fig11-box fig11-fill" x="16" y="28" width="150" height="70"/>
+  <text class="fig11-t" x="28" y="56">Mode S / ADS-B</text>
+  <text class="fig11-s" x="28" y="74">dump1090, pyModeS</text>
+  <rect class="fig11-box fig11-fill" x="196" y="28" width="170" height="70"/>
+  <text class="fig11-t" x="208" y="56">CPR decode</text>
+  <text class="fig11-s" x="208" y="74">home != fence, 0.5 deg reject</text>
+  <rect class="fig11-box fig11-fill" x="396" y="28" width="160" height="70"/>
+  <text class="fig11-t" x="408" y="56">Kinematics</text>
+  <text class="fig11-s" x="408" y="74">Kalman, heading wrap</text>
+  <polygon class="fig11-poly" points="590,36 730,70 700,150 600,168 560,100"/>
+  <circle class="fig11-dot" cx="648" cy="92" r="4"/>
+  <text class="fig11-t" x="574" y="196">Shapely geofence</text>
+  <text class="fig11-s" x="574" y="214">alt, speed, ETA rules</text>
+  <rect class="fig11-box fig11-fill" x="196" y="200" width="170" height="70"/>
+  <text class="fig11-t" x="208" y="228">ETA</text>
+  <text class="fig11-s" x="208" y="246">min(curved, straight)</text>
+  <rect class="fig11-box fig11-fill" x="396" y="200" width="160" height="70"/>
+  <text class="fig11-t" x="408" y="228">Dwell</text>
+  <text class="fig11-s" x="408" y="246">hysteresis, no spam</text>
+  <path class="fig11-arr" d="M166 63 H196"/>
+  <path class="fig11-arr" d="M366 63 H396"/>
+  <path class="fig11-arr" d="M556 63 H590"/>
+  <path class="fig11-arr" d="M281 98 V200"/>
+  <path class="fig11-arr" d="M366 235 H396"/>
+</svg><figcaption class="essay-caption">Decode, then kinematics, then a rule — not a point-in-polygon screenshot.</figcaption></figure></div></section><section class="section essay-section"><div class="section-head"><h3>What I would not collapse again</h3></div><div class="section-body"><div class="fg-prose"><p>airstrik.py taught me that one database doing live and history makes both worse, and that a circular filter is a first draft of a geofence. Redis / SQLite is not a résumé stack. It is the smallest pair that lets a flight disappear from “now” without disappearing from the log.</p><p>Docker Compose stands the tracker up next to a session, with an optional dump1090 profile. CI covers Python 3.11/3.12 and the web toolchain. The useful lesson is the same as aerpawlib: be honest about the wire format you actually have.</p></div></div></section>
+
+                <footer class="page-foot">
+                    <a href="../../#projects" class="btn small">All projects</a>
+                    <a href="https://github.com/quantumbagel/PyAerial" target="_blank" rel="noopener noreferrer" class="btn small">View Project ↗</a>
+                </footer>
+            </article>
+        </main>
+    </div>
+    <script type="module" src="../../particles/main.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const themeToggle = document.getElementById("theme-toggle");
+            const setTheme = (theme) => {
+                document.documentElement.classList.toggle("dark", theme === "dark");
+                localStorage.setItem("theme", theme);
+                if (themeToggle) {
+                    themeToggle.setAttribute("aria-pressed", theme === "dark" ? "true" : "false");
+                }
+            };
+            setTheme(document.documentElement.classList.contains("dark") ? "dark" : "light");
+            if (themeToggle) {
+                themeToggle.addEventListener("click", () => {
+                    document.documentElement.classList.add("theme-transitioning");
+                    setTheme(document.documentElement.classList.contains("dark") ? "light" : "dark");
+                    setTimeout(() => document.documentElement.classList.remove("theme-transitioning"), 180);
+                });
+            }
+            const bindParticleUi = (api) => {
+                if (!api) return;
+                document.querySelectorAll("[data-open-sim]").forEach((btn) => {
+                    btn.addEventListener("click", () => {
+                        api.setEnabled(true);
+                        api.openPanel();
+                    });
+                });
+            };
+            if (window.particleApi) bindParticleUi(window.particleApi);
+            else window.addEventListener("particles-ready", (event) => bindParticleUi(event.detail));
+        });
+    </script>
+</body>
+</html>
