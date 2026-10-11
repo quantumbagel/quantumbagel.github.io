@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 260" role="img" aria-label="Triggered compose-a-rule pipeline">
+  <style>
+    .box { fill: none; stroke: currentColor; stroke-width: 1.4; }
+    .fill { fill: currentColor; fill-opacity: 0.08; }
+    .t { font: 600 12px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; }
+    .s { font: 400 10px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; opacity: 0.62; }
+    .arr { stroke: currentColor; stroke-width: 1.2; fill: none; marker-end: url(#ah); }
+  </style>
+  <defs>
+    <marker id="ah" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L8 4 L0 8 z" fill="currentColor"/>
+    </marker>
+  </defs>
+  <rect class="box fill" x="16" y="24" width="140" height="56"/>
+  <text class="t" x="28" y="48">message</text>
+  <rect class="box fill" x="16" y="92" width="140" height="56"/>
+  <text class="t" x="28" y="116">reaction / voice</text>
+  <rect class="box fill" x="16" y="160" width="140" height="56"/>
+  <text class="t" x="28" y="184">role / schedule</text>
+  <rect class="box fill" x="196" y="80" width="170" height="80"/>
+  <text class="t" x="208" y="112">JSON registry</text>
+  <text class="s" x="208" y="130">trigger to action</text>
+  <rect class="box fill" x="406" y="80" width="150" height="80"/>
+  <text class="t" x="418" y="112">Slash UX</text>
+  <text class="s" x="418" y="130">validate, autocomplete</text>
+  <rect class="box fill" x="596" y="80" width="148" height="80"/>
+  <text class="t" x="608" y="112">MongoDB</text>
+  <text class="s" x="608" y="130">per-guild rules</text>
+  <path class="arr" d="M156 52 H196 V120"/>
+  <path class="arr" d="M156 120 H196"/>
+  <path class="arr" d="M156 188 H196 V160"/>
+  <path class="arr" d="M366 120 H406"/>
+  <path class="arr" d="M556 120 H596"/>
+</svg>

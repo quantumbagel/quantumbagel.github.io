@@ -518,6 +518,14 @@ body = """JS in a tab cannot talk Discord IPC cleanly. Native messaging is the b
 figure = "media/projects/amazon/rpc.svg"
 caption = "Tab → extension → Rust host → Discord. The rate limit is part of the diagram."
 
+[[projects.gallery]]
+src = "media/projects/amazon/popup.png"
+alt = "Amazon Music Rich Presence extension popup while Murderer by Ren is playing, helper app connected as quantumbagel"
+
+[[projects.gallery]]
+src = "media/projects/amazon/discord-status.png"
+alt = "Discord current activity showing Listening to Amazon Music — Microwave by Ricky Jamaraz"
+
 [[projects]]
 category = "discord-bots"
 title = "discord.py-template"
@@ -609,6 +617,14 @@ body = """The sim has to stay smooth behind a frosted column, honor reduced moti
 figure = "media/projects/portfolio/modes.svg"
 caption = "Content in, static HTML out, canvas beside it — not inside the generator."
 
+[[projects.gallery]]
+src = "media/projects/portfolio/homepage-aurora.png"
+alt = "This site running in dark mode with the aurora background simulation"
+
+[[projects.gallery]]
+src = "media/projects/portfolio/sim-panel.png"
+alt = "Background control panel open on the live site, aurora mode selected"
+
 [[projects]]
 category = "solo"
 title = "airtime"
@@ -643,6 +659,10 @@ description = "Screen-automation experiment for Bomb Party: pixel turn detection
 details = "Personal automation: mss / pixel color for turn state, clipboard letter subset, rarity scoring, configurable typing delay. Fragile to UI changes. Not a product."
 link = "https://github.com/quantumbagel/Molotov"
 skills = ["Python", "PyAutoGUI"]
+
+[[projects.gallery]]
+src = "media/projects/molotov/win.png"
+alt = "Molotov Discord embed: Molotov won the last round"
 
 [[project_filters]]
 key = "all"

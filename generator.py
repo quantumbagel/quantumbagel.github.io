@@ -322,12 +322,13 @@ def render_bullet_list(items: list[str]) -> str:
     return f'<ul class="fg-list">{features_list}</ul>'
 
 
-def render_project_gallery(project: dict[str, Any], carousel_id: str) -> str:
+def render_project_gallery(project: dict[str, Any], carousel_id: str, root: str = "") -> str:
     project_gallery = project.get("gallery", [])
     if not project_gallery:
         return ""
 
     slides = []
+    captions: list[str] = []
     for index, item in enumerate(project_gallery):
         media_type = "image"
         src = ""
@@ -347,6 +348,10 @@ def render_project_gallery(project: dict[str, Any], carousel_id: str) -> str:
 
         if not src:
             continue
+
+        src = asset_url(src, root)
+        poster = asset_url(poster, root) if poster else ""
+        captions.append(alt)
 
         if media_type == "video":
             poster_attr = f' poster="{poster}"' if poster else ""
@@ -370,14 +375,10 @@ def render_project_gallery(project: dict[str, Any], carousel_id: str) -> str:
     indicators = ""
     if len(slides) > 1:
         prev_btn = (
-            '<button class="carousel-prev icon-btn" type="button" aria-label="Previous slide">'
-            '<i class="bi bi-chevron-left"></i>'
-            "</button>"
+            '<button class="carousel-prev icon-btn" type="button" aria-label="Previous slide">‹</button>'
         )
         next_btn = (
-            '<button class="carousel-next icon-btn" type="button" aria-label="Next slide">'
-            '<i class="bi bi-chevron-right"></i>'
-            "</button>"
+            '<button class="carousel-next icon-btn" type="button" aria-label="Next slide">›</button>'
         )
         dots = []
         for i in range(len(slides)):
@@ -387,9 +388,11 @@ def render_project_gallery(project: dict[str, Any], carousel_id: str) -> str:
             )
         indicators = f'<div class="carousel-dots">{"".join(dots)}</div>'
 
+    caption = captions[0] if len(captions) == 1 else ""
+    caption_html = f'<p class="essay-caption">{caption}</p>' if caption else ""
+
     return (
-        '<div class="field">'
-        '<div class="section-head"><h3>Media</h3></div>'
+        '<figure class="essay-figure media-figure">'
         f'<div class="media-carousel" data-carousel-id="{carousel_id}">'
         '<div class="carousel-slides" style="transform: translateX(0%);">'
         f'{"".join(slides)}'
@@ -398,7 +401,8 @@ def render_project_gallery(project: dict[str, Any], carousel_id: str) -> str:
         f"{next_btn}"
         f"{indicators}"
         "</div>"
-        "</div>"
+        f"{caption_html}"
+        "</figure>"
     )
 
 
@@ -476,6 +480,7 @@ def render_project_archive(project: dict[str, Any], category_map: dict[str, str]
             "description": project.get("description", ""),
             "date_html": render_project_date(project, category_map),
             "notes_html": notes_html,
+            "gallery_html": render_project_gallery(project, f"gallery-{project_id}"),
             "link_html": (
                 f'<a href="projects/{project_slug(project)}/" class="btn small">Writeup</a>'
                 if project_has_page(project)
@@ -807,6 +812,7 @@ def render_project_page(project: dict[str, Any], context: dict[str, Any], catego
             "features_html": render_labeled_section("Also", render_bullet_list(project.get("features") or [])),
             "skills_html": render_skill_pills(project.get("skills", [])),
             "essay_html": render_essay_sections(project, root),
+            "gallery_html": render_project_gallery(project, f"gallery-{slugify(title)}", root),
             "link_html": render_project_link(project) or private_html,
             "demo_html": demo_html,
         },

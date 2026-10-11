@@ -88,6 +88,8 @@
   <path class="fig7-arr" d="M300 204 V252"/>
 </svg><figcaption class="essay-caption">Experiment script → aerpawlib → MAVSDK → the testbed MAVLink filter → Cube Orange / ArduPilot.</figcaption></figure>
 
+                
+
                 <section class="section"><div class="section-head"><h3>Built</h3></div><div class="section-body"><p class="fg-prose">I maintain <a href='https://github.com/AERPAW/aerpawlib' class='text-link hover:underline'>AERPAW/aerpawlib</a> — the Python API experimenters use to fly LAM6/SAM4 UAVs and the rover. I moved it from DroneKit onto MAVSDK, kept the v1 Runner/StateMachine surface, and added a v2 async API. Current release is 1.4.11.</p></div></section>
                 <section class="section"><div class="section-head"><h3>Hard parts</h3></div><div class="section-body"><ul class="fg-list"><li>Testbed MAVLink filter only allows takeoff, land, goto, and yaw (20–100 m takeoff, land within 5 m of home).</li><li><code>SET_MODE</code> is blocked; GUIDED has to be held with <code>MAV_CMD_DO_SET_MODE</code>. LOITER drops the E-VM link.</li><li>Safety checker belongs on the C-VM, not localhost or the OEO console.</li><li>Timed <code>set_velocity</code> was killing newer commands; bearings ignored latitude (~51° vs 45° at 35.7°N).</li><li>Multi-vehicle ZMQ dropped transitions until JSON + ACK + <code>wait_for_peers</code>.</li></ul></div></section>
                 <section class="section"><div class="section-head"><h3>Learned</h3></div><div class="section-body"><ul class="fg-list"><li>The filter defines the API as much as the SDK does.</li><li>SITL is necessary and not sufficient.</li><li>A compat layer plus a second API beats a flag-day rewrite.</li></ul></div></section>
@@ -172,6 +174,33 @@
             };
             if (window.particleApi) bindParticleUi(window.particleApi);
             else window.addEventListener("particles-ready", (event) => bindParticleUi(event.detail));
+
+            document.querySelectorAll(".media-carousel").forEach((carousel) => {
+                const slidesContainer = carousel.querySelector(".carousel-slides");
+                const prevBtn = carousel.querySelector(".carousel-prev");
+                const nextBtn = carousel.querySelector(".carousel-next");
+                const dots = carousel.querySelectorAll(".carousel-dot");
+                if (!slidesContainer) return;
+                const totalSlides = slidesContainer.children.length;
+                let currentIndex = 0;
+                const goToSlide = (index) => {
+                    currentIndex = (index + totalSlides) % totalSlides;
+                    slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+                    dots.forEach((dot, idx) => dot.classList.toggle("on", idx === currentIndex));
+                    Array.from(slidesContainer.children).forEach((slide, idx) => {
+                        const video = slide.querySelector("video");
+                        if (video && idx !== currentIndex) video.pause();
+                    });
+                };
+                if (prevBtn) prevBtn.addEventListener("click", () => goToSlide(currentIndex - 1));
+                if (nextBtn) nextBtn.addEventListener("click", () => goToSlide(currentIndex + 1));
+                dots.forEach((dot) => {
+                    dot.addEventListener("click", () => {
+                        const slideIndex = parseInt(dot.getAttribute("data-slide-to"), 10);
+                        if (!Number.isNaN(slideIndex)) goToSlide(slideIndex);
+                    });
+                });
+            });
         });
     </script>
 </body>

@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 300" role="img" aria-label="PyAerial ingest to radar pipeline">
+  <style>
+    .box { fill: none; stroke: currentColor; stroke-width: 1.4; }
+    .fill { fill: currentColor; fill-opacity: 0.08; }
+    .t { font: 600 12px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; }
+    .s { font: 400 10px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; opacity: 0.62; }
+    .arr { stroke: currentColor; stroke-width: 1.2; fill: none; marker-end: url(#ah); }
+  </style>
+  <defs>
+    <marker id="ah" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L8 4 L0 8 z" fill="currentColor"/>
+    </marker>
+  </defs>
+  <rect class="box fill" x="16" y="28" width="140" height="70"/>
+  <text class="t" x="28" y="56">RTL-SDR</text>
+  <text class="s" x="28" y="74">dump1090 AVR/Beast</text>
+  <rect class="box fill" x="176" y="28" width="140" height="70"/>
+  <text class="t" x="188" y="56">Engine</text>
+  <text class="s" x="188" y="74">merge, pyModeS</text>
+  <rect class="box fill" x="336" y="28" width="140" height="70"/>
+  <text class="t" x="348" y="56">Kinematics</text>
+  <text class="s" x="348" y="74">Kalman, ETA</text>
+  <rect class="box fill" x="496" y="28" width="140" height="70"/>
+  <text class="t" x="508" y="56">Geofence</text>
+  <text class="s" x="508" y="74">Shapely, KML</text>
+  <rect class="box fill" x="176" y="150" width="140" height="70"/>
+  <text class="t" x="188" y="178">Redis live</text>
+  <text class="s" x="188" y="196">tracker owns keys</text>
+  <rect class="box fill" x="336" y="150" width="140" height="70"/>
+  <text class="t" x="348" y="178">SQLite WAL</text>
+  <text class="s" x="348" y="196">flight history</text>
+  <rect class="box fill" x="496" y="150" width="248" height="70"/>
+  <text class="t" x="508" y="178">Portal, FastAPI + React</text>
+  <text class="s" x="508" y="196">WebSocket radar, Beast, webhooks</text>
+  <path class="arr" d="M156 63 H176"/>
+  <path class="arr" d="M316 63 H336"/>
+  <path class="arr" d="M476 63 H496"/>
+  <path class="arr" d="M246 98 V150"/>
+  <path class="arr" d="M406 98 V150"/>
+  <path class="arr" d="M316 185 H336"/>
+  <path class="arr" d="M476 185 H496"/>
+</svg>

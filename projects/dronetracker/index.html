@@ -76,6 +76,8 @@
   <text class="fig12-s" x="496" y="296">ptz.cgi, record.cgi, export.mkv</text>
 </svg><figcaption class="essay-caption">Camera at a known site pose. UAV GPS/velocity in. Pan, tilt, and zoom are geometry before they are HTTP.</figcaption></figure>
 
+                
+
                 <section class="section"><div class="section-head"><h3>Built</h3></div><div class="section-body"><p class="fg-prose">Dockerized field service: Kafka position/velocity in, VAPIX pan/tilt/zoom out, recordings to the camera SD card as Matroska. Stock sensecam-control had PTZ but not record, so I forked <a href='https://github.com/quantumbagel/sensecam-control-record' class='text-link hover:underline'>sensecam-control-record</a> for start/stop/export. YAML holds site pose, FOV scale, and drone size; dry-run works without a camera.</p></div></section>
                 <section class="section"><div class="section-head"><h3>Hard parts</h3></div><div class="section-body"><ul class="fg-list"><li>Pan is a spherical bearing; tilt is elevation; zoom maps a Q-8615E FOV model into 0–9999 steps.</li><li>Camera north-offset has to wrap into AXIS ±180° pan.</li><li>Optional velocity lead: NEU vs a possible NED convention (sign-flip on vz).</li><li>Minimum pan/zoom steps so the PTZ is not spammed; stale telemetry parks the camera.</li></ul></div></section>
                 <section class="section"><div class="section-head"><h3>Learned</h3></div><div class="section-body"><p class="fg-prose">Closing a telemetry bus onto a physical PTZ is as much field ops as math: Digest-auth CGI, host-network Docker, and a library that can actually start a recording.</p></div></section>
@@ -185,6 +187,33 @@
             };
             if (window.particleApi) bindParticleUi(window.particleApi);
             else window.addEventListener("particles-ready", (event) => bindParticleUi(event.detail));
+
+            document.querySelectorAll(".media-carousel").forEach((carousel) => {
+                const slidesContainer = carousel.querySelector(".carousel-slides");
+                const prevBtn = carousel.querySelector(".carousel-prev");
+                const nextBtn = carousel.querySelector(".carousel-next");
+                const dots = carousel.querySelectorAll(".carousel-dot");
+                if (!slidesContainer) return;
+                const totalSlides = slidesContainer.children.length;
+                let currentIndex = 0;
+                const goToSlide = (index) => {
+                    currentIndex = (index + totalSlides) % totalSlides;
+                    slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+                    dots.forEach((dot, idx) => dot.classList.toggle("on", idx === currentIndex));
+                    Array.from(slidesContainer.children).forEach((slide, idx) => {
+                        const video = slide.querySelector("video");
+                        if (video && idx !== currentIndex) video.pause();
+                    });
+                };
+                if (prevBtn) prevBtn.addEventListener("click", () => goToSlide(currentIndex - 1));
+                if (nextBtn) nextBtn.addEventListener("click", () => goToSlide(currentIndex + 1));
+                dots.forEach((dot) => {
+                    dot.addEventListener("click", () => {
+                        const slideIndex = parseInt(dot.getAttribute("data-slide-to"), 10);
+                        if (!Number.isNaN(slideIndex)) goToSlide(slideIndex);
+                    });
+                });
+            });
         });
     </script>
 </body>

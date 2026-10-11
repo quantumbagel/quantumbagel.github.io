@@ -125,6 +125,7 @@
         <span class="look-meta">2025 - Present · AERPAW</span>
         <p class="writeup-dek look-desc">Official vehicle-control library for AERPAW, NC State's NSF testbed for 5G/6G and autonomous aircraft.</p>
     </a>
+    
     <div class="writeup-grid">
         <div class="subgroup"><div class="subgroup-title">Built</div><p class="fg-prose">I maintain <a href='https://github.com/AERPAW/aerpawlib' class='text-link hover:underline'>AERPAW/aerpawlib</a> — the Python API experimenters use to fly LAM6/SAM4 UAVs and the rover. I moved it from DroneKit onto MAVSDK, kept the v1 Runner/StateMachine surface, and added a v2 async API. Current release is 1.4.11.</p></div>
         <div class="subgroup"><div class="subgroup-title">Hard parts</div><ul class="fg-list"><li>Testbed MAVLink filter only allows takeoff, land, goto, and yaw (20–100 m takeoff, land within 5 m of home).</li><li><code>SET_MODE</code> is blocked; GUIDED has to be held with <code>MAV_CMD_DO_SET_MODE</code>. LOITER drops the E-VM link.</li><li>Safety checker belongs on the C-VM, not localhost or the OEO console.</li><li>Timed <code>set_velocity</code> was killing newer commands; bearings ignored latitude (~51° vs 45° at 35.7°N).</li><li>Multi-vehicle ZMQ dropped transitions until JSON + ACK + <code>wait_for_peers</code>.</li></ul></div>
@@ -185,6 +186,7 @@
         <span class="look-meta">2024 - Present · AERPAW</span>
         <p class="writeup-dek look-desc">Mode S / ADS-B tracker for AERPAW: dump1090 ingest, polygon geofences, Redis live state, SQLite history, React radar.</p>
     </a>
+    
     <div class="writeup-grid">
         <div class="subgroup"><div class="subgroup-title">Built</div><p class="fg-prose">I wrote PyAerial as the successor to <a href='https://github.com/quantumbagel/airstrik.py' class='text-link hover:underline'>airstrik.py</a>. It decodes ADS-B with pyModeS, evaluates Shapely geofences, and splits tracking (<code>pyaerial run</code>) from a read-only portal (<code>pyaerial web</code>). airstrik used circular filters, MongoDB, and Kafka; this stack is Redis + SQLite + webhooks.</p></div>
         <div class="subgroup"><div class="subgroup-title">Hard parts</div><ul class="fg-list"><li>CPR decode needs a home reference that is not the geofence, plus 0.5° jump rejection.</li><li>Multi-receiver merge on RSSI and Hamming distance; heading ranges wrap.</li><li>Curved ETA can miss a fence when the turn circle blows up — take min(curved, straight).</li><li>Dwell/hysteresis so brief constraint matches do not spam.</li><li>Portal is read-only; the tracker claims Redis with a heartbeat.</li></ul></div>
@@ -235,6 +237,7 @@
         <span class="look-meta">2024 - Present · AERPAW</span>
         <p class="writeup-dek look-desc">Aims AXIS Q-8615E PTZ cameras at AERPAW UAVs from Kafka GPS/velocity and records the flight over VAPIX.</p>
     </a>
+    
     <div class="writeup-grid">
         <div class="subgroup"><div class="subgroup-title">Built</div><p class="fg-prose">Dockerized field service: Kafka position/velocity in, VAPIX pan/tilt/zoom out, recordings to the camera SD card as Matroska. Stock sensecam-control had PTZ but not record, so I forked <a href='https://github.com/quantumbagel/sensecam-control-record' class='text-link hover:underline'>sensecam-control-record</a> for start/stop/export. YAML holds site pose, FOV scale, and drone size; dry-run works without a camera.</p></div>
         <div class="subgroup"><div class="subgroup-title">Hard parts</div><ul class="fg-list"><li>Pan is a spherical bearing; tilt is elevation; zoom maps a Q-8615E FOV model into 0–9999 steps.</li><li>Camera north-offset has to wrap into AXIS ±180° pan.</li><li>Optional velocity lead: NEU vs a possible NED convention (sign-flip on vz).</li><li>Minimum pan/zoom steps so the PTZ is not spammed; stale telemetry parks the camera.</li></ul></div>
@@ -290,6 +293,7 @@
         <span class="look-meta">2026 · Merrill Lynch</span>
         <p class="writeup-dek look-desc">FactSet FQL CLI with a restricted formula language and DAG-ordered metrics. Merrill Lynch internship; private repo.</p>
     </a>
+    
     <div class="writeup-grid">
         <div class="subgroup"><div class="subgroup-title">Built</div><p class="fg-prose">Python CLI for equity research: FactSet FQL snapshots or timeseries, YAML/Pydantic configs, a sandboxed formula engine, and Rich/Excel export. A planner batches FQL calls, then Python metrics run in topological order. FDT mode scores a name against peers into Bull/Base/Bear multiples.</p></div>
         <div class="subgroup"><div class="subgroup-title">Hard parts</div><ul class="fg-list"><li>Formulas needed to be useful without becoming a code-execution hole (AST denylist + allowlisted builtins).</li><li>Interdependent metrics: DAG, cycle path, typo suggestions — before any FactSet call.</li><li>Missing FQL values become typed N/As instead of poisoning a sheet.</li><li>Holdings vs timeseries needed different config models; some formulas need a second-pass fetch.</li><li>Runs only inside FactSet's Programmatic Environment.</li></ul></div>
@@ -345,6 +349,7 @@
         <span class="look-meta">2026 - Present · Discord Bots</span>
         <p class="writeup-dek look-desc">Discord game platform: threaded matches, plugin games, Postgres history, crash-safe live resume. PlayCord rewrite.</p>
     </a>
+    
     <div class="writeup-grid">
         <div class="subgroup"><div class="subgroup-title">Built</div><p class="fg-prose">Slash lobbies, matches in threads, and a plugin API so the same <code>play()</code> runs live, in replay, and on a CLI. Postgres 16 holds guilds, matches, the move log, and live-match integrity. Games are in-process plugins — fault isolation, not a security sandbox. Builtins: Tic-Tac-Toe, Connect Four, Chess (incl. Chess960), Coup, Mafia, Spyfall, Liar's Dice.</p></div>
         <div class="subgroup"><div class="subgroup-title">Hard parts</div><ul class="fg-list"><li>Live matches resume after a restart by replaying the move log; abandon if the plugin build changed.</li><li>Lobby/thread timeouts and signed msgpack <code>custom_id</code> routing were the long tail.</li><li>Hang caps and a thread pool keep a stuck <code>play()</code> off the event loop.</li><li>Public invite exists; the bot is not hosted yet.</li></ul></div>
@@ -392,6 +397,7 @@
         <span class="look-meta">2026 - Present · Solo Projects</span>
         <p class="writeup-dek look-desc">This site: TOML-driven static generator plus twelve background simulations you can grab and tune.</p>
     </a>
+    <figure class="essay-figure media-figure"><div class="media-carousel" data-carousel-id="gallery-project-portfolio-website-v3"><div class="carousel-slides" style="transform: translateX(0%);"><div class="carousel-slide"><img src="media/projects/portfolio/homepage-aurora.png" alt="This site running in dark mode with the aurora background simulation" loading="lazy" decoding="async" class="carousel-media"></div><div class="carousel-slide"><img src="media/projects/portfolio/sim-panel.png" alt="Background control panel open on the live site, aurora mode selected" loading="lazy" decoding="async" class="carousel-media"></div></div><button class="carousel-prev icon-btn" type="button" aria-label="Previous slide">‹</button><button class="carousel-next icon-btn" type="button" aria-label="Next slide">›</button><div class="carousel-dots"><button class="carousel-dot on" type="button" data-slide-to="0" aria-label="Go to slide 1"></button><button class="carousel-dot" type="button" data-slide-to="1" aria-label="Go to slide 2"></button></div></div></figure>
     <div class="writeup-grid">
         <div class="subgroup"><div class="subgroup-title">Built</div><p class="fg-prose">Content lives in <code>site.toml</code>, templates render it, GitHub Pages serves it. The background is its own engine — twelve modes with pointer interaction and a live parameter panel.</p></div>
         <div class="subgroup"><div class="subgroup-title">Hard parts</div><ul class="fg-list"><li>Keep the sim smooth behind a frosted column.</li><li>Honor reduced motion; persist mode and params.</li><li>Do not steal pointer events from the page.</li></ul></div>
@@ -426,6 +432,7 @@
     </div>
     <p class="look-desc">Campus parking forecast: public occupancy + events into Postgres, a strong seasonal baseline, and per-lot XGBoost only when it beats that baseline.</p>
     <details class="notes"><summary>Notes</summary><div class="section-body"><p class="fg-prose">A personal forecasting stack for NC State lots. A collector polls the public occupancy API (delta snapshots) and campus events into Postgres; features include 5-minute grids, lags, rolling stats, haversine event radii, and academic-calendar flags. An hour-of-week median is always fit; per-lot XGBoost is kept only if it beats that baseline on validation MAE, across eight horizons from 15 minutes to 24 hours. Training is a separate file-based job so the Streamlit app never loads XGBoost. Private repository — architecture only.</p></div></details>
+    
     <div class="fg-actions"><a href="projects/ncsu-parking/" class="btn small">Writeup</a></div>
 </article>
 <article id="project-amazon-music-discord-rpc" class="project-card project-archive" data-category="solo">
@@ -438,6 +445,7 @@
     </div>
     <p class="look-desc">Browser extension plus a Rust native-messaging host that publishes Amazon Music playback as Discord Rich Presence.</p>
     <details class="notes"><summary>Notes</summary><div class="section-body"><p class="fg-prose">The extension reads Media Session and first-party Amazon metadata instead of scraping the DOM. A small Rust host speaks Chromium/Firefox native messaging and Discord IPC, with coalesce + rate limits (5 / 20s) and reconnect. Private repository.</p></div></details>
+    <figure class="essay-figure media-figure"><div class="media-carousel" data-carousel-id="gallery-project-amazon-music-discord-rpc"><div class="carousel-slides" style="transform: translateX(0%);"><div class="carousel-slide"><img src="media/projects/amazon/popup.png" alt="Amazon Music Rich Presence extension popup while Murderer by Ren is playing, helper app connected as quantumbagel" loading="lazy" decoding="async" class="carousel-media"></div><div class="carousel-slide"><img src="media/projects/amazon/discord-status.png" alt="Discord current activity showing Listening to Amazon Music — Microwave by Ricky Jamaraz" loading="lazy" decoding="async" class="carousel-media"></div></div><button class="carousel-prev icon-btn" type="button" aria-label="Previous slide">‹</button><button class="carousel-next icon-btn" type="button" aria-label="Next slide">›</button><div class="carousel-dots"><button class="carousel-dot on" type="button" data-slide-to="0" aria-label="Go to slide 1"></button><button class="carousel-dot" type="button" data-slide-to="1" aria-label="Go to slide 2"></button></div></div></figure>
     <div class="fg-actions"><a href="projects/amazon-music-discord-rpc/" class="btn small">Writeup</a></div>
 </article>
 <article id="project-discord-py-template" class="project-card project-archive" data-category="discord-bots">
@@ -450,6 +458,7 @@
     </div>
     <p class="look-desc">discord.py 2.x scaffold: YAML config, cog hot-reload with rollback, structured logging, plus an Emoticon analytics cog.</p>
     <details class="notes"><summary>Notes</summary><div class="section-body"><p class="fg-prose">A starter I actually use: centralized YAML, owner management commands, cog reload that rolls back if the new module fails, per-crash error logs, and a Tortoise/SQLite Emoticon cog for emoji usage analytics.</p></div></details>
+    
     <div class="fg-actions"><a href="https://github.com/quantumbagel/discord.py-template" target="_blank" rel="noopener noreferrer" class="btn small">View Project ↗</a></div>
 </article>
 <article id="project-chess-challenge" class="project-card project-archive" data-category="collabs">
@@ -462,6 +471,7 @@
     </div>
     <p class="look-desc">SebLague Chess Coding Challenge entry: iterative-deepening alpha-beta under a 1024-token budget.</p>
     <details class="notes"><summary>Notes</summary><div class="section-body"><p class="fg-prose">Fork of Sebastian Lague's C# challenge (max 1024 tokens). The real bots live on feature branches: iterative deepening, alpha-beta, quiescence, and on the strongest branch a transposition table, null-move pruning, killer moves, and compressed piece-square tables. I am not publishing an ELO — those numbers were never in the repo.</p></div></details>
+    
     <div class="fg-actions"><a href="https://github.com/quantumbagel/Chess-Challenge" target="_blank" rel="noopener noreferrer" class="btn small">View Project ↗</a></div>
 </article>
 <article id="project-triggered" class="project-card project-archive" data-category="discord-bots">
@@ -474,6 +484,7 @@
     </div>
     <p class="look-desc">IFTTT-style Discord automation: compose trigger → action rules, persisted in MongoDB.</p>
     <details class="notes"><summary>Notes</summary><div class="section-body"><p class="fg-prose">Users compose when/then rules across messages, reactions, voice, roles, and schedules. Triggers and dos load from a JSON registry; slash UX handles validation and autocomplete; permissions are scoped per server. Docker Compose + pytest; the hosted instance is personal, not a product.</p></div></details>
+    
     <div class="fg-actions"><a href="projects/triggered/" class="btn small">Writeup</a><a href="https://github.com/quantumbagel/Triggered" target="_blank" rel="noopener noreferrer" class="btn small">View Project ↗</a></div>
 </article>
 <article id="project-finitecraft" class="project-card project-archive" data-category="collabs">
@@ -486,6 +497,7 @@
     </div>
     <p class="look-desc">Collaborative Infinite Craft scraper and recipe-tree search. Deprecated. Grew out of InfiniteScrape.</p>
     <details class="notes"><summary>Notes</summary><div class="section-body"><p class="fg-prose">I built the scraping half: threaded workers, ranked proxies, batched crafts, MongoDB recipe storage. A collaborator added Arborist tree search. Deprecated; interesting as a concurrency/rate-limit story, not as a current system.</p></div></details>
+    
     <div class="fg-actions"><a href="https://github.com/finiteCraft/finiteCraft" target="_blank" rel="noopener noreferrer" class="btn small">View Project ↗</a></div>
 </article>
 <article id="project-airtime" class="project-card project-archive" data-category="solo">
@@ -498,6 +510,7 @@
     </div>
     <p class="look-desc">Arduino Uno quadcopter controller attempt — archived after the IMU/DMP stack exhausted the Uno's 2 KB SRAM.</p>
     <details class="notes"><summary>Notes</summary><div class="section-body"><p class="fg-prose">From-scratch sketches for nRF24 radio, MPU6050 (including MotionApps DMP), BMP180, GPS, and ESC mixing. It does not fly. The DMP firmware path alone is a known Uno RAM problem, and the later sketches are not in a compiling state. Kept as an honest embedded-systems dead end.</p></div></details>
+    
     <div class="fg-actions"><a href="https://github.com/quantumbagel/airtime" target="_blank" rel="noopener noreferrer" class="btn small">View Project ↗</a></div>
 </article>
 <article id="project-statify" class="project-card project-archive" data-category="solo">
@@ -510,6 +523,7 @@
     </div>
     <p class="look-desc">Spigot plugin: server-wide Minecraft stats with a small expression language for custom queries.</p>
     <details class="notes"><summary>Notes</summary><div class="section-body"><p class="fg-prose">First plugin. Aggregates player stats JSON and evaluates nested formulas with a hand-rolled parser (+ − * / ^, a few functions). Useful as a Java/Spigot artifact, not as production plugin work.</p></div></details>
+    
     <div class="fg-actions"><a href="https://github.com/quantumbagel/Statify" target="_blank" rel="noopener noreferrer" class="btn small">View Project ↗</a></div>
 </article>
 <article id="project-piranha" class="project-card project-archive" data-category="discord-bots">
@@ -522,6 +536,7 @@
     </div>
     <p class="look-desc">Early Discord chess bot wrapping Stockfish and a local board-image service. Private; superseded by Strife's chess plugin.</p>
     <details class="notes"><summary>Notes</summary><div class="section-body"><p class="fg-prose">Single-script bot: Stockfish for play, an aiohttp + CairoSVG PNG board server, challenge/move/forfeit, JSON-backed records. Process and timer orchestration in one file. Private repository.</p></div></details>
+    
     <div class="fg-actions"></div>
 </article>
 <article id="project-molotov" class="project-card project-archive" data-category="solo">
@@ -534,6 +549,7 @@
     </div>
     <p class="look-desc">Screen-automation experiment for Bomb Party: pixel turn detection, scored dictionary, timed typing.</p>
     <details class="notes"><summary>Notes</summary><div class="section-body"><p class="fg-prose">Personal automation: mss / pixel color for turn state, clipboard letter subset, rarity scoring, configurable typing delay. Fragile to UI changes. Not a product.</p></div></details>
+    <figure class="essay-figure media-figure"><div class="media-carousel" data-carousel-id="gallery-project-molotov"><div class="carousel-slides" style="transform: translateX(0%);"><div class="carousel-slide"><img src="media/projects/molotov/win.png" alt="Molotov Discord embed: Molotov won the last round" loading="lazy" decoding="async" class="carousel-media"></div></div></div><p class="essay-caption">Molotov Discord embed: Molotov won the last round</p></figure>
     <div class="fg-actions"><a href="https://github.com/quantumbagel/Molotov" target="_blank" rel="noopener noreferrer" class="btn small">View Project ↗</a></div>
 </article>
 
@@ -1054,7 +1070,39 @@
         </main>
     </div>
 
-    
+    <div id="modal-project-amazon-music-discord-rpc" class="backdrop hidden">
+    <div class="modal">
+        <div class="modal-head">
+            <h2>Amazon Music Discord RPC</h2>
+            <button class="modal-close-btn icon-btn" data-modal-id="modal-project-amazon-music-discord-rpc" type="button">✕</button>
+        </div>
+        <div class="modal-body">
+            <p class="fg-prose">The extension reads Media Session and first-party Amazon metadata instead of scraping the DOM. A small Rust host speaks Chromium/Firefox native messaging and Discord IPC, with coalesce + rate limits (5 / 20s) and reconnect. Private repository.</p>
+            <figure class="essay-figure media-figure"><div class="media-carousel" data-carousel-id="carousel-modal-project-amazon-music-discord-rpc"><div class="carousel-slides" style="transform: translateX(0%);"><div class="carousel-slide"><img src="media/projects/amazon/popup.png" alt="Amazon Music Rich Presence extension popup while Murderer by Ren is playing, helper app connected as quantumbagel" loading="lazy" decoding="async" class="carousel-media"></div><div class="carousel-slide"><img src="media/projects/amazon/discord-status.png" alt="Discord current activity showing Listening to Amazon Music — Microwave by Ricky Jamaraz" loading="lazy" decoding="async" class="carousel-media"></div></div><button class="carousel-prev icon-btn" type="button" aria-label="Previous slide">‹</button><button class="carousel-next icon-btn" type="button" aria-label="Next slide">›</button><div class="carousel-dots"><button class="carousel-dot on" type="button" data-slide-to="0" aria-label="Go to slide 1"></button><button class="carousel-dot" type="button" data-slide-to="1" aria-label="Go to slide 2"></button></div></div></figure>
+            
+        </div>
+        <div class="modal-foot">
+            
+        </div>
+    </div>
+</div>
+<div id="modal-project-molotov" class="backdrop hidden">
+    <div class="modal">
+        <div class="modal-head">
+            <h2>Molotov</h2>
+            <button class="modal-close-btn icon-btn" data-modal-id="modal-project-molotov" type="button">✕</button>
+        </div>
+        <div class="modal-body">
+            <p class="fg-prose">Personal automation: mss / pixel color for turn state, clipboard letter subset, rarity scoring, configurable typing delay. Fragile to UI changes. Not a product.</p>
+            <figure class="essay-figure media-figure"><div class="media-carousel" data-carousel-id="carousel-modal-project-molotov"><div class="carousel-slides" style="transform: translateX(0%);"><div class="carousel-slide"><img src="media/projects/molotov/win.png" alt="Molotov Discord embed: Molotov won the last round" loading="lazy" decoding="async" class="carousel-media"></div></div></div><p class="essay-caption">Molotov Discord embed: Molotov won the last round</p></figure>
+            
+        </div>
+        <div class="modal-foot">
+            <a href="https://github.com/quantumbagel/Molotov" target="_blank" rel="noopener noreferrer" class="btn small">View on GitHub ↗</a>
+        </div>
+    </div>
+</div>
+
 
     <script type="module" src="particles/main.js"></script>
     <script>
@@ -1532,8 +1580,10 @@
                 if (openSkill && openSkill !== skillItem) {
                     const prevContent = openSkill.querySelector(".skill-content");
                     const prevIcon = openSkill.querySelector(".skill-toggle-icon");
+                    const prevHead = openSkill.querySelector(".skill-toggle");
                     prevContent.classList.remove("open");
                     if (prevIcon) prevIcon.style.transform = "rotate(0deg)";
+                    if (prevHead) prevHead.setAttribute("aria-expanded", "false");
                 }
 
                 if (skillContent && !skillContent.classList.contains("open")) {
@@ -1541,6 +1591,8 @@
                     if (toggleIcon) {
                         toggleIcon.style.transform = "rotate(180deg)";
                     }
+                    const head = skillItem.querySelector(".skill-toggle");
+                    if (head) head.setAttribute("aria-expanded", "true");
                     openSkill = skillItem;
                 }
 

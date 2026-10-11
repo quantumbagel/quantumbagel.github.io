@@ -73,6 +73,8 @@
   <path class="fig25-arr" d="M300 106 V136"/>
 </svg><figcaption class="essay-caption">site.toml is the content. generator.py writes the homepage and the essay pages. The canvas is its own engine.</figcaption></figure>
 
+                <figure class="essay-figure media-figure"><div class="media-carousel" data-carousel-id="gallery-portfolio-website-v3"><div class="carousel-slides" style="transform: translateX(0%);"><div class="carousel-slide"><img src="../../media/projects/portfolio/homepage-aurora.png" alt="This site running in dark mode with the aurora background simulation" loading="lazy" decoding="async" class="carousel-media"></div><div class="carousel-slide"><img src="../../media/projects/portfolio/sim-panel.png" alt="Background control panel open on the live site, aurora mode selected" loading="lazy" decoding="async" class="carousel-media"></div></div><button class="carousel-prev icon-btn" type="button" aria-label="Previous slide">‹</button><button class="carousel-next icon-btn" type="button" aria-label="Next slide">›</button><div class="carousel-dots"><button class="carousel-dot on" type="button" data-slide-to="0" aria-label="Go to slide 1"></button><button class="carousel-dot" type="button" data-slide-to="1" aria-label="Go to slide 2"></button></div></div></figure>
+
                 <section class="section"><div class="section-head"><h3>Built</h3></div><div class="section-body"><p class="fg-prose">Content lives in <code>site.toml</code>, templates render it, GitHub Pages serves it. The background is its own engine — twelve modes with pointer interaction and a live parameter panel.</p></div></section>
                 <section class="section"><div class="section-head"><h3>Hard parts</h3></div><div class="section-body"><ul class="fg-list"><li>Keep the sim smooth behind a frosted column.</li><li>Honor reduced motion; persist mode and params.</li><li>Do not steal pointer events from the page.</li></ul></div></section>
                 <section class="section"><div class="section-head"><h3>Learned</h3></div><div class="section-body"><p class="fg-prose">A portfolio is more convincing when the page itself is something you can operate.</p></div></section>
@@ -145,6 +147,33 @@
             };
             if (window.particleApi) bindParticleUi(window.particleApi);
             else window.addEventListener("particles-ready", (event) => bindParticleUi(event.detail));
+
+            document.querySelectorAll(".media-carousel").forEach((carousel) => {
+                const slidesContainer = carousel.querySelector(".carousel-slides");
+                const prevBtn = carousel.querySelector(".carousel-prev");
+                const nextBtn = carousel.querySelector(".carousel-next");
+                const dots = carousel.querySelectorAll(".carousel-dot");
+                if (!slidesContainer) return;
+                const totalSlides = slidesContainer.children.length;
+                let currentIndex = 0;
+                const goToSlide = (index) => {
+                    currentIndex = (index + totalSlides) % totalSlides;
+                    slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+                    dots.forEach((dot, idx) => dot.classList.toggle("on", idx === currentIndex));
+                    Array.from(slidesContainer.children).forEach((slide, idx) => {
+                        const video = slide.querySelector("video");
+                        if (video && idx !== currentIndex) video.pause();
+                    });
+                };
+                if (prevBtn) prevBtn.addEventListener("click", () => goToSlide(currentIndex - 1));
+                if (nextBtn) nextBtn.addEventListener("click", () => goToSlide(currentIndex + 1));
+                dots.forEach((dot) => {
+                    dot.addEventListener("click", () => {
+                        const slideIndex = parseInt(dot.getAttribute("data-slide-to"), 10);
+                        if (!Number.isNaN(slideIndex)) goToSlide(slideIndex);
+                    });
+                });
+            });
         });
     </script>
 </body>

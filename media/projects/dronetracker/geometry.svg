@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 300" role="img" aria-label="DroneTracker geodetic aiming geometry">
+  <style>
+    .box { fill: none; stroke: currentColor; stroke-width: 1.4; }
+    .fill { fill: currentColor; fill-opacity: 0.08; }
+    .t { font: 600 12px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; }
+    .s { font: 400 10px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; opacity: 0.62; }
+    .arr { stroke: currentColor; stroke-width: 1.2; fill: none; marker-end: url(#ah); }
+    .dash { stroke-dasharray: 4 3; }
+  </style>
+  <defs>
+    <marker id="ah" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L8 4 L0 8 z" fill="currentColor"/>
+    </marker>
+  </defs>
+  <rect class="box fill" x="20" y="30" width="170" height="72"/>
+  <text class="t" x="36" y="58">Kafka telemetry</text>
+  <text class="s" x="36" y="76">lat lon alt vx vy vz</text>
+  <rect class="box fill" x="230" y="30" width="170" height="72"/>
+  <text class="t" x="246" y="58">Geodesy</text>
+  <text class="s" x="246" y="76">bearing, range, elev</text>
+  <rect class="box fill" x="440" y="30" width="170" height="72"/>
+  <text class="t" x="456" y="58">Lead + offset</text>
+  <text class="s" x="456" y="76">NEU, +/-180 wrap</text>
+  <rect class="box fill" x="230" y="150" width="170" height="72"/>
+  <text class="t" x="246" y="178">Zoom model</text>
+  <text class="s" x="246" y="196">Q-8615E FOV to 0-9999</text>
+  <rect class="box fill" x="440" y="150" width="290" height="72"/>
+  <text class="t" x="456" y="178">AXIS VAPIX</text>
+  <text class="s" x="456" y="196">ptz.cgi, record.cgi, export.mkv</text>
+  <path class="arr" d="M190 66 H230"/>
+  <path class="arr" d="M400 66 H440"/>
+  <path class="arr" d="M315 102 V150"/>
+  <path class="arr" d="M400 186 H440"/>
+  <path class="arr dash" d="M525 102 V150"/>
+</svg>

@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 240" role="img" aria-label="Amazon Music Discord RPC path">
+  <style>
+    .box { fill: none; stroke: currentColor; stroke-width: 1.4; }
+    .fill { fill: currentColor; fill-opacity: 0.08; }
+    .t { font: 600 12px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; }
+    .s { font: 400 10px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; opacity: 0.62; }
+    .arr { stroke: currentColor; stroke-width: 1.2; fill: none; marker-end: url(#ah); }
+  </style>
+  <defs>
+    <marker id="ah" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L8 4 L0 8 z" fill="currentColor"/>
+    </marker>
+  </defs>
+  <rect class="box fill" x="16" y="40" width="170" height="80"/>
+  <text class="t" x="28" y="72">Amazon Music tab</text>
+  <text class="s" x="28" y="90">Media Session API</text>
+  <rect class="box fill" x="216" y="40" width="170" height="80"/>
+  <text class="t" x="228" y="72">Extension</text>
+  <text class="s" x="228" y="90">no DOM scrape</text>
+  <rect class="box fill" x="416" y="40" width="150" height="80"/>
+  <text class="t" x="428" y="72">Rust host</text>
+  <text class="s" x="428" y="90">native messaging</text>
+  <rect class="box fill" x="596" y="40" width="148" height="80"/>
+  <text class="t" x="608" y="72">Discord IPC</text>
+  <text class="s" x="608" y="90">Rich Presence</text>
+  <rect class="box fill" x="216" y="150" width="350" height="60"/>
+  <text class="t" x="228" y="176">coalesce + 5 updates / 20s</text>
+  <text class="s" x="228" y="194">reconnect, Chromium and Firefox</text>
+  <path class="arr" d="M186 80 H216"/>
+  <path class="arr" d="M386 80 H416"/>
+  <path class="arr" d="M566 80 H596"/>
+  <path class="arr" d="M491 120 V150"/>
+</svg>

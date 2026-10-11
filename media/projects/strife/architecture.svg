@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 280" role="img" aria-label="Strife host architecture">
+  <style>
+    .box { fill: none; stroke: currentColor; stroke-width: 1.4; }
+    .fill { fill: currentColor; fill-opacity: 0.08; }
+    .t { font: 600 12px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; }
+    .s { font: 400 10px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; opacity: 0.62; }
+    .arr { stroke: currentColor; stroke-width: 1.2; fill: none; marker-end: url(#ah); }
+  </style>
+  <defs>
+    <marker id="ah" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L8 4 L0 8 z" fill="currentColor"/>
+    </marker>
+  </defs>
+  <rect class="box fill" x="20" y="28" width="160" height="70"/>
+  <text class="t" x="36" y="56">Discord thread</text>
+  <text class="s" x="36" y="74">slash, components</text>
+  <rect class="box fill" x="220" y="28" width="160" height="70"/>
+  <text class="t" x="236" y="56">Host</text>
+  <text class="s" x="236" y="74">lobby, session, routing</text>
+  <rect class="box fill" x="420" y="28" width="160" height="70"/>
+  <text class="t" x="436" y="56">play()</text>
+  <text class="s" x="436" y="74">live = replay = CLI</text>
+  <rect class="box fill" x="620" y="28" width="120" height="70"/>
+  <text class="t" x="636" y="56">Plugin</text>
+  <text class="s" x="636" y="74">GameContext</text>
+  <rect class="box fill" x="220" y="150" width="160" height="70"/>
+  <text class="t" x="236" y="178">Move log</text>
+  <text class="s" x="236" y="196">append-only, resume</text>
+  <rect class="box fill" x="420" y="150" width="320" height="70"/>
+  <text class="t" x="436" y="178">PostgreSQL 16</text>
+  <text class="s" x="436" y="196">matches, players, live integrity</text>
+  <path class="arr" d="M180 63 H220"/>
+  <path class="arr" d="M380 63 H420"/>
+  <path class="arr" d="M580 63 H620"/>
+  <path class="arr" d="M300 98 V150"/>
+  <path class="arr" d="M380 185 H420"/>
+</svg>

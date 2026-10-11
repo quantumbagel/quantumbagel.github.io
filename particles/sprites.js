@@ -1,8 +1,8 @@
 import { SPRITE_SIZE } from "./config.js";
 import { mixRgb } from "./core.js";
 
-export function makeAtomSprite(rgb, highlight) {
-    const size = SPRITE_SIZE;
+export function makeAtomSprite(rgb, highlight, pixelSize) {
+    const size = Math.max(SPRITE_SIZE, Math.round(pixelSize || SPRITE_SIZE));
     const canvas = document.createElement("canvas");
     canvas.width = size;
     canvas.height = size;
@@ -45,11 +45,12 @@ export function makeAtomSprite(rgb, highlight) {
     return canvas;
 }
 
-export function rebuildSprites(colors) {
+export function rebuildSprites(colors, dpr) {
+    const pixelSize = Math.round(SPRITE_SIZE * Math.max(1, dpr || 1));
     return {
-        carbon: makeAtomSprite(colors.particleRgb, false),
-        hydrogen: makeAtomSprite(mixRgb(colors.particleRgb, { r: 255, g: 255, b: 255 }, 0.18), false),
-        hetero: makeAtomSprite(colors.hoverAccentRgb, false),
-        accent: makeAtomSprite(colors.hoverAccentRgb, true),
+        carbon: makeAtomSprite(colors.particleRgb, false, pixelSize),
+        hydrogen: makeAtomSprite(mixRgb(colors.particleRgb, { r: 255, g: 255, b: 255 }, 0.18), false, pixelSize),
+        hetero: makeAtomSprite(colors.hoverAccentRgb, false, pixelSize),
+        accent: makeAtomSprite(colors.hoverAccentRgb, true, pixelSize),
     };
 }

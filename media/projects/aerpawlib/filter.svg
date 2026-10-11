@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 320" role="img" aria-label="AERPAW MAVLink filter allow-list">
+  <style>
+    .box { fill: none; stroke: currentColor; stroke-width: 1.4; }
+    .fill { fill: currentColor; fill-opacity: 0.08; }
+    .ok { fill: currentColor; fill-opacity: 0.14; }
+    .no { fill: none; stroke: currentColor; stroke-dasharray: 4 3; }
+    .t { font: 600 12px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; }
+    .s { font: 400 10px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; opacity: 0.62; }
+    .arr { stroke: currentColor; stroke-width: 1.2; fill: none; marker-end: url(#ah); }
+  </style>
+  <defs>
+    <marker id="ah" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L8 4 L0 8 z" fill="currentColor"/>
+    </marker>
+  </defs>
+  <rect class="box fill" x="16" y="24" width="150" height="64"/>
+  <text class="t" x="28" y="50">E-VM script</text>
+  <text class="s" x="28" y="68">aerpawlib commands</text>
+  <rect class="box ok" x="200" y="16" width="360" height="200"/>
+  <text class="t" x="216" y="40">MAVLink filter (allow-list)</text>
+  <text class="s" x="216" y="58">takeoff 20-100 m, land &lt;=5 m of home</text>
+  <rect class="box fill" x="220" y="76" width="150" height="48"/>
+  <text class="t" x="232" y="96">takeoff / land</text>
+  <text class="s" x="232" y="112">goto, yaw</text>
+  <rect class="box fill" x="388" y="76" width="150" height="48"/>
+  <text class="t" x="400" y="96">status out</text>
+  <text class="s" x="400" y="112">unrestricted</text>
+  <rect class="box no" x="220" y="140" width="318" height="56"/>
+  <text class="t" x="232" y="164">blocked: SET_MODE, LOITER</text>
+  <text class="s" x="232" y="182">GUIDED via MAV_CMD_DO_SET_MODE</text>
+  <rect class="box fill" x="596" y="24" width="148" height="64"/>
+  <text class="t" x="608" y="50">Cube Orange</text>
+  <text class="s" x="608" y="68">ArduPilot, MAVLink v2</text>
+  <rect class="box fill" x="200" y="240" width="360" height="60"/>
+  <text class="t" x="216" y="266">C-VM safety checker</text>
+  <text class="s" x="216" y="284">KML geofence on this node</text>
+  <path class="arr" d="M166 56 H200"/>
+  <path class="arr" d="M560 56 H596"/>
+  <path class="arr" d="M380 216 V240"/>
+</svg>

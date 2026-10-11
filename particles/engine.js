@@ -58,7 +58,7 @@ export function initParticleBackground(canvas, options) {
         );
 
     const quality = createQuality();
-    const getDpr = () => Math.min(window.devicePixelRatio || 1, quality.dprCap());
+    const getDpr = () => Math.min(window.devicePixelRatio || 1, 2);
 
     let width = window.innerWidth;
     let height = window.innerHeight;
@@ -127,7 +127,8 @@ export function initParticleBackground(canvas, options) {
     particleColorStr = rgbToString(colors.particleRgb);
     accentColorStr = rgbToString(colors.hoverAccentRgb);
     bgColorStr = rgbToString(colors.bgRgb);
-    sprites = makeSprites(colors);
+    sprites = makeSprites(colors, dpr);
+    let spriteDpr = dpr;
 
     const world = {
         get width() { return width; },
@@ -152,12 +153,19 @@ export function initParticleBackground(canvas, options) {
     };
 
     const applyCanvasSize = () => {
+        canvas.style.width = `${width}px`;
+        canvas.style.height = `${height}px`;
         canvas.width = Math.round(width * dpr);
         canvas.height = Math.round(height * dpr);
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
         ctx.lineCap = "round";
         ctx.lineJoin = "round";
         ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = "high";
+        if (spriteDpr !== dpr) {
+            spriteDpr = dpr;
+            sprites = makeSprites(colors, dpr);
+        }
     };
     applyCanvasSize();
 
@@ -366,7 +374,7 @@ export function initParticleBackground(canvas, options) {
         particleColorStr = rgbToString(colors.particleRgb);
         accentColorStr = rgbToString(colors.hoverAccentRgb);
         bgColorStr = rgbToString(colors.bgRgb);
-        sprites = makeSprites(colors);
+        sprites = makeSprites(colors, dpr);
         updateCanvasDimensions();
         lastFrameTime = 0;
 
@@ -886,7 +894,7 @@ export function initParticleBackground(canvas, options) {
         particleColorStr = rgbToString(colors.particleRgb);
         accentColorStr = rgbToString(colors.hoverAccentRgb);
         bgColorStr = rgbToString(colors.bgRgb);
-        sprites = makeSprites(colors);
+        sprites = makeSprites(colors, dpr);
         if (reducedMotion && enabled && simReady) {
             drawStatic();
         }

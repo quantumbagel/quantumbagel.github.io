@@ -86,6 +86,8 @@
   <path class="fig19-arr" d="M276 144 V200"/>
 </svg><figcaption class="essay-caption">Occupancy + events into Postgres. XGBoost only ships if it beats an hour-of-week median.</figcaption></figure>
 
+                
+
                 <section class="section"><div class="section-head"><h3>Built</h3></div><div class="section-body"><p class="fg-prose">A personal forecasting stack for NC State lots. A collector polls the public occupancy API (delta snapshots) and campus events into Postgres; features include 5-minute grids, lags, rolling stats, haversine event radii, and academic-calendar flags. An hour-of-week median is always fit; per-lot XGBoost is kept only if it beats that baseline on validation MAE, across eight horizons from 15 minutes to 24 hours. Training is a separate file-based job so the Streamlit app never loads XGBoost. Private repository — architecture only.</p></div></section>
                 
                 
@@ -171,6 +173,33 @@
             };
             if (window.particleApi) bindParticleUi(window.particleApi);
             else window.addEventListener("particles-ready", (event) => bindParticleUi(event.detail));
+
+            document.querySelectorAll(".media-carousel").forEach((carousel) => {
+                const slidesContainer = carousel.querySelector(".carousel-slides");
+                const prevBtn = carousel.querySelector(".carousel-prev");
+                const nextBtn = carousel.querySelector(".carousel-next");
+                const dots = carousel.querySelectorAll(".carousel-dot");
+                if (!slidesContainer) return;
+                const totalSlides = slidesContainer.children.length;
+                let currentIndex = 0;
+                const goToSlide = (index) => {
+                    currentIndex = (index + totalSlides) % totalSlides;
+                    slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+                    dots.forEach((dot, idx) => dot.classList.toggle("on", idx === currentIndex));
+                    Array.from(slidesContainer.children).forEach((slide, idx) => {
+                        const video = slide.querySelector("video");
+                        if (video && idx !== currentIndex) video.pause();
+                    });
+                };
+                if (prevBtn) prevBtn.addEventListener("click", () => goToSlide(currentIndex - 1));
+                if (nextBtn) nextBtn.addEventListener("click", () => goToSlide(currentIndex + 1));
+                dots.forEach((dot) => {
+                    dot.addEventListener("click", () => {
+                        const slideIndex = parseInt(dot.getAttribute("data-slide-to"), 10);
+                        if (!Number.isNaN(slideIndex)) goToSlide(slideIndex);
+                    });
+                });
+            });
         });
     </script>
 </body>

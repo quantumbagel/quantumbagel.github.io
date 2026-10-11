@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 340" role="img" aria-label="aerpawlib stack from experiment script to ArduPilot">
+  <style>
+    .box { fill: none; stroke: currentColor; stroke-width: 1.4; }
+    .fill { fill: currentColor; fill-opacity: 0.08; }
+    .t { font: 600 12px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; }
+    .s { font: 400 10px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; opacity: 0.62; }
+    .arr { stroke: currentColor; stroke-width: 1.2; fill: none; marker-end: url(#ah); }
+  </style>
+  <defs>
+    <marker id="ah" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L8 4 L0 8 z" fill="currentColor"/>
+    </marker>
+  </defs>
+  <rect class="box fill" x="20" y="24" width="160" height="64"/>
+  <text class="t" x="36" y="50">Experiment script</text>
+  <text class="s" x="36" y="68">Runner / StateMachine</text>
+  <rect class="box fill" x="220" y="24" width="160" height="64"/>
+  <text class="t" x="236" y="50">aerpawlib v1 / v2</text>
+  <text class="s" x="236" y="68">Vehicle, can_*, ZMQ</text>
+  <rect class="box fill" x="420" y="24" width="160" height="64"/>
+  <text class="t" x="436" y="50">MAVSDK + gRPC</text>
+  <text class="s" x="436" y="68">mavsdk_server</text>
+  <rect class="box fill" x="580" y="24" width="160" height="64"/>
+  <text class="t" x="596" y="50">MAVLink filter</text>
+  <text class="s" x="596" y="68">takeoff land goto yaw</text>
+  <rect class="box fill" x="580" y="140" width="160" height="64"/>
+  <text class="t" x="596" y="166">Cube Orange</text>
+  <text class="s" x="596" y="184">ArduPilot, LAM6/SAM4</text>
+  <rect class="box fill" x="220" y="140" width="160" height="64"/>
+  <text class="t" x="236" y="166">Safety checker</text>
+  <text class="s" x="236" y="184">KML geofence, C-VM</text>
+  <rect class="box fill" x="20" y="140" width="160" height="64"/>
+  <text class="t" x="36" y="166">SITL tests</text>
+  <text class="s" x="36" y="184">Copter + Rover</text>
+  <rect class="box fill" x="220" y="252" width="360" height="56"/>
+  <text class="t" x="236" y="276">ZMQ proxy 5570 / 5571</text>
+  <text class="s" x="236" y="294">JSON control plane, wait_for_peers</text>
+  <path class="arr" d="M180 56 H220"/>
+  <path class="arr" d="M380 56 H420"/>
+  <path class="arr" d="M580 88 V140"/>
+  <path class="arr" d="M300 88 V140"/>
+  <path class="arr" d="M100 204 V280 H220"/>
+  <path class="arr" d="M300 204 V252"/>
+</svg>

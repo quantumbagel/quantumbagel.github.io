@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 260" role="img" aria-label="ML-Ticker plan fetch derive export pipeline">
+  <style>
+    .box { fill: none; stroke: currentColor; stroke-width: 1.4; }
+    .fill { fill: currentColor; fill-opacity: 0.08; }
+    .t { font: 600 12px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; }
+    .s { font: 400 10px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; opacity: 0.62; }
+    .arr { stroke: currentColor; stroke-width: 1.2; fill: none; marker-end: url(#ah); }
+  </style>
+  <defs>
+    <marker id="ah" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L8 4 L0 8 z" fill="currentColor"/>
+    </marker>
+  </defs>
+  <rect class="box fill" x="16" y="40" width="130" height="70"/>
+  <text class="t" x="28" y="68">YAML config</text>
+  <text class="s" x="28" y="86">Pydantic forbid</text>
+  <rect class="box fill" x="166" y="40" width="130" height="70"/>
+  <text class="t" x="178" y="68">Validate</text>
+  <text class="s" x="178" y="86">AST, DAG, typos</text>
+  <rect class="box fill" x="316" y="40" width="130" height="70"/>
+  <text class="t" x="328" y="68">Planner</text>
+  <text class="s" x="328" y="86">batch FQL calls</text>
+  <rect class="box fill" x="466" y="40" width="130" height="70"/>
+  <text class="t" x="478" y="68">FactSet FPE</text>
+  <text class="s" x="478" y="86">snapshot / series</text>
+  <rect class="box fill" x="166" y="154" width="130" height="70"/>
+  <text class="t" x="178" y="182">Sandbox eval</text>
+  <text class="s" x="178" y="200">topo order, N/A</text>
+  <rect class="box fill" x="316" y="154" width="280" height="70"/>
+  <text class="t" x="328" y="182">Export</text>
+  <text class="s" x="328" y="200">Rich tables, Excel, JSON, FDT</text>
+  <path class="arr" d="M146 75 H166"/>
+  <path class="arr" d="M296 75 H316"/>
+  <path class="arr" d="M446 75 H466"/>
+  <path class="arr" d="M231 110 V154"/>
+  <path class="arr" d="M296 189 H316"/>
+</svg>

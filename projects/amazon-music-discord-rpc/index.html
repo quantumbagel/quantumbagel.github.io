@@ -77,6 +77,8 @@
   <path class="fig21-arr" d="M491 120 V150"/>
 </svg><figcaption class="essay-caption">Media Session in the tab, a Rust native-messaging host, Discord IPC out. No DOM scrape.</figcaption></figure>
 
+                <figure class="essay-figure media-figure"><div class="media-carousel" data-carousel-id="gallery-amazon-music-discord-rpc"><div class="carousel-slides" style="transform: translateX(0%);"><div class="carousel-slide"><img src="../../media/projects/amazon/popup.png" alt="Amazon Music Rich Presence extension popup while Murderer by Ren is playing, helper app connected as quantumbagel" loading="lazy" decoding="async" class="carousel-media"></div><div class="carousel-slide"><img src="../../media/projects/amazon/discord-status.png" alt="Discord current activity showing Listening to Amazon Music — Microwave by Ricky Jamaraz" loading="lazy" decoding="async" class="carousel-media"></div></div><button class="carousel-prev icon-btn" type="button" aria-label="Previous slide">‹</button><button class="carousel-next icon-btn" type="button" aria-label="Next slide">›</button><div class="carousel-dots"><button class="carousel-dot on" type="button" data-slide-to="0" aria-label="Go to slide 1"></button><button class="carousel-dot" type="button" data-slide-to="1" aria-label="Go to slide 2"></button></div></div></figure>
+
                 <section class="section"><div class="section-head"><h3>Built</h3></div><div class="section-body"><p class="fg-prose">The extension reads Media Session and first-party Amazon metadata instead of scraping the DOM. A small Rust host speaks Chromium/Firefox native messaging and Discord IPC, with coalesce + rate limits (5 / 20s) and reconnect. Private repository.</p></div></section>
                 
                 
@@ -153,6 +155,33 @@
             };
             if (window.particleApi) bindParticleUi(window.particleApi);
             else window.addEventListener("particles-ready", (event) => bindParticleUi(event.detail));
+
+            document.querySelectorAll(".media-carousel").forEach((carousel) => {
+                const slidesContainer = carousel.querySelector(".carousel-slides");
+                const prevBtn = carousel.querySelector(".carousel-prev");
+                const nextBtn = carousel.querySelector(".carousel-next");
+                const dots = carousel.querySelectorAll(".carousel-dot");
+                if (!slidesContainer) return;
+                const totalSlides = slidesContainer.children.length;
+                let currentIndex = 0;
+                const goToSlide = (index) => {
+                    currentIndex = (index + totalSlides) % totalSlides;
+                    slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+                    dots.forEach((dot, idx) => dot.classList.toggle("on", idx === currentIndex));
+                    Array.from(slidesContainer.children).forEach((slide, idx) => {
+                        const video = slide.querySelector("video");
+                        if (video && idx !== currentIndex) video.pause();
+                    });
+                };
+                if (prevBtn) prevBtn.addEventListener("click", () => goToSlide(currentIndex - 1));
+                if (nextBtn) nextBtn.addEventListener("click", () => goToSlide(currentIndex + 1));
+                dots.forEach((dot) => {
+                    dot.addEventListener("click", () => {
+                        const slideIndex = parseInt(dot.getAttribute("data-slide-to"), 10);
+                        if (!Number.isNaN(slideIndex)) goToSlide(slideIndex);
+                    });
+                });
+            });
         });
     </script>
 </body>

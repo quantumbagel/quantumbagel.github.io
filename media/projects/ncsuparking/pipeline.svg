@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 280" role="img" aria-label="NCSU parking forecast with baseline gate">
+  <style>
+    .box { fill: none; stroke: currentColor; stroke-width: 1.4; }
+    .fill { fill: currentColor; fill-opacity: 0.08; }
+    .t { font: 600 12px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; }
+    .s { font: 400 10px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; opacity: 0.62; }
+    .arr { stroke: currentColor; stroke-width: 1.2; fill: none; marker-end: url(#ah); }
+  </style>
+  <defs>
+    <marker id="ah" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L8 4 L0 8 z" fill="currentColor"/>
+    </marker>
+  </defs>
+  <rect class="box fill" x="16" y="24" width="150" height="64"/>
+  <text class="t" x="28" y="50">Occupancy API</text>
+  <text class="s" x="28" y="68">delta snapshots</text>
+  <rect class="box fill" x="16" y="108" width="150" height="64"/>
+  <text class="t" x="28" y="134">Campus events</text>
+  <text class="s" x="28" y="152">haversine radius</text>
+  <rect class="box fill" x="196" y="64" width="160" height="80"/>
+  <text class="t" x="208" y="96">Postgres</text>
+  <text class="s" x="208" y="114">5-min grid, lags</text>
+  <rect class="box fill" x="386" y="24" width="160" height="70"/>
+  <text class="t" x="398" y="52">Hour-of-week</text>
+  <text class="s" x="398" y="70">median baseline</text>
+  <rect class="box fill" x="386" y="114" width="160" height="70"/>
+  <text class="t" x="398" y="142">XGBoost</text>
+  <text class="s" x="398" y="160">kept only if better MAE</text>
+  <rect class="box fill" x="576" y="64" width="168" height="80"/>
+  <text class="t" x="588" y="96">Streamlit</text>
+  <text class="s" x="588" y="114">never loads XGBoost</text>
+  <rect class="box fill" x="196" y="200" width="350" height="56"/>
+  <text class="t" x="208" y="226">8 horizons</text>
+  <text class="s" x="208" y="244">15 min to 24 h, academic-calendar flags</text>
+  <path class="arr" d="M166 56 H196 V104"/>
+  <path class="arr" d="M166 140 H196"/>
+  <path class="arr" d="M356 104 H386 V59"/>
+  <path class="arr" d="M356 104 H386 V149"/>
+  <path class="arr" d="M546 59 H576 V104"/>
+  <path class="arr" d="M546 149 H576 V104"/>
+  <path class="arr" d="M276 144 V200"/>
+</svg>

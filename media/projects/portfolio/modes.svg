@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 220" role="img" aria-label="Portfolio generator and simulation engine">
+  <style>
+    .box { fill: none; stroke: currentColor; stroke-width: 1.4; }
+    .fill { fill: currentColor; fill-opacity: 0.08; }
+    .t { font: 600 12px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; }
+    .s { font: 400 10px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; opacity: 0.62; }
+    .arr { stroke: currentColor; stroke-width: 1.2; fill: none; marker-end: url(#ah); }
+  </style>
+  <defs>
+    <marker id="ah" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L8 4 L0 8 z" fill="currentColor"/>
+    </marker>
+  </defs>
+  <rect class="box fill" x="20" y="36" width="160" height="70"/>
+  <text class="t" x="36" y="64">site.toml</text>
+  <text class="s" x="36" y="82">essays, projects</text>
+  <rect class="box fill" x="220" y="36" width="160" height="70"/>
+  <text class="t" x="236" y="64">generator.py</text>
+  <text class="s" x="236" y="82">HTML pages + media</text>
+  <rect class="box fill" x="420" y="36" width="160" height="70"/>
+  <text class="t" x="436" y="64">GitHub Pages</text>
+  <text class="s" x="436" y="82">static index + essays</text>
+  <rect class="box fill" x="220" y="136" width="360" height="60"/>
+  <text class="t" x="236" y="162">Canvas engine, 12 modes</text>
+  <text class="s" x="236" y="180">molecules, orbits, life, aurora, flock</text>
+  <path class="arr" d="M180 71 H220"/>
+  <path class="arr" d="M380 71 H420"/>
+  <path class="arr" d="M300 106 V136"/>
+</svg>

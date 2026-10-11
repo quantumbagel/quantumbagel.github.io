@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 340" role="img" aria-label="DroneTracker camera-to-UAV aiming geometry">
+  <style>
+    .line { stroke: currentColor; stroke-width: 1.3; fill: none; }
+    .dash { stroke-dasharray: 5 4; }
+    .t { font: 600 12px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; }
+    .s { font: 400 10px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; opacity: 0.62; }
+    .fill { fill: currentColor; fill-opacity: 0.1; }
+    .box { fill: none; stroke: currentColor; stroke-width: 1.4; }
+  </style>
+  <rect class="box fill" x="16" y="16" width="200" height="56"/>
+  <text class="t" x="28" y="40">AXIS Q-8615E</text>
+  <text class="s" x="28" y="56">site pose in YAML</text>
+  <path class="line" d="M80 280 L80 120"/>
+  <path class="line dash" d="M80 280 L420 70"/>
+  <path class="line dash" d="M80 280 L620 40"/>
+  <polygon points="68,280 92,280 80,252" fill="currentColor"/>
+  <circle cx="420" cy="70" r="7" fill="none" stroke="currentColor" stroke-width="1.4"/>
+  <path class="line" d="M410 70 h20 M420 60 v20"/>
+  <text class="t" x="436" y="66">UAV now</text>
+  <text class="s" x="436" y="82">lat lon alt</text>
+  <circle cx="620" cy="40" r="5" fill="currentColor"/>
+  <text class="t" x="632" y="36">lead</text>
+  <text class="s" x="632" y="52">NEU velocity</text>
+  <text class="s" x="96" y="200">tilt = elevation</text>
+  <text class="s" x="220" y="250">pan = spherical bearing</text>
+  <text class="s" x="300" y="140">zoom = FOV(range, size) to 0-9999</text>
+  <path class="line" d="M80 280 H300"/>
+  <text class="s" x="88" y="300">camera north-offset wraps into AXIS +/-180</text>
+  <rect class="box fill" x="480" y="250" width="260" height="70"/>
+  <text class="t" x="496" y="278">VAPIX</text>
+  <text class="s" x="496" y="296">ptz.cgi, record.cgi, export.mkv</text>
+</svg>

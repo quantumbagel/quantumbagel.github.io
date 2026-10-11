@@ -81,6 +81,8 @@
   <path class="fig15-arr" d="M296 189 H316"/>
 </svg><figcaption class="essay-caption">Validate the config language, plan the FQL batches, then derive. No public repo — architecture only.</figcaption></figure>
 
+                
+
                 <section class="section"><div class="section-head"><h3>Built</h3></div><div class="section-body"><p class="fg-prose">Python CLI for equity research: FactSet FQL snapshots or timeseries, YAML/Pydantic configs, a sandboxed formula engine, and Rich/Excel export. A planner batches FQL calls, then Python metrics run in topological order. FDT mode scores a name against peers into Bull/Base/Bear multiples.</p></div></section>
                 <section class="section"><div class="section-head"><h3>Hard parts</h3></div><div class="section-body"><ul class="fg-list"><li>Formulas needed to be useful without becoming a code-execution hole (AST denylist + allowlisted builtins).</li><li>Interdependent metrics: DAG, cycle path, typo suggestions — before any FactSet call.</li><li>Missing FQL values become typed N/As instead of poisoning a sheet.</li><li>Holdings vs timeseries needed different config models; some formulas need a second-pass fetch.</li><li>Runs only inside FactSet's Programmatic Environment.</li></ul></div></section>
                 <section class="section"><div class="section-head"><h3>Learned</h3></div><div class="section-body"><p class="fg-prose">Treat research tooling as a product: validate the config language first, then plan → fetch → derive → export.</p></div></section>
@@ -161,6 +163,33 @@
             };
             if (window.particleApi) bindParticleUi(window.particleApi);
             else window.addEventListener("particles-ready", (event) => bindParticleUi(event.detail));
+
+            document.querySelectorAll(".media-carousel").forEach((carousel) => {
+                const slidesContainer = carousel.querySelector(".carousel-slides");
+                const prevBtn = carousel.querySelector(".carousel-prev");
+                const nextBtn = carousel.querySelector(".carousel-next");
+                const dots = carousel.querySelectorAll(".carousel-dot");
+                if (!slidesContainer) return;
+                const totalSlides = slidesContainer.children.length;
+                let currentIndex = 0;
+                const goToSlide = (index) => {
+                    currentIndex = (index + totalSlides) % totalSlides;
+                    slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+                    dots.forEach((dot, idx) => dot.classList.toggle("on", idx === currentIndex));
+                    Array.from(slidesContainer.children).forEach((slide, idx) => {
+                        const video = slide.querySelector("video");
+                        if (video && idx !== currentIndex) video.pause();
+                    });
+                };
+                if (prevBtn) prevBtn.addEventListener("click", () => goToSlide(currentIndex - 1));
+                if (nextBtn) nextBtn.addEventListener("click", () => goToSlide(currentIndex + 1));
+                dots.forEach((dot) => {
+                    dot.addEventListener("click", () => {
+                        const slideIndex = parseInt(dot.getAttribute("data-slide-to"), 10);
+                        if (!Number.isNaN(slideIndex)) goToSlide(slideIndex);
+                    });
+                });
+            });
         });
     </script>
 </body>

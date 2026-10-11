@@ -86,6 +86,8 @@
   <path class="fig9-arr" d="M476 185 H496"/>
 </svg><figcaption class="essay-caption">dump1090 → pyModeS / merge → kinematics → Shapely geofences → Redis live + SQLite history → FastAPI / React radar.</figcaption></figure>
 
+                
+
                 <section class="section"><div class="section-head"><h3>Built</h3></div><div class="section-body"><p class="fg-prose">I wrote PyAerial as the successor to <a href='https://github.com/quantumbagel/airstrik.py' class='text-link hover:underline'>airstrik.py</a>. It decodes ADS-B with pyModeS, evaluates Shapely geofences, and splits tracking (<code>pyaerial run</code>) from a read-only portal (<code>pyaerial web</code>). airstrik used circular filters, MongoDB, and Kafka; this stack is Redis + SQLite + webhooks.</p></div></section>
                 <section class="section"><div class="section-head"><h3>Hard parts</h3></div><div class="section-body"><ul class="fg-list"><li>CPR decode needs a home reference that is not the geofence, plus 0.5° jump rejection.</li><li>Multi-receiver merge on RSSI and Hamming distance; heading ranges wrap.</li><li>Curved ETA can miss a fence when the turn circle blows up — take min(curved, straight).</li><li>Dwell/hysteresis so brief constraint matches do not spam.</li><li>Portal is read-only; the tracker claims Redis with a heartbeat.</li></ul></div></section>
                 <section class="section"><div class="section-head"><h3>Learned</h3></div><div class="section-body"><ul class="fg-list"><li>ADS-B is a wire-format problem before it is a map problem.</li><li>Live vs history wants two stores, not one database doing both.</li><li>Geofence rules should be explicit (alt, speed, ETA) — not implicit 'inside the polygon.'</li></ul></div></section>
@@ -211,6 +213,33 @@
             };
             if (window.particleApi) bindParticleUi(window.particleApi);
             else window.addEventListener("particles-ready", (event) => bindParticleUi(event.detail));
+
+            document.querySelectorAll(".media-carousel").forEach((carousel) => {
+                const slidesContainer = carousel.querySelector(".carousel-slides");
+                const prevBtn = carousel.querySelector(".carousel-prev");
+                const nextBtn = carousel.querySelector(".carousel-next");
+                const dots = carousel.querySelectorAll(".carousel-dot");
+                if (!slidesContainer) return;
+                const totalSlides = slidesContainer.children.length;
+                let currentIndex = 0;
+                const goToSlide = (index) => {
+                    currentIndex = (index + totalSlides) % totalSlides;
+                    slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+                    dots.forEach((dot, idx) => dot.classList.toggle("on", idx === currentIndex));
+                    Array.from(slidesContainer.children).forEach((slide, idx) => {
+                        const video = slide.querySelector("video");
+                        if (video && idx !== currentIndex) video.pause();
+                    });
+                };
+                if (prevBtn) prevBtn.addEventListener("click", () => goToSlide(currentIndex - 1));
+                if (nextBtn) nextBtn.addEventListener("click", () => goToSlide(currentIndex + 1));
+                dots.forEach((dot) => {
+                    dot.addEventListener("click", () => {
+                        const slideIndex = parseInt(dot.getAttribute("data-slide-to"), 10);
+                        if (!Number.isNaN(slideIndex)) goToSlide(slideIndex);
+                    });
+                });
+            });
         });
     </script>
 </body>
