@@ -20,11 +20,11 @@ export const KIND_C = 0;
 export const KIND_HETERO = 1;
 export const KIND_H = 2;
 export const ATOM_RADIUS = [5.8, 6.6, 3.4];
-export const CONTENT_MAX_WIDTH = 768;
+export const CONTENT_MAX_WIDTH = 820;
 export const GUTTER_MIN_WIDTH = 900;
 export const PATH_CAP = 360;
 export const INTERACTIVE_SELECTOR =
-    "a, button, input, textarea, select, label, [role='button'], .project-card, .modal-close-btn, #bg-sim-panel, #particle-toggle";
+    "a, button, input, textarea, select, label, [role='button'], .btn, .chip-btn, .icon-btn, .item, .project-card, .modal-close-btn, #bg-sim-panel, #particle-toggle, [data-open-sim]";
 
 export const MODES = [
     "molecules",
@@ -171,13 +171,13 @@ export const COUNT_CAPS = {
 
 export const BAKED_PALETTES = {
     light: {
-        particleRgb: { r: 46, g: 46, b: 46 },
-        hoverAccentRgb: { r: 200, g: 68, b: 48 },
-        bgRgb: { r: 248, g: 248, b: 248 },
+        particleRgb: { r: 26, g: 29, b: 38 },
+        hoverAccentRgb: { r: 77, g: 110, b: 240 },
+        bgRgb: { r: 243, g: 244, b: 248 },
     },
     dark: {
-        particleRgb: { r: 212, g: 212, b: 217 },
-        hoverAccentRgb: { r: 72, g: 212, b: 230 },
-        bgRgb: { r: 32, g: 34, b: 38 },
+        particleRgb: { r: 232, g: 234, b: 240 },
+        hoverAccentRgb: { r: 124, g: 156, b: 255 },
+        bgRgb: { r: 14, g: 16, b: 21 },
     },
 };

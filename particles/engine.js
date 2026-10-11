@@ -43,7 +43,6 @@ export function initParticleBackground(canvas, options) {
     options = options || {};
 
     const toggleButton = options.toggleButton || document.getElementById("particle-toggle");
-    const sitePanel = document.getElementById("site-panel");
     const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     const ctx = canvas.getContext("2d", { alpha: true, desynchronized: true }) || canvas.getContext("2d");
     canvas.style.contain = "strict";
@@ -408,20 +407,8 @@ export function initParticleBackground(canvas, options) {
 
     const applyFrost = () => {
         const t = params.frost * quality.frostMul();
-        const root = document.documentElement;
-        if (t < 0.04) {
-            root.style.setProperty("--site-frost-blur", "0px");
-            root.style.setProperty("--site-frost-tint", "0%");
-            if (sitePanel) {
-                sitePanel.classList.add("site-glass-off");
-            }
-            return;
-        }
-        root.style.setProperty("--site-frost-blur", `${(8 + t * 16).toFixed(1)}px`);
-        root.style.setProperty("--site-frost-tint", `${Math.round(10 + t * 20)}%`);
-        if (sitePanel) {
-            sitePanel.classList.remove("site-glass-off");
-        }
+        const tint = t < 0.04 ? 100 : Math.max(92, Math.round(100 - t * 8));
+        document.documentElement.style.setProperty("--page-card-tint", `${tint}%`);
     };
 
     const applyLiveParams = (changedKey) => {
@@ -535,7 +522,7 @@ export function initParticleBackground(canvas, options) {
         for (let i = 0; i < MODES.length; i++) {
             const id = MODES[i];
             const pressed = id === mode ? "true" : "false";
-            modesHtml += `<button type="button" class="bg-sim-mode" data-mode="${id}" aria-pressed="${pressed}">${MODE_LABELS[id]}</button>`;
+            modesHtml += `<button type="button" class="chip-btn" data-mode="${id}" aria-pressed="${pressed}">${MODE_LABELS[id]}</button>`;
         }
         let rows = paramRow("Frost", params.frost, 0, 1, 0.05, "frost");
         for (let i = 0; i < fields.length; i++) {
@@ -545,7 +532,9 @@ export function initParticleBackground(canvas, options) {
         const randomNote = randomMode
             ? `<p class="bg-sim-note">Random is on, so a new simulation is picked each visit.</p>`
             : "";
-        panelEl.innerHTML = `<div class="bg-sim-head"><strong>Background</strong><span class="bg-sim-tools"><button type="button" class="bg-sim-close" data-action="toggle" aria-pressed="${enabled ? "true" : "false"}">${enabled ? "On" : "Off"}</button><button type="button" class="bg-sim-close" data-action="random" aria-pressed="${randomMode ? "true" : "false"}">Random</button><button type="button" class="bg-sim-close" data-action="again">Again</button><button type="button" class="bg-sim-close" data-action="reset">Reset</button><button type="button" class="bg-sim-close" data-action="close" aria-label="Close">X</button></span></div><div class="bg-sim-modes">${modesHtml}</div>${rows}<p class="bg-sim-hint">${MODE_HINTS[mode]}</p>${randomNote}`;
+        const onClass = enabled ? " btn accent small" : " btn small ghost";
+        const randomClass = randomMode ? " btn accent small" : " btn small ghost";
+        panelEl.innerHTML = `<div class="bg-sim-head"><span class="look-name">Background</span><span class="bg-sim-tools"><button type="button" class="${onClass.trim()}" data-action="toggle" aria-pressed="${enabled ? "true" : "false"}">${enabled ? "On" : "Off"}</button><button type="button" class="${randomClass.trim()}" data-action="random" aria-pressed="${randomMode ? "true" : "false"}">Random</button><button type="button" class="btn small ghost" data-action="again">Again</button><button type="button" class="btn small ghost" data-action="reset">Reset</button><button type="button" class="icon-btn" data-action="close" aria-label="Close">X</button></span></div><div class="bg-sim-modes">${modesHtml}</div>${rows}<p class="bg-sim-hint">${MODE_HINTS[mode]}</p>${randomNote}`;
     };
 
     const restartBackground = () => {
@@ -634,8 +623,7 @@ export function initParticleBackground(canvas, options) {
             return;
         }
         const open = panelEl && !panelEl.hidden;
-        const dot = enabled ? "○" : "●";
-        toggleButton.textContent = `Background/${dot}`;
+        toggleButton.textContent = "Background";
         toggleButton.setAttribute("aria-label", `Background: ${enabled ? "On" : "Off"}`);
         toggleButton.setAttribute("aria-expanded", open ? "true" : "false");
         toggleButton.setAttribute("aria-controls", "bg-sim-panel");
@@ -1043,5 +1031,10 @@ export function initParticleBackground(canvas, options) {
         updateCanvasDimensions,
         scheduleDimensionUpdate,
         setEnabled,
+        openPanel: () => {
+            ensurePanel();
+            renderPanel();
+            setPanelOpen(true);
+        },
     };
 }
