@@ -876,6 +876,8 @@ def load_blog_posts(posts_dir: Path = POSTS_DIR) -> list[dict[str, Any]]:
     for file in sorted(posts_dir.glob("*.md")):
         content = file.read_text(encoding="utf-8")
         meta, body = parse_frontmatter(content)
+        if meta.get("draft") is True:
+            continue
 
         raw_title = str(meta.get("title") or file.stem.replace("-", " ").title())
         slug = slugify(str(meta.get("slug") or re.sub(r"^\d{4}-\d{2}(-\d{2})?-", "", file.stem) or raw_title))
@@ -1060,13 +1062,14 @@ def build_index_context(config: dict[str, Any]) -> dict[str, Any]:
 
     skills_html = "\n".join(skills_columns)
 
-    flight_projects = [
-        p for p in projects if p.get("category") == "aerpaw" or p.get("title") in ("airtime",)
-    ]
+    flight_projects = [p for p in projects if p.get("category") == "aerpaw"]
     systems_projects = [p for p in projects if p not in flight_projects]
 
     posts = load_blog_posts()
     worrydream_flight_html = render_worrydream_project_group(flight_projects)
+    flight_note = content_config.get("flight_note")
+    if flight_note:
+        worrydream_flight_html += f"\n<p>{flight_note}</p>"
     worrydream_systems_html = render_worrydream_project_group(systems_projects)
     worrydream_writing_html = render_worrydream_writing_group(posts)
     worrydream_bio_html = render_worrydream_bio(experiences)

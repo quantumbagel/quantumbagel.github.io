@@ -36,7 +36,7 @@ technologies = "Technologies"
 [contact]
 form_action = "https://formspree.io/f/moqgwdop"
 submit_label = "Send Message"
-intro = "I am interested in internship and research opportunities in embedded systems, backend infrastructure, and autonomous flight software. Feel free to use the form below, or connect with me directly on GitHub, LinkedIn, or Discord."
+intro = "I am always interested in new opportunities and am happy to talk about them."
 
 [footer]
 text = "Made with <3 by @quantumbagel, not AI."
@@ -46,6 +46,8 @@ about = [
   "I am <strong class='text-gray-800 dark:text-white'>Julian Reder</strong>, a Computer Engineering and Statistics student at NC State. Most of my recent work focuses on developing research software for <a href='https://aerpaw.org' class='text-link hover:underline'>AERPAW</a>, an NSF testbed for advanced wireless communications and autonomous aircraft, alongside an internship at Merrill Lynch where I built calculation tools for wealth management portfolios holding over <strong>$500M</strong> in assets under management.",
   "I enjoy connecting different layers of hardware and software together, including pairing radio receivers with flight stacks, streaming camera telemetry into tracking services, and designing reliable backend APIs. You can reach out through the contact options below, or click <strong>Background</strong> in the header if you want to explore the interactive canvas simulations."
 ]
+
+flight_note = "Beyond these, I have made many other contributions across the <a href='https://aerpaw.org'>AERPAW</a> platform, from fixes and features in the testbed's software to tools that support day-to-day experiment operations."
 
 taglines = [
   "is a Computer Engineering and Statistics student @ NCSU",
@@ -108,7 +110,7 @@ icon = "devicon-cplusplus-plain"
 level = "Advanced"
 start_date = "2023-01-01"
 details = "I use C and C++ for microcontroller programming and low-level hardware projects, such as writing firmware sketches for Arduino sensors and building small native modules when Python needs extra speed."
-projects = ["airtime"]
+projects = []
 
 [[skills.languages]]
 name = "JavaScript"
@@ -626,15 +628,6 @@ alt = "This site running in dark mode with the aurora background simulation"
 [[projects.gallery]]
 src = "media/projects/portfolio/sim-panel.png"
 alt = "Background control panel open on the live site, aurora mode selected"
-
-[[projects]]
-category = "solo"
-title = "airtime"
-date = "2024"
-description = "An early experimental quadcopter flight controller written for the Arduino Uno, exploring sensor fusion and radio control on low-memory microcontrollers."
-details = "I wrote this project to explore building a multicopter flight controller from scratch using an Arduino Uno, integrating an nRF24L01 radio receiver, an MPU-6050 inertial measurement unit, a BMP180 barometer, and electronic speed controller mixing logic. The project ran into the physical memory limitations of the Uno's 2 KB of SRAM when loading digital motion processing firmware, serving as a practical lesson in microcontroller memory constraints and real-time hardware budgeting."
-link = "https://github.com/quantumbagel/airtime"
-skills = ["C/C++", "Arduino"]
 
 [[projects]]
 category = "solo"
