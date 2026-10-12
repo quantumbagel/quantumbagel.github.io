@@ -1,8 +1,8 @@
 ---
 title: "Hello World"
 date: "October 2026"
-description: "A space for notes on video game design, Undertale, systems programming, and whatever else catches my attention."
-tags: ["General", "Game Design", "Undertale"]
+description: "Welcome to my blog :D"
+tags: ["General"]
 ---
 
 Welcome to my corner of the web for longer-form thoughts.
