@@ -9,12 +9,14 @@ favicon = "pfp.webp"
 name = "Julian Reder"
 headline = "Computer Engineering & Statistics Student @ NCSU"
 profile_image = "pfp.webp"
+email = "jjreder@ncsu.edu"
 
 [user.social]
 github = "https://github.com/quantumbagel"
 linkedin = "https://www.linkedin.com/in/julian-reder-nc/"
 discord = "https://discordapp.com/users/897146430664355850"
 resume = "/resume"
+email = "mailto:jjreder@ncsu.edu"
 
 [sections]
 about_title = "About"
