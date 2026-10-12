@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NCSU Parking — Julian Reder</title>
-    <meta name="description" content="Campus parking forecast: public occupancy + events into Postgres, a strong seasonal baseline, and per-lot XGBoost only when it beats that baseline.">
+    <title>NCSU Parking | Julian Reder</title>
+    <meta name="description" content="A predictive parking availability model for NC State campus decks that combines historical occupancy feeds with campus event schedules and validates machine learning models against strong seasonal baselines.">
     <link rel="icon" type="image/png" href="../../pfp.webp">
     <script>
         (function() {
@@ -34,10 +34,10 @@
             <article class="page-card">
                 <header class="page-head">
                     <h1 class="look-name big">NCSU Parking</h1>
-                    <p class="look-desc">Campus parking forecast: public occupancy + events into Postgres, a strong seasonal baseline, and per-lot XGBoost only when it beats that baseline.</p>
+                    <p class="look-desc">A predictive parking availability model for NC State campus decks that combines historical occupancy feeds with campus event schedules and validates machine learning models against strong seasonal baselines.</p>
                     <div class="look-meta">2026</div>
                     <div class="page-actions">
-                        <span class="chip">Private — architecture only</span>
+                        <span class="chip">Private (Architecture Only)</span>
                         
                     </div>
                     <div class="chips"><span class="chip-btn">Python</span><span class="chip-btn">PostgreSQL</span><span class="chip-btn">XGBoost</span><span class="chip-btn">pandas</span><span class="chip-btn">Streamlit</span><span class="chip-btn">Docker</span></div>
@@ -84,16 +84,16 @@
   <path class="fig19-arr" d="M546 59 H576 V104"/>
   <path class="fig19-arr" d="M546 149 H576 V104"/>
   <path class="fig19-arr" d="M276 144 V200"/>
-</svg><figcaption class="essay-caption">Occupancy + events into Postgres. XGBoost only ships if it beats an hour-of-week median.</figcaption></figure>
+</svg><figcaption class="essay-caption">Data pipeline diagram showing occupancy polling, calendar event ingestion, feature engineering, and model validation against seasonal baselines.</figcaption></figure>
 
                 
 
-                <section class="section"><div class="section-head"><h3>Built</h3></div><div class="section-body"><p class="fg-prose">A personal forecasting stack for NC State lots. A collector polls the public occupancy API (delta snapshots) and campus events into Postgres; features include 5-minute grids, lags, rolling stats, haversine event radii, and academic-calendar flags. An hour-of-week median is always fit; per-lot XGBoost is kept only if it beats that baseline on validation MAE, across eight horizons from 15 minutes to 24 hours. Training is a separate file-based job so the Streamlit app never loads XGBoost. Private repository — architecture only.</p></div></section>
+                <section class="section"><div class="section-head"><h3>Built</h3></div><div class="section-body"><p class="fg-prose">I built a data collection and forecasting pipeline for NC State campus parking decks. A background collector polls public occupancy APIs and university event calendars into PostgreSQL, engineering features such as five-minute time grids, lag statistics, rolling occupancy averages, geographic event distances, and academic calendar dates. The forecasting pipeline evaluates an hour-of-week seasonal baseline and only retains per-lot XGBoost models when they achieve lower validation error than the simple median across forecasting windows ranging from fifteen minutes to twenty-four hours. Model training runs as a decoupled batch job, keeping the lightweight Streamlit dashboard responsive.</p></div></section>
                 
                 
                 
 
-                <section class="section essay-section"><div class="section-head"><h3>A forecast that can lose</h3></div><div class="section-body"><div class="fg-prose"><p>NCSU Parking is a personal stack for campus lots. The public occupancy API and campus events go into Postgres. Features are boring on purpose: 5-minute grids, lags, rolling stats, haversine event radii, academic-calendar flags. Eight horizons, 15 minutes to 24 hours.</p><p>Private repository — architecture only. I am not publishing lot-level error tables I cannot stand behind in public.</p></div></div></section><section class="section essay-section"><div class="section-head"><h3>Baseline first</h3></div><div class="section-body"><div class="fg-prose"><p>An hour-of-week median is always fit. Per-lot XGBoost is kept only if it beats that baseline on validation MAE. Most “ML parking” demos skip this gate and then look clever on a Tuesday at 10:00, when the median already knew.</p><p>Training is a separate file-based job. The Streamlit app never loads XGBoost. That is not a performance trick. It is how I keep a dashboard from importing a model that failed the gate.</p></div><figure class="essay-figure"><svg class="diagram" role="img" aria-label="Baseline first" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 280" role="img" aria-label="NCSU parking forecast with baseline gate">
+                <section class="section essay-section"><div class="section-head"><h3>Forecasting campus parking demand</h3></div><div class="section-body"><div class="fg-prose"><p>Finding parking on a large university campus can be frustrating during peak morning class hours and major athletic events. NC State publishes live occupancy counts for several campus parking decks, but the university does not provide forward-looking predictions to help students plan where to park in advance. I built this personal forecasting system to collect occupancy data continuously, combine it with campus event calendars, and evaluate whether machine learning models could reliably forecast lot availability across multiple time horizons.</p><p>The project is maintained in a private repository as an exploratory data engineering stack, using PostgreSQL to store time-series records, automated feature generation scripts in Python, and an interactive Streamlit dashboard for visualizing current availability and forecast estimates.</p></div></div></section><section class="section essay-section"><div class="section-head"><h3>Evaluating against strong seasonal baselines</h3></div><div class="section-body"><div class="fg-prose"><p>Parking occupancy follows clear cyclical patterns based on class schedules, which means an hour-of-week median baseline is already quite accurate for predicting routine weekday mornings. Rather than assuming that a complex machine learning model is automatically better, my training pipeline fits a seasonal median model first and only accepts an XGBoost model if it demonstrates lower mean absolute error on held-out validation data across horizons from 15 minutes up to 24 hours.</p><p>By enforcing this evaluation check for each individual parking deck, the system prevents overfitting on decks that follow strict routine schedules while allowing machine learning models to handle decks with higher variance. Model training runs as an independent batch process that saves validated model artifacts to disk, ensuring that the front-end dashboard remains fast and never depends on computationally heavy training libraries at runtime.</p></div><figure class="essay-figure"><svg class="diagram" role="img" aria-label="Evaluating against strong seasonal baselines" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 280" role="img" aria-label="NCSU parking forecast with baseline gate">
   <style>
     .fig20-box { fill: none; stroke: currentColor; stroke-width: 1.4; }
     .fig20-fill { fill: currentColor; fill-opacity: 0.08; }
@@ -134,11 +134,11 @@
   <path class="fig20-arr" d="M546 59 H576 V104"/>
   <path class="fig20-arr" d="M546 149 H576 V104"/>
   <path class="fig20-arr" d="M276 144 V200"/>
-</svg><figcaption class="essay-caption">The interesting box is the one that can discard the model.</figcaption></figure></div></section><section class="section essay-section"><div class="section-head"><h3>What the events actually add</h3></div><div class="section-body"><div class="fg-prose"><p>A football Saturday is not a residual you invent after the fact. Events are collected with the occupancy, given a radius, and become features. If they do not beat the seasonal median, they do not get to stay either.</p><p>The lesson I wanted on the page: a model that is not allowed to lose is not a forecast.</p></div></div></section>
+</svg><figcaption class="essay-caption">Pipeline structure showing raw data ingestion, feature generation, baseline benchmarking, and model selection.</figcaption></figure></div></section><section class="section essay-section"><div class="section-head"><h3>Incorporating campus event data</h3></div><div class="section-body"><div class="fg-prose"><p>Routine class schedules explain typical weekday traffic, but special events like home football games, basketball tournaments, and concerts create massive localized spikes in parking demand that standard calendar features fail to capture. To address this, the data collector automatically scrapes university event feeds, maps each event to its physical campus venue, and calculates geographic distance features relative to nearby parking facilities.</p><p>These event distance features give the forecasting models advance notice of sudden attendance surges, helping improve prediction accuracy during weekend games and evening performances when historical averages alone would significantly underestimate parking congestion.</p></div></div></section>
 
                 <footer class="page-foot">
                     <a href="../../#projects" class="btn small">All projects</a>
-                    <span class="chip">Private — architecture only</span>
+                    <span class="chip">Private (Architecture Only)</span>
                 </footer>
             </article>
         </main>

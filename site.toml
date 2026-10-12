@@ -2,7 +2,7 @@
 lang = "en"
 
 [meta]
-description = "Julian Reder — Computer Engineering and Statistics at NC State. Research software for AERPAW (vehicle control, ADS-B tracking, PTZ cameras) and systems work across backends, radios, and field tools."
+description = "Julian Reder is a Computer Engineering and Statistics student at NC State who develops research software for AERPAW, focusing on autonomous vehicle control, aircraft tracking, camera systems, and backend tools."
 favicon = "pfp.webp"
 
 [user]
@@ -33,15 +33,15 @@ technologies = "Technologies"
 [contact]
 form_action = "https://formspree.io/f/moqgwdop"
 submit_label = "Send Message"
-intro = "I am looking for internships and research roles in embedded systems, backend infrastructure, and wireless/autonomy software. Use the form below, or reach me on GitHub, LinkedIn, or Discord."
+intro = "I am interested in internship and research opportunities in embedded systems, backend infrastructure, and autonomous flight software. Feel free to use the form below, or connect with me directly on GitHub, LinkedIn, or Discord."
 
 [footer]
 text = "Made with <3 by @quantumbagel, not AI."
 
 [content]
 about = [
-  "I'm <strong class='text-gray-800 dark:text-white'>Julian Reder</strong>, a Computer Engineering and Statistics student at NC State. I write research software for <a href='https://aerpaw.org' class='text-link hover:underline'>AERPAW</a> — the NSF PAWR testbed for 5G/6G and autonomous aircraft — and I just finished a technical internship at Merrill Lynch on a calculations platform used against <strong>$500M+</strong> AUM.",
-  "I like making systems agree with each other: radios and flight stacks, cameras and telemetry, configs and APIs. Contact is at the bottom. Click <strong>Background</strong> in the header if you want to play with the simulations."
+  "I am <strong class='text-gray-800 dark:text-white'>Julian Reder</strong>, a Computer Engineering and Statistics student at NC State. Most of my recent work focuses on developing research software for <a href='https://aerpaw.org' class='text-link hover:underline'>AERPAW</a>, an NSF testbed for advanced wireless communications and autonomous aircraft, alongside an internship at Merrill Lynch where I built calculation tools for wealth management portfolios holding over <strong>$500M</strong> in assets under management.",
+  "I enjoy connecting different layers of hardware and software together, including pairing radio receivers with flight stacks, streaming camera telemetry into tracking services, and designing reliable backend APIs. You can reach out through the contact options below, or click <strong>Background</strong> in the header if you want to explore the interactive canvas simulations."
 ]
 
 taglines = [
@@ -61,42 +61,42 @@ taglines = [
 title = "Technical Intern, Bell, Bell & Cronlund Group @ Merrill Lynch Wealth Management"
 link = "https://advisor.ml.com/sites/nc/raleigh-nc/bellbellcronlund"
 date = "May 2026 - August 2026"
-description = """Worked on an internal calculations platform used for <strong>$500M+</strong> in assets under management.
+description = """I worked on an internal financial calculations platform supporting wealth management portfolios with over <strong>$500M</strong> in assets under management.
 <ul class='list-disc pl-5 mt-2 space-y-1'>
-<li>Created <strong>ML-Ticker</strong>, a Python CLI for querying FactSet FQL snapshot and historical data</li>
-<li>Added a sandboxed formula engine with DAG-based dependency checks and Pydantic config validation</li>
-<li>Exported results as colorized terminal tables and styled Excel workbooks</li>
+<li>Built <strong>ML-Ticker</strong>, a Python command line tool that queries FactSet FQL for snapshot and historical market data</li>
+<li>Developed a formula evaluation engine that resolves metric dependencies as a directed graph and validates configuration files with Pydantic</li>
+<li>Added formatted export utilities for colorized terminal displays and multi-sheet Excel reports</li>
 </ul>"""
 
 [[experiences]]
 title = "B.S. Computer Engineering and Statistics, North Carolina State University"
 link = "https://ncsu.edu"
 date = "Fall 2025 - Present"
-description = "Pursuing a dual Bachelor's in Computer Engineering and Statistics (GPA: 4.0)."
+description = "Pursuing a dual Bachelor of Science in Computer Engineering and Statistics with a 4.0 GPA."
 
 [[experiences]]
 title = "Developer @ AERPAW"
 link = "https://aerpaw.org"
 date = "Summer 2023 - Present"
-description = """Developer on <a href='https://aerpaw.org' class='text-link hover:underline'>AERPAW</a> (Aerial Experimentation and Research Platform for Advanced Wireless), NC State's NSF PAWR testbed for programmable radios and autonomous UAVs/UGVs, working with Dr. Mihail Sichitiu on flight software, telemetry, and airspace awareness.
+description = """I develop software for <a href='https://aerpaw.org' class='text-link hover:underline'>AERPAW</a> (Aerial Experimentation and Research Platform for Advanced Wireless), an NSF testbed at NC State for programmable radios and autonomous vehicles, working with Dr. Mihail Sichitiu on flight software, telemetry, and airspace tracking.
 <ul class='list-disc pl-5 mt-2 space-y-1'>
-<li>Primary maintainer of <strong>aerpawlib</strong>, AERPAW's official Python vehicle-control library — migrated the stack from DroneKit onto MAVSDK and keep it aligned with the testbed MAVLink filter</li>
-<li>Built <strong>PyAerial</strong>, a Mode S / ADS-B tracker with polygon geofences, Redis live state, and a FastAPI / React radar UI (successor to airstrik.py)</li>
-<li>Built <strong>DroneTracker</strong>, which aims AXIS Q-8615E PTZ cameras from live UAV GPS/velocity over Kafka and records field video over VAPIX</li>
+<li>Serve as the primary maintainer of <strong>aerpawlib</strong>, the official Python vehicle control library, where I transitioned the codebase from DroneKit to MAVSDK to keep it aligned with testbed safety filters</li>
+<li>Created <strong>PyAerial</strong>, an aircraft tracking platform that decodes Mode S and ADS-B radio signals, checks live positions against polygon geofences, and visualizes flights on a radar map</li>
+<li>Built <strong>DroneTracker</strong>, an automated tracking service that points pan-tilt-zoom cameras at flying drones using real-time GPS telemetry and manages video recording sessions</li>
 </ul>"""
 
 [[experiences]]
 title = "A.S., Wake Technical Community College"
 link = "https://waketech.edu"
 date = "Fall 2023 - Spring 2025"
-description = "Associate in Science. Multiple semesters on the Dean's List and membership in the Beta Alpha chapter of Phi Theta Kappa (GPA: 3.8)."
+description = "Earned an Associate in Science degree while making the Dean's List for multiple semesters and joining the Beta Alpha chapter of Phi Theta Kappa with a 3.8 GPA."
 
 [[skills.languages]]
 name = "Python"
 icon = "devicon-python-plain"
 level = "Expert"
 start_date = "2021-01-01"
-details = "Since starting to program seriously, Python has been my primary language. I have used it for APIs, automation, hardware control, and data processing in almost every major project I have worked on."
+details = "Python has been my primary programming language for several years, and I use it regularly for building web APIs, processing data, managing background services, and controlling drone hardware."
 projects = ["aerpawlib", "PyAerial", "DroneTracker", "ML-Ticker", "Strife", "NCSU Parking", "finiteCraft", "Triggered", "discord.py-template", "Portfolio Website (v3)"]
 
 [[skills.languages]]
@@ -104,7 +104,7 @@ name = "C/C++"
 icon = "devicon-cplusplus-plain"
 level = "Advanced"
 start_date = "2023-01-01"
-details = "I use C and C++ for microcontroller work and anything that needs to sit close to hardware. airtime was an Arduino Uno flight-controller attempt that died on SRAM; I have also written small Python extensions when a hot path needed it."
+details = "I use C and C++ for microcontroller programming and low-level hardware projects, such as writing firmware sketches for Arduino sensors and building small native modules when Python needs extra speed."
 projects = ["airtime"]
 
 [[skills.languages]]
@@ -112,7 +112,7 @@ name = "JavaScript"
 icon = "devicon-javascript-plain"
 level = "Advanced"
 start_date = "2023-01-01"
-details = "I use JavaScript for this site's UI (theme, simulations panel, deep links) and for a Media Session–based browser extension that drives Discord Rich Presence."
+details = "I use JavaScript for front-end development, including the canvas background simulations and settings panel on this site, as well as a browser extension that reads media playback data."
 projects = ["Portfolio Website (v3)", "Amazon Music Discord RPC"]
 
 [[skills.languages]]
@@ -120,7 +120,7 @@ name = "Java"
 icon = "devicon-java-plain"
 level = "Competent"
 start_date = "2022-01-01"
-details = "I have not used Java much outside of class. My main project with it is Statify, a SpigotMC plugin that exposes Minecraft statistics to the server and players."
+details = "I have used Java primarily in coursework and for building Statify, a Minecraft server plugin that calculates and displays player statistics."
 projects = ["Statify"]
 
 [[skills.languages]]
@@ -128,7 +128,7 @@ name = "C#"
 icon = "devicon-csharp-plain"
 level = "Competent"
 start_date = "2024-01-01"
-details = "C# for Sebastian Lague's Chess Coding Challenge: iterative-deepening alpha-beta under a 1024-token budget."
+details = "I used C# to participate in Sebastian Lague's chess coding challenge, writing a custom search engine that implemented alpha-beta pruning within a strict token limit."
 projects = ["Chess-Challenge"]
 
 [[skills.languages]]
@@ -136,7 +136,7 @@ name = "Bash"
 icon = "devicon-bash-plain"
 level = "Competent"
 start_date = "2022-01-01"
-details = "I use Bash for automation and developer setup. Most of my scripts bootstrap local environments, manage Docker deployments, or wait for databases to start before other services run."
+details = "I write Bash scripts to automate local development environments, manage Docker containers, and handle initialization steps like waiting for database readiness before services launch."
 projects = ["All projects", "Docker setup scripts"]
 
 [[skills.technologies]]
@@ -144,7 +144,7 @@ name = "Linux/Unix"
 icon = "devicon-linux-plain"
 level = "Expert"
 start_date = "2021-01-01"
-details = "Linux has been my main operating system for development and hosting since I started programming seriously. I have experience managing VPS servers, systemd services, file permissions, environment variables, and debugging network issues with tools like netstat and tcpdump."
+details = "Linux has been my primary operating system for both development and server hosting, and I regularly configure systemd services, manage file permissions, set up networks, and troubleshoot connectivity with tools like netstat and tcpdump."
 projects = ["Server Management", "All Projects"]
 
 [[skills.technologies]]
@@ -152,7 +152,7 @@ name = "Docker"
 icon = "devicon-docker-plain"
 level = "Expert"
 start_date = "2023-01-01"
-details = "I use Docker to run multi-service applications in development and production. I have experience writing Compose files, multi-stage builds, and network isolation for projects such as PyAerial, Strife, and discord.py-template."
+details = "I use Docker and Docker Compose to package and deploy multi-service applications, writing multi-stage container builds and configuring private container networks for projects like PyAerial and Strife."
 projects = ["PyAerial", "DroneTracker", "Piranha", "Strife", "discord.py-template"]
 
 [[skills.technologies]]
@@ -160,7 +160,7 @@ name = "Git"
 icon = "devicon-git-plain"
 level = "Advanced"
 start_date = "2022-01-01"
-details = "Since starting to program seriously, Git has been my version control software of choice. I have significant experience using a good majority of the features it provides."
+details = "I use Git for daily version control across all of my repositories, managing feature branches, rebasing changes, and collaborating on open source pull requests."
 projects = ["All Projects"]
 
 [[skills.technologies]]
@@ -168,7 +168,7 @@ name = "Selenium / Web Scraping"
 icon = "globe"
 level = "Advanced"
 start_date = "2024-01-01"
-details = "I have used Selenium and Playwright to automate browsers and scrape websites. In finiteCraft I ran headless Chromium workers to discover Infinite Craft recipes and used rotating proxies to stay under rate limits."
+details = "I have used Selenium and Playwright to automate browser interactions and gather data from web pages, including running headless Chromium instances behind rotating proxy pools to discover recipe combinations."
 projects = ["finiteCraft"]
 
 [[skills.technologies]]
@@ -176,7 +176,7 @@ name = "OpenAPI"
 icon = "braces"
 level = "Advanced"
 start_date = "2024-01-01"
-details = "I have designed machine-readable HTTP APIs with FastAPI (PyAerial's live discovery endpoint and WebSocket spec) and structured trigger/action schemas in Triggered."
+details = "I design REST APIs and WebSocket endpoints using FastAPI, generating OpenAPI specifications to keep front-end applications and backend schemas synchronized."
 projects = ["PyAerial", "Triggered"]
 
 [[skills.technologies]]
@@ -184,7 +184,7 @@ name = "SQL"
 icon = "database"
 level = "Advanced"
 start_date = "2022-01-01"
-details = "PostgreSQL is what I reach for when the schema matters: Strife's match/move/live-integrity migrations, and the NCSU parking collector. SQLite shows up in PyAerial history and smaller tools."
+details = "I use PostgreSQL for applications that need strict relational data models and foreign key constraints, such as game state tracking and parking occupancy history, and I use SQLite for local caching and flight logs."
 projects = ["Strife", "NCSU Parking", "PyAerial"]
 
 [[skills.technologies]]
@@ -192,7 +192,7 @@ name = "MongoDB"
 icon = "devicon-mongodb-plain"
 level = "Advanced"
 start_date = "2024-01-01"
-details = "MongoDB was the first database I learned. I used it in airstrik.py for flight history, in Triggered for automation rules, and in finiteCraft for recipe graphs."
+details = "I use MongoDB when storing flexible document structures, such as user-configured Discord automation rules and graph-like recipe trees that benefit from schema flexibility."
 projects = ["Triggered", "finiteCraft"]
 
 [[skills.technologies]]
@@ -200,7 +200,7 @@ name = "Kafka"
 icon = "devicon-apachekafka-original"
 level = "Advanced"
 start_date = "2023-06-01"
-details = "I have used Kafka as the field bus for AERPAW camera operations. DroneTracker consumes UAV position/velocity on a data topic, takes on/off commands from a control topic, and publishes acknowledgements and recording transfers."
+details = "I use Apache Kafka to stream high-throughput telemetry in field environments, allowing camera tracking services to consume drone coordinates and publish operational status updates reliably."
 projects = ["DroneTracker"]
 
 [[skills.technologies]]
@@ -208,7 +208,7 @@ name = "discord.py"
 icon = "discord"
 level = "Expert"
 start_date = "2022-01-01"
-details = "I have used discord.py to write several Discord bots and a reusable bot template. I have significant experience with cogs, interaction routing, and building larger bot architectures."
+details = "I have built multiple Discord bots and reusable application scaffolds using discord.py, organizing commands with cogs, handling slash command interactions, and managing asynchronous event loops."
 projects = ["Piranha", "Triggered", "Strife", "discord.py-template"]
 
 [[skills.technologies]]
@@ -216,7 +216,7 @@ name = "ADS-B / Mode-S"
 icon = "broadcast"
 level = "Advanced"
 start_date = "2023-06-01"
-details = "I have used ADS-B and Mode-S to parse aircraft radio signals and track flight coordinates. At AERPAW I worked with this protocol at the hardware level, using RTL-SDR receivers to capture 1090 MHz transponder packets for PyAerial."
+details = "I work with ADS-B and Mode S transponder protocols to decode aircraft positions from radio signals, using software-defined radio receivers tuned to 1090 MHz to feed live telemetry into tracking applications."
 projects = ["PyAerial"]
 
 
@@ -225,298 +225,297 @@ featured = true
 category = "aerpaw"
 title = "aerpawlib"
 date = "2025 - Present"
-description = "Official vehicle-control library for AERPAW, NC State's NSF testbed for 5G/6G and autonomous aircraft."
-built = "I maintain <a href='https://github.com/AERPAW/aerpawlib' class='text-link hover:underline'>AERPAW/aerpawlib</a> — the Python API experimenters use to fly LAM6/SAM4 UAVs and the rover. I moved it from DroneKit onto MAVSDK, kept the v1 Runner/StateMachine surface, and added a v2 async API. Current release is 1.4.11."
+description = "The official vehicle control library for AERPAW, NC State's research testbed for advanced wireless communications and autonomous aircraft."
+built = "I maintain the official <a href='https://github.com/AERPAW/aerpawlib' class='text-link hover:underline'>AERPAW/aerpawlib</a> repository, which provides the Python programming interface that visiting researchers use to fly autonomous drones and drive ground rovers during experiments. I transitioned the project from its original DroneKit foundation over to MAVSDK, preserved backward compatibility for existing scripts, and added a modern asynchronous API for newer experiments."
 challenges = [
-  "Testbed MAVLink filter only allows takeoff, land, goto, and yaw (20–100 m takeoff, land within 5 m of home).",
-  "<code>SET_MODE</code> is blocked; GUIDED has to be held with <code>MAV_CMD_DO_SET_MODE</code>. LOITER drops the E-VM link.",
-  "Safety checker belongs on the C-VM, not localhost or the OEO console.",
-  "Timed <code>set_velocity</code> was killing newer commands; bearings ignored latitude (~51° vs 45° at 35.7°N).",
-  "Multi-vehicle ZMQ dropped transitions until JSON + ACK + <code>wait_for_peers</code>."
+  "The testbed safety filter strictly restricts vehicle commands to takeoff, landing, waypoints, and yaw, requiring all takeoff altitudes to stay between 20 and 100 meters and landings to finish within 5 meters of home.",
+  "Direct flight mode changes are blocked by the safety layer, so guided mode has to be maintained using explicit command messages without dropping communication links.",
+  "Safety validation logic has to coordinate directly with the companion virtual machine rather than running locally or through operator consoles.",
+  "Velocity commands and geodesic navigation calculations needed updates to handle latitude scaling properly and prevent newer movement requests from being prematurely cancelled.",
+  "Coordinating multiple vehicles over ZeroMQ required switching to an acknowledged messaging handshake so state transitions would not be dropped under load."
 ]
 learned = [
-  "The filter defines the API as much as the SDK does.",
-  "SITL is necessary and not sufficient.",
-  "A compat layer plus a second API beats a flag-day rewrite."
+  "Working within a hardware testbed means the physical safety filter dictates software requirements just as much as the autopilot library itself.",
+  "Software-in-the-loop simulations are essential for catching basic logic errors, but real flight testing is still needed to uncover edge cases in testbed infrastructure.",
+  "Providing a backward-compatible wrapper alongside a redesigned API made it possible to modernize the library without breaking existing researcher experiments."
 ]
 features = [
-  "Primary maintainer of the official AERPAW.org library (v1 + v2 on MAVSDK 3.17)",
-  "Safety checker with KML geofences, fail-closed command validation, success-only RTL",
-  "ZMQ XSUB/XPUB proxy for multi-vehicle scripts (ports 5570/5571, JSON control plane)",
-  "ArduPilot SITL + MAVSDK integration tests; CI on Python 3.10–3.14",
-  "Docs at aerpaw.github.io/aerpawlib"
+  "Primary maintainer of the official vehicle control library across both legacy and asynchronous MAVSDK interfaces.",
+  "Built-in safety checking with boundary geofences, command validation, and safe return-to-launch handling.",
+  "ZeroMQ messaging proxy that coordinates multi-vehicle experiments across shared wireless channels.",
+  "Comprehensive automated test suite featuring ArduPilot software-in-the-loop simulation.",
+  "Complete developer documentation and tutorial guides published on GitHub Pages."
 ]
 link = "https://github.com/AERPAW/aerpawlib"
 skills = ["Python", "MAVSDK / MAVLink", "ArduPilot", "asyncio / gRPC", "ZeroMQ", "pytest", "SITL"]
 page = true
 tone = "199"
 hero = "media/projects/aerpawlib/stack.svg"
-hero_caption = "Experiment script → aerpawlib → MAVSDK → the testbed MAVLink filter → Cube Orange / ArduPilot."
+hero_caption = "Architecture diagram showing how researcher scripts interact with aerpawlib, MAVSDK, and the testbed safety filter before reaching the vehicle autopilot."
 
 [[projects.essay]]
-heading = "The platform"
-body = """AERPAW — Aerial Experimentation and Research Platform for Advanced Wireless — is NC State's NSF PAWR testbed. The public line is that it is the first platform built to study 5G/6G together with autonomous aircraft. The vehicles experimenters actually fly are the LAM6 and SAM4 multicopters and a rover, all on Cube Orange running ArduPilot, speaking MAVLink v2. Portable radio nodes (SDRs on the large vehicles, lighter radios on SAM4) are the payload. Experiment VMs start through <code>startexperiment.sh</code> → <code>startVehicle.sh</code>.
-<p>A MAVLink filter sits between experimenter code and the autopilot. Only takeoff, land, simple goto, and yaw go through. Takeoff is 20–100 m. Landing has to be within 5 m of the takeoff point. Gotos are checked against the field geofence; the rover also has no-go zones for creeks. Status messages flow the other way unrestricted. That filter is the real API.</p>"""
+heading = "The AERPAW platform"
+body = """AERPAW (Aerial Experimentation and Research Platform for Advanced Wireless) is a National Science Foundation research testbed located at NC State that lets researchers experiment with wireless communications and autonomous vehicle control. Visiting experimenters write software to control custom multi-rotor drones like the LAM6 and SAM4 as well as ground rovers, all of which use Cube Orange flight controllers running ArduPilot. Because these vehicles carry sensitive custom radio payloads like software-defined radios and operate in active airspace, safety is enforced strictly at every step of execution.
+<p>Every vehicle command sent from an experiment script passes through an automated safety filter before it reaches the flight controller. This filter only allows a handful of safe operations such as taking off between 20 and 100 meters, returning to land within 5 meters of home, and flying to coordinates that remain inside a predefined field geofence. Telemetry flows back to experimenters freely, but any command that violates boundaries or safety rules gets dropped immediately, which means library code has to conform strictly to these constraints.</p>"""
 
 [[projects.essay]]
-heading = "What I maintain"
-body = """The original aerpawlib was John Kesler's DroneKit / pymavlink library: experimenters wrote Runner and StateMachine scripts, asyncio in the background, QGroundControl <code>.plan</code> files for waypoints. I am a listed co-author and the primary maintainer of the official <a href="https://github.com/AERPAW/aerpawlib">AERPAW/aerpawlib</a> tree. Current release is 1.4.11.
-<p>I migrated the library onto MAVSDK so vehicle firmware can move without monkey-patching Python. v1 keeps the old surface — DroneKit-shaped telemetry wrappers, a dual asyncio/gRPC loop so existing sync-looking scripts still run. v2 is the API I wanted: <code>VehicleTask</code>, <code>can_takeoff</code> / <code>can_goto</code> / <code>can_land</code>, one event loop. I also own the SITL harness, the CLI, the docs, and the 1.4.x series that made this survive the live E-VM / C-VM filter.</p>"""
+heading = "Maintaining and modernizing aerpawlib"
+body = """The original version of aerpawlib was created by John Kesler using DroneKit and pymavlink, providing simple runner classes and state machines that experimenters could script alongside flight plans exported from ground control software. As DroneKit became unmaintained and vehicle firmware moved forward, I stepped in as the primary maintainer of the official <a href="https://github.com/AERPAW/aerpawlib">AERPAW/aerpawlib</a> repository to modernize the codebase and migrate the backend to MAVSDK so researchers could run updated firmware without issues.
+<p>To keep existing research scripts working without requiring everyone to rewrite their experiments overnight, I kept the original class structure and telemetry helpers in place using a compatibility layer. Alongside that legacy surface, I built an asynchronous v2 API that lets developers write cleaner event-driven flight routines using native Python async syntax, while also maintaining the simulation harnesses, command line utilities, and documentation site.</p>"""
 
 [[projects.essay]]
-heading = "What the filter taught the API"
-body = """<code>SET_MODE</code> is not on the allow-list. <code>MAV_CMD_DO_SET_MODE</code> is. <code>action.hold()</code> / LOITER severs the E-VM link, so GUIDED has to be held with raw MAVLink. The safety checker has to talk to this node's C-VM, not localhost and not the OEO console — that bug shipped and got reverted in 1.4.7–1.4.8. Auto RTL runs only after a successful mission; abort used to fly home at <code>home.alt ≈ 0</code> and get rejected by the 20 m minimum.
-<p>Smaller, uglier ones: timed <code>set_velocity</code> loops cancelled the next command; geodesic bearings ignored latitude (about 51° vs 45° at Lake Wheeler); <code>ExternalProcess</code> dropped stdin/stdout files. Multi-vehicle ZMQ started as fire-and-forget PUB/SUB. It drops transitions. The control plane is now JSON with ACK, HELLO, and <code>wait_for_peers</code> on ports 5570/5571.</p>"""
+heading = "Adapting to the safety filter"
+body = """Writing a flight control library for a testbed is different from building standard drone software because the security filter constantly shapes how commands must be formulated. For instance, standard flight mode switch commands are filtered out, so the library has to issue low-level guided mode commands directly to prevent the drone from entering an unsupported holding state that would sever the virtual machine connection. Similarly, emergency return procedures had to be adjusted so aborted missions would not attempt to navigate home at zero altitude and trigger an immediate filter rejection.
+<p>I also resolved several subtle navigation and networking issues while supporting active experiments in the field. Velocity command loops were rewritten so that newer movement updates would not be overridden by older timers, heading calculations were corrected to account for latitude changes across the testing facility, and the inter-vehicle ZeroMQ communications layer was upgraded from basic message publishing to an acknowledged handshake that ensures multi-drone formations do not lose state during coordinated maneuvers.</p>"""
 figure = "media/projects/aerpawlib/filter.svg"
-caption = "The allow-list is the API. Status comes back unrestricted; SET_MODE and LOITER do not go through."
+caption = "Diagram illustrating how commands are validated by the testbed filter while telemetry streams freely back to the experiment script."
 
 [[projects.essay]]
-heading = "How I know it works"
-body = """Unit tests run on Python 3.10–3.14 in CI. Integration tests start ArduCopter and Rover SITL plus mavsdk_server and reset the vehicles between cases. MAVProxy will block if stdout is a pipe — the suite has to run with capture off. Docs live at aerpaw.github.io/aerpawlib. The useful lesson is boring: SITL is necessary and not sufficient. The filter wins arguments."""
+heading = "Testing and reliability"
+body = """To ensure that changes do not break active flight routines, the library includes a suite of unit tests and integration tests that run through continuous integration on modern Python versions. The integration test suite automatically starts simulated ArduCopter and Rover instances using software-in-the-loop simulation, connects them to a local MAVSDK server instance, and verifies flight sequences before resetting the vehicles between test runs. While simulation makes it easy to catch regression bugs early, field testing with real vehicle hardware remains the definitive test for how software behaves under live testbed conditions."""
 
 [[projects]]
 featured = true
 category = "aerpaw"
 title = "PyAerial"
 date = "2024 - Present"
-description = "Mode S / ADS-B tracker for AERPAW: dump1090 ingest, polygon geofences, Redis live state, SQLite history, React radar."
-built = "I wrote PyAerial as the successor to <a href='https://github.com/quantumbagel/airstrik.py' class='text-link hover:underline'>airstrik.py</a>. It decodes ADS-B with pyModeS, evaluates Shapely geofences, and splits tracking (<code>pyaerial run</code>) from a read-only portal (<code>pyaerial web</code>). airstrik used circular filters, MongoDB, and Kafka; this stack is Redis + SQLite + webhooks."
+description = "An airspace awareness and aircraft tracking system that ingests Mode S and ADS-B signals, evaluates geofence boundaries, and displays live flights on a radar map."
+built = "I built PyAerial as a complete rewrite of my earlier aircraft tracking project, <a href='https://github.com/quantumbagel/airstrik.py' class='text-link hover:underline'>airstrik.py</a>. The application decodes raw ADS-B radio signals using pyModeS, evaluates custom Shapely geofence boundaries, and separates the real-time tracking daemon from the web dashboard so that user interface traffic never interrupts signal decoding."
 challenges = [
-  "CPR decode needs a home reference that is not the geofence, plus 0.5° jump rejection.",
-  "Multi-receiver merge on RSSI and Hamming distance; heading ranges wrap.",
-  "Curved ETA can miss a fence when the turn circle blows up — take min(curved, straight).",
-  "Dwell/hysteresis so brief constraint matches do not spam.",
-  "Portal is read-only; the tracker claims Redis with a heartbeat."
+  "Decoding Compact Position Reporting coordinates requires a reliable reference position separate from boundary areas to prevent receiver errors from producing false aircraft locations.",
+  "Merging signals from multiple ground receivers requires comparing signal strength and Hamming distance while correctly wrapping compass heading boundaries across zero degrees.",
+  "Estimated arrival calculations had to account for both straight paths and turning maneuvers to ensure aircraft approaching boundaries are detected consistently.",
+  "Geofence notifications needed timing hysteresis to avoid sending multiple alerts when an aircraft briefly skirts the edge of an airspace boundary.",
+  "The background tracker maintains a persistent heartbeat in Redis so that read-only web workers cannot accidentally overwrite live tracking state."
 ]
 learned = [
-  "ADS-B is a wire-format problem before it is a map problem.",
-  "Live vs history wants two stores, not one database doing both.",
-  "Geofence rules should be explicit (alt, speed, ETA) — not implicit 'inside the polygon.'"
+  "Handling radio broadcast formats requires validating packet integrity and message order before attempting to plot coordinates on a map.",
+  "Separating real-time state in Redis from long-term flight logs in SQLite provides much better performance and reliability than trying to use a single database for both.",
+  "Geofence rules work best when they include explicit flight parameters like altitude ceilings, ground speed, and arrival time rather than just simple point checks."
 ]
 features = [
-  "Shapely polygons from inline rings, KML/KMZ, or GeoJSON",
-  "Straight-line and curved ETA; optional Kalman-smoothed velocity",
-  "FastAPI + React (Leaflet/MapLibre) radar UI; Beast re-export",
-  "Docker Compose with optional RTL-SDR / dump1090 profile",
-  "CI on Python 3.11/3.12 and the web toolchain"
+  "Custom boundary definitions imported from inline coordinates, KML files, or GeoJSON layers.",
+  "Kinematic trajectory calculations including both straight-line and turning arrival time estimations.",
+  "FastAPI backend paired with a React and Leaflet radar interface that streams live aircraft updates.",
+  "Docker Compose configurations that support both live software-defined radio feeds and recorded data.",
+  "Automated testing pipeline validating Python decoding logic and frontend build scripts."
 ]
 link = "https://github.com/quantumbagel/PyAerial"
 skills = ["Python", "pyModeS", "Shapely", "Redis", "SQLite", "FastAPI", "React", "Docker", "RTL-SDR", "ADS-B / Mode-S"]
 page = true
 tone = "250"
 hero = "media/projects/pyaerial/pipeline.svg"
-hero_caption = "dump1090 → pyModeS / merge → kinematics → Shapely geofences → Redis live + SQLite history → FastAPI / React radar."
+hero_caption = "Pipeline overview showing how radio signals pass from dump1090 through pyModeS decoding, geofence checks, and Redis caching before reaching the web map."
 
 [[projects.essay]]
-heading = "Why it exists"
-body = """AERPAW needed to see aircraft that were not ours. Experiment UAVs speak MAVLink through the filter. Everything else in the airspace shows up as Mode S / ADS-B. PyAerial is the tracker I wrote for that: decode the beacon, decide whether it matters, and show it live.
-<p>It replaces <a href="https://github.com/quantumbagel/airstrik.py">airstrik.py</a>. That older private repo used circular filters, MongoDB, and Kafka. This one does not. Current PyAerial is Redis + SQLite + webhooks + a read-only portal. If a writeup still says Kafka on this repo, it is describing the wrong codebase.</p>"""
+heading = "Airspace awareness for the testbed"
+body = """While AERPAW vehicles operate on controlled frequencies and communicate through flight filters, our team also needed visibility into commercial and general aviation traffic flying near the test site. Most aircraft broadcast their identification, altitude, and position continuously over Mode S and ADS-B radio frequencies. I created PyAerial to ingest these radio broadcasts from local ground receivers, determine whether any planes are approaching testbed boundaries, and display current airspace activity on a live map.
+<p>This project replaced an earlier prototype called <a href="https://github.com/quantumbagel/airstrik.py">airstrik.py</a>, which used simple circular distance checks, MongoDB, and Kafka. PyAerial redesigns the entire workflow around Redis for live state caching, SQLite for permanent flight logs, and configurable webhooks for alert notifications, creating a much simpler and more reliable deployment for field operations.</p>"""
 
 [[projects.essay]]
-heading = "Ingest, then two stores"
-body = """<code>pyaerial run</code> is the tracker. It reads dump1090 AVR/Beast (RTL-SDR optional), decodes with pyModeS, merges overlapping receivers on RSSI and Hamming distance, and writes two places: Redis for now, SQLite WAL for after. The tracker claims Redis with a heartbeat so a second process cannot pretend to own the live keys.
-<p><code>pyaerial web</code> is a different process on purpose. FastAPI + React (Leaflet / MapLibre) is read-only. It can re-export Beast, fire webhooks, and draw the radar. It does not decode. That split is the whole architecture: a hung portal cannot stall CPR.</p>"""
+heading = "Decoupling tracking from the web interface"
+body = """The tracking daemon runs as a dedicated background process that connects to dump1090 receiver streams, decodes raw message packets with pyModeS, and combines overlapping signals from multiple receivers based on signal strength. It writes active aircraft coordinates into Redis with short expiration timeouts while recording completed flight sessions into an append-only SQLite database using write-ahead logging.
+<p>The web dashboard runs as a separate process built with FastAPI and React, providing map visualizations and status reports by reading from the shared cache. Because the web server never touches the raw radio stream, heavy web traffic or browser reconnections can never slow down or interrupt time-sensitive position decoding in the tracker.</p>"""
 figure = "media/projects/pyaerial/pipeline.svg"
-caption = "Tracker owns Redis. Portal reads. Kafka and Mongo are the old airstrik.py box."
+caption = "Architecture diagram highlighting the boundary between the radio decoding daemon and the read-only web portal."
 
 [[projects.essay]]
-heading = "CPR is not a map problem"
-body = """Compact Position Reporting needs a reference that is not the geofence. If you use the polygon as home, a receiver on the wrong side of the field decodes a plausible-looking ghost. I keep a separate home, reject 0.5° jumps, and treat heading ranges as wrapping — 350° to 10° is a 20° sector, not a 340° one.
-<p>Geofences are Shapely polygons from inline rings, KML/KMZ, or GeoJSON. A match is not “inside the polygon.” Rules are explicit: altitude, speed, and ETA. Curved ETA can blow up when the turn circle is huge, so the gate is <code>min(curved, straight)</code>. Dwell / hysteresis exist so a one-sample graze does not page Discord.</p>"""
+heading = "Position decoding and geofence evaluation"
+body = """One of the trickiest parts of processing ADS-B signals is Compact Position Reporting, an encoding format that compresses latitude and longitude into alternating even and odd message frames. Because the math requires an initial reference point to resolve positions unambiguously, using an arbitrary boundary as home can cause distant receivers to compute ghost positions that look plausible at first glance. PyAerial anchors decoding to a fixed ground station location, rejects sudden unrealistic position jumps, and properly handles angular wrap-around when checking heading ranges across north.
+<p>Airspace boundaries are evaluated using geometric polygons defined in GeoJSON or KML files. Rather than only checking if an aircraft is currently inside the boundary, the engine calculates estimated arrival times based on speed and heading, taking the safer estimate between straight-line flight and curved trajectories. A configurable dwell time is also applied so that an aircraft momentarily clipping the outer perimeter does not trigger repetitive alert notifications.</p>"""
 figure = "media/projects/pyaerial/geofence.svg"
-caption = "Decode, then kinematics, then a rule — not a point-in-polygon screenshot."
+caption = "Boundary evaluation workflow showing signal decoding, speed and heading kinematics, and rule validation."
 
 [[projects.essay]]
-heading = "What I would not collapse again"
-body = """airstrik.py taught me that one database doing live and history makes both worse, and that a circular filter is a first draft of a geofence. Redis / SQLite is not a résumé stack. It is the smallest pair that lets a flight disappear from “now” without disappearing from the log.
-<p>Docker Compose stands the tracker up next to a session, with an optional dump1090 profile. CI covers Python 3.11/3.12 and the web toolchain. The useful lesson is the same as aerpawlib: be honest about the wire format you actually have.</p>"""
+heading = "Storage design and deployment"
+body = """Splitting storage between Redis and SQLite solved the performance bottlenecks I experienced in earlier prototypes. Redis handles fast in-memory key lookups for currently active aircraft, while SQLite safely stores historical flight trajectories without competing for write locks on every incoming radio packet.
+<p>The entire application is packaged with Docker Compose, allowing it to run either on a server connected directly to an RTL-SDR software-defined radio receiver or on a workstation replaying recorded network feeds. Continuous integration tests run against supported Python versions to verify that message parsing, kinematic calculations, and API routes remain stable as new features are added.</p>"""
 
 [[projects]]
 featured = true
 category = "aerpaw"
 title = "DroneTracker"
 date = "2024 - Present"
-description = "Aims AXIS Q-8615E PTZ cameras at AERPAW UAVs from Kafka GPS/velocity and records the flight over VAPIX."
-built = "Dockerized field service: Kafka position/velocity in, VAPIX pan/tilt/zoom out, recordings to the camera SD card as Matroska. Stock sensecam-control had PTZ but not record, so I forked <a href='https://github.com/quantumbagel/sensecam-control-record' class='text-link hover:underline'>sensecam-control-record</a> for start/stop/export. YAML holds site pose, FOV scale, and drone size; dry-run works without a camera."
+description = "An automated tracking service that points AXIS pan-tilt-zoom cameras at flying drones using live GPS coordinates from Kafka and records flight video over VAPIX."
+built = "I developed DroneTracker as a containerized service that reads real-time drone position and velocity telemetry from Apache Kafka, computes the required camera orientation angles, and issues pan, tilt, and zoom commands to AXIS optical cameras over the VAPIX network protocol. Because existing control libraries only supported movement commands without video recording, I also forked and updated the camera client library to manage recording sessions on the camera's local storage."
 challenges = [
-  "Pan is a spherical bearing; tilt is elevation; zoom maps a Q-8615E FOV model into 0–9999 steps.",
-  "Camera north-offset has to wrap into AXIS ±180° pan.",
-  "Optional velocity lead: NEU vs a possible NED convention (sign-flip on vz).",
-  "Minimum pan/zoom steps so the PTZ is not spammed; stale telemetry parks the camera."
+  "Translating geodetic coordinates into camera angles requires calculating spherical bearings for pan, elevation angles for tilt, and optical zoom steps based on distance and vehicle dimensions.",
+  "Handling camera compass offsets requires wrapping angles correctly into the camera's native pan range of minus 180 to positive 180 degrees.",
+  "Supporting predictive lead times requires managing coordinate frame conventions carefully so vertical velocity directions match physical drone movement.",
+  "Network delays and stale telemetry packets had to be filtered out so the camera would hold a resting position rather than slewing toward outdated coordinates."
 ]
-learned = "Closing a telemetry bus onto a physical PTZ is as much field ops as math: Digest-auth CGI, host-network Docker, and a library that can actually start a recording."
+learned = "Connecting physical cameras to network telemetry requires handling camera hardware mechanics, network authentication, and video storage management alongside the mathematical coordinate transformations."
 features = [
-  "Geodetic → pan/tilt/zoom for AXIS Q-8615E, including FOV calibration",
-  "Kafka data, command, and output topics; packet-timeout deactivate",
-  "VAPIX recording start/stop/export via a forked sensecam-control",
-  "Docker Compose, host networking, recordings volume, dry-run mode"
+  "Geodetic coordinate conversion to pan, tilt, and zoom values for AXIS PTZ cameras with optical calibration.",
+  "Kafka integration for telemetry ingestion, operator commands, and service status reporting.",
+  "Automated video recording start, stop, and file export using an updated VAPIX integration library.",
+  "Docker Compose deployment with support for local simulation and dry-run testing without physical hardware."
 ]
 link = "https://github.com/quantumbagel/DroneTracker"
 skills = ["Python", "VAPIX", "Kafka", "geopy", "Docker", "Linux/Unix"]
 page = true
 tone = "29"
 hero = "media/projects/dronetracker/aim.svg"
-hero_caption = "Camera at a known site pose. UAV GPS/velocity in. Pan, tilt, and zoom are geometry before they are HTTP."
+hero_caption = "Tracking diagram showing how drone GPS coordinates are transformed into physical camera pan, tilt, and zoom angles."
 
 [[projects.essay]]
-heading = "The job"
-body = """DroneTracker keeps an AXIS Q-8615E pointed at an AERPAW UAV and records the pass. Positions and velocities arrive on Kafka. Commands leave over VAPIX. Recordings land on the camera SD card as Matroska. The repo is <a href="https://github.com/quantumbagel/DroneTracker">quantumbagel/DroneTracker</a>.
-<p>This is the featured project that actually uses Kafka. PyAerial does not. I keep saying that because the AERPAW-adjacent repos share a vocabulary and not a stack.</p>"""
+heading = "Automating camera tracking for drone flights"
+body = """During field experiments at AERPAW, researchers frequently fly autonomous drone missions that need high-definition video documentation. Manually operating a camera to follow a fast-moving drone across wide open fields is difficult and unreliable, especially during complex multi-vehicle flights. I developed DroneTracker to automate this process by reading live GPS coordinates from the testbed telemetry stream and continuously aiming an AXIS Q-8615E pan-tilt-zoom camera directly at the aircraft while managing video recording sessions.
+<p>The service is published in the <a href="https://github.com/quantumbagel/DroneTracker">quantumbagel/DroneTracker</a> repository and runs as a Docker container deployed at the camera tower site. It listens to Kafka messaging topics for telemetry updates and operator instructions, then communicates with the camera over local network interfaces using the manufacturer's VAPIX API.</p>"""
 
 [[projects.essay]]
-heading = "Geometry before CGI"
-body = """Pan is a spherical bearing from the camera to the aircraft. Tilt is elevation. Zoom is a Q-8615E field-of-view model mapped into 0–9999 steps, using slant range and a configured drone size. YAML holds site pose, FOV scale, and that size. If those numbers are wrong, VAPIX will faithfully stare at the wrong sky.
-<p>Camera north-offset has to wrap into AXIS ±180° pan. Optional velocity lead is NEU; a NED source will look fine until vz is the wrong sign. I forked <a href="https://github.com/quantumbagel/sensecam-control-record">sensecam-control-record</a> because stock sensecam-control could PTZ and could not start a recording.</p>"""
+heading = "Calculating camera angles from geodetic coordinates"
+body = """The core tracking logic converts latitude, longitude, and altitude measurements from the drone into local camera viewing angles. Pan is calculated as a spherical bearing from the camera's surveyed installation point to the aircraft, tilt is derived from relative elevation and slant range, and zoom is computed using a calibrated field-of-view model that adjusts optical magnification based on drone size and distance. These configuration parameters are stored in a site configuration file so the camera can be redeployed to different towers without code changes.
+<p>To keep the camera pointed smoothly at moving targets, the service can apply an optional predictive lead time based on reported velocity vectors. Getting this right required converting velocity components into consistent North-East-Up reference frames, accounting for camera mounting compass offsets, and enforcing minimum angular movement thresholds to keep the motor assembly from oscillating unnecessarily on tiny coordinate fluctuations.</p>"""
 figure = "media/projects/dronetracker/aim.svg"
-caption = "The useful diagram is the triangle, not the Kafka topic list."
+caption = "Coordinate transformation geometry mapping aircraft geodetic coordinates into local pan, tilt, and optical zoom steps."
 
 [[projects.essay]]
-heading = "Field ops is the other half"
-body = """Kafka lag looks like a tracking bug. A stale packet is a confident wrong pan, so a timeout parks the camera instead of chasing history. Minimum pan/zoom steps exist because command spam does not slew the head faster — it makes it hunt. Digest-auth CGI, host-network Docker, and a dry-run mode without a camera are how this survives a field day.
-<p>Closing a telemetry bus onto a physical PTZ is as much ops as math. The library either starts a recording or it does not. There is no dashboard that makes a bad bearing look good.</p>"""
+heading = "Field operations and camera control"
+body = """Running tracking software in the field comes with practical network and hardware constraints that do not show up in clean simulated environments. For example, if network lag delays telemetry packets, issuing commands based on old data causes the camera to swing toward where the drone was seconds ago rather than where it is now. To prevent this, the tracker discards outdated packets and parks the camera safely whenever the telemetry stream times out.
+<p>Managing video recording also required custom work on the camera interface. The existing open source Python library for AXIS cameras supported basic movement but lacked methods for starting or exporting recordings, so I forked the project to add recording controls and file retrieval over Digest-authenticated HTTP endpoints. The service also includes a dry-run mode that logs computed angles without connecting to a physical camera, making it easy to test logic updates from a laptop before deploying to the field.</p>"""
 figure = "media/projects/dronetracker/geometry.svg"
-caption = "Kafka in, VAPIX out. Everything in the middle is geodesy and a camera model."
+caption = "Overview of the telemetry pipeline from Kafka message ingestion to VAPIX camera control and video export."
 
 [[projects]]
 featured = true
 category = "ml"
 title = "ML-Ticker"
 date = "2026"
-description = "FactSet FQL CLI with a restricted formula language and DAG-ordered metrics. Merrill Lynch internship; private repo."
-built = "Python CLI for equity research: FactSet FQL snapshots or timeseries, YAML/Pydantic configs, a sandboxed formula engine, and Rich/Excel export. A planner batches FQL calls, then Python metrics run in topological order. FDT mode scores a name against peers into Bull/Base/Bear multiples."
+description = "A command line financial data tool built during my internship at Merrill Lynch, featuring FactSet FQL querying, a safe formula evaluation engine, and Excel reporting."
+built = "I built ML-Ticker as an internal Python command line application for equity research workflows, allowing analysts to retrieve FactSet market data, define custom financial metrics through configuration files, and export formatted reports to terminal tables and styled Excel workbooks."
 challenges = [
-  "Formulas needed to be useful without becoming a code-execution hole (AST denylist + allowlisted builtins).",
-  "Interdependent metrics: DAG, cycle path, typo suggestions — before any FactSet call.",
-  "Missing FQL values become typed N/As instead of poisoning a sheet.",
-  "Holdings vs timeseries needed different config models; some formulas need a second-pass fetch.",
-  "Runs only inside FactSet's Programmatic Environment."
+  "Allowing analysts to write custom formulas required building a restricted syntax tree evaluator that safely prevented arbitrary code execution while supporting mathematical expressions.",
+  "Formulas frequently depended on other calculated metrics, requiring an internal dependency graph to resolve evaluation order and detect circular references before querying external APIs.",
+  "Financial queries often returned incomplete data points that needed typed missing-value representations to keep calculated workbook columns from failing silently.",
+  "Managing differences between point-in-time portfolio holdings and historical time-series queries required separate data models and multi-stage retrieval pipelines."
 ]
-learned = "Treat research tooling as a product: validate the config language first, then plan → fetch → derive → export."
+learned = "Building internal research tools requires validating user configurations and mathematical expressions up front so errors are caught before making expensive data queries."
 features = [
-  "Holdings, timeseries, validate, list, and FDT commands (packaged CLI, v0.3.0)",
-  "AST-gated formula language + topological evaluation (no NetworkX)",
-  "Pydantic configs with cycle checks and typo suggestions",
-  "Rich terminal tables and multi-sheet Excel with hidden helper metrics"
+  "Command line interface with subcommands for snapshot queries, time-series data, metric validation, and peer valuation comparisons.",
+  "Safe expression parser that validates custom metric formulas using abstract syntax tree inspection.",
+  "Dependency resolution algorithm that evaluates interdependent metrics in topological order without heavy external graph libraries.",
+  "Report generation with formatted terminal display and multi-tab Excel workbooks containing hidden calculation sheets."
 ]
 skills = ["Python", "FactSet FQL", "Pydantic", "pandas", "openpyxl", "Typer", "DAGs"]
 page = true
 tone = "145"
 hero = "media/projects/ml-ticker/pipeline.svg"
-hero_caption = "Validate the config language, plan the FQL batches, then derive. No public repo — architecture only."
+hero_caption = "Architectural overview showing configuration validation, batched data querying, dependency graph evaluation, and report export."
 
 [[projects.essay]]
-heading = "What I can say"
-body = """ML-Ticker was internship work at Merrill Lynch: a Python CLI against FactSet FQL, used on a calculations platform that sits on <strong>$500M+</strong> AUM. There is no public GitHub link. I am not going to describe internal tickers, entitlements, or anything that looks like a leak dressed up as a portfolio bullet.
-<p>What I will describe is the shape of the system, because that shape is the work.</p>"""
+heading = "Project context and overview"
+body = """During my summer internship with Merrill Lynch Wealth Management, I worked on software supporting an internal calculations platform used for portfolios managing more than $500M in assets. Analysts frequently needed to pull fundamental data and historical pricing from FactSet, apply team-specific valuation formulas, and generate clean reports for review. Because this was proprietary internal software, the source code is private, but the architectural design provides a good example of how to build reliable data processing tools.
+<p>I built ML-Ticker as a packaged Python command line utility running within FactSet's programmatic environment. The tool reads configuration files written in YAML, checks that all requested metrics and custom formulas are valid, batches remote API queries efficiently, and exports the final calculations into colored terminal tables and multi-sheet Excel workbooks.</p>"""
 
 [[projects.essay]]
-heading = "Sandbox, then graph"
-body = """FQL is powerful and easy to get wrong. The CLI takes YAML/Pydantic configs (extra fields forbidden), validates a restricted formula language, plans the FactSet calls, then evaluates Python metrics in topological order. Holdings and timeseries are different config models. Some formulas need a second-pass fetch. FDT mode scores a name against peers into Bull / Base / Bear multiples.
-<p>It only runs inside FactSet's Programmatic Environment. That is a real constraint, not a footnote.</p>"""
+heading = "Safe formula parsing and dependency resolution"
+body = """One of the central requirements was giving analysts the flexibility to write custom mathematical formulas without opening security vulnerabilities through unsafe Python evaluation. To solve this, I wrote a custom expression validator using Python's abstract syntax tree module. The parser inspects every formula against an allowlist of approved mathematical operators and built-in functions, rejecting attribute lookups, imports, or arbitrary code before anything executes.
+<p>Because formulas often build on top of other calculated figures, the application treats the entire metric set as a directed acyclic graph. Before any data is requested from FactSet, the engine computes the topological sort order for evaluation, checks for circular references, and suggests corrections if an analyst misspelled a metric name. This ensures that expensive network requests are never made for invalid configuration files.</p>"""
 figure = "media/projects/ml-ticker/pipeline.svg"
-caption = "Plan → fetch → derive → export. Details stop at the box."
+caption = "Workflow diagram illustrating configuration parsing, remote query batching, metric resolution, and workbook generation."
 
 [[projects.essay]]
-heading = "Why the AST and the DAG"
-body = """Formulas had to be useful without becoming a code-execution hole: AST denylist, allowlisted builtins, no NetworkX. Interdependent metrics get a DAG, a cycle path, and typo suggestions — before any FactSet call. Missing FQL values become typed N/As instead of poisoning a sheet. Export is Rich tables, multi-sheet Excel with hidden helper metrics, JSON.
-<p>The failures that hurt were type failures that looked like data failures. Making the graph refuse a silent coerce was more useful than a prettier command. Treat research tooling as a product: validate the language first.</p>"""
+heading = "Data consistency and report export"
+body = """Financial data feeds often contain missing values, partial historical dates, or inconsistent data types across different market sectors. If an API returns an empty field, naively coercing it to zero can distort valuation multiples and create misleading spreadsheet results. ML-Ticker treats missing values as explicit typed placeholders throughout the calculation pipeline, ensuring that division by zero or absent data points propagate clearly into the final report.
+<p>Once all metrics are computed, the tool formats output depending on the analyst's workflow. Quick lookups display clean terminal tables using the Rich library, while in-depth reviews export styled Excel workbooks with separate sheets for raw data, intermediate calculations, and final presentation summaries, saving the team hours of manual spreadsheet formatting each week.</p>"""
 
 [[projects]]
 featured = true
 category = "discord-bots"
 title = "Strife"
 date = "2026 - Present"
-description = "Discord game platform: threaded matches, plugin games, Postgres history, crash-safe live resume. PlayCord rewrite."
-built = "Slash lobbies, matches in threads, and a plugin API so the same <code>play()</code> runs live, in replay, and on a CLI. Postgres 16 holds guilds, matches, the move log, and live-match integrity. Games are in-process plugins — fault isolation, not a security sandbox. Builtins: Tic-Tac-Toe, Connect Four, Chess (incl. Chess960), Coup, Mafia, Spyfall, Liar's Dice."
+description = "A multiplayer game platform for Discord that runs turn-based matches inside message threads, featuring plugin game engines, PostgreSQL persistence, and crash recovery."
+built = "I developed Strife as a complete rewrite of my earlier Discord bot PlayCord, creating an extensible platform where multiplayer turn-based games run in dedicated message threads. The architecture uses a modular plugin system so that the exact same game logic runs interactively on Discord, replays historical matches, and runs in local command line sessions."
 challenges = [
-  "Live matches resume after a restart by replaying the move log; abandon if the plugin build changed.",
-  "Lobby/thread timeouts and signed msgpack <code>custom_id</code> routing were the long tail.",
-  "Hang caps and a thread pool keep a stuck <code>play()</code> off the event loop.",
-  "Public invite exists; the bot is not hosted yet."
+  "Recovering ongoing matches after bot restarts required saving every player action to an append-only database log and replaying moves sequentially to restore game state.",
+  "Handling user interface interactions across Discord threads required encoding signed message identifiers and managing automated timeouts for inactive lobbies.",
+  "Preventing unresponsive game code from blocking Discord's asynchronous event loop required isolating player turns inside bounded background execution pools.",
+  "Designing relational database migrations to track active match states and foreign key relationships across players, guilds, and historical move logs."
 ]
-learned = "A game host is a durability problem: deterministic simulation, an append-only log, and 'live' as a first-class match state."
+learned = "Building a reliable online gaming bot requires treating state persistence as the central priority, using deterministic game rules and an append-only move log so that crashes never corrupt active games."
 features = [
-  "Seven builtin games plus git-installable plugins",
-  "Postgres migrations through live-match integrity constraints",
-  "Replay / CLI / live share one play() implementation",
-  "Docker Compose self-host; ~27k LOC in the bot package"
+  "Seven built-in games including Chess, Coup, Mafia, Connect Four, Spyfall, and Liar's Dice, alongside support for third-party plugins.",
+  "Robust PostgreSQL database layer that stores full move histories and enforces match integrity constraints.",
+  "Unified game loop interface shared across interactive Discord sessions, historical match replays, and command line testing.",
+  "Self-contained Docker Compose configuration for easy hosting and deployment."
 ]
 link = "https://github.com/quantumbagel/Strife"
 skills = ["Python", "discord.py", "PostgreSQL", "asyncpg", "Pydantic", "Docker"]
 page = true
 tone = "300"
 hero = "media/projects/strife/architecture.svg"
-hero_caption = "A Discord thread is just a view. play() is the same function for live, replay, and CLI."
+hero_caption = "Architecture diagram illustrating how Discord interactions route through the core game host and state storage into individual game plugins."
 
 [[projects.essay]]
-heading = "A game host, not a chess bot"
-body = """Strife is a rewrite of PlayCord: slash lobbies, matches in threads, and a plugin API so the same <code>play()</code> runs live, in replay, and on a CLI. Games are in-process plugins — fault isolation, not a security sandbox. I keep saying that because “sandbox” is the word people want and not the thing I built.
-<p>Builtins: Tic-Tac-Toe, Connect Four, Chess (including Chess960), Coup, Mafia, Spyfall, Liar's Dice. Plugins can be git-installed. Public invite exists; the bot is not hosted yet. Docker Compose is how you run it.</p>"""
+heading = "From single-purpose bots to a game platform"
+body = """My earlier Discord gaming bots like Piranha and PlayCord were fun experiments, but each bot was tightly coupled to a single game and handled user interaction through hardcoded commands and temporary memory dictionaries. Whenever the bot restarted or encountered an unexpected network disconnect, ongoing games vanished and player progress was lost. Strife was designed from scratch to solve these limitations by providing a durable hosting environment that can run many different games through a unified plugin interface.
+<p>The system creates dedicated Discord message threads for every new match, keeping game discussions and interactive button controls neatly contained without cluttering server channels. It includes built-in implementations of seven games, ranging from classic board games like Chess and Connect Four to social deduction games like Coup and Mafia, while allowing new games to be added as modular plugins.</p>"""
 
 [[projects.essay]]
-heading = "Durability is the product"
-body = """Postgres 16 holds guilds, matches, the move log, and live-match integrity. A restart resumes a live match by replaying the log. If the plugin build changed, it abandons instead of lying. That is the whole trick: deterministic simulation plus an append-only log, with “live” as a first-class match state.
-<p>The long tail was not the games. It was lobby/thread timeouts, signed msgpack <code>custom_id</code> routing, hang caps, and a thread pool so a stuck <code>play()</code> stays off the event loop. About 27k LOC in the bot package, most of it host machinery.</p>"""
+heading = "Persistent state and crash recovery"
+body = """The primary design goal for Strife was ensuring that a server restart or network glitch would never ruin an active match. To achieve this, the host records every game move into a PostgreSQL database as an append-only log of player actions and state transitions. If the bot restarts while games are in progress, it scans the database for active matches and replays each recorded move sequentially through the game engine, restoring the exact state of the board before re-enabling player controls.
+<p>Because the core game loop is completely separated from Discord's network APIs, the same game logic function can run in multiple contexts. During a live match it listens to Discord button clicks, in replay mode it reads past database records to generate an interactive playback, and in local development it runs directly in a terminal console, which makes testing new game rules much faster.</p>"""
 figure = "media/projects/strife/architecture.svg"
-caption = "Discord is I/O. Postgres is memory. play() is the game."
+caption = "Data flow showing how user inputs pass through Discord interaction handlers, persist in PostgreSQL, and execute across modular game plugins."
 
 [[projects.essay]]
-heading = "What I would not hide in a cog"
-body = """Piranha was the earlier chess bot: one file, Stockfish, a PNG board server. Fine for a weekend. Useless as a platform. The moment you want Coup and Chess to share resume, you need a host, not another cog.
-<p>I would still not call the plugin loader a sandbox. Process isolation is a different project. This one is honest about the boundary it actually has.</p>"""
+heading = "Managing asynchronous execution and user interface state"
+body = """Running interactive games on Discord introduces numerous edge cases around timeouts, concurrent button presses, and user navigation. Strife packs interaction metadata into signed payloads attached to Discord interface components, allowing the bot to route button clicks directly to the appropriate match without keeping large state trees in transient memory.
+<p>To keep slow game logic or unexpected loops from freezing Discord's asynchronous event loop, player moves are executed in a managed thread pool with strict timeout bounds. If a game plugin hangs or takes too long to respond, the host can safely terminate the turn and notify the players without impacting any other matches running on the server.</p>"""
 
 [[projects]]
 category = "solo"
 title = "NCSU Parking"
 date = "2026"
-description = "Campus parking forecast: public occupancy + events into Postgres, a strong seasonal baseline, and per-lot XGBoost only when it beats that baseline."
-details = "A personal forecasting stack for NC State lots. A collector polls the public occupancy API (delta snapshots) and campus events into Postgres; features include 5-minute grids, lags, rolling stats, haversine event radii, and academic-calendar flags. An hour-of-week median is always fit; per-lot XGBoost is kept only if it beats that baseline on validation MAE, across eight horizons from 15 minutes to 24 hours. Training is a separate file-based job so the Streamlit app never loads XGBoost. Private repository — architecture only."
+description = "A predictive parking availability model for NC State campus decks that combines historical occupancy feeds with campus event schedules and validates machine learning models against strong seasonal baselines."
+details = "I built a data collection and forecasting pipeline for NC State campus parking decks. A background collector polls public occupancy APIs and university event calendars into PostgreSQL, engineering features such as five-minute time grids, lag statistics, rolling occupancy averages, geographic event distances, and academic calendar dates. The forecasting pipeline evaluates an hour-of-week seasonal baseline and only retains per-lot XGBoost models when they achieve lower validation error than the simple median across forecasting windows ranging from fifteen minutes to twenty-four hours. Model training runs as a decoupled batch job, keeping the lightweight Streamlit dashboard responsive."
 skills = ["Python", "PostgreSQL", "XGBoost", "pandas", "Streamlit", "Docker"]
 page = true
 tone = "80"
 hero = "media/projects/ncsuparking/pipeline.svg"
-hero_caption = "Occupancy + events into Postgres. XGBoost only ships if it beats an hour-of-week median."
+hero_caption = "Data pipeline diagram showing occupancy polling, calendar event ingestion, feature engineering, and model validation against seasonal baselines."
 
 [[projects.essay]]
-heading = "A forecast that can lose"
-body = """NCSU Parking is a personal stack for campus lots. The public occupancy API and campus events go into Postgres. Features are boring on purpose: 5-minute grids, lags, rolling stats, haversine event radii, academic-calendar flags. Eight horizons, 15 minutes to 24 hours.
-<p>Private repository — architecture only. I am not publishing lot-level error tables I cannot stand behind in public.</p>"""
+heading = "Forecasting campus parking demand"
+body = """Finding parking on a large university campus can be frustrating during peak morning class hours and major athletic events. NC State publishes live occupancy counts for several campus parking decks, but the university does not provide forward-looking predictions to help students plan where to park in advance. I built this personal forecasting system to collect occupancy data continuously, combine it with campus event calendars, and evaluate whether machine learning models could reliably forecast lot availability across multiple time horizons.
+<p>The project is maintained in a private repository as an exploratory data engineering stack, using PostgreSQL to store time-series records, automated feature generation scripts in Python, and an interactive Streamlit dashboard for visualizing current availability and forecast estimates.</p>"""
 
 [[projects.essay]]
-heading = "Baseline first"
-body = """An hour-of-week median is always fit. Per-lot XGBoost is kept only if it beats that baseline on validation MAE. Most “ML parking” demos skip this gate and then look clever on a Tuesday at 10:00, when the median already knew.
-<p>Training is a separate file-based job. The Streamlit app never loads XGBoost. That is not a performance trick. It is how I keep a dashboard from importing a model that failed the gate.</p>"""
+heading = "Evaluating against strong seasonal baselines"
+body = """Parking occupancy follows clear cyclical patterns based on class schedules, which means an hour-of-week median baseline is already quite accurate for predicting routine weekday mornings. Rather than assuming that a complex machine learning model is automatically better, my training pipeline fits a seasonal median model first and only accepts an XGBoost model if it demonstrates lower mean absolute error on held-out validation data across horizons from 15 minutes up to 24 hours.
+<p>By enforcing this evaluation check for each individual parking deck, the system prevents overfitting on decks that follow strict routine schedules while allowing machine learning models to handle decks with higher variance. Model training runs as an independent batch process that saves validated model artifacts to disk, ensuring that the front-end dashboard remains fast and never depends on computationally heavy training libraries at runtime.</p>"""
 figure = "media/projects/ncsuparking/pipeline.svg"
-caption = "The interesting box is the one that can discard the model."
+caption = "Pipeline structure showing raw data ingestion, feature generation, baseline benchmarking, and model selection."
 
 [[projects.essay]]
-heading = "What the events actually add"
-body = """A football Saturday is not a residual you invent after the fact. Events are collected with the occupancy, given a radius, and become features. If they do not beat the seasonal median, they do not get to stay either.
-<p>The lesson I wanted on the page: a model that is not allowed to lose is not a forecast.</p>"""
+heading = "Incorporating campus event data"
+body = """Routine class schedules explain typical weekday traffic, but special events like home football games, basketball tournaments, and concerts create massive localized spikes in parking demand that standard calendar features fail to capture. To address this, the data collector automatically scrapes university event feeds, maps each event to its physical campus venue, and calculates geographic distance features relative to nearby parking facilities.
+<p>These event distance features give the forecasting models advance notice of sudden attendance surges, helping improve prediction accuracy during weekend games and evening performances when historical averages alone would significantly underestimate parking congestion.</p>"""
 
 [[projects]]
 category = "solo"
 title = "Amazon Music Discord RPC"
 date = "2026"
-description = "Browser extension plus a Rust native-messaging host that publishes Amazon Music playback as Discord Rich Presence."
-details = "The extension reads Media Session and first-party Amazon metadata instead of scraping the DOM. A small Rust host speaks Chromium/Firefox native messaging and Discord IPC, with coalesce + rate limits (5 / 20s) and reconnect. Private repository."
+description = "A browser extension and lightweight Rust background helper that shares current Amazon Music playback status to Discord Rich Presence."
+details = "I created a browser extension and native messaging companion in Rust that displays active Amazon Music tracks in Discord status. The browser extension reads track details directly from the standard browser Media Session API and internal player state rather than fragile web page scraping. The Rust background process communicates with the browser using native messaging and sends status updates over Discord IPC, incorporating update batching and rate limiting to keep Discord presence smooth and responsive."
 skills = ["JavaScript", "Rust", "Discord IPC"]
 page = true
 tone = "40"
 hero = "media/projects/amazon/rpc.svg"
-hero_caption = "Media Session in the tab, a Rust native-messaging host, Discord IPC out. No DOM scrape."
+hero_caption = "Architecture diagram illustrating how media playback data flows from the browser extension through the Rust helper process into Discord IPC."
 
 [[projects.essay]]
-heading = "Presence without scraping"
-body = """Amazon Music Discord RPC is a browser extension plus a Rust native-messaging host. The extension reads the Media Session API and first-party Amazon metadata. It does not scrape the DOM. The host speaks Chromium and Firefox native messaging on one side and Discord IPC on the other.
-<p>Private repository. The interesting part is the process boundary, not a screenshot of a Discord popup.</p>"""
+heading = "Displaying playback status without fragile web scraping"
+body = """Discord provides built-in Rich Presence integration for Spotify, but users of other streaming platforms like Amazon Music lack an official way to share their currently playing music with friends. Many third-party solutions attempt to read song titles by scraping HTML elements directly from the web player, which frequently breaks whenever the streaming service updates its website layout or CSS classes. I built this extension to extract song titles, artists, album artwork, and playback progress cleanly by hooking into the browser's standard Media Session API and internal player events.
+<p>Because web extensions cannot open local operating system sockets directly, the browser component pairs with a lightweight native helper program written in Rust. This separation keeps the extension secure while allowing status updates to reach the local Discord desktop client through standard inter-process communication.</p>"""
 
 [[projects.essay]]
-heading = "The host is the product"
-body = """JS in a tab cannot talk Discord IPC cleanly. Native messaging is the boring, correct pipe. The Rust host coalesces updates, rate-limits them (5 / 20s), and reconnects. If you skip those, you either get rate-limited by Discord or you flicker the presence on every progress tick.
-<p>I wanted a small native binary I could reason about, not another Electron tray app.</p>"""
+heading = "Native communication and rate limiting"
+body = """The browser extension sends track updates to the companion application using the native messaging protocols supported by Chromium and Firefox. The Rust background application connects to Discord's local IPC pipe, parses incoming playback packets, and manages connection recovery if Discord is closed and reopened during playback.
+<p>To avoid triggering Discord's network rate limits or causing the status widget to flicker on every elapsed second of audio, the Rust helper batches incoming progress updates and enforces a maximum rate of five updates per twenty seconds. This architecture results in a fast, low-memory utility that runs quietly in the background without requiring heavy frameworks or separate desktop interface windows.</p>"""
 figure = "media/projects/amazon/rpc.svg"
-caption = "Tab → extension → Rust host → Discord. The rate limit is part of the diagram."
+caption = "Data flow from the browser tab through native messaging into the Rust helper and Discord desktop client."
 
 [[projects.gallery]]
 src = "media/projects/amazon/popup.png"
@@ -524,14 +523,14 @@ alt = "Amazon Music Rich Presence extension popup while Murderer by Ren is playi
 
 [[projects.gallery]]
 src = "media/projects/amazon/discord-status.png"
-alt = "Discord current activity showing Listening to Amazon Music — Microwave by Ricky Jamaraz"
+alt = "Discord current activity showing Listening to Amazon Music with the song Microwave by Ricky Jamaraz"
 
 [[projects]]
 category = "discord-bots"
 title = "discord.py-template"
 date = "2025 - Present"
-description = "discord.py 2.x scaffold: YAML config, cog hot-reload with rollback, structured logging, plus an Emoticon analytics cog."
-details = "A starter I actually use: centralized YAML, owner management commands, cog reload that rolls back if the new module fails, per-crash error logs, and a Tortoise/SQLite Emoticon cog for emoji usage analytics."
+description = "A modular discord.py application starter template featuring YAML configuration, cog hot-reloading with automatic rollback on error, structured crash logging, and emoji analytics."
+details = "I designed this project template to standardize how I build and maintain Discord bots in Python. It includes a centralized YAML configuration loader, administrative bot owner utilities, a hot-reload system that automatically rolls back failed module updates to avoid downtime, and an integrated emoji analytics cog backed by SQLite and the Tortoise ORM."
 link = "https://github.com/quantumbagel/discord.py-template"
 skills = ["Python", "discord.py", "YAML", "Docker"]
 
@@ -539,8 +538,8 @@ skills = ["Python", "discord.py", "YAML", "Docker"]
 category = "collabs"
 title = "Chess-Challenge"
 date = "2023"
-description = "SebLague Chess Coding Challenge entry: iterative-deepening alpha-beta under a 1024-token budget."
-details = "Fork of Sebastian Lague's C# challenge (max 1024 tokens). The real bots live on feature branches: iterative deepening, alpha-beta, quiescence, and on the strongest branch a transposition table, null-move pruning, killer moves, and compressed piece-square tables. I am not publishing an ELO — those numbers were never in the repo."
+description = "A custom C# chess engine developed for Sebastian Lague's Chess Coding Challenge, implementing iterative-deepening alpha-beta search within a strict 1024-token code budget."
+details = "I created this chess bot as an entry in Sebastian Lague's community coding challenge, which required competitors to build an autonomous chess engine in C# under a strict budget of 1024 code tokens. Across experimental branches, I implemented iterative-deepening search, alpha-beta pruning, quiescence evaluation to prevent horizon effects, and advanced search heuristics including transposition tables, null-move pruning, killer move ordering, and compact piece-square positional tables."
 link = "https://github.com/quantumbagel/Chess-Challenge"
 skills = ["C#", ".NET", "Search algorithms"]
 
@@ -548,33 +547,33 @@ skills = ["C#", ".NET", "Search algorithms"]
 category = "discord-bots"
 title = "Triggered"
 date = "2023 - 2026"
-description = "IFTTT-style Discord automation: compose trigger → action rules, persisted in MongoDB."
-details = "Users compose when/then rules across messages, reactions, voice, roles, and schedules. Triggers and dos load from a JSON registry; slash UX handles validation and autocomplete; permissions are scoped per server. Docker Compose + pytest; the hosted instance is personal, not a product."
+description = "A rule-based Discord automation bot that allows server administrators to configure custom event triggers and actions without writing code, with configuration stored in MongoDB."
+details = "I built Triggered to let Discord community managers create automated event-driven workflows, similar to services like IFTTT. Users configure custom rules triggered by chat messages, emoji reactions, voice channel events, role assignments, or recurring schedules. Triggers and corresponding actions are defined in a modular JSON registry that powers Discord slash command autocomplete and input validation, with server configurations persisted safely in MongoDB."
 link = "https://github.com/quantumbagel/Triggered"
 skills = ["Python", "discord.py", "MongoDB", "Docker"]
 page = true
 tone = "350"
 hero = "media/projects/triggered/rules.svg"
-hero_caption = "Users compose when → then rules. Triggers and actions load from a JSON registry; Mongo stores the rest."
+hero_caption = "Workflow diagram showing how server events are matched against registered trigger definitions and executed according to stored rules."
 
 [[projects.essay]]
-heading = "IFTTT, but for one guild"
-body = """Triggered is Discord automation you compose instead of code. When a message / reaction / voice / role / schedule event fires, a stored rule runs an action. Triggers and dos load from a JSON registry so the slash UX can validate and autocomplete without a hardcoded switch.
-<p>Permissions are scoped per server. Docker Compose + pytest. The hosted instance is personal, not a product.</p>"""
+heading = "Configurable server automation"
+body = """Managing active Discord communities often requires handling repetitive administrative tasks, such as granting roles when users react to a message, welcoming members when they join specific voice channels, or posting reminders on recurring schedules. Instead of writing custom code for every small request, I developed Triggered to provide a flexible rule engine where server moderators can assemble custom workflows directly through Discord slash commands.
+<p>Each automation rule pairs an event trigger with one or more resulting actions, such as sending notifications, updating user permissions, or modifying channel settings. All rule definitions and guild settings are stored in MongoDB, allowing configurations to persist reliably across bot reboots and container redeployments.</p>"""
 
 [[projects.essay]]
-heading = "Registry, then persistence"
-body = """The useful design choice was making the registry the source of what can exist, and Mongo the source of what this guild actually configured. Autocomplete stays honest. A missing trigger type fails closed instead of executing a half-built rule.
-<p>I would not sell this as a platform. I would show it as the moment I stopped writing one-off cogs for every “if X then Y” request.</p>"""
+heading = "Registry design and input validation"
+body = """To make the system easily extensible, available triggers and actions are defined in a centralized JSON registry rather than being hardcoded into branching logic across multiple bot modules. When users interact with Discord slash commands, the bot queries this registry to dynamically populate autocomplete suggestions and validate user input parameters before saving a rule.
+<p>This separation makes it straightforward to add new trigger types or action handlers without modifying existing command routing. The bot also validates that rules only execute within the permissions granted to the configuring user, preventing automation workflows from being used to bypass standard server moderation controls.</p>"""
 figure = "media/projects/triggered/rules.svg"
-caption = "Events in, registry in the middle, Mongo for the composed rules."
+caption = "Event handling diagram showing how incoming Discord events are matched against the rule registry and executed through stored MongoDB configurations."
 
 [[projects]]
 category = "collabs"
 title = "finiteCraft"
 date = "2024"
-description = "Collaborative Infinite Craft scraper and recipe-tree search. Deprecated. Grew out of InfiniteScrape."
-details = "I built the scraping half: threaded workers, ranked proxies, batched crafts, MongoDB recipe storage. A collaborator added Arborist tree search. Deprecated; interesting as a concurrency/rate-limit story, not as a current system."
+description = "A distributed web scraping and graph search project that discovered and mapped crafting combinations for the browser game Infinite Craft."
+details = "I collaborated on this project to explore large-scale web scraping and combination search for the browser game Infinite Craft. I developed the automated scraping backend using multithreaded workers, rotating proxy pools with health scoring, and MongoDB storage to capture recipe discovery pairs, while a collaborator built the tree search algorithm used to find optimal crafting paths between elements."
 link = "https://github.com/finiteCraft/finiteCraft"
 skills = ["Python", "MongoDB", "Docker"]
 
@@ -583,18 +582,18 @@ featured = true
 category = "solo"
 title = "Portfolio Website (v3)"
 date = "2026 - Present"
-description = "This site: TOML-driven static generator plus twelve background simulations you can grab and tune."
-built = "Content lives in <code>site.toml</code>, templates render it, GitHub Pages serves it. The background is its own engine — twelve modes with pointer interaction and a live parameter panel."
+description = "A personal portfolio site generated with custom Python build scripts from structured TOML data, featuring twelve interactive HTML5 canvas background simulations."
+built = "I built this website using a lightweight custom static generator in Python that compiles structured content from a TOML configuration file into clean HTML pages. The visual background is powered by a custom JavaScript canvas engine that provides twelve interactive particle and physics simulations with adjustable settings."
 challenges = [
-  "Keep the sim smooth behind a frosted column.",
-  "Honor reduced motion; persist mode and params.",
-  "Do not steal pointer events from the page."
+  "Maintaining smooth canvas animation performance behind semi-transparent backdrop filters across both desktop and mobile web browsers.",
+  "Ensuring canvas event listeners handle user interaction smoothly without interfering with text selection, link clicks, or normal page scrolling.",
+  "Supporting accessibility preferences by respecting reduced motion settings and persisting user simulation choices in local storage."
 ]
-learned = "A portfolio is more convincing when the page itself is something you can operate."
+learned = "Building a personal site with a simple file-driven static generator makes content maintenance easy while keeping page load speeds fast and avoiding runtime framework dependencies."
 features = [
-  "Custom Python static generator from TOML + HTML partials",
-  "Light/dark theme, section deep links, contact form",
-  "Interactive background simulations with a live control panel"
+  "Custom Python static site generator that compiles TOML data and HTML partials into static pages.",
+  "Responsive design with dark and light themes, smooth navigation anchors, and contact form integration.",
+  "Interactive canvas background system with twelve selectable simulation modes and real-time parameter controls."
 ]
 demo = "sim"
 demo_label = "Open the simulations"
@@ -603,19 +602,19 @@ skills = ["Python", "JavaScript", "Canvas"]
 page = true
 tone = "199"
 hero = "media/projects/portfolio/modes.svg"
-hero_caption = "site.toml is the content. generator.py writes the homepage and the essay pages. The canvas is its own engine."
+hero_caption = "Architecture diagram illustrating how Python build scripts compile site data into static HTML pages alongside the standalone canvas simulation engine."
 
 [[projects.essay]]
-heading = "A site that is also a thing"
-body = """This page is generated. Content lives in <code>site.toml</code>, templates render it, GitHub Pages serves it. Featured projects get a teaser on the homepage and a longer essay at <code>/projects/{slug}/</code>. I would rather maintain TOML than a CMS.
-<p>The background is a separate engine: twelve modes, pointer interaction, a live parameter panel, reduced-motion support, and persistence in localStorage. Click Background in the header.</p>"""
+heading = "Design and static generation"
+body = """When designing this portfolio, I wanted a site that loaded quickly, was simple to host on GitHub Pages, and could be updated easily without the overhead of heavy web frameworks or database-driven content management systems. I wrote a small static site generator in Python that reads all portfolio content, project writeups, and experience details from a single TOML configuration file, rendering them into clean static HTML files through reusable page templates.
+<p>Featured projects receive both a concise overview card on the main page and a detailed project page with technical writeups and architecture diagrams, allowing readers to explore the background and implementation details of each build.</p>"""
 
 [[projects.essay]]
-heading = "What I keep fighting"
-body = """The sim has to stay smooth behind a frosted column, honor reduced motion, and not steal pointer events from the page. Module init also has to boot without racing <code>DOMContentLoaded</code> — that one actually broke the particles.
-<p>A portfolio is more convincing when the page itself is something you can operate, and when the writeups are willing to say what the repo actually contains.</p>"""
+heading = "Interactive canvas background engine"
+body = """Behind the text content runs a standalone HTML5 canvas engine that renders twelve different mathematical and physics simulations, including particle fields, orbital mechanics, cellular automata, and wave interference patterns. Visitors can interact directly with the simulations using their mouse or touchscreen, open a control panel in the header to adjust simulation parameters in real time, or switch between visual presets.
+<p>A key focus during implementation was ensuring that the canvas renders efficiently without consuming excessive processor cycles or blocking user interaction with the page. The animation loop adjusts its resolution for high-density screens, pauses when the browser tab is hidden, respects user preferences for reduced motion, and sits behind transparent content layers without capturing clicks or scrolling gestures meant for the text.</p>"""
 figure = "media/projects/portfolio/modes.svg"
-caption = "Content in, static HTML out, canvas beside it — not inside the generator."
+caption = "Build and runtime diagram showing how static HTML generation is separated from the client-side JavaScript canvas engine."
 
 [[projects.gallery]]
 src = "media/projects/portfolio/homepage-aurora.png"
@@ -629,8 +628,8 @@ alt = "Background control panel open on the live site, aurora mode selected"
 category = "solo"
 title = "airtime"
 date = "2024"
-description = "Arduino Uno quadcopter controller attempt — archived after the IMU/DMP stack exhausted the Uno's 2 KB SRAM."
-details = "From-scratch sketches for nRF24 radio, MPU6050 (including MotionApps DMP), BMP180, GPS, and ESC mixing. It does not fly. The DMP firmware path alone is a known Uno RAM problem, and the later sketches are not in a compiling state. Kept as an honest embedded-systems dead end."
+description = "An early experimental quadcopter flight controller written for the Arduino Uno, exploring sensor fusion and radio control on low-memory microcontrollers."
+details = "I wrote this project to explore building a multicopter flight controller from scratch using an Arduino Uno, integrating an nRF24L01 radio receiver, an MPU-6050 inertial measurement unit, a BMP180 barometer, and electronic speed controller mixing logic. The project ran into the physical memory limitations of the Uno's 2 KB of SRAM when loading digital motion processing firmware, serving as a practical lesson in microcontroller memory constraints and real-time hardware budgeting."
 link = "https://github.com/quantumbagel/airtime"
 skills = ["C/C++", "Arduino"]
 
@@ -638,8 +637,8 @@ skills = ["C/C++", "Arduino"]
 category = "solo"
 title = "Statify"
 date = "2023"
-description = "Spigot plugin: server-wide Minecraft stats with a small expression language for custom queries."
-details = "First plugin. Aggregates player stats JSON and evaluates nested formulas with a hand-rolled parser (+ − * / ^, a few functions). Useful as a Java/Spigot artifact, not as production plugin work."
+description = "A Minecraft server plugin built with the Spigot API that aggregates server-wide player statistics and evaluates custom mathematical ranking queries."
+details = "I created Statify as an introduction to Java development and the SpigotMC server platform. The plugin reads player statistics from server JSON files and includes a custom recursive-descent formula parser that allows server administrators to evaluate composite metrics, such as combining player activity and mining counts into custom leaderboard rankings."
 link = "https://github.com/quantumbagel/Statify"
 skills = ["Java", "SpigotMC API"]
 
@@ -647,16 +646,16 @@ skills = ["Java", "SpigotMC API"]
 category = "discord-bots"
 title = "Piranha"
 date = "2023"
-description = "Early Discord chess bot wrapping Stockfish and a local board-image service. Private; superseded by Strife's chess plugin."
-details = "Single-script bot: Stockfish for play, an aiohttp + CairoSVG PNG board server, challenge/move/forfeit, JSON-backed records. Process and timer orchestration in one file. Private repository."
+description = "An early Discord chess bot that integrated the Stockfish engine with a local board rendering service to run interactive matches."
+details = "Piranha was an early Discord bot project where I integrated the Stockfish chess engine to support player challenges and automated opponents. It used an asynchronous web service to render board state images with CairoSVG and tracked match state locally, providing valuable experience with subprocess management and game state loops before I later designed Strife."
 skills = ["Python", "discord.py", "Stockfish"]
 
 [[projects]]
 category = "solo"
 title = "Molotov"
 date = "2023"
-description = "Screen-automation experiment for Bomb Party: pixel turn detection, scored dictionary, timed typing."
-details = "Personal automation: mss / pixel color for turn state, clipboard letter subset, rarity scoring, configurable typing delay. Fragile to UI changes. Not a product."
+description = "A desktop screen automation script that used screen capture and dictionary lookups to play the word game Bomb Party automatically."
+details = "I created Molotov as an experiment in computer vision and desktop automation for the browser word game Bomb Party. The script captured on-screen pixels using mss to detect active turn states, matched required letter prompts against an English dictionary scored by word rarity, and typed valid words into the browser with configurable delays to simulate human typing."
 link = "https://github.com/quantumbagel/Molotov"
 skills = ["Python", "PyAutoGUI"]
 

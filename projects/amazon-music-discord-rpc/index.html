@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Amazon Music Discord RPC — Julian Reder</title>
-    <meta name="description" content="Browser extension plus a Rust native-messaging host that publishes Amazon Music playback as Discord Rich Presence.">
+    <title>Amazon Music Discord RPC | Julian Reder</title>
+    <meta name="description" content="A browser extension and lightweight Rust background helper that shares current Amazon Music playback status to Discord Rich Presence.">
     <link rel="icon" type="image/png" href="../../pfp.webp">
     <script>
         (function() {
@@ -34,10 +34,10 @@
             <article class="page-card">
                 <header class="page-head">
                     <h1 class="look-name big">Amazon Music Discord RPC</h1>
-                    <p class="look-desc">Browser extension plus a Rust native-messaging host that publishes Amazon Music playback as Discord Rich Presence.</p>
+                    <p class="look-desc">A browser extension and lightweight Rust background helper that shares current Amazon Music playback status to Discord Rich Presence.</p>
                     <div class="look-meta">2026</div>
                     <div class="page-actions">
-                        <span class="chip">Private — architecture only</span>
+                        <span class="chip">Private (Architecture Only)</span>
                         
                     </div>
                     <div class="chips"><span class="chip-btn">JavaScript</span><span class="chip-btn">Rust</span><span class="chip-btn">Discord IPC</span></div>
@@ -75,16 +75,16 @@
   <path class="fig21-arr" d="M386 80 H416"/>
   <path class="fig21-arr" d="M566 80 H596"/>
   <path class="fig21-arr" d="M491 120 V150"/>
-</svg><figcaption class="essay-caption">Media Session in the tab, a Rust native-messaging host, Discord IPC out. No DOM scrape.</figcaption></figure>
+</svg><figcaption class="essay-caption">Architecture diagram illustrating how media playback data flows from the browser extension through the Rust helper process into Discord IPC.</figcaption></figure>
 
-                <figure class="essay-figure media-figure"><div class="media-carousel" data-carousel-id="gallery-amazon-music-discord-rpc"><div class="carousel-slides" style="transform: translateX(0%);"><div class="carousel-slide"><img src="../../media/projects/amazon/popup.png" alt="Amazon Music Rich Presence extension popup while Murderer by Ren is playing, helper app connected as quantumbagel" loading="lazy" decoding="async" class="carousel-media"></div><div class="carousel-slide"><img src="../../media/projects/amazon/discord-status.png" alt="Discord current activity showing Listening to Amazon Music — Microwave by Ricky Jamaraz" loading="lazy" decoding="async" class="carousel-media"></div></div><button class="carousel-prev icon-btn" type="button" aria-label="Previous slide">‹</button><button class="carousel-next icon-btn" type="button" aria-label="Next slide">›</button><div class="carousel-dots"><button class="carousel-dot on" type="button" data-slide-to="0" aria-label="Go to slide 1"></button><button class="carousel-dot" type="button" data-slide-to="1" aria-label="Go to slide 2"></button></div></div></figure>
+                <figure class="essay-figure media-figure"><div class="media-carousel" data-carousel-id="gallery-amazon-music-discord-rpc"><div class="carousel-slides" style="transform: translateX(0%);"><div class="carousel-slide"><img src="../../media/projects/amazon/popup.png" alt="Amazon Music Rich Presence extension popup while Murderer by Ren is playing, helper app connected as quantumbagel" loading="lazy" decoding="async" class="carousel-media"></div><div class="carousel-slide"><img src="../../media/projects/amazon/discord-status.png" alt="Discord current activity showing Listening to Amazon Music with the song Microwave by Ricky Jamaraz" loading="lazy" decoding="async" class="carousel-media"></div></div><button class="carousel-prev icon-btn" type="button" aria-label="Previous slide">‹</button><button class="carousel-next icon-btn" type="button" aria-label="Next slide">›</button><div class="carousel-dots"><button class="carousel-dot on" type="button" data-slide-to="0" aria-label="Go to slide 1"></button><button class="carousel-dot" type="button" data-slide-to="1" aria-label="Go to slide 2"></button></div></div></figure>
 
-                <section class="section"><div class="section-head"><h3>Built</h3></div><div class="section-body"><p class="fg-prose">The extension reads Media Session and first-party Amazon metadata instead of scraping the DOM. A small Rust host speaks Chromium/Firefox native messaging and Discord IPC, with coalesce + rate limits (5 / 20s) and reconnect. Private repository.</p></div></section>
+                <section class="section"><div class="section-head"><h3>Built</h3></div><div class="section-body"><p class="fg-prose">I created a browser extension and native messaging companion in Rust that displays active Amazon Music tracks in Discord status. The browser extension reads track details directly from the standard browser Media Session API and internal player state rather than fragile web page scraping. The Rust background process communicates with the browser using native messaging and sends status updates over Discord IPC, incorporating update batching and rate limiting to keep Discord presence smooth and responsive.</p></div></section>
                 
                 
                 
 
-                <section class="section essay-section"><div class="section-head"><h3>Presence without scraping</h3></div><div class="section-body"><div class="fg-prose"><p>Amazon Music Discord RPC is a browser extension plus a Rust native-messaging host. The extension reads the Media Session API and first-party Amazon metadata. It does not scrape the DOM. The host speaks Chromium and Firefox native messaging on one side and Discord IPC on the other.</p><p>Private repository. The interesting part is the process boundary, not a screenshot of a Discord popup.</p></div></div></section><section class="section essay-section"><div class="section-head"><h3>The host is the product</h3></div><div class="section-body"><div class="fg-prose"><p>JS in a tab cannot talk Discord IPC cleanly. Native messaging is the boring, correct pipe. The Rust host coalesces updates, rate-limits them (5 / 20s), and reconnects. If you skip those, you either get rate-limited by Discord or you flicker the presence on every progress tick.</p><p>I wanted a small native binary I could reason about, not another Electron tray app.</p></div><figure class="essay-figure"><svg class="diagram" role="img" aria-label="The host is the product" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 240" role="img" aria-label="Amazon Music Discord RPC path">
+                <section class="section essay-section"><div class="section-head"><h3>Displaying playback status without fragile web scraping</h3></div><div class="section-body"><div class="fg-prose"><p>Discord provides built-in Rich Presence integration for Spotify, but users of other streaming platforms like Amazon Music lack an official way to share their currently playing music with friends. Many third-party solutions attempt to read song titles by scraping HTML elements directly from the web player, which frequently breaks whenever the streaming service updates its website layout or CSS classes. I built this extension to extract song titles, artists, album artwork, and playback progress cleanly by hooking into the browser's standard Media Session API and internal player events.</p><p>Because web extensions cannot open local operating system sockets directly, the browser component pairs with a lightweight native helper program written in Rust. This separation keeps the extension secure while allowing status updates to reach the local Discord desktop client through standard inter-process communication.</p></div></div></section><section class="section essay-section"><div class="section-head"><h3>Native communication and rate limiting</h3></div><div class="section-body"><div class="fg-prose"><p>The browser extension sends track updates to the companion application using the native messaging protocols supported by Chromium and Firefox. The Rust background application connects to Discord's local IPC pipe, parses incoming playback packets, and manages connection recovery if Discord is closed and reopened during playback.</p><p>To avoid triggering Discord's network rate limits or causing the status widget to flicker on every elapsed second of audio, the Rust helper batches incoming progress updates and enforces a maximum rate of five updates per twenty seconds. This architecture results in a fast, low-memory utility that runs quietly in the background without requiring heavy frameworks or separate desktop interface windows.</p></div><figure class="essay-figure"><svg class="diagram" role="img" aria-label="Native communication and rate limiting" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 240" role="img" aria-label="Amazon Music Discord RPC path">
   <style>
     .fig22-box { fill: none; stroke: currentColor; stroke-width: 1.4; }
     .fig22-fill { fill: currentColor; fill-opacity: 0.08; }
@@ -116,11 +116,11 @@
   <path class="fig22-arr" d="M386 80 H416"/>
   <path class="fig22-arr" d="M566 80 H596"/>
   <path class="fig22-arr" d="M491 120 V150"/>
-</svg><figcaption class="essay-caption">Tab → extension → Rust host → Discord. The rate limit is part of the diagram.</figcaption></figure></div></section>
+</svg><figcaption class="essay-caption">Data flow from the browser tab through native messaging into the Rust helper and Discord desktop client.</figcaption></figure></div></section>
 
                 <footer class="page-foot">
                     <a href="../../#projects" class="btn small">All projects</a>
-                    <span class="chip">Private — architecture only</span>
+                    <span class="chip">Private (Architecture Only)</span>
                 </footer>
             </article>
         </main>

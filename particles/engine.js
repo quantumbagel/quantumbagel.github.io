@@ -474,7 +474,7 @@ export function initParticleBackground(canvas, options) {
         const warn = paramIsOverCap({ min, max }, value);
         const rangeVal = clamp(value, min, max);
         const warnClass = warn ? " bg-sim-row-warn" : "";
-        const title = warn ? ' title="Above the supported range — may be slow or unstable."' : "";
+        const title = warn ? ' title="Above the supported range; may be slow or unstable."' : "";
         const numMin = floor != null ? ` min="${floor}"` : "";
         return `<div class="bg-sim-row${warnClass}"${title}><span data-label="${label}">${label}<span class="bg-sim-warn-mark">!</span></span><input type="range" min="${min}" max="${max}" step="${step}" value="${rangeVal}" data-scope="${scope}"${keyAttr}><input type="number" step="any" inputmode="decimal"${numMin} value="${formatParam(value)}" data-scope="${scope}"${keyAttr}></div>`;
     };
@@ -486,7 +486,7 @@ export function initParticleBackground(canvas, options) {
         const warn = paramIsOverCap(bounds, value);
         row.classList.toggle("bg-sim-row-warn", warn);
         if (warn) {
-            row.setAttribute("title", "Above the supported range — may be slow or unstable.");
+            row.setAttribute("title", "Above the supported range; may be slow or unstable.");
         } else {
             row.removeAttribute("title");
         }

@@ -795,7 +795,7 @@ def render_project_page(project: dict[str, Any], context: dict[str, Any], catego
         )
     private_html = ""
     if not project.get("link"):
-        private_html = '<span class="chip">Private — architecture only</span>'
+        private_html = '<span class="chip">Private (Architecture Only)</span>'
     page_context = {
         **context,
         "paths": {"root": root},

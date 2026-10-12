@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Triggered — Julian Reder</title>
-    <meta name="description" content="IFTTT-style Discord automation: compose trigger → action rules, persisted in MongoDB.">
+    <title>Triggered | Julian Reder</title>
+    <meta name="description" content="A rule-based Discord automation bot that allows server administrators to configure custom event triggers and actions without writing code, with configuration stored in MongoDB.">
     <link rel="icon" type="image/png" href="../../pfp.webp">
     <script>
         (function() {
@@ -34,7 +34,7 @@
             <article class="page-card">
                 <header class="page-head">
                     <h1 class="look-name big">Triggered</h1>
-                    <p class="look-desc">IFTTT-style Discord automation: compose trigger → action rules, persisted in MongoDB.</p>
+                    <p class="look-desc">A rule-based Discord automation bot that allows server administrators to configure custom event triggers and actions without writing code, with configuration stored in MongoDB.</p>
                     <div class="look-meta">2023 - 2026</div>
                     <div class="page-actions">
                         <a href="https://github.com/quantumbagel/Triggered" target="_blank" rel="noopener noreferrer" class="btn small">View Project ↗</a>
@@ -76,16 +76,16 @@
   <path class="fig23-arr" d="M156 188 H196 V160"/>
   <path class="fig23-arr" d="M366 120 H406"/>
   <path class="fig23-arr" d="M556 120 H596"/>
-</svg><figcaption class="essay-caption">Users compose when → then rules. Triggers and actions load from a JSON registry; Mongo stores the rest.</figcaption></figure>
+</svg><figcaption class="essay-caption">Workflow diagram showing how server events are matched against registered trigger definitions and executed according to stored rules.</figcaption></figure>
 
                 
 
-                <section class="section"><div class="section-head"><h3>Built</h3></div><div class="section-body"><p class="fg-prose">Users compose when/then rules across messages, reactions, voice, roles, and schedules. Triggers and dos load from a JSON registry; slash UX handles validation and autocomplete; permissions are scoped per server. Docker Compose + pytest; the hosted instance is personal, not a product.</p></div></section>
+                <section class="section"><div class="section-head"><h3>Built</h3></div><div class="section-body"><p class="fg-prose">I built Triggered to let Discord community managers create automated event-driven workflows, similar to services like IFTTT. Users configure custom rules triggered by chat messages, emoji reactions, voice channel events, role assignments, or recurring schedules. Triggers and corresponding actions are defined in a modular JSON registry that powers Discord slash command autocomplete and input validation, with server configurations persisted safely in MongoDB.</p></div></section>
                 
                 
                 
 
-                <section class="section essay-section"><div class="section-head"><h3>IFTTT, but for one guild</h3></div><div class="section-body"><div class="fg-prose"><p>Triggered is Discord automation you compose instead of code. When a message / reaction / voice / role / schedule event fires, a stored rule runs an action. Triggers and dos load from a JSON registry so the slash UX can validate and autocomplete without a hardcoded switch.</p><p>Permissions are scoped per server. Docker Compose + pytest. The hosted instance is personal, not a product.</p></div></div></section><section class="section essay-section"><div class="section-head"><h3>Registry, then persistence</h3></div><div class="section-body"><div class="fg-prose"><p>The useful design choice was making the registry the source of what can exist, and Mongo the source of what this guild actually configured. Autocomplete stays honest. A missing trigger type fails closed instead of executing a half-built rule.</p><p>I would not sell this as a platform. I would show it as the moment I stopped writing one-off cogs for every “if X then Y” request.</p></div><figure class="essay-figure"><svg class="diagram" role="img" aria-label="Registry, then persistence" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 260" role="img" aria-label="Triggered compose-a-rule pipeline">
+                <section class="section essay-section"><div class="section-head"><h3>Configurable server automation</h3></div><div class="section-body"><div class="fg-prose"><p>Managing active Discord communities often requires handling repetitive administrative tasks, such as granting roles when users react to a message, welcoming members when they join specific voice channels, or posting reminders on recurring schedules. Instead of writing custom code for every small request, I developed Triggered to provide a flexible rule engine where server moderators can assemble custom workflows directly through Discord slash commands.</p><p>Each automation rule pairs an event trigger with one or more resulting actions, such as sending notifications, updating user permissions, or modifying channel settings. All rule definitions and guild settings are stored in MongoDB, allowing configurations to persist reliably across bot reboots and container redeployments.</p></div></div></section><section class="section essay-section"><div class="section-head"><h3>Registry design and input validation</h3></div><div class="section-body"><div class="fg-prose"><p>To make the system easily extensible, available triggers and actions are defined in a centralized JSON registry rather than being hardcoded into branching logic across multiple bot modules. When users interact with Discord slash commands, the bot queries this registry to dynamically populate autocomplete suggestions and validate user input parameters before saving a rule.</p><p>This separation makes it straightforward to add new trigger types or action handlers without modifying existing command routing. The bot also validates that rules only execute within the permissions granted to the configuring user, preventing automation workflows from being used to bypass standard server moderation controls.</p></div><figure class="essay-figure"><svg class="diagram" role="img" aria-label="Registry design and input validation" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 260" role="img" aria-label="Triggered compose-a-rule pipeline">
   <style>
     .fig24-box { fill: none; stroke: currentColor; stroke-width: 1.4; }
     .fig24-fill { fill: currentColor; fill-opacity: 0.08; }
@@ -118,7 +118,7 @@
   <path class="fig24-arr" d="M156 188 H196 V160"/>
   <path class="fig24-arr" d="M366 120 H406"/>
   <path class="fig24-arr" d="M556 120 H596"/>
-</svg><figcaption class="essay-caption">Events in, registry in the middle, Mongo for the composed rules.</figcaption></figure></div></section>
+</svg><figcaption class="essay-caption">Event handling diagram showing how incoming Discord events are matched against the rule registry and executed through stored MongoDB configurations.</figcaption></figure></div></section>
 
                 <footer class="page-foot">
                     <a href="../../#projects" class="btn small">All projects</a>
