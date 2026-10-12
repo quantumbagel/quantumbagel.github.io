@@ -1,1745 +1,561 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Julian Reder - Computer Engineering & Statistics Student @ NCSU</title>
-    <meta name="description" content="Julian Reder is a Computer Engineering and Statistics student at NC State who develops research software for AERPAW, focusing on autonomous vehicle control, aircraft tracking, camera systems, and backend tools.">
-    <link rel="icon" type="image/png" href="pfp.webp">
-    <script>
-        (function() {
-            const storedTheme = localStorage.getItem("theme");
-            const preferredTheme = storedTheme || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-            if (preferredTheme === "dark") {
-                document.documentElement.classList.add("dark");
-            } else {
-                document.documentElement.classList.remove("dark");
-            }
-        })();
+<meta charset="UTF-8">
+<title>Julian Reder - Computer Engineering & Statistics Student @ NCSU</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="author" content="Julian Reder">
+<meta name="description" content="Julian Reder is a Computer Engineering and Statistics student at NC State who develops research software for AERPAW, focusing on autonomous vehicle control, aircraft tracking, camera systems, and backend tools.">
+<link rel="icon" type="image/png" href="pfp.webp">
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { overflow-x: hidden; scroll-behavior: smooth; }
+    body { 
+        background: #10183a; 
+        color: #ace; 
+        font: normal 13px/1.3 "Avenir", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; 
+        padding: 40px 24px 60px;
+        overflow-x: hidden;
+    }
 
-        if (window.location.hash) {
-            if ('scrollRestoration' in history) {
-                history.scrollRestoration = 'manual';
-            }
-        }
-    </script>
-    <link href="font.css" rel="stylesheet">
-    <link href="theme.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    .everything { 
+        position: relative; 
+        margin-left: auto; 
+        margin-right: auto; 
+        max-width: 564px; 
+    }
+
+    h1 { 
+        text-transform: uppercase; 
+        color: #999; 
+        margin-bottom: 0px; 
+        font-weight: normal; 
+        font-size: 19px; 
+        letter-spacing: 0.5px;
+    }
+
+    h2 { 
+        color: #999; 
+        margin-bottom: 18px; 
+        font-weight: normal; 
+        font-size: 11px; 
+        letter-spacing: 0.3px;
+    }
+
+    p { margin-top: 10px; margin-bottom: 10px; }
+    
+    .intro p { margin-top: 3px; margin-bottom: 3px; }
+    .intro p.section { margin-top: 14px; }
+
+    .section { 
+        margin-top: 28px; 
+        color: #ace;
+        font-size: 13px;
+    }
+
+    /* Worrydream Left-Hanging Year Layout */
+    h3 { 
+        color: #999; 
+        font-size: 13px; 
+        font-weight: normal; 
+        position: absolute; 
+        margin-left: 18px; 
+    }
+
+    ul { 
+        list-style-type: none; 
+        margin-left: 72px; 
+        margin-top: 10px; 
+        margin-bottom: 12px; 
+    }
+
+    li { 
+        color: #999; 
+        margin-bottom: 3px; 
+        line-height: 1.35;
+    }
+
+    a { 
+        color: #fff; 
+        font-weight: bold; 
+        text-decoration: none; 
+        transition: color 0.1s;
+    }
+
+    a:hover { 
+        text-decoration: underline; 
+    }
+
+    /* Standout highlight */
+    .good { 
+        color: #ff0; 
+    }
+
+    .subpages {
+        color: #777;
+        font-size: 11.5px;
+    }
+
+    .subpages a {
+        font-weight: normal;
+        color: #aaa;
+    }
+
+    .bio { 
+        color: #999; 
+        font-size: 12px; 
+        margin-left: 24px; 
+        margin-top: 8px;
+        margin-bottom: 22px; 
+    }
+
+    .bio ul { 
+        list-style-type: disc; 
+        margin-left: 20px; 
+        margin-top: 6px;
+    }
+
+    .bio li { 
+        color: #999; 
+        margin-bottom: 5px; 
+    }
+
+    .bio a { 
+        color: #bbb; 
+        font-weight: normal;
+    }
+
+    .contact-table {
+        margin-left: 72px;
+        margin-top: 8px;
+        color: #999;
+        font-size: 12.5px;
+        line-height: 1.5;
+    }
+
+    .contact-table a {
+        color: #eee;
+    }
+
+    hr { 
+        border: none; 
+        border-top: 1px solid #346; 
+        margin-top: 36px; 
+        margin-bottom: 36px; 
+    }
+
+    /* Contact Form Styles */
+    .contact-form {
+        margin-top: 12px;
+        margin-bottom: 24px;
+    }
+
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+    }
+
+    .form-group {
+        margin-bottom: 12px;
+    }
+
+    .form-group label {
+        display: block;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: #999;
+        margin-bottom: 4px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        width: 100%;
+        background: rgba(13, 20, 48, 0.75);
+        border: 1px solid #346;
+        border-radius: 4px;
+        color: #fff;
+        padding: 8px 10px;
+        font-family: inherit;
+        font-size: 13px;
+        outline: none;
+        transition: border-color 0.15s;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+        border-color: #ff0;
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+        color: #567;
+    }
+
+    .form-actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-top: 8px;
+    }
+
+    .contact-btn {
+        background: transparent;
+        color: #fff;
+        font: inherit;
+        font-size: 12px;
+        font-weight: bold;
+        border: 1px solid #346;
+        border-radius: 3px;
+        padding: 5px 12px;
+        cursor: pointer;
+        transition: all 0.15s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .contact-btn:hover {
+        background: rgba(51, 68, 102, 0.25);
+        border-color: #568;
+        color: #ff0;
+    }
+
+    .contact-btn:active {
+        background: rgba(51, 68, 102, 0.4);
+    }
+
+    .contact-btn:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+    }
+
+    .contact-status {
+        font-size: 12px;
+    }
+
+    .contact-status.success {
+        color: #ff0;
+    }
+
+    .contact-status.error {
+        color: #f77;
+    }
+
+    .hidden {
+        display: none !important;
+    }
+
+    /* Worrydream Floating Hover Preview */
+    .preview-dock {
+        display: none;
+        position: fixed;
+        top: 20%;
+        left: calc(50% + 310px);
+        width: 340px;
+        max-width: 90vw;
+        pointer-events: none;
+        z-index: 100;
+        background: rgba(16, 24, 58, 0.95);
+        border: 1px solid #346;
+        border-radius: 6px;
+        padding: 10px;
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+        transition: opacity 0.15s ease;
+    }
+
+    .preview-dock.visible {
+        display: block;
+    }
+
+    .preview-dock img {
+        width: 100%;
+        max-height: 260px;
+        object-fit: contain;
+        display: block;
+        background: #0d1430;
+        border-radius: 4px;
+    }
+
+    .preview-dock .preview-title {
+        color: #fff;
+        font-weight: bold;
+        font-size: 12px;
+        margin-top: 6px;
+    }
+
+    .preview-dock .preview-caption {
+        color: #89a;
+        font-size: 11px;
+        margin-top: 2px;
+        line-height: 1.3;
+    }
+
+    /* Subtle Decorative Line Art in Background */
+    .bg-sketch {
+        position: absolute;
+        pointer-events: none;
+        opacity: 0.12;
+        z-index: -1;
+    }
+
+    .drone-sketch {
+        top: -10px;
+        right: -240px;
+        width: 320px;
+    }
+
+    .radar-sketch {
+        top: 480px;
+        left: -260px;
+        width: 280px;
+    }
+
+    .top-nav {
+        position: absolute;
+        top: 0;
+        right: 0;
+        font-size: 11px;
+        color: #777;
+    }
+
+    .top-nav a {
+        color: #89a;
+        font-weight: normal;
+        margin-left: 10px;
+    }
+
+    @media screen and (max-width: 600px) {
+        body { font-size: 14px; padding: 24px 16px; }
+        .bg-sketch { display: none; }
+        h1 { font-size: 20px; }
+        h3 { font-size: 13px; margin-left: 0px; position: static; display: block; margin-top: 14px; }
+        ul { margin-left: 16px; margin-top: 4px; }
+        li { margin-bottom: 6px; }
+        .bio { font-size: 13px; margin-left: 12px; }
+        .contact-table { margin-left: 16px; }
+        .preview-dock { display: none !important; }
+        .top-nav { position: static; margin-bottom: 16px; }
+        .form-row { grid-template-columns: 1fr; }
+    }
+</style>
 </head>
 <body>
-    <canvas id="interactive-bg" aria-hidden="true"></canvas>
-    <div class="shell">
-        <header class="topbar">
-            <img src="pfp.webp" alt="Julian Reder" class="brand-thumb">
-            <a href="./" class="brand">Julian Reder</a>
-            <span id="tagline" class="muted small">is a Computer Engineering and Statistics student @ NCSU</span>
-            <span class="grow"></span>
-            <nav class="topbar-nav">
-                <a href="https://github.com/quantumbagel" target="_blank" rel="noopener noreferrer" class="btn small ghost" aria-label="GitHub">
-                    <i class="bi bi-github"></i><span class="nav-label">GitHub</span>
-                </a>
-                <a href="https://www.linkedin.com/in/julian-reder-nc/" target="_blank" rel="noopener noreferrer" class="btn small ghost" aria-label="LinkedIn">
-                    <i class="bi bi-linkedin"></i><span class="nav-label">LinkedIn</span>
-                </a>
-                <a href="https://discordapp.com/users/897146430664355850" target="_blank" rel="noopener noreferrer" class="btn small ghost" aria-label="Discord">
-                    <i class="bi bi-discord"></i><span class="nav-label">Discord</span>
-                </a>
-                <a href="/resume" target="_blank" rel="noopener noreferrer" class="btn small ghost" aria-label="Resume">
-                    <i class="bi bi-file-earmark-text"></i><span class="nav-label">Resume</span>
-                </a>
-                <button id="theme-toggle" class="btn small ghost" type="button" aria-label="Toggle theme" aria-pressed="false">Theme</button>
-                <button id="particle-toggle" class="btn small ghost" type="button" aria-label="Background: On" aria-expanded="false" aria-controls="bg-sim-panel">Background</button>
-            </nav>
-        </header>
-        <main class="page">
-            <div id="site-panel" class="page-card">
-                <section class="section" id="about">
-                    <div class="section-head">
-                        <h3>About</h3>
-                        <button class="section-copy-link icon-btn" data-section-id="about" title="Copy link to section" type="button" aria-label="Copy link to About">
-                            <i class="bi bi-link-45deg"></i>
-                        </button>
-                    </div>
-                    <div class="section-body">
-                        <div class="fg-prose"><p>I am <strong class='text-gray-800 dark:text-white'>Julian Reder</strong>, a Computer Engineering and Statistics student at NC State. Most of my recent work focuses on developing research software for <a href='https://aerpaw.org' class='text-link hover:underline'>AERPAW</a>, an NSF testbed for advanced wireless communications and autonomous aircraft, alongside an internship at Merrill Lynch where I built calculation tools for wealth management portfolios holding over <strong>$500M</strong> in assets under management.</p><p>I enjoy connecting different layers of hardware and software together, including pairing radio receivers with flight stacks, streaming camera telemetry into tracking services, and designing reliable backend APIs. You can reach out through the contact options below, or click <strong>Background</strong> in the header if you want to explore the interactive canvas simulations.</p></div>
-                    </div>
-                </section>
 
-                <section class="section" id="projects">
-                    <div class="section-head">
-                        <h3>What I've built</h3>
-                        <button class="section-copy-link icon-btn" data-section-id="projects" title="Copy link to section" type="button" aria-label="Copy link to projects">
-                            <i class="bi bi-link-45deg"></i>
-                        </button>
-                    </div>
-                    <div class="section-body" id="project-grid">
-                        <article id="project-aerpawlib" class="project-card project-writeup" data-category="aerpaw">
-    <a href="projects/aerpawlib/">
-        <figure class="essay-figure"><svg class="diagram" role="img" aria-label="aerpawlib schematic" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 340" role="img" aria-label="aerpawlib stack from experiment script to ArduPilot">
-  <style>
-    .fig1-box { fill: none; stroke: currentColor; stroke-width: 1.4; }
-    .fig1-fill { fill: currentColor; fill-opacity: 0.08; }
-    .fig1-t { font: 600 12px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; }
-    .fig1-s { font: 400 10px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; opacity: 0.62; }
-    .fig1-arr { stroke: currentColor; stroke-width: 1.2; fill: none; marker-end: url(#fig1-ah); }
-  </style>
-  <defs>
-    <marker id="fig1-ah" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M0 0 L8 4 L0 8 z" fill="currentColor"/>
-    </marker>
-  </defs>
-  <rect class="fig1-box fig1-fill" x="20" y="24" width="160" height="64"/>
-  <text class="fig1-t" x="36" y="50">Experiment script</text>
-  <text class="fig1-s" x="36" y="68">Runner / StateMachine</text>
-  <rect class="fig1-box fig1-fill" x="220" y="24" width="160" height="64"/>
-  <text class="fig1-t" x="236" y="50">aerpawlib v1 / v2</text>
-  <text class="fig1-s" x="236" y="68">Vehicle, can_*, ZMQ</text>
-  <rect class="fig1-box fig1-fill" x="420" y="24" width="160" height="64"/>
-  <text class="fig1-t" x="436" y="50">MAVSDK + gRPC</text>
-  <text class="fig1-s" x="436" y="68">mavsdk_server</text>
-  <rect class="fig1-box fig1-fill" x="580" y="24" width="160" height="64"/>
-  <text class="fig1-t" x="596" y="50">MAVLink filter</text>
-  <text class="fig1-s" x="596" y="68">takeoff land goto yaw</text>
-  <rect class="fig1-box fig1-fill" x="580" y="140" width="160" height="64"/>
-  <text class="fig1-t" x="596" y="166">Cube Orange</text>
-  <text class="fig1-s" x="596" y="184">ArduPilot, LAM6/SAM4</text>
-  <rect class="fig1-box fig1-fill" x="220" y="140" width="160" height="64"/>
-  <text class="fig1-t" x="236" y="166">Safety checker</text>
-  <text class="fig1-s" x="236" y="184">KML geofence, C-VM</text>
-  <rect class="fig1-box fig1-fill" x="20" y="140" width="160" height="64"/>
-  <text class="fig1-t" x="36" y="166">SITL tests</text>
-  <text class="fig1-s" x="36" y="184">Copter + Rover</text>
-  <rect class="fig1-box fig1-fill" x="220" y="252" width="360" height="56"/>
-  <text class="fig1-t" x="236" y="276">ZMQ proxy 5570 / 5571</text>
-  <text class="fig1-s" x="236" y="294">JSON control plane, wait_for_peers</text>
-  <path class="fig1-arr" d="M180 56 H220"/>
-  <path class="fig1-arr" d="M380 56 H420"/>
-  <path class="fig1-arr" d="M580 88 V140"/>
-  <path class="fig1-arr" d="M300 88 V140"/>
-  <path class="fig1-arr" d="M100 204 V280 H220"/>
-  <path class="fig1-arr" d="M300 204 V252"/>
-</svg><figcaption class="essay-caption">Architecture diagram showing how researcher scripts interact with aerpawlib, MAVSDK, and the testbed safety filter before reaching the vehicle autopilot.</figcaption></figure>
-        <h3 class="look-name">aerpawlib</h3>
-        <span class="look-meta">2025 - Present · AERPAW</span>
-        <p class="writeup-dek look-desc">The official vehicle control library for AERPAW, NC State's research testbed for advanced wireless communications and autonomous aircraft.</p>
-    </a>
-    
-    <div class="writeup-grid">
-        <div class="subgroup"><div class="subgroup-title">Built</div><p class="fg-prose">I maintain the official <a href='https://github.com/AERPAW/aerpawlib' class='text-link hover:underline'>AERPAW/aerpawlib</a> repository, which provides the Python programming interface that visiting researchers use to fly autonomous drones and drive ground rovers during experiments. I transitioned the project from its original DroneKit foundation over to MAVSDK, preserved backward compatibility for existing scripts, and added a modern asynchronous API for newer experiments.</p></div>
-        <div class="subgroup"><div class="subgroup-title">Hard parts</div><ul class="fg-list"><li>The testbed safety filter strictly restricts vehicle commands to takeoff, landing, waypoints, and yaw, requiring all takeoff altitudes to stay between 20 and 100 meters and landings to finish within 5 meters of home.</li><li>Direct flight mode changes are blocked by the safety layer, so guided mode has to be maintained using explicit command messages without dropping communication links.</li><li>Safety validation logic has to coordinate directly with the companion virtual machine rather than running locally or through operator consoles.</li><li>Velocity commands and geodesic navigation calculations needed updates to handle latitude scaling properly and prevent newer movement requests from being prematurely cancelled.</li><li>Coordinating multiple vehicles over ZeroMQ required switching to an acknowledged messaging handshake so state transitions would not be dropped under load.</li></ul></div>
-        <div class="subgroup"><div class="subgroup-title">Learned</div><ul class="fg-list"><li>Working within a hardware testbed means the physical safety filter dictates software requirements just as much as the autopilot library itself.</li><li>Software-in-the-loop simulations are essential for catching basic logic errors, but real flight testing is still needed to uncover edge cases in testbed infrastructure.</li><li>Providing a backward-compatible wrapper alongside a redesigned API made it possible to modernize the library without breaking existing researcher experiments.</li></ul></div>
-    </div>
-    <div class="chips"><span class="chip-btn">Python</span><span class="chip-btn">MAVSDK / MAVLink</span><span class="chip-btn">ArduPilot</span><span class="chip-btn">asyncio / gRPC</span><span class="chip-btn">ZeroMQ</span><span class="chip-btn">pytest</span><span class="chip-btn">SITL</span></div>
-    <div class="fg-actions">
-        <a href="projects/aerpawlib/" class="btn small primary">Open writeup</a>
-        <a href="https://github.com/AERPAW/aerpawlib" target="_blank" rel="noopener noreferrer" class="btn small">View Project ↗</a>
-        
-    </div>
-</article>
-<article id="project-pyaerial" class="project-card project-writeup" data-category="aerpaw">
-    <a href="projects/pyaerial/">
-        <figure class="essay-figure"><svg class="diagram" role="img" aria-label="PyAerial schematic" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 300" role="img" aria-label="PyAerial ingest to radar pipeline">
-  <style>
-    .fig2-box { fill: none; stroke: currentColor; stroke-width: 1.4; }
-    .fig2-fill { fill: currentColor; fill-opacity: 0.08; }
-    .fig2-t { font: 600 12px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; }
-    .fig2-s { font: 400 10px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; opacity: 0.62; }
-    .fig2-arr { stroke: currentColor; stroke-width: 1.2; fill: none; marker-end: url(#fig2-ah); }
-  </style>
-  <defs>
-    <marker id="fig2-ah" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M0 0 L8 4 L0 8 z" fill="currentColor"/>
-    </marker>
-  </defs>
-  <rect class="fig2-box fig2-fill" x="16" y="28" width="140" height="70"/>
-  <text class="fig2-t" x="28" y="56">RTL-SDR</text>
-  <text class="fig2-s" x="28" y="74">dump1090 AVR/Beast</text>
-  <rect class="fig2-box fig2-fill" x="176" y="28" width="140" height="70"/>
-  <text class="fig2-t" x="188" y="56">Engine</text>
-  <text class="fig2-s" x="188" y="74">merge, pyModeS</text>
-  <rect class="fig2-box fig2-fill" x="336" y="28" width="140" height="70"/>
-  <text class="fig2-t" x="348" y="56">Kinematics</text>
-  <text class="fig2-s" x="348" y="74">Kalman, ETA</text>
-  <rect class="fig2-box fig2-fill" x="496" y="28" width="140" height="70"/>
-  <text class="fig2-t" x="508" y="56">Geofence</text>
-  <text class="fig2-s" x="508" y="74">Shapely, KML</text>
-  <rect class="fig2-box fig2-fill" x="176" y="150" width="140" height="70"/>
-  <text class="fig2-t" x="188" y="178">Redis live</text>
-  <text class="fig2-s" x="188" y="196">tracker owns keys</text>
-  <rect class="fig2-box fig2-fill" x="336" y="150" width="140" height="70"/>
-  <text class="fig2-t" x="348" y="178">SQLite WAL</text>
-  <text class="fig2-s" x="348" y="196">flight history</text>
-  <rect class="fig2-box fig2-fill" x="496" y="150" width="248" height="70"/>
-  <text class="fig2-t" x="508" y="178">Portal, FastAPI + React</text>
-  <text class="fig2-s" x="508" y="196">WebSocket radar, Beast, webhooks</text>
-  <path class="fig2-arr" d="M156 63 H176"/>
-  <path class="fig2-arr" d="M316 63 H336"/>
-  <path class="fig2-arr" d="M476 63 H496"/>
-  <path class="fig2-arr" d="M246 98 V150"/>
-  <path class="fig2-arr" d="M406 98 V150"/>
-  <path class="fig2-arr" d="M316 185 H336"/>
-  <path class="fig2-arr" d="M476 185 H496"/>
-</svg><figcaption class="essay-caption">Pipeline overview showing how radio signals pass from dump1090 through pyModeS decoding, geofence checks, and Redis caching before reaching the web map.</figcaption></figure>
-        <h3 class="look-name">PyAerial</h3>
-        <span class="look-meta">2024 - Present · AERPAW</span>
-        <p class="writeup-dek look-desc">An airspace awareness and aircraft tracking system that ingests Mode S and ADS-B signals, evaluates geofence boundaries, and displays live flights on a radar map.</p>
-    </a>
-    
-    <div class="writeup-grid">
-        <div class="subgroup"><div class="subgroup-title">Built</div><p class="fg-prose">I built PyAerial as a complete rewrite of my earlier aircraft tracking project, <a href='https://github.com/quantumbagel/airstrik.py' class='text-link hover:underline'>airstrik.py</a>. The application decodes raw ADS-B radio signals using pyModeS, evaluates custom Shapely geofence boundaries, and separates the real-time tracking daemon from the web dashboard so that user interface traffic never interrupts signal decoding.</p></div>
-        <div class="subgroup"><div class="subgroup-title">Hard parts</div><ul class="fg-list"><li>Decoding Compact Position Reporting coordinates requires a reliable reference position separate from boundary areas to prevent receiver errors from producing false aircraft locations.</li><li>Merging signals from multiple ground receivers requires comparing signal strength and Hamming distance while correctly wrapping compass heading boundaries across zero degrees.</li><li>Estimated arrival calculations had to account for both straight paths and turning maneuvers to ensure aircraft approaching boundaries are detected consistently.</li><li>Geofence notifications needed timing hysteresis to avoid sending multiple alerts when an aircraft briefly skirts the edge of an airspace boundary.</li><li>The background tracker maintains a persistent heartbeat in Redis so that read-only web workers cannot accidentally overwrite live tracking state.</li></ul></div>
-        <div class="subgroup"><div class="subgroup-title">Learned</div><ul class="fg-list"><li>Handling radio broadcast formats requires validating packet integrity and message order before attempting to plot coordinates on a map.</li><li>Separating real-time state in Redis from long-term flight logs in SQLite provides much better performance and reliability than trying to use a single database for both.</li><li>Geofence rules work best when they include explicit flight parameters like altitude ceilings, ground speed, and arrival time rather than just simple point checks.</li></ul></div>
-    </div>
-    <div class="chips"><span class="chip-btn">Python</span><span class="chip-btn">pyModeS</span><span class="chip-btn">Shapely</span><span class="chip-btn">Redis</span><span class="chip-btn">SQLite</span><span class="chip-btn">FastAPI</span><span class="chip-btn">React</span><span class="chip-btn">Docker</span><span class="chip-btn">RTL-SDR</span><span class="chip-btn">ADS-B / Mode-S</span></div>
-    <div class="fg-actions">
-        <a href="projects/pyaerial/" class="btn small primary">Open writeup</a>
-        <a href="https://github.com/quantumbagel/PyAerial" target="_blank" rel="noopener noreferrer" class="btn small">View Project ↗</a>
-        
-    </div>
-</article>
-<article id="project-dronetracker" class="project-card project-writeup" data-category="aerpaw">
-    <a href="projects/dronetracker/">
-        <figure class="essay-figure"><svg class="diagram" role="img" aria-label="DroneTracker schematic" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 340" role="img" aria-label="DroneTracker camera-to-UAV aiming geometry">
-  <style>
-    .fig3-line { stroke: currentColor; stroke-width: 1.3; fill: none; }
-    .fig3-dash { stroke-dasharray: 5 4; }
-    .fig3-t { font: 600 12px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; }
-    .fig3-s { font: 400 10px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; opacity: 0.62; }
-    .fig3-fill { fill: currentColor; fill-opacity: 0.1; }
-    .fig3-box { fill: none; stroke: currentColor; stroke-width: 1.4; }
-  </style>
-  <rect class="fig3-box fig3-fill" x="16" y="16" width="200" height="56"/>
-  <text class="fig3-t" x="28" y="40">AXIS Q-8615E</text>
-  <text class="fig3-s" x="28" y="56">site pose in YAML</text>
-  <path class="fig3-line" d="M80 280 L80 120"/>
-  <path class="fig3-line fig3-dash" d="M80 280 L420 70"/>
-  <path class="fig3-line fig3-dash" d="M80 280 L620 40"/>
-  <polygon points="68,280 92,280 80,252" fill="currentColor"/>
-  <circle cx="420" cy="70" r="7" fill="none" stroke="currentColor" stroke-width="1.4"/>
-  <path class="fig3-line" d="M410 70 h20 M420 60 v20"/>
-  <text class="fig3-t" x="436" y="66">UAV now</text>
-  <text class="fig3-s" x="436" y="82">lat lon alt</text>
-  <circle cx="620" cy="40" r="5" fill="currentColor"/>
-  <text class="fig3-t" x="632" y="36">lead</text>
-  <text class="fig3-s" x="632" y="52">NEU velocity</text>
-  <text class="fig3-s" x="96" y="200">tilt = elevation</text>
-  <text class="fig3-s" x="220" y="250">pan = spherical bearing</text>
-  <text class="fig3-s" x="300" y="140">zoom = FOV(range, size) to 0-9999</text>
-  <path class="fig3-line" d="M80 280 H300"/>
-  <text class="fig3-s" x="88" y="300">camera north-offset wraps into AXIS +/-180</text>
-  <rect class="fig3-box fig3-fill" x="480" y="250" width="260" height="70"/>
-  <text class="fig3-t" x="496" y="278">VAPIX</text>
-  <text class="fig3-s" x="496" y="296">ptz.cgi, record.cgi, export.mkv</text>
-</svg><figcaption class="essay-caption">Tracking diagram showing how drone GPS coordinates are transformed into physical camera pan, tilt, and zoom angles.</figcaption></figure>
-        <h3 class="look-name">DroneTracker</h3>
-        <span class="look-meta">2024 - Present · AERPAW</span>
-        <p class="writeup-dek look-desc">An automated tracking service that points AXIS pan-tilt-zoom cameras at flying drones using live GPS coordinates from Kafka and records flight video over VAPIX.</p>
-    </a>
-    
-    <div class="writeup-grid">
-        <div class="subgroup"><div class="subgroup-title">Built</div><p class="fg-prose">I developed DroneTracker as a containerized service that reads real-time drone position and velocity telemetry from Apache Kafka, computes the required camera orientation angles, and issues pan, tilt, and zoom commands to AXIS optical cameras over the VAPIX network protocol. Because existing control libraries only supported movement commands without video recording, I also forked and updated the camera client library to manage recording sessions on the camera's local storage.</p></div>
-        <div class="subgroup"><div class="subgroup-title">Hard parts</div><ul class="fg-list"><li>Translating geodetic coordinates into camera angles requires calculating spherical bearings for pan, elevation angles for tilt, and optical zoom steps based on distance and vehicle dimensions.</li><li>Handling camera compass offsets requires wrapping angles correctly into the camera's native pan range of minus 180 to positive 180 degrees.</li><li>Supporting predictive lead times requires managing coordinate frame conventions carefully so vertical velocity directions match physical drone movement.</li><li>Network delays and stale telemetry packets had to be filtered out so the camera would hold a resting position rather than slewing toward outdated coordinates.</li></ul></div>
-        <div class="subgroup"><div class="subgroup-title">Learned</div><p class="fg-prose">Connecting physical cameras to network telemetry requires handling camera hardware mechanics, network authentication, and video storage management alongside the mathematical coordinate transformations.</p></div>
-    </div>
-    <div class="chips"><span class="chip-btn">Python</span><span class="chip-btn">VAPIX</span><span class="chip-btn">Kafka</span><span class="chip-btn">geopy</span><span class="chip-btn">Docker</span><span class="chip-btn">Linux/Unix</span></div>
-    <div class="fg-actions">
-        <a href="projects/dronetracker/" class="btn small primary">Open writeup</a>
-        <a href="https://github.com/quantumbagel/DroneTracker" target="_blank" rel="noopener noreferrer" class="btn small">View Project ↗</a>
-        
-    </div>
-</article>
-<article id="project-ml-ticker" class="project-card project-writeup" data-category="ml">
-    <a href="projects/ml-ticker/">
-        <figure class="essay-figure"><svg class="diagram" role="img" aria-label="ML-Ticker schematic" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 260" role="img" aria-label="ML-Ticker plan fetch derive export pipeline">
-  <style>
-    .fig4-box { fill: none; stroke: currentColor; stroke-width: 1.4; }
-    .fig4-fill { fill: currentColor; fill-opacity: 0.08; }
-    .fig4-t { font: 600 12px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; }
-    .fig4-s { font: 400 10px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; opacity: 0.62; }
-    .fig4-arr { stroke: currentColor; stroke-width: 1.2; fill: none; marker-end: url(#fig4-ah); }
-  </style>
-  <defs>
-    <marker id="fig4-ah" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M0 0 L8 4 L0 8 z" fill="currentColor"/>
-    </marker>
-  </defs>
-  <rect class="fig4-box fig4-fill" x="16" y="40" width="130" height="70"/>
-  <text class="fig4-t" x="28" y="68">YAML config</text>
-  <text class="fig4-s" x="28" y="86">Pydantic forbid</text>
-  <rect class="fig4-box fig4-fill" x="166" y="40" width="130" height="70"/>
-  <text class="fig4-t" x="178" y="68">Validate</text>
-  <text class="fig4-s" x="178" y="86">AST, DAG, typos</text>
-  <rect class="fig4-box fig4-fill" x="316" y="40" width="130" height="70"/>
-  <text class="fig4-t" x="328" y="68">Planner</text>
-  <text class="fig4-s" x="328" y="86">batch FQL calls</text>
-  <rect class="fig4-box fig4-fill" x="466" y="40" width="130" height="70"/>
-  <text class="fig4-t" x="478" y="68">FactSet FPE</text>
-  <text class="fig4-s" x="478" y="86">snapshot / series</text>
-  <rect class="fig4-box fig4-fill" x="166" y="154" width="130" height="70"/>
-  <text class="fig4-t" x="178" y="182">Sandbox eval</text>
-  <text class="fig4-s" x="178" y="200">topo order, N/A</text>
-  <rect class="fig4-box fig4-fill" x="316" y="154" width="280" height="70"/>
-  <text class="fig4-t" x="328" y="182">Export</text>
-  <text class="fig4-s" x="328" y="200">Rich tables, Excel, JSON, FDT</text>
-  <path class="fig4-arr" d="M146 75 H166"/>
-  <path class="fig4-arr" d="M296 75 H316"/>
-  <path class="fig4-arr" d="M446 75 H466"/>
-  <path class="fig4-arr" d="M231 110 V154"/>
-  <path class="fig4-arr" d="M296 189 H316"/>
-</svg><figcaption class="essay-caption">Architectural overview showing configuration validation, batched data querying, dependency graph evaluation, and report export.</figcaption></figure>
-        <h3 class="look-name">ML-Ticker</h3>
-        <span class="look-meta">2026 · Merrill Lynch</span>
-        <p class="writeup-dek look-desc">A command line financial data tool built during my internship at Merrill Lynch, featuring FactSet FQL querying, a safe formula evaluation engine, and Excel reporting.</p>
-    </a>
-    
-    <div class="writeup-grid">
-        <div class="subgroup"><div class="subgroup-title">Built</div><p class="fg-prose">I built ML-Ticker as an internal Python command line application for equity research workflows, allowing analysts to retrieve FactSet market data, define custom financial metrics through configuration files, and export formatted reports to terminal tables and styled Excel workbooks.</p></div>
-        <div class="subgroup"><div class="subgroup-title">Hard parts</div><ul class="fg-list"><li>Allowing analysts to write custom formulas required building a restricted syntax tree evaluator that safely prevented arbitrary code execution while supporting mathematical expressions.</li><li>Formulas frequently depended on other calculated metrics, requiring an internal dependency graph to resolve evaluation order and detect circular references before querying external APIs.</li><li>Financial queries often returned incomplete data points that needed typed missing-value representations to keep calculated workbook columns from failing silently.</li><li>Managing differences between point-in-time portfolio holdings and historical time-series queries required separate data models and multi-stage retrieval pipelines.</li></ul></div>
-        <div class="subgroup"><div class="subgroup-title">Learned</div><p class="fg-prose">Building internal research tools requires validating user configurations and mathematical expressions up front so errors are caught before making expensive data queries.</p></div>
-    </div>
-    <div class="chips"><span class="chip-btn">Python</span><span class="chip-btn">FactSet FQL</span><span class="chip-btn">Pydantic</span><span class="chip-btn">pandas</span><span class="chip-btn">openpyxl</span><span class="chip-btn">Typer</span><span class="chip-btn">DAGs</span></div>
-    <div class="fg-actions">
-        <a href="projects/ml-ticker/" class="btn small primary">Open writeup</a>
-        
-        
-    </div>
-</article>
-<article id="project-strife" class="project-card project-writeup" data-category="discord-bots">
-    <a href="projects/strife/">
-        <figure class="essay-figure"><svg class="diagram" role="img" aria-label="Strife schematic" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 280" role="img" aria-label="Strife host architecture">
-  <style>
-    .fig5-box { fill: none; stroke: currentColor; stroke-width: 1.4; }
-    .fig5-fill { fill: currentColor; fill-opacity: 0.08; }
-    .fig5-t { font: 600 12px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; }
-    .fig5-s { font: 400 10px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; opacity: 0.62; }
-    .fig5-arr { stroke: currentColor; stroke-width: 1.2; fill: none; marker-end: url(#fig5-ah); }
-  </style>
-  <defs>
-    <marker id="fig5-ah" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M0 0 L8 4 L0 8 z" fill="currentColor"/>
-    </marker>
-  </defs>
-  <rect class="fig5-box fig5-fill" x="20" y="28" width="160" height="70"/>
-  <text class="fig5-t" x="36" y="56">Discord thread</text>
-  <text class="fig5-s" x="36" y="74">slash, components</text>
-  <rect class="fig5-box fig5-fill" x="220" y="28" width="160" height="70"/>
-  <text class="fig5-t" x="236" y="56">Host</text>
-  <text class="fig5-s" x="236" y="74">lobby, session, routing</text>
-  <rect class="fig5-box fig5-fill" x="420" y="28" width="160" height="70"/>
-  <text class="fig5-t" x="436" y="56">play()</text>
-  <text class="fig5-s" x="436" y="74">live = replay = CLI</text>
-  <rect class="fig5-box fig5-fill" x="620" y="28" width="120" height="70"/>
-  <text class="fig5-t" x="636" y="56">Plugin</text>
-  <text class="fig5-s" x="636" y="74">GameContext</text>
-  <rect class="fig5-box fig5-fill" x="220" y="150" width="160" height="70"/>
-  <text class="fig5-t" x="236" y="178">Move log</text>
-  <text class="fig5-s" x="236" y="196">append-only, resume</text>
-  <rect class="fig5-box fig5-fill" x="420" y="150" width="320" height="70"/>
-  <text class="fig5-t" x="436" y="178">PostgreSQL 16</text>
-  <text class="fig5-s" x="436" y="196">matches, players, live integrity</text>
-  <path class="fig5-arr" d="M180 63 H220"/>
-  <path class="fig5-arr" d="M380 63 H420"/>
-  <path class="fig5-arr" d="M580 63 H620"/>
-  <path class="fig5-arr" d="M300 98 V150"/>
-  <path class="fig5-arr" d="M380 185 H420"/>
-</svg><figcaption class="essay-caption">Architecture diagram illustrating how Discord interactions route through the core game host and state storage into individual game plugins.</figcaption></figure>
-        <h3 class="look-name">Strife</h3>
-        <span class="look-meta">2026 - Present · Discord Bots</span>
-        <p class="writeup-dek look-desc">A multiplayer game platform for Discord that runs turn-based matches inside message threads, featuring plugin game engines, PostgreSQL persistence, and crash recovery.</p>
-    </a>
-    
-    <div class="writeup-grid">
-        <div class="subgroup"><div class="subgroup-title">Built</div><p class="fg-prose">I developed Strife as a complete rewrite of my earlier Discord bot PlayCord, creating an extensible platform where multiplayer turn-based games run in dedicated message threads. The architecture uses a modular plugin system so that the exact same game logic runs interactively on Discord, replays historical matches, and runs in local command line sessions.</p></div>
-        <div class="subgroup"><div class="subgroup-title">Hard parts</div><ul class="fg-list"><li>Recovering ongoing matches after bot restarts required saving every player action to an append-only database log and replaying moves sequentially to restore game state.</li><li>Handling user interface interactions across Discord threads required encoding signed message identifiers and managing automated timeouts for inactive lobbies.</li><li>Preventing unresponsive game code from blocking Discord's asynchronous event loop required isolating player turns inside bounded background execution pools.</li><li>Designing relational database migrations to track active match states and foreign key relationships across players, guilds, and historical move logs.</li></ul></div>
-        <div class="subgroup"><div class="subgroup-title">Learned</div><p class="fg-prose">Building a reliable online gaming bot requires treating state persistence as the central priority, using deterministic game rules and an append-only move log so that crashes never corrupt active games.</p></div>
-    </div>
-    <div class="chips"><span class="chip-btn">Python</span><span class="chip-btn">discord.py</span><span class="chip-btn">PostgreSQL</span><span class="chip-btn">asyncpg</span><span class="chip-btn">Pydantic</span><span class="chip-btn">Docker</span></div>
-    <div class="fg-actions">
-        <a href="projects/strife/" class="btn small primary">Open writeup</a>
-        <a href="https://github.com/quantumbagel/Strife" target="_blank" rel="noopener noreferrer" class="btn small">View Project ↗</a>
-        
-    </div>
-</article>
-<article id="project-portfolio-website-v3" class="project-card project-writeup" data-category="solo">
-    <a href="projects/portfolio-website-v3/">
-        <figure class="essay-figure"><svg class="diagram" role="img" aria-label="Portfolio Website (v3) schematic" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 220" role="img" aria-label="Portfolio generator and simulation engine">
-  <style>
-    .fig6-box { fill: none; stroke: currentColor; stroke-width: 1.4; }
-    .fig6-fill { fill: currentColor; fill-opacity: 0.08; }
-    .fig6-t { font: 600 12px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; }
-    .fig6-s { font: 400 10px ui-monospace, SFMono-Regular, Menlo, monospace; fill: currentColor; opacity: 0.62; }
-    .fig6-arr { stroke: currentColor; stroke-width: 1.2; fill: none; marker-end: url(#fig6-ah); }
-  </style>
-  <defs>
-    <marker id="fig6-ah" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M0 0 L8 4 L0 8 z" fill="currentColor"/>
-    </marker>
-  </defs>
-  <rect class="fig6-box fig6-fill" x="20" y="36" width="160" height="70"/>
-  <text class="fig6-t" x="36" y="64">site.toml</text>
-  <text class="fig6-s" x="36" y="82">essays, projects</text>
-  <rect class="fig6-box fig6-fill" x="220" y="36" width="160" height="70"/>
-  <text class="fig6-t" x="236" y="64">generator.py</text>
-  <text class="fig6-s" x="236" y="82">HTML pages + media</text>
-  <rect class="fig6-box fig6-fill" x="420" y="36" width="160" height="70"/>
-  <text class="fig6-t" x="436" y="64">GitHub Pages</text>
-  <text class="fig6-s" x="436" y="82">static index + essays</text>
-  <rect class="fig6-box fig6-fill" x="220" y="136" width="360" height="60"/>
-  <text class="fig6-t" x="236" y="162">Canvas engine, 12 modes</text>
-  <text class="fig6-s" x="236" y="180">molecules, orbits, life, aurora, flock</text>
-  <path class="fig6-arr" d="M180 71 H220"/>
-  <path class="fig6-arr" d="M380 71 H420"/>
-  <path class="fig6-arr" d="M300 106 V136"/>
-</svg><figcaption class="essay-caption">Architecture diagram illustrating how Python build scripts compile site data into static HTML pages alongside the standalone canvas simulation engine.</figcaption></figure>
-        <h3 class="look-name">Portfolio Website (v3)</h3>
-        <span class="look-meta">2026 - Present · Solo Projects</span>
-        <p class="writeup-dek look-desc">A personal portfolio site generated with custom Python build scripts from structured TOML data, featuring twelve interactive HTML5 canvas background simulations.</p>
-    </a>
-    <figure class="essay-figure media-figure"><div class="media-carousel" data-carousel-id="gallery-project-portfolio-website-v3"><div class="carousel-slides" style="transform: translateX(0%);"><div class="carousel-slide"><img src="media/projects/portfolio/homepage-aurora.png" alt="This site running in dark mode with the aurora background simulation" loading="lazy" decoding="async" class="carousel-media"></div><div class="carousel-slide"><img src="media/projects/portfolio/sim-panel.png" alt="Background control panel open on the live site, aurora mode selected" loading="lazy" decoding="async" class="carousel-media"></div></div><button class="carousel-prev icon-btn" type="button" aria-label="Previous slide">‹</button><button class="carousel-next icon-btn" type="button" aria-label="Next slide">›</button><div class="carousel-dots"><button class="carousel-dot on" type="button" data-slide-to="0" aria-label="Go to slide 1"></button><button class="carousel-dot" type="button" data-slide-to="1" aria-label="Go to slide 2"></button></div></div></figure>
-    <div class="writeup-grid">
-        <div class="subgroup"><div class="subgroup-title">Built</div><p class="fg-prose">I built this website using a lightweight custom static generator in Python that compiles structured content from a TOML configuration file into clean HTML pages. The visual background is powered by a custom JavaScript canvas engine that provides twelve interactive particle and physics simulations with adjustable settings.</p></div>
-        <div class="subgroup"><div class="subgroup-title">Hard parts</div><ul class="fg-list"><li>Maintaining smooth canvas animation performance behind semi-transparent backdrop filters across both desktop and mobile web browsers.</li><li>Ensuring canvas event listeners handle user interaction smoothly without interfering with text selection, link clicks, or normal page scrolling.</li><li>Supporting accessibility preferences by respecting reduced motion settings and persisting user simulation choices in local storage.</li></ul></div>
-        <div class="subgroup"><div class="subgroup-title">Learned</div><p class="fg-prose">Building a personal site with a simple file-driven static generator makes content maintenance easy while keeping page load speeds fast and avoiding runtime framework dependencies.</p></div>
-    </div>
-    <div class="chips"><span class="chip-btn">Python</span><span class="chip-btn">JavaScript</span><span class="chip-btn">Canvas</span></div>
-    <div class="fg-actions">
-        <a href="projects/portfolio-website-v3/" class="btn small primary">Open writeup</a>
-        <a href="https://github.com/quantumbagel/quantumbagel.github.io" target="_blank" rel="noopener noreferrer" class="btn small">View Project ↗</a>
-        <button type="button" data-open-sim class="btn small">Open the simulations</button>
-    </div>
-</article>
+<div class="everything">
 
-                    </div>
-                </section>
+    <!-- Top Navigation -->
+    <div class="top-nav">
+        <a href="#contact" class="good">Talk to me</a> ·
+        <a href="/resume">Resume</a> ·
+        <a href="https://github.com/quantumbagel">GitHub</a> ·
+        <a href="https://www.linkedin.com/in/julian-reder-nc/">LinkedIn</a>
+    </div>
 
-                <section class="section" id="more">
-                    <div class="section-head">
-                        <h3>More builds</h3>
-                        <button class="section-copy-link icon-btn" data-section-id="more" title="Copy link to section" type="button" aria-label="Copy link to more builds">
-                            <i class="bi bi-link-45deg"></i>
-                        </button>
-                    </div>
-                    <div class="section-body">
-                        <article id="project-ncsu-parking" class="project-card project-archive" data-category="solo">
-    <div class="hbox spread">
-        <div>
-            <h3>NCSU Parking</h3>
-            <span class="look-meta">2026 · Solo Projects</span>
-        </div>
-        <button class="copy-link-btn icon-btn" data-project-id="project-ncsu-parking" title="Copy link to project" type="button">#</button>
-    </div>
-    <p class="look-desc">A predictive parking availability model for NC State campus decks that combines historical occupancy feeds with campus event schedules and validates machine learning models against strong seasonal baselines.</p>
-    <details class="notes"><summary>Notes</summary><div class="section-body"><p class="fg-prose">I built a data collection and forecasting pipeline for NC State campus parking decks. A background collector polls public occupancy APIs and university event calendars into PostgreSQL, engineering features such as five-minute time grids, lag statistics, rolling occupancy averages, geographic event distances, and academic calendar dates. The forecasting pipeline evaluates an hour-of-week seasonal baseline and only retains per-lot XGBoost models when they achieve lower validation error than the simple median across forecasting windows ranging from fifteen minutes to twenty-four hours. Model training runs as a decoupled batch job, keeping the lightweight Streamlit dashboard responsive.</p></div></details>
-    
-    <div class="fg-actions"><a href="projects/ncsu-parking/" class="btn small">Writeup</a></div>
-</article>
-<article id="project-amazon-music-discord-rpc" class="project-card project-archive" data-category="solo">
-    <div class="hbox spread">
-        <div>
-            <h3>Amazon Music Discord RPC</h3>
-            <span class="look-meta">2026 · Solo Projects</span>
-        </div>
-        <button class="copy-link-btn icon-btn" data-project-id="project-amazon-music-discord-rpc" title="Copy link to project" type="button">#</button>
-    </div>
-    <p class="look-desc">A browser extension and lightweight Rust background helper that shares current Amazon Music playback status to Discord Rich Presence.</p>
-    <details class="notes"><summary>Notes</summary><div class="section-body"><p class="fg-prose">I created a browser extension and native messaging companion in Rust that displays active Amazon Music tracks in Discord status. The browser extension reads track details directly from the standard browser Media Session API and internal player state rather than fragile web page scraping. The Rust background process communicates with the browser using native messaging and sends status updates over Discord IPC, incorporating update batching and rate limiting to keep Discord presence smooth and responsive.</p></div></details>
-    <figure class="essay-figure media-figure"><div class="media-carousel" data-carousel-id="gallery-project-amazon-music-discord-rpc"><div class="carousel-slides" style="transform: translateX(0%);"><div class="carousel-slide"><img src="media/projects/amazon/popup.png" alt="Amazon Music Rich Presence extension popup while Murderer by Ren is playing, helper app connected as quantumbagel" loading="lazy" decoding="async" class="carousel-media"></div><div class="carousel-slide"><img src="media/projects/amazon/discord-status.png" alt="Discord current activity showing Listening to Amazon Music with the song Microwave by Ricky Jamaraz" loading="lazy" decoding="async" class="carousel-media"></div></div><button class="carousel-prev icon-btn" type="button" aria-label="Previous slide">‹</button><button class="carousel-next icon-btn" type="button" aria-label="Next slide">›</button><div class="carousel-dots"><button class="carousel-dot on" type="button" data-slide-to="0" aria-label="Go to slide 1"></button><button class="carousel-dot" type="button" data-slide-to="1" aria-label="Go to slide 2"></button></div></div></figure>
-    <div class="fg-actions"><a href="projects/amazon-music-discord-rpc/" class="btn small">Writeup</a></div>
-</article>
-<article id="project-discord-py-template" class="project-card project-archive" data-category="discord-bots">
-    <div class="hbox spread">
-        <div>
-            <h3>discord.py-template</h3>
-            <span class="look-meta">2025 - Present · Discord Bots</span>
-        </div>
-        <button class="copy-link-btn icon-btn" data-project-id="project-discord-py-template" title="Copy link to project" type="button">#</button>
-    </div>
-    <p class="look-desc">A modular discord.py application starter template featuring YAML configuration, cog hot-reloading with automatic rollback on error, structured crash logging, and emoji analytics.</p>
-    <details class="notes"><summary>Notes</summary><div class="section-body"><p class="fg-prose">I designed this project template to standardize how I build and maintain Discord bots in Python. It includes a centralized YAML configuration loader, administrative bot owner utilities, a hot-reload system that automatically rolls back failed module updates to avoid downtime, and an integrated emoji analytics cog backed by SQLite and the Tortoise ORM.</p></div></details>
-    
-    <div class="fg-actions"><a href="https://github.com/quantumbagel/discord.py-template" target="_blank" rel="noopener noreferrer" class="btn small">View Project ↗</a></div>
-</article>
-<article id="project-chess-challenge" class="project-card project-archive" data-category="collabs">
-    <div class="hbox spread">
-        <div>
-            <h3>Chess-Challenge</h3>
-            <span class="look-meta">2023 · Collaborations</span>
-        </div>
-        <button class="copy-link-btn icon-btn" data-project-id="project-chess-challenge" title="Copy link to project" type="button">#</button>
-    </div>
-    <p class="look-desc">A custom C# chess engine developed for Sebastian Lague's Chess Coding Challenge, implementing iterative-deepening alpha-beta search within a strict 1024-token code budget.</p>
-    <details class="notes"><summary>Notes</summary><div class="section-body"><p class="fg-prose">I created this chess bot as an entry in Sebastian Lague's community coding challenge, which required competitors to build an autonomous chess engine in C# under a strict budget of 1024 code tokens. Across experimental branches, I implemented iterative-deepening search, alpha-beta pruning, quiescence evaluation to prevent horizon effects, and advanced search heuristics including transposition tables, null-move pruning, killer move ordering, and compact piece-square positional tables.</p></div></details>
-    
-    <div class="fg-actions"><a href="https://github.com/quantumbagel/Chess-Challenge" target="_blank" rel="noopener noreferrer" class="btn small">View Project ↗</a></div>
-</article>
-<article id="project-triggered" class="project-card project-archive" data-category="discord-bots">
-    <div class="hbox spread">
-        <div>
-            <h3>Triggered</h3>
-            <span class="look-meta">2023 - 2026 · Discord Bots</span>
-        </div>
-        <button class="copy-link-btn icon-btn" data-project-id="project-triggered" title="Copy link to project" type="button">#</button>
-    </div>
-    <p class="look-desc">A rule-based Discord automation bot that allows server administrators to configure custom event triggers and actions without writing code, with configuration stored in MongoDB.</p>
-    <details class="notes"><summary>Notes</summary><div class="section-body"><p class="fg-prose">I built Triggered to let Discord community managers create automated event-driven workflows, similar to services like IFTTT. Users configure custom rules triggered by chat messages, emoji reactions, voice channel events, role assignments, or recurring schedules. Triggers and corresponding actions are defined in a modular JSON registry that powers Discord slash command autocomplete and input validation, with server configurations persisted safely in MongoDB.</p></div></details>
-    
-    <div class="fg-actions"><a href="projects/triggered/" class="btn small">Writeup</a><a href="https://github.com/quantumbagel/Triggered" target="_blank" rel="noopener noreferrer" class="btn small">View Project ↗</a></div>
-</article>
-<article id="project-finitecraft" class="project-card project-archive" data-category="collabs">
-    <div class="hbox spread">
-        <div>
-            <h3>finiteCraft</h3>
-            <span class="look-meta">2024 · Collaborations</span>
-        </div>
-        <button class="copy-link-btn icon-btn" data-project-id="project-finitecraft" title="Copy link to project" type="button">#</button>
-    </div>
-    <p class="look-desc">A distributed web scraping and graph search project that discovered and mapped crafting combinations for the browser game Infinite Craft.</p>
-    <details class="notes"><summary>Notes</summary><div class="section-body"><p class="fg-prose">I collaborated on this project to explore large-scale web scraping and combination search for the browser game Infinite Craft. I developed the automated scraping backend using multithreaded workers, rotating proxy pools with health scoring, and MongoDB storage to capture recipe discovery pairs, while a collaborator built the tree search algorithm used to find optimal crafting paths between elements.</p></div></details>
-    
-    <div class="fg-actions"><a href="https://github.com/finiteCraft/finiteCraft" target="_blank" rel="noopener noreferrer" class="btn small">View Project ↗</a></div>
-</article>
-<article id="project-airtime" class="project-card project-archive" data-category="solo">
-    <div class="hbox spread">
-        <div>
-            <h3>airtime</h3>
-            <span class="look-meta">2024 · Solo Projects</span>
-        </div>
-        <button class="copy-link-btn icon-btn" data-project-id="project-airtime" title="Copy link to project" type="button">#</button>
-    </div>
-    <p class="look-desc">An early experimental quadcopter flight controller written for the Arduino Uno, exploring sensor fusion and radio control on low-memory microcontrollers.</p>
-    <details class="notes"><summary>Notes</summary><div class="section-body"><p class="fg-prose">I wrote this project to explore building a multicopter flight controller from scratch using an Arduino Uno, integrating an nRF24L01 radio receiver, an MPU-6050 inertial measurement unit, a BMP180 barometer, and electronic speed controller mixing logic. The project ran into the physical memory limitations of the Uno's 2 KB of SRAM when loading digital motion processing firmware, serving as a practical lesson in microcontroller memory constraints and real-time hardware budgeting.</p></div></details>
-    
-    <div class="fg-actions"><a href="https://github.com/quantumbagel/airtime" target="_blank" rel="noopener noreferrer" class="btn small">View Project ↗</a></div>
-</article>
-<article id="project-statify" class="project-card project-archive" data-category="solo">
-    <div class="hbox spread">
-        <div>
-            <h3>Statify</h3>
-            <span class="look-meta">2023 · Solo Projects</span>
-        </div>
-        <button class="copy-link-btn icon-btn" data-project-id="project-statify" title="Copy link to project" type="button">#</button>
-    </div>
-    <p class="look-desc">A Minecraft server plugin built with the Spigot API that aggregates server-wide player statistics and evaluates custom mathematical ranking queries.</p>
-    <details class="notes"><summary>Notes</summary><div class="section-body"><p class="fg-prose">I created Statify as an introduction to Java development and the SpigotMC server platform. The plugin reads player statistics from server JSON files and includes a custom recursive-descent formula parser that allows server administrators to evaluate composite metrics, such as combining player activity and mining counts into custom leaderboard rankings.</p></div></details>
-    
-    <div class="fg-actions"><a href="https://github.com/quantumbagel/Statify" target="_blank" rel="noopener noreferrer" class="btn small">View Project ↗</a></div>
-</article>
-<article id="project-piranha" class="project-card project-archive" data-category="discord-bots">
-    <div class="hbox spread">
-        <div>
-            <h3>Piranha</h3>
-            <span class="look-meta">2023 · Discord Bots</span>
-        </div>
-        <button class="copy-link-btn icon-btn" data-project-id="project-piranha" title="Copy link to project" type="button">#</button>
-    </div>
-    <p class="look-desc">An early Discord chess bot that integrated the Stockfish engine with a local board rendering service to run interactive matches.</p>
-    <details class="notes"><summary>Notes</summary><div class="section-body"><p class="fg-prose">Piranha was an early Discord bot project where I integrated the Stockfish chess engine to support player challenges and automated opponents. It used an asynchronous web service to render board state images with CairoSVG and tracked match state locally, providing valuable experience with subprocess management and game state loops before I later designed Strife.</p></div></details>
-    
-    <div class="fg-actions"></div>
-</article>
-<article id="project-molotov" class="project-card project-archive" data-category="solo">
-    <div class="hbox spread">
-        <div>
-            <h3>Molotov</h3>
-            <span class="look-meta">2023 · Solo Projects</span>
-        </div>
-        <button class="copy-link-btn icon-btn" data-project-id="project-molotov" title="Copy link to project" type="button">#</button>
-    </div>
-    <p class="look-desc">A desktop screen automation script that used screen capture and dictionary lookups to play the word game Bomb Party automatically.</p>
-    <details class="notes"><summary>Notes</summary><div class="section-body"><p class="fg-prose">I created Molotov as an experiment in computer vision and desktop automation for the browser word game Bomb Party. The script captured on-screen pixels using mss to detect active turn states, matched required letter prompts against an English dictionary scored by word rarity, and typed valid words into the browser with configurable delays to simulate human typing.</p></div></details>
-    <figure class="essay-figure media-figure"><div class="media-carousel" data-carousel-id="gallery-project-molotov"><div class="carousel-slides" style="transform: translateX(0%);"><div class="carousel-slide"><img src="media/projects/molotov/win.png" alt="Molotov Discord embed: Molotov won the last round" loading="lazy" decoding="async" class="carousel-media"></div></div></div><p class="essay-caption">Molotov Discord embed: Molotov won the last round</p></figure>
-    <div class="fg-actions"><a href="https://github.com/quantumbagel/Molotov" target="_blank" rel="noopener noreferrer" class="btn small">View Project ↗</a></div>
-</article>
+    <!-- Decorative Wireframe Sketched Figures -->
+    <svg class="bg-sketch drone-sketch" viewBox="0 0 200 200" fill="none" stroke="#ace" stroke-width="1.2">
+        <circle cx="100" cy="100" r="16" />
+        <line x1="40" y1="40" x2="88" y2="88" />
+        <line x1="160" y1="40" x2="112" y2="88" />
+        <line x1="40" y1="160" x2="88" y2="112" />
+        <line x1="160" y1="160" x2="112" y2="112" />
+        <circle cx="40" cy="40" r="18" stroke-dasharray="3 3"/>
+        <circle cx="160" cy="40" r="18" stroke-dasharray="3 3"/>
+        <circle cx="40" cy="160" r="18" stroke-dasharray="3 3"/>
+        <circle cx="160" cy="160" r="18" stroke-dasharray="3 3"/>
+    </svg>
 
-                    </div>
-                </section>
+    <svg class="bg-sketch radar-sketch" viewBox="0 0 200 200" fill="none" stroke="#ace" stroke-width="1.2">
+        <circle cx="100" cy="100" r="80" stroke-dasharray="4 4"/>
+        <circle cx="100" cy="100" r="50" />
+        <circle cx="100" cy="100" r="20" />
+        <line x1="100" y1="20" x2="100" y2="180" />
+        <line x1="20" y1="100" x2="180" y2="100" />
+        <line x1="100" y1="100" x2="160" y2="40" stroke="#ff0" stroke-width="1.5" />
+    </svg>
 
-                <section class="section" id="experience">
-                    <div class="section-head">
-                        <h3>Experience</h3>
-                        <button class="section-copy-link icon-btn" data-section-id="experience" title="Copy link to section" type="button" aria-label="Copy link to experience">
-                            <i class="bi bi-link-45deg"></i>
-                        </button>
-                    </div>
-                    <div class="section-body">
-                        <article class="experience-item">
-    <div class="card-head"><h3 class="look-name"><a href="https://advisor.ml.com/sites/nc/raleigh-nc/bellbellcronlund">Technical Intern, Bell, Bell & Cronlund Group @ Merrill Lynch Wealth Management</a></h3><button class="experience-copy-link icon-btn" data-link="https://advisor.ml.com/sites/nc/raleigh-nc/bellbellcronlund" title="Copy link" type="button"><i class="bi bi-link-45deg"></i></button></div>
-    <div class="look-meta">May 2026 - August 2026</div>
-    <div class="fg-prose">I worked on an internal financial calculations platform supporting wealth management portfolios with over <strong>$500M</strong> in assets under management.
-<ul class='list-disc pl-5 mt-2 space-y-1'>
-<li>Built <strong>ML-Ticker</strong>, a Python command line tool that queries FactSet FQL for snapshot and historical market data</li>
-<li>Developed a formula evaluation engine that resolves metric dependencies as a directed graph and validates configuration files with Pydantic</li>
-<li>Added formatted export utilities for colorized terminal displays and multi-sheet Excel reports</li>
-</ul></div>
-</article>
-<article class="experience-item">
-    <div class="card-head"><h3 class="look-name"><a href="https://ncsu.edu">B.S. Computer Engineering and Statistics, North Carolina State University</a></h3><button class="experience-copy-link icon-btn" data-link="https://ncsu.edu" title="Copy link" type="button"><i class="bi bi-link-45deg"></i></button></div>
-    <div class="look-meta">Fall 2025 - Present</div>
-    <div class="fg-prose">Pursuing a dual Bachelor of Science in Computer Engineering and Statistics with a 4.0 GPA.</div>
-</article>
-<article class="experience-item">
-    <div class="card-head"><h3 class="look-name"><a href="https://aerpaw.org">Developer @ AERPAW</a></h3><button class="experience-copy-link icon-btn" data-link="https://aerpaw.org" title="Copy link" type="button"><i class="bi bi-link-45deg"></i></button></div>
-    <div class="look-meta">Summer 2023 - Present</div>
-    <div class="fg-prose">I develop software for <a href='https://aerpaw.org' class='text-link hover:underline'>AERPAW</a> (Aerial Experimentation and Research Platform for Advanced Wireless), an NSF testbed at NC State for programmable radios and autonomous vehicles, working with Dr. Mihail Sichitiu on flight software, telemetry, and airspace tracking.
-<ul class='list-disc pl-5 mt-2 space-y-1'>
-<li>Serve as the primary maintainer of <strong>aerpawlib</strong>, the official Python vehicle control library, where I transitioned the codebase from DroneKit to MAVSDK to keep it aligned with testbed safety filters</li>
-<li>Created <strong>PyAerial</strong>, an aircraft tracking platform that decodes Mode S and ADS-B radio signals, checks live positions against polygon geofences, and visualizes flights on a radar map</li>
-<li>Built <strong>DroneTracker</strong>, an automated tracking service that points pan-tilt-zoom cameras at flying drones using real-time GPS telemetry and manages video recording sessions</li>
-</ul></div>
-</article>
-<article class="experience-item">
-    <div class="card-head"><h3 class="look-name"><a href="https://waketech.edu">A.S., Wake Technical Community College</a></h3><button class="experience-copy-link icon-btn" data-link="https://waketech.edu" title="Copy link" type="button"><i class="bi bi-link-45deg"></i></button></div>
-    <div class="look-meta">Fall 2023 - Spring 2025</div>
-    <div class="fg-prose">Earned an Associate in Science degree while making the Dean's List for multiple semesters and joining the Beta Alpha chapter of Phi Theta Kappa with a 3.8 GPA.</div>
-</article>
+    <!-- Floating Hover Preview (Worrydream Style) -->
+    <div class="preview-dock" id="preview-dock">
+        <img id="preview-img" src="" alt="Preview">
+        <div class="preview-title" id="preview-title"></div>
+        <div class="preview-caption" id="preview-caption"></div>
+    </div>
 
-                    </div>
-                </section>
+    <h1>Julian Reder</h1>
+    <h2>Computer Engineering & Statistics Student @ NCSU</h2>
 
-                <section class="section" id="skills">
-                    <div class="section-head">
-                        <h3>Skills</h3>
-                        <button class="section-copy-link icon-btn" data-section-id="skills" title="Copy link to section" type="button" aria-label="Copy link to skills">
-                            <i class="bi bi-link-45deg"></i>
-                        </button>
-                    </div>
-                    <div class="section-body skills-grid cols-2">
-                        <div><div class="subgroup-title">Languages</div><div id="skill-python" class="skill-item">
-    <div class="skill-toggle card-head" data-skill-id="python" role="button" tabindex="0" aria-expanded="false">
-        <div class="hbox">
-            <i class="devicon-python-plain"></i>
-            <span class="item-name">Python</span>
-            <span class="look-meta">over 5 years</span>
+    <div class="intro">
+        <p>I build research software connecting hardware with distributed systems.</p>
+        <p>Developer for <a href="https://aerpaw.org" class="good">AERPAW</a>, an NSF testbed for advanced wireless and autonomous flight.</p>
+        <p class="section">Student at <a href="https://ncsu.edu">NC State University</a> (B.S. Computer Engineering &amp; Statistics, 4.0 GPA).</p>
+        <p>I also interned at <a href="https://advisor.ml.com/sites/nc/raleigh-nc/bellbellcronlund">Merrill Lynch Wealth Management</a>, play Factorio, and have three cats.</p>
+    </div>
+
+    <p class="section">Autonomous vehicles, radar &amp; flight systems.</p>
+    <h3>2025</h3>
+<ul>
+<li><a href="projects/aerpawlib/" class="good has-preview" data-preview="media/projects/aerpawlib/stack.svg" data-title="aerpawlib" data-caption="Architecture diagram showing how researcher scripts interact with aerpawlib, MAVSDK, and the testbed safety filter before reaching the vehicle autopilot.">aerpawlib</a>: The official vehicle control library for AERPAW, NC State's research testbed for advanced wireless communications and autonomous aircraft.<div class="subpages"><a href="https://github.com/AERPAW/aerpawlib">code</a> · <a href="projects/aerpawlib/">writeup</a> · <a href="https://sites.google.com/ncsu.edu/aerpaw-user-manual/">user manual</a></div></li>
+</ul>
+<h3>2024</h3>
+<ul>
+<li><a href="projects/pyaerial/" class="good has-preview" data-preview="media/projects/pyaerial/pipeline.svg" data-title="PyAerial" data-caption="Pipeline overview showing how radio signals pass from dump1090 through pyModeS decoding, geofence checks, and Redis caching before reaching the web map.">PyAerial</a>: An airspace awareness and aircraft tracking system that ingests Mode S and ADS-B signals, evaluates geofence boundaries, and displays live flights on a radar map.<div class="subpages"><a href="https://github.com/quantumbagel/PyAerial">code</a> · <a href="projects/pyaerial/">writeup</a></div></li>
+<li><a href="projects/dronetracker/" class="good has-preview" data-preview="media/projects/dronetracker/aim.svg" data-title="DroneTracker" data-caption="Tracking diagram showing how drone GPS coordinates are transformed into physical camera pan, tilt, and zoom angles.">DroneTracker</a>: An automated tracking service that points AXIS pan-tilt-zoom cameras at flying drones using live GPS coordinates from Kafka and records flight video over VAPIX.<div class="subpages"><a href="https://github.com/quantumbagel/DroneTracker">code</a> · <a href="projects/dronetracker/">writeup</a></div></li>
+<li><a href="https://github.com/quantumbagel/airtime">airtime</a>: An early experimental quadcopter flight controller written for the Arduino Uno, exploring sensor fusion and radio control on low-memory microcontrollers.<div class="subpages"><a href="https://github.com/quantumbagel/airtime">code</a></div></li>
+</ul>
+
+    <p class="section">Data platforms, compilers &amp; software systems.</p>
+    <h3>2026</h3>
+<ul>
+<li><a href="projects/ml-ticker/" class="good has-preview" data-preview="media/projects/ml-ticker/pipeline.svg" data-title="ML-Ticker" data-caption="Architectural overview showing configuration validation, batched data querying, dependency graph evaluation, and report export.">ML-Ticker</a>: A command line financial data tool built during my internship at Merrill Lynch, featuring FactSet FQL querying, a safe formula evaluation engine, and Excel reporting.<div class="subpages"><a href="projects/ml-ticker/">writeup</a></div></li>
+<li><a href="projects/strife/" class="good has-preview" data-preview="media/projects/strife/architecture.svg" data-title="Strife" data-caption="Architecture diagram illustrating how Discord interactions route through the core game host and state storage into individual game plugins.">Strife</a>: A multiplayer game platform for Discord that runs turn-based matches inside message threads, featuring plugin game engines, PostgreSQL persistence, and crash recovery.<div class="subpages"><a href="https://github.com/quantumbagel/Strife">code</a> · <a href="projects/strife/">writeup</a></div></li>
+<li><a href="projects/ncsu-parking/" class="has-preview" data-preview="media/projects/ncsuparking/pipeline.svg" data-title="NCSU Parking" data-caption="Data pipeline diagram showing occupancy polling, calendar event ingestion, feature engineering, and model validation against seasonal baselines.">NCSU Parking</a>: A predictive parking availability model for NC State campus decks that combines historical occupancy feeds with campus event schedules and validates machine learning models against strong seasonal baselines.<div class="subpages"><a href="projects/ncsu-parking/">writeup</a></div></li>
+<li><a href="projects/amazon-music-discord-rpc/" class="has-preview" data-preview="media/projects/amazon/rpc.svg" data-title="Amazon Music Discord RPC" data-caption="Architecture diagram illustrating how media playback data flows from the browser extension through the Rust helper process into Discord IPC.">Amazon Music Discord RPC</a>: A browser extension and lightweight Rust background helper that shares current Amazon Music playback status to Discord Rich Presence.<div class="subpages"><a href="projects/amazon-music-discord-rpc/">writeup</a></div></li>
+<li><a href="projects/portfolio-website-v3/" class="good has-preview" data-preview="media/projects/portfolio/modes.svg" data-title="Portfolio Website (v3)" data-caption="Architecture diagram illustrating how Python build scripts compile site data into static HTML pages alongside the standalone canvas simulation engine.">Portfolio Website (v3)</a>: A personal portfolio site generated with custom Python build scripts from structured TOML data, featuring twelve interactive HTML5 canvas background simulations.<div class="subpages"><a href="https://github.com/quantumbagel/quantumbagel.github.io">code</a> · <a href="projects/portfolio-website-v3/">writeup</a></div></li>
+</ul>
+<h3>2025</h3>
+<ul>
+<li><a href="https://github.com/quantumbagel/discord.py-template">discord.py-template</a>: A modular discord.py application starter template featuring YAML configuration, cog hot-reloading with automatic rollback on error, structured crash logging, and emoji analytics.<div class="subpages"><a href="https://github.com/quantumbagel/discord.py-template">code</a></div></li>
+</ul>
+<h3>2024</h3>
+<ul>
+<li><a href="https://github.com/finiteCraft/finiteCraft">finiteCraft</a>: A distributed web scraping and graph search project that discovered and mapped crafting combinations for the browser game Infinite Craft.<div class="subpages"><a href="https://github.com/finiteCraft/finiteCraft">code</a></div></li>
+</ul>
+<h3>2023</h3>
+<ul>
+<li><a href="https://github.com/quantumbagel/Chess-Challenge">Chess-Challenge</a>: A custom C# chess engine developed for Sebastian Lague's Chess Coding Challenge, implementing iterative-deepening alpha-beta search within a strict 1024-token code budget.<div class="subpages"><a href="https://github.com/quantumbagel/Chess-Challenge">code</a></div></li>
+<li><a href="projects/triggered/" class="has-preview" data-preview="media/projects/triggered/rules.svg" data-title="Triggered" data-caption="Workflow diagram showing how server events are matched against registered trigger definitions and executed according to stored rules.">Triggered</a>: A rule-based Discord automation bot that allows server administrators to configure custom event triggers and actions without writing code, with configuration stored in MongoDB.<div class="subpages"><a href="https://github.com/quantumbagel/Triggered">code</a> · <a href="projects/triggered/">writeup</a></div></li>
+<li><a href="https://github.com/quantumbagel/Statify">Statify</a>: A Minecraft server plugin built with the Spigot API that aggregates server-wide player statistics and evaluates custom mathematical ranking queries.<div class="subpages"><a href="https://github.com/quantumbagel/Statify">code</a></div></li>
+<li><a href="#">Piranha</a>: An early Discord chess bot that integrated the Stockfish engine with a local board rendering service to run interactive matches.</li>
+<li><a href="https://github.com/quantumbagel/Molotov">Molotov</a>: A desktop screen automation script that used screen capture and dictionary lookups to play the word game Bomb Party automatically.<div class="subpages"><a href="https://github.com/quantumbagel/Molotov">code</a></div></li>
+</ul>
+
+    <hr>
+
+    <p class="section">Experience &amp; Education.</p>
+    <div class="bio"><ul><li><a href="https://advisor.ml.com/sites/nc/raleigh-nc/bellbellcronlund" class="good">Technical Intern, Bell, Bell & Cronlund Group @ Merrill Lynch Wealth Management</a> (May 2026 - August 2026)</li><li><a href="https://ncsu.edu" class="good">B.S. Computer Engineering and Statistics, North Carolina State University</a> (Fall 2025 - Present)</li><li><a href="https://aerpaw.org" class="good">Developer @ AERPAW</a> (Summer 2023 - Present)</li><li><a href="https://waketech.edu" class="good">A.S., Wake Technical Community College</a> (Fall 2023 - Spring 2025)</li></ul></div>
+
+    <p class="section">Elsewhere.</p>
+
+    <div class="contact-table">
+        <div><strong>GitHub:</strong> <a href="https://github.com/quantumbagel">https://github.com/quantumbagel</a></div>
+        <div><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/julian-reder-nc/">https://www.linkedin.com/in/julian-reder-nc/</a></div>
+        <div><strong>Discord:</strong> <a href="https://discordapp.com/users/897146430664355850">@quantumbagel</a></div>
+        <div><strong>Resume:</strong> <a href="/resume">preview pdf</a></div>
+        <div><strong>Email:</strong> <a href="mailto:jbreder@ncsu.edu">jbreder@ncsu.edu</a></div>
+    </div>
+
+    <hr>
+
+    <!-- Contact Form Section -->
+    <p class="section" id="contact">Talk to me.</p>
+    <p style="color: #999; font-size: 12px; line-height: 1.45; margin-bottom: 14px;">
+        I am interested in internship and research opportunities in embedded systems, backend infrastructure, and autonomous flight software. Feel free to use the form below, or connect with me directly on GitHub, LinkedIn, or Discord.
+    </p>
+
+    <form id="contact-form" action="https://formspree.io/f/moqgwdop" method="POST" class="contact-form">
+        <div class="form-row">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" autocomplete="name" required placeholder="Your name">
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" autocomplete="email" required placeholder="your.email@example.com">
+            </div>
         </div>
-        <div class="hbox">
-            <button class="skill-copy-link icon-btn" data-skill-id="python" title="Copy link to skill" type="button" aria-label="Copy link to Python">
-                <i class="bi bi-link-45deg"></i>
+        <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="4" required placeholder="Tell me about what you're working on..."></textarea>
+        </div>
+        <div class="form-actions">
+            <button id="contact-submit-btn" type="submit" class="contact-btn">
+                <span id="contact-submit-text">Send Message</span> →
             </button>
-            <i class="bi bi-chevron-down skill-toggle-icon"></i>
+            <span id="contact-status" class="hidden"></span>
         </div>
-    </div>
-    <div class="skill-content">
-        <div>
-            <div class="card-body">
-                <span class="chip">Expert</span>
-                <p class="doc">Python has been my primary programming language for several years, and I use it regularly for building web APIs, processing data, managing background services, and controlling drone hardware.</p>
-                <div class="chips"><a href="#project-aerpawlib" class="project-jump chip-btn">aerpawlib</a><a href="#project-pyaerial" class="project-jump chip-btn">PyAerial</a><a href="#project-dronetracker" class="project-jump chip-btn">DroneTracker</a><a href="#project-ml-ticker" class="project-jump chip-btn">ML-Ticker</a><a href="#project-strife" class="project-jump chip-btn">Strife</a><a href="#project-ncsu-parking" class="project-jump chip-btn">NCSU Parking</a><a href="#project-finitecraft" class="project-jump chip-btn">finiteCraft</a><a href="#project-triggered" class="project-jump chip-btn">Triggered</a><a href="#project-discord-py-template" class="project-jump chip-btn">discord.py-template</a><a href="#project-portfolio-website-v3" class="project-jump chip-btn">Portfolio Website (v3)</a></div>
-            </div>
-        </div>
-    </div>
-</div>
-<div id="skill-c-cplusplus" class="skill-item">
-    <div class="skill-toggle card-head" data-skill-id="c-cplusplus" role="button" tabindex="0" aria-expanded="false">
-        <div class="hbox">
-            <i class="devicon-cplusplus-plain"></i>
-            <span class="item-name">C/C++</span>
-            <span class="look-meta">over 3 years</span>
-        </div>
-        <div class="hbox">
-            <button class="skill-copy-link icon-btn" data-skill-id="c-cplusplus" title="Copy link to skill" type="button" aria-label="Copy link to C/C++">
-                <i class="bi bi-link-45deg"></i>
-            </button>
-            <i class="bi bi-chevron-down skill-toggle-icon"></i>
-        </div>
-    </div>
-    <div class="skill-content">
-        <div>
-            <div class="card-body">
-                <span class="chip">Advanced</span>
-                <p class="doc">I use C and C++ for microcontroller programming and low-level hardware projects, such as writing firmware sketches for Arduino sensors and building small native modules when Python needs extra speed.</p>
-                <div class="chips"><a href="#project-airtime" class="project-jump chip-btn">airtime</a></div>
-            </div>
-        </div>
-    </div>
-</div>
-<div id="skill-javascript" class="skill-item">
-    <div class="skill-toggle card-head" data-skill-id="javascript" role="button" tabindex="0" aria-expanded="false">
-        <div class="hbox">
-            <i class="devicon-javascript-plain"></i>
-            <span class="item-name">JavaScript</span>
-            <span class="look-meta">over 3 years</span>
-        </div>
-        <div class="hbox">
-            <button class="skill-copy-link icon-btn" data-skill-id="javascript" title="Copy link to skill" type="button" aria-label="Copy link to JavaScript">
-                <i class="bi bi-link-45deg"></i>
-            </button>
-            <i class="bi bi-chevron-down skill-toggle-icon"></i>
-        </div>
-    </div>
-    <div class="skill-content">
-        <div>
-            <div class="card-body">
-                <span class="chip">Advanced</span>
-                <p class="doc">I use JavaScript for front-end development, including the canvas background simulations and settings panel on this site, as well as a browser extension that reads media playback data.</p>
-                <div class="chips"><a href="#project-portfolio-website-v3" class="project-jump chip-btn">Portfolio Website (v3)</a><a href="#project-amazon-music-discord-rpc" class="project-jump chip-btn">Amazon Music Discord RPC</a></div>
-            </div>
-        </div>
-    </div>
-</div>
-<div id="skill-java" class="skill-item">
-    <div class="skill-toggle card-head" data-skill-id="java" role="button" tabindex="0" aria-expanded="false">
-        <div class="hbox">
-            <i class="devicon-java-plain"></i>
-            <span class="item-name">Java</span>
-            <span class="look-meta">over 4 years</span>
-        </div>
-        <div class="hbox">
-            <button class="skill-copy-link icon-btn" data-skill-id="java" title="Copy link to skill" type="button" aria-label="Copy link to Java">
-                <i class="bi bi-link-45deg"></i>
-            </button>
-            <i class="bi bi-chevron-down skill-toggle-icon"></i>
-        </div>
-    </div>
-    <div class="skill-content">
-        <div>
-            <div class="card-body">
-                <span class="chip">Competent</span>
-                <p class="doc">I have used Java primarily in coursework and for building Statify, a Minecraft server plugin that calculates and displays player statistics.</p>
-                <div class="chips"><a href="#project-statify" class="project-jump chip-btn">Statify</a></div>
-            </div>
-        </div>
-    </div>
-</div>
-<div id="skill-c" class="skill-item">
-    <div class="skill-toggle card-head" data-skill-id="c" role="button" tabindex="0" aria-expanded="false">
-        <div class="hbox">
-            <i class="devicon-csharp-plain"></i>
-            <span class="item-name">C#</span>
-            <span class="look-meta">over 2 years</span>
-        </div>
-        <div class="hbox">
-            <button class="skill-copy-link icon-btn" data-skill-id="c" title="Copy link to skill" type="button" aria-label="Copy link to C#">
-                <i class="bi bi-link-45deg"></i>
-            </button>
-            <i class="bi bi-chevron-down skill-toggle-icon"></i>
-        </div>
-    </div>
-    <div class="skill-content">
-        <div>
-            <div class="card-body">
-                <span class="chip">Competent</span>
-                <p class="doc">I used C# to participate in Sebastian Lague's chess coding challenge, writing a custom search engine that implemented alpha-beta pruning within a strict token limit.</p>
-                <div class="chips"><a href="#project-chess-challenge" class="project-jump chip-btn">Chess-Challenge</a></div>
-            </div>
-        </div>
-    </div>
-</div>
-<div id="skill-bash" class="skill-item">
-    <div class="skill-toggle card-head" data-skill-id="bash" role="button" tabindex="0" aria-expanded="false">
-        <div class="hbox">
-            <i class="devicon-bash-plain"></i>
-            <span class="item-name">Bash</span>
-            <span class="look-meta">over 4 years</span>
-        </div>
-        <div class="hbox">
-            <button class="skill-copy-link icon-btn" data-skill-id="bash" title="Copy link to skill" type="button" aria-label="Copy link to Bash">
-                <i class="bi bi-link-45deg"></i>
-            </button>
-            <i class="bi bi-chevron-down skill-toggle-icon"></i>
-        </div>
-    </div>
-    <div class="skill-content">
-        <div>
-            <div class="card-body">
-                <span class="chip">Competent</span>
-                <p class="doc">I write Bash scripts to automate local development environments, manage Docker containers, and handle initialization steps like waiting for database readiness before services launch.</p>
-                <div class="chips"><span class="chip-btn">All projects</span><span class="chip-btn">Docker setup scripts</span></div>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
-<div><div class="subgroup-title">Technologies</div><div id="skill-linux-unix" class="skill-item">
-    <div class="skill-toggle card-head" data-skill-id="linux-unix" role="button" tabindex="0" aria-expanded="false">
-        <div class="hbox">
-            <i class="devicon-linux-plain"></i>
-            <span class="item-name">Linux/Unix</span>
-            <span class="look-meta">over 5 years</span>
-        </div>
-        <div class="hbox">
-            <button class="skill-copy-link icon-btn" data-skill-id="linux-unix" title="Copy link to skill" type="button" aria-label="Copy link to Linux/Unix">
-                <i class="bi bi-link-45deg"></i>
-            </button>
-            <i class="bi bi-chevron-down skill-toggle-icon"></i>
-        </div>
-    </div>
-    <div class="skill-content">
-        <div>
-            <div class="card-body">
-                <span class="chip">Expert</span>
-                <p class="doc">Linux has been my primary operating system for both development and server hosting, and I regularly configure systemd services, manage file permissions, set up networks, and troubleshoot connectivity with tools like netstat and tcpdump.</p>
-                <div class="chips"><span class="chip-btn">Server Management</span><span class="chip-btn">All Projects</span></div>
-            </div>
-        </div>
-    </div>
-</div>
-<div id="skill-docker" class="skill-item">
-    <div class="skill-toggle card-head" data-skill-id="docker" role="button" tabindex="0" aria-expanded="false">
-        <div class="hbox">
-            <i class="devicon-docker-plain"></i>
-            <span class="item-name">Docker</span>
-            <span class="look-meta">over 3 years</span>
-        </div>
-        <div class="hbox">
-            <button class="skill-copy-link icon-btn" data-skill-id="docker" title="Copy link to skill" type="button" aria-label="Copy link to Docker">
-                <i class="bi bi-link-45deg"></i>
-            </button>
-            <i class="bi bi-chevron-down skill-toggle-icon"></i>
-        </div>
-    </div>
-    <div class="skill-content">
-        <div>
-            <div class="card-body">
-                <span class="chip">Expert</span>
-                <p class="doc">I use Docker and Docker Compose to package and deploy multi-service applications, writing multi-stage container builds and configuring private container networks for projects like PyAerial and Strife.</p>
-                <div class="chips"><a href="#project-pyaerial" class="project-jump chip-btn">PyAerial</a><a href="#project-dronetracker" class="project-jump chip-btn">DroneTracker</a><a href="#project-piranha" class="project-jump chip-btn">Piranha</a><a href="#project-strife" class="project-jump chip-btn">Strife</a><a href="#project-discord-py-template" class="project-jump chip-btn">discord.py-template</a></div>
-            </div>
-        </div>
-    </div>
-</div>
-<div id="skill-git" class="skill-item">
-    <div class="skill-toggle card-head" data-skill-id="git" role="button" tabindex="0" aria-expanded="false">
-        <div class="hbox">
-            <i class="devicon-git-plain"></i>
-            <span class="item-name">Git</span>
-            <span class="look-meta">over 4 years</span>
-        </div>
-        <div class="hbox">
-            <button class="skill-copy-link icon-btn" data-skill-id="git" title="Copy link to skill" type="button" aria-label="Copy link to Git">
-                <i class="bi bi-link-45deg"></i>
-            </button>
-            <i class="bi bi-chevron-down skill-toggle-icon"></i>
-        </div>
-    </div>
-    <div class="skill-content">
-        <div>
-            <div class="card-body">
-                <span class="chip">Advanced</span>
-                <p class="doc">I use Git for daily version control across all of my repositories, managing feature branches, rebasing changes, and collaborating on open source pull requests.</p>
-                <div class="chips"><span class="chip-btn">All Projects</span></div>
-            </div>
-        </div>
-    </div>
-</div>
-<div id="skill-selenium-web-scraping" class="skill-item">
-    <div class="skill-toggle card-head" data-skill-id="selenium-web-scraping" role="button" tabindex="0" aria-expanded="false">
-        <div class="hbox">
-            <i class="bi bi-globe"></i>
-            <span class="item-name">Selenium / Web Scraping</span>
-            <span class="look-meta">over 2 years</span>
-        </div>
-        <div class="hbox">
-            <button class="skill-copy-link icon-btn" data-skill-id="selenium-web-scraping" title="Copy link to skill" type="button" aria-label="Copy link to Selenium / Web Scraping">
-                <i class="bi bi-link-45deg"></i>
-            </button>
-            <i class="bi bi-chevron-down skill-toggle-icon"></i>
-        </div>
-    </div>
-    <div class="skill-content">
-        <div>
-            <div class="card-body">
-                <span class="chip">Advanced</span>
-                <p class="doc">I have used Selenium and Playwright to automate browser interactions and gather data from web pages, including running headless Chromium instances behind rotating proxy pools to discover recipe combinations.</p>
-                <div class="chips"><a href="#project-finitecraft" class="project-jump chip-btn">finiteCraft</a></div>
-            </div>
-        </div>
-    </div>
-</div>
-<div id="skill-openapi" class="skill-item">
-    <div class="skill-toggle card-head" data-skill-id="openapi" role="button" tabindex="0" aria-expanded="false">
-        <div class="hbox">
-            <i class="bi bi-braces"></i>
-            <span class="item-name">OpenAPI</span>
-            <span class="look-meta">over 2 years</span>
-        </div>
-        <div class="hbox">
-            <button class="skill-copy-link icon-btn" data-skill-id="openapi" title="Copy link to skill" type="button" aria-label="Copy link to OpenAPI">
-                <i class="bi bi-link-45deg"></i>
-            </button>
-            <i class="bi bi-chevron-down skill-toggle-icon"></i>
-        </div>
-    </div>
-    <div class="skill-content">
-        <div>
-            <div class="card-body">
-                <span class="chip">Advanced</span>
-                <p class="doc">I design REST APIs and WebSocket endpoints using FastAPI, generating OpenAPI specifications to keep front-end applications and backend schemas synchronized.</p>
-                <div class="chips"><a href="#project-pyaerial" class="project-jump chip-btn">PyAerial</a><a href="#project-triggered" class="project-jump chip-btn">Triggered</a></div>
-            </div>
-        </div>
-    </div>
-</div>
-<div id="skill-sql" class="skill-item">
-    <div class="skill-toggle card-head" data-skill-id="sql" role="button" tabindex="0" aria-expanded="false">
-        <div class="hbox">
-            <i class="bi bi-database"></i>
-            <span class="item-name">SQL</span>
-            <span class="look-meta">over 4 years</span>
-        </div>
-        <div class="hbox">
-            <button class="skill-copy-link icon-btn" data-skill-id="sql" title="Copy link to skill" type="button" aria-label="Copy link to SQL">
-                <i class="bi bi-link-45deg"></i>
-            </button>
-            <i class="bi bi-chevron-down skill-toggle-icon"></i>
-        </div>
-    </div>
-    <div class="skill-content">
-        <div>
-            <div class="card-body">
-                <span class="chip">Advanced</span>
-                <p class="doc">I use PostgreSQL for applications that need strict relational data models and foreign key constraints, such as game state tracking and parking occupancy history, and I use SQLite for local caching and flight logs.</p>
-                <div class="chips"><a href="#project-strife" class="project-jump chip-btn">Strife</a><a href="#project-ncsu-parking" class="project-jump chip-btn">NCSU Parking</a><a href="#project-pyaerial" class="project-jump chip-btn">PyAerial</a></div>
-            </div>
-        </div>
-    </div>
-</div>
-<div id="skill-mongodb" class="skill-item">
-    <div class="skill-toggle card-head" data-skill-id="mongodb" role="button" tabindex="0" aria-expanded="false">
-        <div class="hbox">
-            <i class="devicon-mongodb-plain"></i>
-            <span class="item-name">MongoDB</span>
-            <span class="look-meta">over 2 years</span>
-        </div>
-        <div class="hbox">
-            <button class="skill-copy-link icon-btn" data-skill-id="mongodb" title="Copy link to skill" type="button" aria-label="Copy link to MongoDB">
-                <i class="bi bi-link-45deg"></i>
-            </button>
-            <i class="bi bi-chevron-down skill-toggle-icon"></i>
-        </div>
-    </div>
-    <div class="skill-content">
-        <div>
-            <div class="card-body">
-                <span class="chip">Advanced</span>
-                <p class="doc">I use MongoDB when storing flexible document structures, such as user-configured Discord automation rules and graph-like recipe trees that benefit from schema flexibility.</p>
-                <div class="chips"><a href="#project-triggered" class="project-jump chip-btn">Triggered</a><a href="#project-finitecraft" class="project-jump chip-btn">finiteCraft</a></div>
-            </div>
-        </div>
-    </div>
-</div>
-<div id="skill-kafka" class="skill-item">
-    <div class="skill-toggle card-head" data-skill-id="kafka" role="button" tabindex="0" aria-expanded="false">
-        <div class="hbox">
-            <i class="devicon-apachekafka-original"></i>
-            <span class="item-name">Kafka</span>
-            <span class="look-meta">over 3 years</span>
-        </div>
-        <div class="hbox">
-            <button class="skill-copy-link icon-btn" data-skill-id="kafka" title="Copy link to skill" type="button" aria-label="Copy link to Kafka">
-                <i class="bi bi-link-45deg"></i>
-            </button>
-            <i class="bi bi-chevron-down skill-toggle-icon"></i>
-        </div>
-    </div>
-    <div class="skill-content">
-        <div>
-            <div class="card-body">
-                <span class="chip">Advanced</span>
-                <p class="doc">I use Apache Kafka to stream high-throughput telemetry in field environments, allowing camera tracking services to consume drone coordinates and publish operational status updates reliably.</p>
-                <div class="chips"><a href="#project-dronetracker" class="project-jump chip-btn">DroneTracker</a></div>
-            </div>
-        </div>
-    </div>
-</div>
-<div id="skill-discord-py" class="skill-item">
-    <div class="skill-toggle card-head" data-skill-id="discord-py" role="button" tabindex="0" aria-expanded="false">
-        <div class="hbox">
-            <i class="bi bi-discord"></i>
-            <span class="item-name">discord.py</span>
-            <span class="look-meta">over 4 years</span>
-        </div>
-        <div class="hbox">
-            <button class="skill-copy-link icon-btn" data-skill-id="discord-py" title="Copy link to skill" type="button" aria-label="Copy link to discord.py">
-                <i class="bi bi-link-45deg"></i>
-            </button>
-            <i class="bi bi-chevron-down skill-toggle-icon"></i>
-        </div>
-    </div>
-    <div class="skill-content">
-        <div>
-            <div class="card-body">
-                <span class="chip">Expert</span>
-                <p class="doc">I have built multiple Discord bots and reusable application scaffolds using discord.py, organizing commands with cogs, handling slash command interactions, and managing asynchronous event loops.</p>
-                <div class="chips"><a href="#project-piranha" class="project-jump chip-btn">Piranha</a><a href="#project-triggered" class="project-jump chip-btn">Triggered</a><a href="#project-strife" class="project-jump chip-btn">Strife</a><a href="#project-discord-py-template" class="project-jump chip-btn">discord.py-template</a></div>
-            </div>
-        </div>
-    </div>
-</div>
-<div id="skill-ads-b-mode-s" class="skill-item">
-    <div class="skill-toggle card-head" data-skill-id="ads-b-mode-s" role="button" tabindex="0" aria-expanded="false">
-        <div class="hbox">
-            <i class="bi bi-broadcast"></i>
-            <span class="item-name">ADS-B / Mode-S</span>
-            <span class="look-meta">over 3 years</span>
-        </div>
-        <div class="hbox">
-            <button class="skill-copy-link icon-btn" data-skill-id="ads-b-mode-s" title="Copy link to skill" type="button" aria-label="Copy link to ADS-B / Mode-S">
-                <i class="bi bi-link-45deg"></i>
-            </button>
-            <i class="bi bi-chevron-down skill-toggle-icon"></i>
-        </div>
-    </div>
-    <div class="skill-content">
-        <div>
-            <div class="card-body">
-                <span class="chip">Advanced</span>
-                <p class="doc">I work with ADS-B and Mode S transponder protocols to decode aircraft positions from radio signals, using software-defined radio receivers tuned to 1090 MHz to feed live telemetry into tracking applications.</p>
-                <div class="chips"><a href="#project-pyaerial" class="project-jump chip-btn">PyAerial</a></div>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
-                    </div>
-                </section>
+    </form>
 
-                <section class="section" id="elsewhere">
-                    <div class="section-head">
-                        <h3>Elsewhere</h3>
-                        <button class="section-copy-link icon-btn" data-section-id="elsewhere" title="Copy link to section" type="button" aria-label="Copy link to elsewhere">
-                            <i class="bi bi-link-45deg"></i>
-                        </button>
-                    </div>
-                    <div class="section-body elsewhere-list">
-                        <a href="https://github.com/quantumbagel" target="_blank" rel="noopener noreferrer" class="chip-btn">
-    GitHub ↗
-</a>
-<a href="https://www.linkedin.com/in/julian-reder-nc/" target="_blank" rel="noopener noreferrer" class="chip-btn">
-    LinkedIn ↗
-</a>
-<a href="https://discordapp.com/users/897146430664355850" target="_blank" rel="noopener noreferrer" class="chip-btn">
-    Discord ↗
-</a>
-<a href="/resume" target="_blank" rel="noopener noreferrer" class="chip-btn">
-    Resume ↗
-</a>
-<a href="https://aerpaw.org" target="_blank" rel="noopener noreferrer" class="chip-btn">
-    AERPAW ↗
-</a>
-<a href="https://sites.google.com/ncsu.edu/aerpaw-user-manual/" target="_blank" rel="noopener noreferrer" class="chip-btn">
-    AERPAW User Manual ↗
-</a>
-<a href="https://github.com/AERPAW/aerpawlib" target="_blank" rel="noopener noreferrer" class="chip-btn">
-    aerpawlib ↗
-</a>
-
-                    </div>
-                </section>
-
-                <section class="section" id="contact">
-                    <div class="section-head">
-                        <h3>Contact</h3>
-                        <button class="section-copy-link icon-btn" data-section-id="contact" title="Copy link to section" type="button" aria-label="Copy link to contact">
-                            <i class="bi bi-link-45deg"></i>
-                        </button>
-                    </div>
-                    <div class="section-body">
-                        <p class="lead">I am interested in internship and research opportunities in embedded systems, backend infrastructure, and autonomous flight software. Feel free to use the form below, or connect with me directly on GitHub, LinkedIn, or Discord.</p>
-                        <form id="contact-form" action="https://formspree.io/f/moqgwdop" method="POST">
-                            <div class="form-grid">
-                                <div class="field">
-                                    <div class="field-head"><label class="field-label" for="name">Name</label></div>
-                                    <div class="field-body"><input type="text" id="name" name="name" autocomplete="name" required></div>
-                                </div>
-                                <div class="field">
-                                    <div class="field-head"><label class="field-label" for="email">Email</label></div>
-                                    <div class="field-body"><input type="email" id="email" name="email" autocomplete="email" required></div>
-                                </div>
-                            </div>
-                            <div class="field">
-                                <div class="field-head"><label class="field-label" for="message">Message</label></div>
-                                <div class="field-body"><textarea id="message" name="message" rows="4" required></textarea></div>
-                            </div>
-                            <div class="contact-actions">
-                                <button id="contact-submit-btn" type="submit" class="btn primary">
-                                    <span id="contact-submit-text">Send Message</span>
-                                    <i id="contact-submit-icon" class="bi bi-send"></i>
-                                </button>
-                                <div id="contact-status" class="hidden"></div>
-                            </div>
-                        </form>
-                    </div>
-                </section>
-
-                <footer id="footer-easter-egg" class="page-foot muted small">
-                    <p>Made with <3 by @quantumbagel, not AI.</p>
-                </footer>
-            </div>
-        </main>
-    </div>
-
-    <div id="modal-project-amazon-music-discord-rpc" class="backdrop hidden">
-    <div class="modal">
-        <div class="modal-head">
-            <h2>Amazon Music Discord RPC</h2>
-            <button class="modal-close-btn icon-btn" data-modal-id="modal-project-amazon-music-discord-rpc" type="button">✕</button>
-        </div>
-        <div class="modal-body">
-            <p class="fg-prose">I created a browser extension and native messaging companion in Rust that displays active Amazon Music tracks in Discord status. The browser extension reads track details directly from the standard browser Media Session API and internal player state rather than fragile web page scraping. The Rust background process communicates with the browser using native messaging and sends status updates over Discord IPC, incorporating update batching and rate limiting to keep Discord presence smooth and responsive.</p>
-            <figure class="essay-figure media-figure"><div class="media-carousel" data-carousel-id="carousel-modal-project-amazon-music-discord-rpc"><div class="carousel-slides" style="transform: translateX(0%);"><div class="carousel-slide"><img src="media/projects/amazon/popup.png" alt="Amazon Music Rich Presence extension popup while Murderer by Ren is playing, helper app connected as quantumbagel" loading="lazy" decoding="async" class="carousel-media"></div><div class="carousel-slide"><img src="media/projects/amazon/discord-status.png" alt="Discord current activity showing Listening to Amazon Music with the song Microwave by Ricky Jamaraz" loading="lazy" decoding="async" class="carousel-media"></div></div><button class="carousel-prev icon-btn" type="button" aria-label="Previous slide">‹</button><button class="carousel-next icon-btn" type="button" aria-label="Next slide">›</button><div class="carousel-dots"><button class="carousel-dot on" type="button" data-slide-to="0" aria-label="Go to slide 1"></button><button class="carousel-dot" type="button" data-slide-to="1" aria-label="Go to slide 2"></button></div></div></figure>
-            
-        </div>
-        <div class="modal-foot">
-            
-        </div>
-    </div>
-</div>
-<div id="modal-project-molotov" class="backdrop hidden">
-    <div class="modal">
-        <div class="modal-head">
-            <h2>Molotov</h2>
-            <button class="modal-close-btn icon-btn" data-modal-id="modal-project-molotov" type="button">✕</button>
-        </div>
-        <div class="modal-body">
-            <p class="fg-prose">I created Molotov as an experiment in computer vision and desktop automation for the browser word game Bomb Party. The script captured on-screen pixels using mss to detect active turn states, matched required letter prompts against an English dictionary scored by word rarity, and typed valid words into the browser with configurable delays to simulate human typing.</p>
-            <figure class="essay-figure media-figure"><div class="media-carousel" data-carousel-id="carousel-modal-project-molotov"><div class="carousel-slides" style="transform: translateX(0%);"><div class="carousel-slide"><img src="media/projects/molotov/win.png" alt="Molotov Discord embed: Molotov won the last round" loading="lazy" decoding="async" class="carousel-media"></div></div></div><p class="essay-caption">Molotov Discord embed: Molotov won the last round</p></figure>
-            
-        </div>
-        <div class="modal-foot">
-            <a href="https://github.com/quantumbagel/Molotov" target="_blank" rel="noopener noreferrer" class="btn small">View on GitHub ↗</a>
-        </div>
-    </div>
 </div>
 
+<!-- Hover Preview & Form Handling Scripts -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    // Floating hover previews
+    const dock = document.getElementById("preview-dock");
+    const previewImg = document.getElementById("preview-img");
+    const previewTitle = document.getElementById("preview-title");
+    const previewCaption = document.getElementById("preview-caption");
 
-    <script type="module" src="particles/main.js"></script>
-    <script>
-    document.addEventListener("DOMContentLoaded", () => {
-        let updateCanvasDimensions = () => {};
-        const taglines = ["is a Computer Engineering and Statistics student @ NCSU", "builds drone and aircraft tracking systems", "likes drones :D", "is an open source enthusiast", "has three cats :3", "is always learning", "plays Factorio", "is a little bit weird", "no actually a lot weird"];
-        const taglineEl = document.getElementById("tagline");
-        let currentIndex = 0;
+    if (dock) {
+        document.querySelectorAll(".has-preview").forEach(link => {
+            link.addEventListener("mouseenter", () => {
+                const src = link.getAttribute("data-preview");
+                const title = link.getAttribute("data-title") || "";
+                const caption = link.getAttribute("data-caption") || "";
 
-        const cycleTagline = () => {
-            if (!taglineEl || taglines.length === 0) {
-                return;
-            }
+                if (!src) return;
 
-            currentIndex = (currentIndex + 1) % taglines.length;
-            const nextTagline = taglines[currentIndex];
-            taglineEl.style.opacity = "0";
-            taglineEl.style.transform = "translateY(1.5rem)";
-            taglineEl.style.transition = "opacity 0.3s ease, transform 0.3s ease";
-
-            setTimeout(() => {
-                taglineEl.textContent = nextTagline;
-                taglineEl.style.opacity = "1";
-                taglineEl.style.transform = "translateY(0)";
-            }, 150);
-        };
-
-        if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-            setInterval(cycleTagline, 4000);
-        }
-
-        const contactForm = document.getElementById("contact-form");
-        if (contactForm) {
-            const submitBtn = document.getElementById("contact-submit-btn");
-            const submitText = document.getElementById("contact-submit-text");
-            const submitIcon = document.getElementById("contact-submit-icon");
-            const statusEl = document.getElementById("contact-status");
-
-            contactForm.addEventListener("submit", async (event) => {
-                event.preventDefault();
-
-                submitBtn.disabled = true;
-                const originalText = submitText.textContent;
-                submitText.textContent = "Sending...";
-                submitIcon.className = "bi bi-arrow-repeat spin";
-
-                statusEl.classList.add("hidden");
-                statusEl.className = "hidden";
-                statusEl.innerHTML = "";
-
-                const formData = new FormData(contactForm);
-
-                try {
-                    const response = await fetch(contactForm.action, {
-                        method: contactForm.method,
-                        body: formData,
-                        headers: {
-                            'Accept': 'application/json'
-                        }
-                    });
-
-                    if (response.ok) {
-                        statusEl.className = "note ok";
-                        statusEl.innerHTML = '<i class="bi bi-check-circle-fill"></i> Message sent successfully!';
-                        contactForm.reset();
-                    } else {
-                        const data = await response.json();
-                        let errorMessage = "Oops! There was a problem sending your message.";
-                        if (data && data.errors) {
-                            errorMessage = data.errors.map(err => err.message).join(", ");
-                        }
-                        statusEl.className = "note error";
-                        statusEl.innerHTML = `<i class="bi bi-exclamation-triangle-fill"></i> ${errorMessage}`;
-                    }
-                } catch (error) {
-                    statusEl.className = "note error";
-                    statusEl.innerHTML = '<i class="bi bi-exclamation-triangle-fill"></i> Connection error. Please try again.';
-                } finally {
-                    submitBtn.disabled = false;
-                    submitText.textContent = originalText;
-                    submitIcon.className = "bi bi-send";
-                    statusEl.classList.remove("hidden");
-                }
+                previewImg.src = src;
+                previewTitle.textContent = title;
+                previewCaption.textContent = caption;
+                dock.classList.add("visible");
             });
-        }
 
-        const skillToggles = document.querySelectorAll(".skill-toggle");
-        let openSkill = null;
-        skillToggles.forEach((toggle) => {
-            const skillItem = toggle.closest(".skill-item");
-            const skillContent = skillItem.querySelector(".skill-content");
-            const toggleIcon = toggle.querySelector(".skill-toggle-icon");
+            link.addEventListener("mouseleave", () => {
+                dock.classList.remove("visible");
+            });
+        });
+    }
 
-            const setSkillOpen = (item, open) => {
-                const content = item.querySelector(".skill-content");
-                const icon = item.querySelector(".skill-toggle-icon");
-                const head = item.querySelector(".skill-toggle");
-                content.classList.toggle("open", open);
-                if (icon) icon.style.transform = open ? "rotate(180deg)" : "rotate(0deg)";
-                if (head) head.setAttribute("aria-expanded", open ? "true" : "false");
-            };
+    // Contact Form AJAX Handler
+    const contactForm = document.getElementById("contact-form");
+    if (contactForm) {
+        const submitBtn = document.getElementById("contact-submit-btn");
+        const submitText = document.getElementById("contact-submit-text");
+        const statusEl = document.getElementById("contact-status");
 
-            toggle.addEventListener("click", (e) => {
-                if (e.target.closest(".skill-copy-link")) {
-                    return;
-                }
+        contactForm.addEventListener("submit", async (event) => {
+            event.preventDefault();
 
-                if (openSkill && openSkill !== skillItem) {
-                    setSkillOpen(openSkill, false);
-                }
+            submitBtn.disabled = true;
+            const originalText = submitText.textContent;
+            submitText.textContent = "Sending...";
 
-                if (!skillContent.classList.contains("open")) {
-                    setSkillOpen(skillItem, true);
-                    openSkill = skillItem;
+            statusEl.classList.add("hidden");
+            statusEl.className = "hidden";
+            statusEl.innerHTML = "";
+
+            const formData = new FormData(contactForm);
+            try {
+                const response = await fetch(contactForm.action, {
+                    method: "POST",
+                    body: formData,
+                    headers: { Accept: "application/json" }
+                });
+
+                if (response.ok) {
+                    contactForm.reset();
+                    submitText.textContent = "Sent!";
+                    statusEl.className = "contact-status success";
+                    statusEl.textContent = "Thanks! Your message has been sent.";
+                    setTimeout(() => {
+                        submitText.textContent = originalText;
+                        submitBtn.disabled = false;
+                    }, 4000);
                 } else {
-                    setSkillOpen(skillItem, false);
-                    openSkill = null;
+                    throw new Error();
                 }
-            });
-
-            toggle.addEventListener("keydown", (e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault();
-                    toggle.click();
-                }
-            });
-
-            if (skillContent) {
-                skillContent.addEventListener("transitionend", (e) => {
-                    if (e.propertyName === "grid-template-rows") {
-                        updateCanvasDimensions();
-                    }
-                });
+            } catch (e) {
+                submitBtn.disabled = false;
+                submitText.textContent = originalText;
+                statusEl.className = "contact-status error";
+                statusEl.textContent = "Something went wrong. Please reach out directly at jbreder@ncsu.edu.";
             }
         });
+    }
+});
+</script>
 
-        const projectFilters = document.getElementById("project-filters");
-        const filterBtns = projectFilters ? Array.from(projectFilters.querySelectorAll(".filter-btn")) : [];
-        const projectCards = document.querySelectorAll(".project-card");
-        const projectJumpLinks = document.querySelectorAll(".project-jump");
-        const allFilterBtn = projectFilters ? projectFilters.querySelector('.filter-btn[data-filter="all"]') : null;
-        const projectSearch = document.getElementById("project-search");
-        const noProjectsMessage = document.getElementById("no-projects-message");
-
-        let activeCategory = "all";
-        let searchQuery = "";
-
-        const applyFilterAndSearch = () => {
-            let visibleCount = 0;
-            projectCards.forEach((card) => {
-                const matchesCategory = activeCategory === "all" || card.getAttribute("data-category") === activeCategory;
-                const matchesSearch = !searchQuery || card.textContent.toLowerCase().includes(searchQuery);
-                const isVisible = matchesCategory && matchesSearch;
-                card.classList.toggle("hidden", !isVisible);
-                if (isVisible) {
-                    visibleCount++;
-                }
-            });
-            if (noProjectsMessage) {
-                noProjectsMessage.classList.toggle("hidden", visibleCount > 0);
-            }
-            updateCanvasDimensions();
-        };
-
-        const setActiveFilter = (filterValue) => {
-            filterBtns.forEach((btn) => {
-                const isActive = btn.getAttribute("data-filter") === filterValue;
-                btn.setAttribute("aria-pressed", isActive ? "true" : "false");
-                btn.classList.toggle("on", isActive);
-            });
-        };
-
-        const selectFilter = (filterValue) => {
-            activeCategory = filterValue;
-            setActiveFilter(filterValue);
-            applyFilterAndSearch();
-            document.querySelectorAll('[id^="modal-"]').forEach((modal) => {
-                pauseModalVideos(modal);
-            });
-        };
-
-        if (projectFilters) {
-            projectFilters.addEventListener("click", (event) => {
-                const filterBtn = event.target.closest(".filter-btn");
-                if (!filterBtn) {
-                    return;
-                }
-
-                selectFilter(filterBtn.getAttribute("data-filter") || "all");
-            });
-        }
-
-        if (projectSearch) {
-            projectSearch.addEventListener("input", (event) => {
-                searchQuery = event.target.value.toLowerCase().trim();
-                applyFilterAndSearch();
-            });
-        }
-
-        projectJumpLinks.forEach((link) => {
-            link.addEventListener("click", () => {
-                if (allFilterBtn) {
-                    selectFilter(allFilterBtn.getAttribute("data-filter") || "all");
-                }
-            });
-        });
-
-        if (filterBtns.length > 0) {
-            const initialFilter =
-                filterBtns.find((btn) => btn.getAttribute("aria-pressed") === "true")?.getAttribute("data-filter")
-                || allFilterBtn?.getAttribute("data-filter")
-                || filterBtns[0].getAttribute("data-filter")
-                || "all";
-            selectFilter(initialFilter);
-        }
-
-        const initMediaCarousels = () => {
-            const carousels = document.querySelectorAll(".media-carousel");
-            carousels.forEach((carousel) => {
-                const slidesContainer = carousel.querySelector(".carousel-slides");
-                const prevBtn = carousel.querySelector(".carousel-prev");
-                const nextBtn = carousel.querySelector(".carousel-next");
-                const dots = carousel.querySelectorAll(".carousel-dot");
-
-                if (!slidesContainer) return;
-
-                const totalSlides = slidesContainer.children.length;
-                let currentIndex = 0;
-
-                const goToSlide = (index) => {
-                    if (index < 0) {
-                        currentIndex = totalSlides - 1;
-                    } else if (index >= totalSlides) {
-                        currentIndex = 0;
-                    } else {
-                        currentIndex = index;
-                    }
-
-                    slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
-
-                    dots.forEach((dot, idx) => {
-                        dot.classList.toggle("on", idx === currentIndex);
-                    });
-
-                    Array.from(slidesContainer.children).forEach((slide, idx) => {
-                        const video = slide.querySelector("video");
-                        if (video && idx !== currentIndex) {
-                            video.pause();
-                        }
-                    });
-                };
-
-                carousel.goToSlide = goToSlide;
-
-                if (prevBtn) {
-                    prevBtn.addEventListener("click", (e) => {
-                        e.stopPropagation();
-                        goToSlide(currentIndex - 1);
-                    });
-                }
-
-                if (nextBtn) {
-                    nextBtn.addEventListener("click", (e) => {
-                        e.stopPropagation();
-                        goToSlide(currentIndex + 1);
-                    });
-                }
-
-                dots.forEach((dot) => {
-                    dot.addEventListener("click", (e) => {
-                        e.stopPropagation();
-                        const slideIndex = parseInt(dot.getAttribute("data-slide-to"), 10);
-                        if (!isNaN(slideIndex)) {
-                            goToSlide(slideIndex);
-                        }
-                    });
-                });
-
-                let touchStartX = 0;
-                let touchEndX = 0;
-
-                carousel.addEventListener("touchstart", (e) => {
-                    touchStartX = e.changedTouches[0].screenX;
-                }, { passive: true });
-
-                carousel.addEventListener("touchend", (e) => {
-                    touchEndX = e.changedTouches[0].screenX;
-                    const swipeThreshold = 50;
-                    if (touchEndX < touchStartX - swipeThreshold) {
-                        goToSlide(currentIndex + 1);
-                    } else if (touchEndX > touchStartX + swipeThreshold) {
-                        goToSlide(currentIndex - 1);
-                    }
-                }, { passive: true });
-            });
-        };
-
-        initMediaCarousels();
-
-        const detailsBtns = document.querySelectorAll(".project-details-btn");
-        const closeBtns = document.querySelectorAll(".modal-close-btn");
-
-        function pauseModalVideos(modal) {
-            if (modal) {
-                modal.querySelectorAll("video").forEach((v) => v.pause());
-            }
-        }
-
-        const resetCarousel = (modal) => {
-            if (modal) {
-                const carousel = modal.querySelector(".media-carousel");
-                if (carousel && typeof carousel.goToSlide === "function") {
-                    carousel.goToSlide(0);
-                }
-            }
-        };
-
-        detailsBtns.forEach((btn) => {
-            btn.addEventListener("click", () => {
-                const modalId = btn.getAttribute("data-modal-id");
-                const modal = document.getElementById(modalId);
-                if (modal) {
-                    modal.classList.remove("hidden");
-                    modal.style.display = "flex";
-                    resetCarousel(modal);
-                }
-            });
-        });
-
-        closeBtns.forEach((btn) => {
-            btn.addEventListener("click", () => {
-                const modalId = btn.getAttribute("data-modal-id");
-                const modal = document.getElementById(modalId);
-                if (modal) {
-                    modal.classList.add("hidden");
-                    modal.style.display = "none";
-                    pauseModalVideos(modal);
-                }
-            });
-        });
-
-        document.querySelectorAll('[id^="modal-"]').forEach((modal) => {
-            modal.addEventListener("click", (event) => {
-                if (event.target === modal) {
-                    modal.classList.add("hidden");
-                    modal.style.display = "none";
-                    pauseModalVideos(modal);
-                }
-            });
-        });
-
-        document.addEventListener("keydown", (event) => {
-            if (event.key === "Escape") {
-                document.querySelectorAll('[id^="modal-"]').forEach((modal) => {
-                    modal.classList.add("hidden");
-                    modal.style.display = "none";
-                    pauseModalVideos(modal);
-                });
-            }
-        });
-
-        document.addEventListener("visibilitychange", () => {
-            if (document.hidden) {
-                document.querySelectorAll("video").forEach((v) => v.pause());
-            }
-        });
-
-        const copyLinkBtns = document.querySelectorAll(".copy-link-btn");
-        copyLinkBtns.forEach((btn) => {
-            btn.addEventListener("click", (event) => {
-                event.preventDefault();
-                const projectId = btn.getAttribute("data-project-id");
-                const url = `${window.location.origin}${window.location.pathname}#${projectId}`;
-                navigator.clipboard.writeText(url).then(() => {
-                    const originalIcon = btn.innerHTML;
-                    btn.innerHTML = '<i class="bi bi-check"></i>';
-                    setTimeout(() => {
-                        btn.innerHTML = originalIcon;
-                    }, 2000);
-                });
-            });
-        });
-
-        const experienceCopyLinkBtns = document.querySelectorAll(".experience-copy-link");
-        experienceCopyLinkBtns.forEach((btn) => {
-            btn.addEventListener("click", (event) => {
-                event.preventDefault();
-                event.stopPropagation();
-                const link = btn.getAttribute("data-link");
-                navigator.clipboard.writeText(link).then(() => {
-                    const originalIcon = btn.innerHTML;
-                    btn.innerHTML = '<i class="bi bi-check"></i>';
-                    setTimeout(() => {
-                        btn.innerHTML = originalIcon;
-                    }, 2000);
-                });
-            });
-        });
-
-        const skillCopyLinkBtns = document.querySelectorAll(".skill-copy-link");
-        skillCopyLinkBtns.forEach((btn) => {
-            btn.addEventListener("click", (event) => {
-                event.preventDefault();
-                event.stopPropagation();
-                const skillId = btn.getAttribute("data-skill-id");
-                const url = `${window.location.origin}${window.location.pathname}#skill-${skillId}`;
-                navigator.clipboard.writeText(url).then(() => {
-                    const originalIcon = btn.innerHTML;
-                    btn.innerHTML = '<i class="bi bi-check"></i>';
-                    setTimeout(() => {
-                        btn.innerHTML = originalIcon;
-                    }, 2000);
-                });
-            });
-        });
-
-        const sectionCopyLinkBtns = document.querySelectorAll(".section-copy-link");
-        sectionCopyLinkBtns.forEach((btn) => {
-            btn.addEventListener("click", (event) => {
-                event.preventDefault();
-                event.stopPropagation();
-                const sectionId = btn.getAttribute("data-section-id");
-                const url = `${window.location.origin}${window.location.pathname}#${sectionId}`;
-                navigator.clipboard.writeText(url).then(() => {
-                    const originalIcon = btn.innerHTML;
-                    btn.innerHTML = '<i class="bi bi-check"></i>';
-                    setTimeout(() => {
-                        btn.innerHTML = originalIcon;
-                    }, 2000);
-                });
-            });
-        });
-
-        const highlightProject = (projectId, immediate = false) => {
-            const targetCard = document.getElementById(projectId);
-            if (targetCard) {
-                if (targetCard.classList.contains("hidden")) {
-                    if (projectSearch) {
-                        projectSearch.value = "";
-                        searchQuery = "";
-                    }
-                    if (allFilterBtn) {
-                        selectFilter("all");
-                    }
-                }
-
-                projectCards.forEach((card) => {
-                    card.classList.remove("is-highlighted");
-                });
-
-                if (immediate) {
-                    targetCard.scrollIntoView({ block: "center" });
-                    targetCard.classList.add("is-highlighted");
-                    setTimeout(() => {
-                        targetCard.classList.remove("is-highlighted");
-                    }, 3000);
-                } else {
-                    requestAnimationFrame(() => {
-                        targetCard.scrollIntoView({ behavior: "smooth", block: "center" });
-                        targetCard.classList.add("is-highlighted");
-                        setTimeout(() => {
-                            targetCard.classList.remove("is-highlighted");
-                        }, 3000);
-                    });
-                }
-            }
-        };
-
-        const highlightAndOpenSkill = (skillId, immediate = false) => {
-            const skillItem = document.getElementById(skillId);
-            if (skillItem) {
-                const skillContent = skillItem.querySelector(".skill-content");
-                const toggleIcon = skillItem.querySelector(".skill-toggle-icon");
-
-                if (openSkill && openSkill !== skillItem) {
-                    const prevContent = openSkill.querySelector(".skill-content");
-                    const prevIcon = openSkill.querySelector(".skill-toggle-icon");
-                    const prevHead = openSkill.querySelector(".skill-toggle");
-                    prevContent.classList.remove("open");
-                    if (prevIcon) prevIcon.style.transform = "rotate(0deg)";
-                    if (prevHead) prevHead.setAttribute("aria-expanded", "false");
-                }
-
-                if (skillContent && !skillContent.classList.contains("open")) {
-                    skillContent.classList.add("open");
-                    if (toggleIcon) {
-                        toggleIcon.style.transform = "rotate(180deg)";
-                    }
-                    const head = skillItem.querySelector(".skill-toggle");
-                    if (head) head.setAttribute("aria-expanded", "true");
-                    openSkill = skillItem;
-                }
-
-                skillItem.classList.add("is-highlighted");
-                setTimeout(() => {
-                    skillItem.classList.remove("is-highlighted");
-                }, 3000);
-
-                if (immediate) {
-                    skillItem.scrollIntoView({ block: "center" });
-                } else {
-                    requestAnimationFrame(() => {
-                        skillItem.scrollIntoView({ behavior: "smooth", block: "center" });
-                    });
-                }
-            }
-        };
-
-        const handleHashRouting = (hashString, immediate = false) => {
-            if (!hashString) return;
-            const cleanHash = hashString.substring(1);
-            if (cleanHash.startsWith("skill-")) {
-                highlightAndOpenSkill(cleanHash, immediate);
-            } else if (cleanHash.startsWith("project-")) {
-                highlightProject(cleanHash, immediate);
-            } else {
-                const el = document.getElementById(cleanHash);
-                if (el) {
-                    if (immediate) {
-                        el.scrollIntoView({ block: "center" });
-                    } else {
-                        el.scrollIntoView({ behavior: "smooth", block: "center" });
-                    }
-                }
-            }
-        };
-
-        if (window.location.hash) {
-            if ('scrollRestoration' in history) {
-                history.scrollRestoration = 'manual';
-            }
-            handleHashRouting(window.location.hash, true);
-
-            window.addEventListener("load", () => {
-                handleHashRouting(window.location.hash, true);
-            });
-        }
-
-        const themeToggle = document.getElementById("theme-toggle");
-
-        const getPreferredTheme = () => {
-            const storedTheme = localStorage.getItem("theme");
-            if (storedTheme) return storedTheme;
-            return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-        };
-
-        const setTheme = (theme) => {
-            if (theme === "dark") {
-                document.documentElement.classList.add("dark");
-            } else {
-                document.documentElement.classList.remove("dark");
-            }
-            localStorage.setItem("theme", theme);
-            if (themeToggle) {
-                themeToggle.setAttribute("aria-pressed", theme === "dark" ? "true" : "false");
-            }
-        };
-
-        setTheme(getPreferredTheme());
-
-        if (themeToggle) {
-            themeToggle.addEventListener("click", () => {
-                document.documentElement.classList.add("theme-transitioning");
-                const isDark = document.documentElement.classList.contains("dark");
-                setTheme(isDark ? "light" : "dark");
-                setTimeout(() => {
-                    document.documentElement.classList.remove("theme-transitioning");
-                }, 300);
-            });
-        }
-
-        const footerEasterEgg = document.getElementById("footer-easter-egg");
-        if (footerEasterEgg) {
-            footerEasterEgg.addEventListener("click", () => {
-                const pfpCount = 30;
-
-                for (let i = 0; i < pfpCount; i += 1) {
-                    const pfp = document.createElement("img");
-                    pfp.src = "pfp.webp";
-                    pfp.style.position = "fixed";
-                    pfp.style.pointerEvents = "none";
-                    pfp.style.zIndex = "9999";
-                    pfp.style.width = "60px";
-                    pfp.style.height = "60px";
-                    pfp.style.borderRadius = "50%";
-                    pfp.style.objectFit = "cover";
-                    pfp.style.left = `${Math.random() * 100}%`;
-                    pfp.style.top = "-80px";
-
-                    const randomDuration = 2000 + Math.random() * 2000;
-                    const randomDelay = i * 100;
-                    const randomRotationSpeed = Math.random() * 720 - 360;
-                    const randomStartRotation = Math.random() * 360;
-                    pfp.style.animation = `pfpFall ${randomDuration}ms linear ${randomDelay}ms forwards`;
-                    pfp.style.setProperty('--rotation-speed', `${randomRotationSpeed}deg`);
-                    pfp.style.setProperty('--start-rotation', `${randomStartRotation}deg`);
-                    document.body.appendChild(pfp);
-
-                    setTimeout(() => {
-                        pfp.remove();
-                    }, randomDuration + randomDelay);
-                }
-            });
-        }
-
-        const bindParticleUi = (api) => {
-            if (!api) {
-                return;
-            }
-            updateCanvasDimensions = api.updateCanvasDimensions;
-            document.querySelectorAll("[data-open-sim]").forEach((btn) => {
-                btn.addEventListener("click", () => {
-                    api.setEnabled(true);
-                    api.openPanel();
-                });
-            });
-        };
-
-        if (window.particleApi) {
-            bindParticleUi(window.particleApi);
-        } else {
-            window.addEventListener("particles-ready", (event) => {
-                bindParticleUi(event.detail);
-            });
-        }
-
-        const style = document.createElement("style");
-        style.textContent = `
-            @keyframes pfpFall {
-                to {
-                    transform: translateY(100vh) rotate(calc(var(--start-rotation, 0deg) + var(--rotation-speed, 360deg)));
-                    opacity: 0;
-                }
-            }
-        `;
-        document.head.appendChild(style);
-    });
-    </script>
 </body>
 </html>

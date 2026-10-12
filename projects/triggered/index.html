@@ -1,49 +1,372 @@
 <!DOCTYPE html>
-<html lang="en" data-tone="350">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Triggered | Julian Reder</title>
     <meta name="description" content="A rule-based Discord automation bot that allows server administrators to configure custom event triggers and actions without writing code, with configuration stored in MongoDB.">
     <link rel="icon" type="image/png" href="../../pfp.webp">
-    <script>
-        (function() {
-            const storedTheme = localStorage.getItem("theme");
-            const preferredTheme = storedTheme || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-            if (preferredTheme === "dark") {
-                document.documentElement.classList.add("dark");
-            } else {
-                document.documentElement.classList.remove("dark");
-            }
-        })();
-    </script>
-    <link href="../../font.css" rel="stylesheet">
-    <link rel="stylesheet" href="../../theme.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { overflow-x: hidden; scroll-behavior: smooth; }
+        body { 
+            background: #10183a; 
+            color: #ace; 
+            font: normal 13px/1.3 "Avenir", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; 
+            padding: 40px 24px 60px;
+            overflow-x: hidden;
+        }
+
+        .everything { 
+            position: relative; 
+            margin-left: auto; 
+            margin-right: auto; 
+            max-width: 564px; 
+        }
+
+        /* Top Navigation */
+        .top-nav {
+            position: absolute;
+            top: 0;
+            right: 0;
+            font-size: 11px;
+            color: #777;
+        }
+
+        .top-nav a {
+            color: #89a;
+            font-weight: normal;
+            margin-left: 10px;
+            text-decoration: none;
+            transition: color 0.1s;
+        }
+
+        .top-nav a:hover {
+            color: #fff;
+            text-decoration: underline;
+        }
+
+        /* Header */
+        h1 { 
+            text-transform: uppercase; 
+            color: #999; 
+            margin-bottom: 0px; 
+            font-weight: normal; 
+            font-size: 19px; 
+            letter-spacing: 0.5px;
+        }
+
+        h2 { 
+            color: #999; 
+            margin-bottom: 16px; 
+            font-weight: normal; 
+            font-size: 11px; 
+            letter-spacing: 0.3px;
+        }
+
+        p { margin-top: 10px; margin-bottom: 10px; }
+
+        .dek {
+            color: #ace;
+            font-size: 13px;
+            line-height: 1.35;
+            margin-top: 8px;
+            margin-bottom: 16px;
+        }
+
+        .meta-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            font-size: 11.5px;
+            color: #89a;
+            margin-bottom: 18px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid #346;
+        }
+
+        .meta-row a {
+            color: #ff0;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .meta-row a:hover {
+            text-decoration: underline;
+        }
+
+        /* Skills Chips */
+        .chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin: 6px 0 14px;
+        }
+
+        .chip-btn, .chip {
+            color: #89a;
+            font-size: 11px;
+            font-family: ui-monospace, Menlo, monospace;
+            background: rgba(51, 68, 102, 0.3);
+            border: 1px solid #346;
+            border-radius: 3px;
+            padding: 1px 6px;
+        }
+
+        /* Links & Highlights */
+        a { 
+            color: #fff; 
+            font-weight: bold; 
+            text-decoration: none; 
+            transition: color 0.1s;
+        }
+
+        a:hover { 
+            text-decoration: underline; 
+        }
+
+        .good { 
+            color: #ff0; 
+        }
+
+        /* Section Headings */
+        .section { 
+            margin-top: 26px; 
+        }
+
+        .section-head h3 {
+            color: #ace;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 6px;
+            border: none;
+            padding: 0;
+        }
+
+        .section-body {
+            color: #ace;
+            font-size: 13px;
+            line-height: 1.35;
+        }
+
+        .section-body p {
+            margin-top: 8px;
+            margin-bottom: 8px;
+        }
+
+        .section-body strong {
+            color: #fff;
+        }
+
+        /* Lists (Challenges, Learned) */
+        .fg-list {
+            list-style-type: none;
+            margin-left: 0;
+            margin-top: 6px;
+            margin-bottom: 10px;
+        }
+
+        .fg-list li {
+            position: relative;
+            padding-left: 18px;
+            margin-bottom: 5px;
+            line-height: 1.35;
+            color: #999;
+        }
+
+        .fg-list li::before {
+            content: "•";
+            position: absolute;
+            left: 4px;
+            color: #ff0;
+            font-size: 13px;
+        }
+
+        .fg-list li strong {
+            color: #fff;
+        }
+
+        /* Diagrams & Figures */
+        .essay-figure {
+            margin: 18px 0;
+            border: 1px solid #346;
+            background: rgba(16, 24, 58, 0.9);
+            border-radius: 4px;
+            padding: 12px;
+            overflow-x: auto;
+        }
+
+        .essay-figure svg,
+        .essay-figure img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .essay-caption {
+            font-size: 11px;
+            color: #89a;
+            font-style: italic;
+            margin-top: 8px;
+            text-align: center;
+            line-height: 1.3;
+        }
+
+        /* Carousel Support */
+        .media-carousel {
+            position: relative;
+            overflow: hidden;
+            border-radius: 4px;
+        }
+
+        .carousel-slides {
+            display: flex;
+            transition: transform 0.3s ease;
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .carousel-media {
+            max-width: 100%;
+            max-height: 320px;
+            object-fit: contain;
+            border-radius: 4px;
+        }
+
+        .carousel-prev, .carousel-next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(16, 24, 58, 0.85);
+            border: 1px solid #346;
+            color: #fff;
+            padding: 4px 10px;
+            cursor: pointer;
+            border-radius: 3px;
+            font-size: 13px;
+        }
+
+        .carousel-prev { left: 6px; }
+        .carousel-next { right: 6px; }
+
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            margin-top: 8px;
+        }
+
+        .carousel-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #346;
+            border: none;
+            cursor: pointer;
+        }
+
+        .carousel-dot.on {
+            background: #ff0;
+        }
+
+        /* Code */
+        code {
+            font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+            font-size: 12px;
+            background: rgba(51, 68, 102, 0.4);
+            padding: 1px 4px;
+            border-radius: 3px;
+            color: #ff0;
+        }
+
+        hr { 
+            border: none; 
+            border-top: 1px solid #346; 
+            margin-top: 36px; 
+            margin-bottom: 24px; 
+        }
+
+        /* Footer */
+        .page-foot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: #89a;
+        }
+
+        .page-foot a {
+            color: #89a;
+            font-weight: normal;
+        }
+
+        .page-foot a:hover {
+            color: #fff;
+        }
+
+        /* Background Sketch */
+        .bg-sketch {
+            position: absolute;
+            pointer-events: none;
+            opacity: 0.12;
+            z-index: -1;
+            top: -10px;
+            right: -240px;
+            width: 320px;
+        }
+
+        @media screen and (max-width: 600px) {
+            body { font-size: 14px; padding: 24px 16px 60px; }
+            .bg-sketch { display: none; }
+            h1 { font-size: 19px; }
+            .top-nav { position: static; margin-bottom: 16px; }
+            .essay-figure { padding: 8px; }
+        }
+    </style>
 </head>
 <body>
-    <canvas id="interactive-bg" aria-hidden="true"></canvas>
-    <div class="shell">
-        <header class="topbar">
-            <a href="../../" class="brand">Julian Reder</a>
-            <span class="muted small topbar-kicker">Discord Bots · 2023 - 2026</span>
-            <span class="grow"></span>
-            <button id="theme-toggle" class="btn small ghost" type="button" aria-label="Toggle theme" aria-pressed="false">Theme</button>
-            <button id="particle-toggle" class="btn small ghost" type="button" aria-label="Background: On" aria-expanded="false" aria-controls="bg-sim-panel">Background</button>
-        </header>
-        <main class="page">
-            <article class="page-card">
-                <header class="page-head">
-                    <h1 class="look-name big">Triggered</h1>
-                    <p class="look-desc">A rule-based Discord automation bot that allows server administrators to configure custom event triggers and actions without writing code, with configuration stored in MongoDB.</p>
-                    <div class="look-meta">2023 - 2026</div>
-                    <div class="page-actions">
-                        <a href="https://github.com/quantumbagel/Triggered" target="_blank" rel="noopener noreferrer" class="btn small">View Project ↗</a>
-                        
-                    </div>
-                    <div class="chips"><span class="chip-btn">Python</span><span class="chip-btn">discord.py</span><span class="chip-btn">MongoDB</span><span class="chip-btn">Docker</span></div>
-                </header>
+    <div class="everything">
+        <!-- Top Navigation -->
+        <div class="top-nav">
+            <a href="../../#contact" class="good">Talk to me</a> ·
+            <a href="../../">Julian Reder</a> ·
+            <a href="../../resume">Resume</a> ·
+            <a href="https://github.com/quantumbagel">GitHub</a>
+        </div>
 
-                <figure class="essay-figure"><svg class="diagram" role="img" aria-label="Triggered schematic" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 260" role="img" aria-label="Triggered compose-a-rule pipeline">
+        <!-- Background Sketch -->
+        <svg class="bg-sketch" viewBox="0 0 200 200" fill="none" stroke="#ace" stroke-width="1.2">
+            <circle cx="100" cy="100" r="16" />
+            <line x1="40" y1="40" x2="88" y2="88" />
+            <line x1="160" y1="40" x2="112" y2="88" />
+            <line x1="40" y1="160" x2="88" y2="112" />
+            <line x1="160" y1="160" x2="112" y2="112" />
+            <circle cx="40" cy="40" r="18" stroke-dasharray="3 3"/>
+            <circle cx="160" cy="40" r="18" stroke-dasharray="3 3"/>
+            <circle cx="40" cy="160" r="18" stroke-dasharray="3 3"/>
+            <circle cx="160" cy="160" r="18" stroke-dasharray="3 3"/>
+        </svg>
+
+        <header>
+            <h1>Triggered</h1>
+            <h2>Discord Bots · 2023 - 2026</h2>
+            <p class="dek">A rule-based Discord automation bot that allows server administrators to configure custom event triggers and actions without writing code, with configuration stored in MongoDB.</p>
+            <div class="meta-row">
+                <span>2023 - 2026</span>
+                <a href="https://github.com/quantumbagel/Triggered" target="_blank" rel="noopener noreferrer" class="btn small">View Project ↗</a>
+                
+            </div>
+            <div class="chips"><span class="chip-btn">Python</span><span class="chip-btn">discord.py</span><span class="chip-btn">MongoDB</span><span class="chip-btn">Docker</span></div>
+        </header>
+
+        <figure class="essay-figure"><svg class="diagram" role="img" aria-label="Triggered schematic" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 260" role="img" aria-label="Triggered compose-a-rule pipeline">
   <style>
     .fig23-box { fill: none; stroke: currentColor; stroke-width: 1.4; }
     .fig23-fill { fill: currentColor; fill-opacity: 0.08; }
@@ -78,14 +401,14 @@
   <path class="fig23-arr" d="M556 120 H596"/>
 </svg><figcaption class="essay-caption">Workflow diagram showing how server events are matched against registered trigger definitions and executed according to stored rules.</figcaption></figure>
 
-                
+        
 
-                <section class="section"><div class="section-head"><h3>Built</h3></div><div class="section-body"><p class="fg-prose">I built Triggered to let Discord community managers create automated event-driven workflows, similar to services like IFTTT. Users configure custom rules triggered by chat messages, emoji reactions, voice channel events, role assignments, or recurring schedules. Triggers and corresponding actions are defined in a modular JSON registry that powers Discord slash command autocomplete and input validation, with server configurations persisted safely in MongoDB.</p></div></section>
-                
-                
-                
+        <section class="section"><div class="section-head"><h3>Built</h3></div><div class="section-body"><p class="fg-prose">I built Triggered to let Discord community managers create automated event-driven workflows, similar to services like IFTTT. Users configure custom rules triggered by chat messages, emoji reactions, voice channel events, role assignments, or recurring schedules. Triggers and corresponding actions are defined in a modular JSON registry that powers Discord slash command autocomplete and input validation, with server configurations persisted safely in MongoDB.</p></div></section>
+        
+        
+        
 
-                <section class="section essay-section"><div class="section-head"><h3>Configurable server automation</h3></div><div class="section-body"><div class="fg-prose"><p>Managing active Discord communities often requires handling repetitive administrative tasks, such as granting roles when users react to a message, welcoming members when they join specific voice channels, or posting reminders on recurring schedules. Instead of writing custom code for every small request, I developed Triggered to provide a flexible rule engine where server moderators can assemble custom workflows directly through Discord slash commands.</p><p>Each automation rule pairs an event trigger with one or more resulting actions, such as sending notifications, updating user permissions, or modifying channel settings. All rule definitions and guild settings are stored in MongoDB, allowing configurations to persist reliably across bot reboots and container redeployments.</p></div></div></section><section class="section essay-section"><div class="section-head"><h3>Registry design and input validation</h3></div><div class="section-body"><div class="fg-prose"><p>To make the system easily extensible, available triggers and actions are defined in a centralized JSON registry rather than being hardcoded into branching logic across multiple bot modules. When users interact with Discord slash commands, the bot queries this registry to dynamically populate autocomplete suggestions and validate user input parameters before saving a rule.</p><p>This separation makes it straightforward to add new trigger types or action handlers without modifying existing command routing. The bot also validates that rules only execute within the permissions granted to the configuring user, preventing automation workflows from being used to bypass standard server moderation controls.</p></div><figure class="essay-figure"><svg class="diagram" role="img" aria-label="Registry design and input validation" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 260" role="img" aria-label="Triggered compose-a-rule pipeline">
+        <section class="section essay-section"><div class="section-head"><h3>Configurable server automation</h3></div><div class="section-body"><div class="fg-prose"><p>Managing active Discord communities often requires handling repetitive administrative tasks, such as granting roles when users react to a message, welcoming members when they join specific voice channels, or posting reminders on recurring schedules. Instead of writing custom code for every small request, I developed Triggered to provide a flexible rule engine where server moderators can assemble custom workflows directly through Discord slash commands.</p><p>Each automation rule pairs an event trigger with one or more resulting actions, such as sending notifications, updating user permissions, or modifying channel settings. All rule definitions and guild settings are stored in MongoDB, allowing configurations to persist reliably across bot reboots and container redeployments.</p></div></div></section><section class="section essay-section"><div class="section-head"><h3>Registry design and input validation</h3></div><div class="section-body"><div class="fg-prose"><p>To make the system easily extensible, available triggers and actions are defined in a centralized JSON registry rather than being hardcoded into branching logic across multiple bot modules. When users interact with Discord slash commands, the bot queries this registry to dynamically populate autocomplete suggestions and validate user input parameters before saving a rule.</p><p>This separation makes it straightforward to add new trigger types or action handlers without modifying existing command routing. The bot also validates that rules only execute within the permissions granted to the configuring user, preventing automation workflows from being used to bypass standard server moderation controls.</p></div><figure class="essay-figure"><svg class="diagram" role="img" aria-label="Registry design and input validation" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 260" role="img" aria-label="Triggered compose-a-rule pipeline">
   <style>
     .fig24-box { fill: none; stroke: currentColor; stroke-width: 1.4; }
     .fig24-fill { fill: currentColor; fill-opacity: 0.08; }
@@ -120,44 +443,16 @@
   <path class="fig24-arr" d="M556 120 H596"/>
 </svg><figcaption class="essay-caption">Event handling diagram showing how incoming Discord events are matched against the rule registry and executed through stored MongoDB configurations.</figcaption></figure></div></section>
 
-                <footer class="page-foot">
-                    <a href="../../#projects" class="btn small">All projects</a>
-                    <a href="https://github.com/quantumbagel/Triggered" target="_blank" rel="noopener noreferrer" class="btn small">View Project ↗</a>
-                </footer>
-            </article>
-        </main>
+        <hr>
+
+        <footer class="page-foot">
+            <a href="../../">← Back to Julian Reder</a>
+            <div><a href="https://github.com/quantumbagel/Triggered" target="_blank" rel="noopener noreferrer" class="btn small">View Project ↗</a></div>
+        </footer>
     </div>
-    <script type="module" src="../../particles/main.js"></script>
+
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            const themeToggle = document.getElementById("theme-toggle");
-            const setTheme = (theme) => {
-                document.documentElement.classList.toggle("dark", theme === "dark");
-                localStorage.setItem("theme", theme);
-                if (themeToggle) {
-                    themeToggle.setAttribute("aria-pressed", theme === "dark" ? "true" : "false");
-                }
-            };
-            setTheme(document.documentElement.classList.contains("dark") ? "dark" : "light");
-            if (themeToggle) {
-                themeToggle.addEventListener("click", () => {
-                    document.documentElement.classList.add("theme-transitioning");
-                    setTheme(document.documentElement.classList.contains("dark") ? "light" : "dark");
-                    setTimeout(() => document.documentElement.classList.remove("theme-transitioning"), 180);
-                });
-            }
-            const bindParticleUi = (api) => {
-                if (!api) return;
-                document.querySelectorAll("[data-open-sim]").forEach((btn) => {
-                    btn.addEventListener("click", () => {
-                        api.setEnabled(true);
-                        api.openPanel();
-                    });
-                });
-            };
-            if (window.particleApi) bindParticleUi(window.particleApi);
-            else window.addEventListener("particles-ready", (event) => bindParticleUi(event.detail));
-
             document.querySelectorAll(".media-carousel").forEach((carousel) => {
                 const slidesContainer = carousel.querySelector(".carousel-slides");
                 const prevBtn = carousel.querySelector(".carousel-prev");

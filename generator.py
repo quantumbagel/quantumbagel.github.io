@@ -577,6 +577,70 @@ def render_filter_buttons(filters: list[dict[str, str]]) -> str:
     return "".join(buttons)
 
 
+def render_worrydream_project_item(p: dict[str, Any]) -> str:
+    title = p.get("title", "")
+    featured = p.get("featured", False)
+    page = project_has_page(p)
+    page_href = f"projects/{project_slug(p)}/" if page else (p.get("link") or "#")
+
+    classes = []
+    if featured:
+        classes.append("good")
+    if p.get("hero"):
+        classes.append("has-preview")
+
+    class_attr = f' class="{" ".join(classes)}"' if classes else ""
+    preview_attrs = ""
+    if p.get("hero"):
+        caption = p.get("hero_caption", "")
+        preview_attrs = f' data-preview="{p["hero"]}" data-title="{title}" data-caption="{caption}"'
+
+    desc = p.get("description", "")
+    sublinks = []
+    if p.get("link"):
+        sublinks.append(f'<a href="{p["link"]}">code</a>')
+    if page:
+        sublinks.append(f'<a href="{page_href}">writeup</a>')
+    if title == "aerpawlib":
+        sublinks.append('<a href="https://sites.google.com/ncsu.edu/aerpaw-user-manual/">user manual</a>')
+
+    sublinks_html = f'<div class="subpages">{" · ".join(sublinks)}</div>' if sublinks else ""
+    return (
+        f'<li>'
+        f'<a href="{page_href}"{class_attr}{preview_attrs}>{title}</a>: {desc}'
+        f'{sublinks_html}'
+        f'</li>'
+    )
+
+
+def render_worrydream_project_group(projects: list[dict[str, Any]]) -> str:
+    by_year: dict[str, list[dict[str, Any]]] = {}
+    for p in projects:
+        date_str = str(p.get("date", ""))
+        match = re.search(r"\b(20\d\d)\b", date_str)
+        year = match.group(1) if match else "Other"
+        by_year.setdefault(year, []).append(p)
+
+    chunks = []
+    for year in sorted(by_year.keys(), reverse=True):
+        items_html = "\n".join(render_worrydream_project_item(p) for p in by_year[year])
+        chunks.append(f'<h3>{year}</h3>\n<ul>\n{items_html}\n</ul>')
+    return "\n".join(chunks)
+
+
+def render_worrydream_bio(experiences: list[dict[str, Any]]) -> str:
+    items = []
+    for exp in experiences:
+        title = exp.get("title", "")
+        link = exp.get("link", "")
+        date = exp.get("date", "")
+        if link:
+            items.append(f'<li><a href="{link}" class="good">{title}</a> ({date})</li>')
+        else:
+            items.append(f'<li><strong>{title}</strong> ({date})</li>')
+    return f'<div class="bio"><ul>{"".join(items)}</ul></div>'
+
+
 def build_index_context(config: dict[str, Any]) -> dict[str, Any]:
     site = {"lang": "en", **config.get("site", {})}
 
@@ -704,6 +768,15 @@ def build_index_context(config: dict[str, Any]) -> dict[str, Any]:
 
     skills_html = "\n".join(skills_columns)
 
+    flight_projects = [
+        p for p in projects if p.get("category") == "aerpaw" or p.get("title") in ("airtime",)
+    ]
+    systems_projects = [p for p in projects if p not in flight_projects]
+
+    worrydream_flight_html = render_worrydream_project_group(flight_projects)
+    worrydream_systems_html = render_worrydream_project_group(systems_projects)
+    worrydream_bio_html = render_worrydream_bio(experiences)
+
     content = {
         "first_tagline": taglines[0],
         "taglines_json": json.dumps(taglines),
@@ -716,6 +789,9 @@ def build_index_context(config: dict[str, Any]) -> dict[str, Any]:
         "project_modals_html": "".join(render_project_modal(project) for project in archive_projects if project.get("gallery")),
         "project_writeups_html": "".join(render_project_writeup(project, category_map) for project in featured_projects),
         "project_archive_html": "".join(render_project_archive(project, category_map) for project in archive_projects),
+        "worrydream_flight_html": worrydream_flight_html,
+        "worrydream_systems_html": worrydream_systems_html,
+        "worrydream_bio_html": worrydream_bio_html,
         "elsewhere_html": "".join(render_elsewhere_link(item) for item in elsewhere),
         "has_archive": "true" if archive_projects else "",
         "has_elsewhere": "true" if elsewhere else "",

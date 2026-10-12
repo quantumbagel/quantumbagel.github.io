@@ -1,49 +1,372 @@
 <!DOCTYPE html>
-<html lang="en" data-tone="80">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>NCSU Parking | Julian Reder</title>
     <meta name="description" content="A predictive parking availability model for NC State campus decks that combines historical occupancy feeds with campus event schedules and validates machine learning models against strong seasonal baselines.">
     <link rel="icon" type="image/png" href="../../pfp.webp">
-    <script>
-        (function() {
-            const storedTheme = localStorage.getItem("theme");
-            const preferredTheme = storedTheme || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-            if (preferredTheme === "dark") {
-                document.documentElement.classList.add("dark");
-            } else {
-                document.documentElement.classList.remove("dark");
-            }
-        })();
-    </script>
-    <link href="../../font.css" rel="stylesheet">
-    <link rel="stylesheet" href="../../theme.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { overflow-x: hidden; scroll-behavior: smooth; }
+        body { 
+            background: #10183a; 
+            color: #ace; 
+            font: normal 13px/1.3 "Avenir", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; 
+            padding: 40px 24px 60px;
+            overflow-x: hidden;
+        }
+
+        .everything { 
+            position: relative; 
+            margin-left: auto; 
+            margin-right: auto; 
+            max-width: 564px; 
+        }
+
+        /* Top Navigation */
+        .top-nav {
+            position: absolute;
+            top: 0;
+            right: 0;
+            font-size: 11px;
+            color: #777;
+        }
+
+        .top-nav a {
+            color: #89a;
+            font-weight: normal;
+            margin-left: 10px;
+            text-decoration: none;
+            transition: color 0.1s;
+        }
+
+        .top-nav a:hover {
+            color: #fff;
+            text-decoration: underline;
+        }
+
+        /* Header */
+        h1 { 
+            text-transform: uppercase; 
+            color: #999; 
+            margin-bottom: 0px; 
+            font-weight: normal; 
+            font-size: 19px; 
+            letter-spacing: 0.5px;
+        }
+
+        h2 { 
+            color: #999; 
+            margin-bottom: 16px; 
+            font-weight: normal; 
+            font-size: 11px; 
+            letter-spacing: 0.3px;
+        }
+
+        p { margin-top: 10px; margin-bottom: 10px; }
+
+        .dek {
+            color: #ace;
+            font-size: 13px;
+            line-height: 1.35;
+            margin-top: 8px;
+            margin-bottom: 16px;
+        }
+
+        .meta-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            font-size: 11.5px;
+            color: #89a;
+            margin-bottom: 18px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid #346;
+        }
+
+        .meta-row a {
+            color: #ff0;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .meta-row a:hover {
+            text-decoration: underline;
+        }
+
+        /* Skills Chips */
+        .chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin: 6px 0 14px;
+        }
+
+        .chip-btn, .chip {
+            color: #89a;
+            font-size: 11px;
+            font-family: ui-monospace, Menlo, monospace;
+            background: rgba(51, 68, 102, 0.3);
+            border: 1px solid #346;
+            border-radius: 3px;
+            padding: 1px 6px;
+        }
+
+        /* Links & Highlights */
+        a { 
+            color: #fff; 
+            font-weight: bold; 
+            text-decoration: none; 
+            transition: color 0.1s;
+        }
+
+        a:hover { 
+            text-decoration: underline; 
+        }
+
+        .good { 
+            color: #ff0; 
+        }
+
+        /* Section Headings */
+        .section { 
+            margin-top: 26px; 
+        }
+
+        .section-head h3 {
+            color: #ace;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 6px;
+            border: none;
+            padding: 0;
+        }
+
+        .section-body {
+            color: #ace;
+            font-size: 13px;
+            line-height: 1.35;
+        }
+
+        .section-body p {
+            margin-top: 8px;
+            margin-bottom: 8px;
+        }
+
+        .section-body strong {
+            color: #fff;
+        }
+
+        /* Lists (Challenges, Learned) */
+        .fg-list {
+            list-style-type: none;
+            margin-left: 0;
+            margin-top: 6px;
+            margin-bottom: 10px;
+        }
+
+        .fg-list li {
+            position: relative;
+            padding-left: 18px;
+            margin-bottom: 5px;
+            line-height: 1.35;
+            color: #999;
+        }
+
+        .fg-list li::before {
+            content: "•";
+            position: absolute;
+            left: 4px;
+            color: #ff0;
+            font-size: 13px;
+        }
+
+        .fg-list li strong {
+            color: #fff;
+        }
+
+        /* Diagrams & Figures */
+        .essay-figure {
+            margin: 18px 0;
+            border: 1px solid #346;
+            background: rgba(16, 24, 58, 0.9);
+            border-radius: 4px;
+            padding: 12px;
+            overflow-x: auto;
+        }
+
+        .essay-figure svg,
+        .essay-figure img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .essay-caption {
+            font-size: 11px;
+            color: #89a;
+            font-style: italic;
+            margin-top: 8px;
+            text-align: center;
+            line-height: 1.3;
+        }
+
+        /* Carousel Support */
+        .media-carousel {
+            position: relative;
+            overflow: hidden;
+            border-radius: 4px;
+        }
+
+        .carousel-slides {
+            display: flex;
+            transition: transform 0.3s ease;
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .carousel-media {
+            max-width: 100%;
+            max-height: 320px;
+            object-fit: contain;
+            border-radius: 4px;
+        }
+
+        .carousel-prev, .carousel-next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(16, 24, 58, 0.85);
+            border: 1px solid #346;
+            color: #fff;
+            padding: 4px 10px;
+            cursor: pointer;
+            border-radius: 3px;
+            font-size: 13px;
+        }
+
+        .carousel-prev { left: 6px; }
+        .carousel-next { right: 6px; }
+
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            margin-top: 8px;
+        }
+
+        .carousel-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #346;
+            border: none;
+            cursor: pointer;
+        }
+
+        .carousel-dot.on {
+            background: #ff0;
+        }
+
+        /* Code */
+        code {
+            font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+            font-size: 12px;
+            background: rgba(51, 68, 102, 0.4);
+            padding: 1px 4px;
+            border-radius: 3px;
+            color: #ff0;
+        }
+
+        hr { 
+            border: none; 
+            border-top: 1px solid #346; 
+            margin-top: 36px; 
+            margin-bottom: 24px; 
+        }
+
+        /* Footer */
+        .page-foot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: #89a;
+        }
+
+        .page-foot a {
+            color: #89a;
+            font-weight: normal;
+        }
+
+        .page-foot a:hover {
+            color: #fff;
+        }
+
+        /* Background Sketch */
+        .bg-sketch {
+            position: absolute;
+            pointer-events: none;
+            opacity: 0.12;
+            z-index: -1;
+            top: -10px;
+            right: -240px;
+            width: 320px;
+        }
+
+        @media screen and (max-width: 600px) {
+            body { font-size: 14px; padding: 24px 16px 60px; }
+            .bg-sketch { display: none; }
+            h1 { font-size: 19px; }
+            .top-nav { position: static; margin-bottom: 16px; }
+            .essay-figure { padding: 8px; }
+        }
+    </style>
 </head>
 <body>
-    <canvas id="interactive-bg" aria-hidden="true"></canvas>
-    <div class="shell">
-        <header class="topbar">
-            <a href="../../" class="brand">Julian Reder</a>
-            <span class="muted small topbar-kicker">Solo Projects · 2026</span>
-            <span class="grow"></span>
-            <button id="theme-toggle" class="btn small ghost" type="button" aria-label="Toggle theme" aria-pressed="false">Theme</button>
-            <button id="particle-toggle" class="btn small ghost" type="button" aria-label="Background: On" aria-expanded="false" aria-controls="bg-sim-panel">Background</button>
-        </header>
-        <main class="page">
-            <article class="page-card">
-                <header class="page-head">
-                    <h1 class="look-name big">NCSU Parking</h1>
-                    <p class="look-desc">A predictive parking availability model for NC State campus decks that combines historical occupancy feeds with campus event schedules and validates machine learning models against strong seasonal baselines.</p>
-                    <div class="look-meta">2026</div>
-                    <div class="page-actions">
-                        <span class="chip">Private (Architecture Only)</span>
-                        
-                    </div>
-                    <div class="chips"><span class="chip-btn">Python</span><span class="chip-btn">PostgreSQL</span><span class="chip-btn">XGBoost</span><span class="chip-btn">pandas</span><span class="chip-btn">Streamlit</span><span class="chip-btn">Docker</span></div>
-                </header>
+    <div class="everything">
+        <!-- Top Navigation -->
+        <div class="top-nav">
+            <a href="../../#contact" class="good">Talk to me</a> ·
+            <a href="../../">Julian Reder</a> ·
+            <a href="../../resume">Resume</a> ·
+            <a href="https://github.com/quantumbagel">GitHub</a>
+        </div>
 
-                <figure class="essay-figure"><svg class="diagram" role="img" aria-label="NCSU Parking schematic" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 280" role="img" aria-label="NCSU parking forecast with baseline gate">
+        <!-- Background Sketch -->
+        <svg class="bg-sketch" viewBox="0 0 200 200" fill="none" stroke="#ace" stroke-width="1.2">
+            <circle cx="100" cy="100" r="16" />
+            <line x1="40" y1="40" x2="88" y2="88" />
+            <line x1="160" y1="40" x2="112" y2="88" />
+            <line x1="40" y1="160" x2="88" y2="112" />
+            <line x1="160" y1="160" x2="112" y2="112" />
+            <circle cx="40" cy="40" r="18" stroke-dasharray="3 3"/>
+            <circle cx="160" cy="40" r="18" stroke-dasharray="3 3"/>
+            <circle cx="40" cy="160" r="18" stroke-dasharray="3 3"/>
+            <circle cx="160" cy="160" r="18" stroke-dasharray="3 3"/>
+        </svg>
+
+        <header>
+            <h1>NCSU Parking</h1>
+            <h2>Solo Projects · 2026</h2>
+            <p class="dek">A predictive parking availability model for NC State campus decks that combines historical occupancy feeds with campus event schedules and validates machine learning models against strong seasonal baselines.</p>
+            <div class="meta-row">
+                <span>2026</span>
+                <span class="chip">Private (Architecture Only)</span>
+                
+            </div>
+            <div class="chips"><span class="chip-btn">Python</span><span class="chip-btn">PostgreSQL</span><span class="chip-btn">XGBoost</span><span class="chip-btn">pandas</span><span class="chip-btn">Streamlit</span><span class="chip-btn">Docker</span></div>
+        </header>
+
+        <figure class="essay-figure"><svg class="diagram" role="img" aria-label="NCSU Parking schematic" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 280" role="img" aria-label="NCSU parking forecast with baseline gate">
   <style>
     .fig19-box { fill: none; stroke: currentColor; stroke-width: 1.4; }
     .fig19-fill { fill: currentColor; fill-opacity: 0.08; }
@@ -86,14 +409,14 @@
   <path class="fig19-arr" d="M276 144 V200"/>
 </svg><figcaption class="essay-caption">Data pipeline diagram showing occupancy polling, calendar event ingestion, feature engineering, and model validation against seasonal baselines.</figcaption></figure>
 
-                
+        
 
-                <section class="section"><div class="section-head"><h3>Built</h3></div><div class="section-body"><p class="fg-prose">I built a data collection and forecasting pipeline for NC State campus parking decks. A background collector polls public occupancy APIs and university event calendars into PostgreSQL, engineering features such as five-minute time grids, lag statistics, rolling occupancy averages, geographic event distances, and academic calendar dates. The forecasting pipeline evaluates an hour-of-week seasonal baseline and only retains per-lot XGBoost models when they achieve lower validation error than the simple median across forecasting windows ranging from fifteen minutes to twenty-four hours. Model training runs as a decoupled batch job, keeping the lightweight Streamlit dashboard responsive.</p></div></section>
-                
-                
-                
+        <section class="section"><div class="section-head"><h3>Built</h3></div><div class="section-body"><p class="fg-prose">I built a data collection and forecasting pipeline for NC State campus parking decks. A background collector polls public occupancy APIs and university event calendars into PostgreSQL, engineering features such as five-minute time grids, lag statistics, rolling occupancy averages, geographic event distances, and academic calendar dates. The forecasting pipeline evaluates an hour-of-week seasonal baseline and only retains per-lot XGBoost models when they achieve lower validation error than the simple median across forecasting windows ranging from fifteen minutes to twenty-four hours. Model training runs as a decoupled batch job, keeping the lightweight Streamlit dashboard responsive.</p></div></section>
+        
+        
+        
 
-                <section class="section essay-section"><div class="section-head"><h3>Forecasting campus parking demand</h3></div><div class="section-body"><div class="fg-prose"><p>Finding parking on a large university campus can be frustrating during peak morning class hours and major athletic events. NC State publishes live occupancy counts for several campus parking decks, but the university does not provide forward-looking predictions to help students plan where to park in advance. I built this personal forecasting system to collect occupancy data continuously, combine it with campus event calendars, and evaluate whether machine learning models could reliably forecast lot availability across multiple time horizons.</p><p>The project is maintained in a private repository as an exploratory data engineering stack, using PostgreSQL to store time-series records, automated feature generation scripts in Python, and an interactive Streamlit dashboard for visualizing current availability and forecast estimates.</p></div></div></section><section class="section essay-section"><div class="section-head"><h3>Evaluating against strong seasonal baselines</h3></div><div class="section-body"><div class="fg-prose"><p>Parking occupancy follows clear cyclical patterns based on class schedules, which means an hour-of-week median baseline is already quite accurate for predicting routine weekday mornings. Rather than assuming that a complex machine learning model is automatically better, my training pipeline fits a seasonal median model first and only accepts an XGBoost model if it demonstrates lower mean absolute error on held-out validation data across horizons from 15 minutes up to 24 hours.</p><p>By enforcing this evaluation check for each individual parking deck, the system prevents overfitting on decks that follow strict routine schedules while allowing machine learning models to handle decks with higher variance. Model training runs as an independent batch process that saves validated model artifacts to disk, ensuring that the front-end dashboard remains fast and never depends on computationally heavy training libraries at runtime.</p></div><figure class="essay-figure"><svg class="diagram" role="img" aria-label="Evaluating against strong seasonal baselines" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 280" role="img" aria-label="NCSU parking forecast with baseline gate">
+        <section class="section essay-section"><div class="section-head"><h3>Forecasting campus parking demand</h3></div><div class="section-body"><div class="fg-prose"><p>Finding parking on a large university campus can be frustrating during peak morning class hours and major athletic events. NC State publishes live occupancy counts for several campus parking decks, but the university does not provide forward-looking predictions to help students plan where to park in advance. I built this personal forecasting system to collect occupancy data continuously, combine it with campus event calendars, and evaluate whether machine learning models could reliably forecast lot availability across multiple time horizons.</p><p>The project is maintained in a private repository as an exploratory data engineering stack, using PostgreSQL to store time-series records, automated feature generation scripts in Python, and an interactive Streamlit dashboard for visualizing current availability and forecast estimates.</p></div></div></section><section class="section essay-section"><div class="section-head"><h3>Evaluating against strong seasonal baselines</h3></div><div class="section-body"><div class="fg-prose"><p>Parking occupancy follows clear cyclical patterns based on class schedules, which means an hour-of-week median baseline is already quite accurate for predicting routine weekday mornings. Rather than assuming that a complex machine learning model is automatically better, my training pipeline fits a seasonal median model first and only accepts an XGBoost model if it demonstrates lower mean absolute error on held-out validation data across horizons from 15 minutes up to 24 hours.</p><p>By enforcing this evaluation check for each individual parking deck, the system prevents overfitting on decks that follow strict routine schedules while allowing machine learning models to handle decks with higher variance. Model training runs as an independent batch process that saves validated model artifacts to disk, ensuring that the front-end dashboard remains fast and never depends on computationally heavy training libraries at runtime.</p></div><figure class="essay-figure"><svg class="diagram" role="img" aria-label="Evaluating against strong seasonal baselines" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 280" role="img" aria-label="NCSU parking forecast with baseline gate">
   <style>
     .fig20-box { fill: none; stroke: currentColor; stroke-width: 1.4; }
     .fig20-fill { fill: currentColor; fill-opacity: 0.08; }
@@ -136,44 +459,16 @@
   <path class="fig20-arr" d="M276 144 V200"/>
 </svg><figcaption class="essay-caption">Pipeline structure showing raw data ingestion, feature generation, baseline benchmarking, and model selection.</figcaption></figure></div></section><section class="section essay-section"><div class="section-head"><h3>Incorporating campus event data</h3></div><div class="section-body"><div class="fg-prose"><p>Routine class schedules explain typical weekday traffic, but special events like home football games, basketball tournaments, and concerts create massive localized spikes in parking demand that standard calendar features fail to capture. To address this, the data collector automatically scrapes university event feeds, maps each event to its physical campus venue, and calculates geographic distance features relative to nearby parking facilities.</p><p>These event distance features give the forecasting models advance notice of sudden attendance surges, helping improve prediction accuracy during weekend games and evening performances when historical averages alone would significantly underestimate parking congestion.</p></div></div></section>
 
-                <footer class="page-foot">
-                    <a href="../../#projects" class="btn small">All projects</a>
-                    <span class="chip">Private (Architecture Only)</span>
-                </footer>
-            </article>
-        </main>
+        <hr>
+
+        <footer class="page-foot">
+            <a href="../../">← Back to Julian Reder</a>
+            <div><span class="chip">Private (Architecture Only)</span></div>
+        </footer>
     </div>
-    <script type="module" src="../../particles/main.js"></script>
+
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            const themeToggle = document.getElementById("theme-toggle");
-            const setTheme = (theme) => {
-                document.documentElement.classList.toggle("dark", theme === "dark");
-                localStorage.setItem("theme", theme);
-                if (themeToggle) {
-                    themeToggle.setAttribute("aria-pressed", theme === "dark" ? "true" : "false");
-                }
-            };
-            setTheme(document.documentElement.classList.contains("dark") ? "dark" : "light");
-            if (themeToggle) {
-                themeToggle.addEventListener("click", () => {
-                    document.documentElement.classList.add("theme-transitioning");
-                    setTheme(document.documentElement.classList.contains("dark") ? "light" : "dark");
-                    setTimeout(() => document.documentElement.classList.remove("theme-transitioning"), 180);
-                });
-            }
-            const bindParticleUi = (api) => {
-                if (!api) return;
-                document.querySelectorAll("[data-open-sim]").forEach((btn) => {
-                    btn.addEventListener("click", () => {
-                        api.setEnabled(true);
-                        api.openPanel();
-                    });
-                });
-            };
-            if (window.particleApi) bindParticleUi(window.particleApi);
-            else window.addEventListener("particles-ready", (event) => bindParticleUi(event.detail));
-
             document.querySelectorAll(".media-carousel").forEach((carousel) => {
                 const slidesContainer = carousel.querySelector(".carousel-slides");
                 const prevBtn = carousel.querySelector(".carousel-prev");

@@ -1,49 +1,372 @@
 <!DOCTYPE html>
-<html lang="en" data-tone="199">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Portfolio Website (v3) | Julian Reder</title>
     <meta name="description" content="A personal portfolio site generated with custom Python build scripts from structured TOML data, featuring twelve interactive HTML5 canvas background simulations.">
     <link rel="icon" type="image/png" href="../../pfp.webp">
-    <script>
-        (function() {
-            const storedTheme = localStorage.getItem("theme");
-            const preferredTheme = storedTheme || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-            if (preferredTheme === "dark") {
-                document.documentElement.classList.add("dark");
-            } else {
-                document.documentElement.classList.remove("dark");
-            }
-        })();
-    </script>
-    <link href="../../font.css" rel="stylesheet">
-    <link rel="stylesheet" href="../../theme.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { overflow-x: hidden; scroll-behavior: smooth; }
+        body { 
+            background: #10183a; 
+            color: #ace; 
+            font: normal 13px/1.3 "Avenir", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; 
+            padding: 40px 24px 60px;
+            overflow-x: hidden;
+        }
+
+        .everything { 
+            position: relative; 
+            margin-left: auto; 
+            margin-right: auto; 
+            max-width: 564px; 
+        }
+
+        /* Top Navigation */
+        .top-nav {
+            position: absolute;
+            top: 0;
+            right: 0;
+            font-size: 11px;
+            color: #777;
+        }
+
+        .top-nav a {
+            color: #89a;
+            font-weight: normal;
+            margin-left: 10px;
+            text-decoration: none;
+            transition: color 0.1s;
+        }
+
+        .top-nav a:hover {
+            color: #fff;
+            text-decoration: underline;
+        }
+
+        /* Header */
+        h1 { 
+            text-transform: uppercase; 
+            color: #999; 
+            margin-bottom: 0px; 
+            font-weight: normal; 
+            font-size: 19px; 
+            letter-spacing: 0.5px;
+        }
+
+        h2 { 
+            color: #999; 
+            margin-bottom: 16px; 
+            font-weight: normal; 
+            font-size: 11px; 
+            letter-spacing: 0.3px;
+        }
+
+        p { margin-top: 10px; margin-bottom: 10px; }
+
+        .dek {
+            color: #ace;
+            font-size: 13px;
+            line-height: 1.35;
+            margin-top: 8px;
+            margin-bottom: 16px;
+        }
+
+        .meta-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            font-size: 11.5px;
+            color: #89a;
+            margin-bottom: 18px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid #346;
+        }
+
+        .meta-row a {
+            color: #ff0;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .meta-row a:hover {
+            text-decoration: underline;
+        }
+
+        /* Skills Chips */
+        .chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin: 6px 0 14px;
+        }
+
+        .chip-btn, .chip {
+            color: #89a;
+            font-size: 11px;
+            font-family: ui-monospace, Menlo, monospace;
+            background: rgba(51, 68, 102, 0.3);
+            border: 1px solid #346;
+            border-radius: 3px;
+            padding: 1px 6px;
+        }
+
+        /* Links & Highlights */
+        a { 
+            color: #fff; 
+            font-weight: bold; 
+            text-decoration: none; 
+            transition: color 0.1s;
+        }
+
+        a:hover { 
+            text-decoration: underline; 
+        }
+
+        .good { 
+            color: #ff0; 
+        }
+
+        /* Section Headings */
+        .section { 
+            margin-top: 26px; 
+        }
+
+        .section-head h3 {
+            color: #ace;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 6px;
+            border: none;
+            padding: 0;
+        }
+
+        .section-body {
+            color: #ace;
+            font-size: 13px;
+            line-height: 1.35;
+        }
+
+        .section-body p {
+            margin-top: 8px;
+            margin-bottom: 8px;
+        }
+
+        .section-body strong {
+            color: #fff;
+        }
+
+        /* Lists (Challenges, Learned) */
+        .fg-list {
+            list-style-type: none;
+            margin-left: 0;
+            margin-top: 6px;
+            margin-bottom: 10px;
+        }
+
+        .fg-list li {
+            position: relative;
+            padding-left: 18px;
+            margin-bottom: 5px;
+            line-height: 1.35;
+            color: #999;
+        }
+
+        .fg-list li::before {
+            content: "•";
+            position: absolute;
+            left: 4px;
+            color: #ff0;
+            font-size: 13px;
+        }
+
+        .fg-list li strong {
+            color: #fff;
+        }
+
+        /* Diagrams & Figures */
+        .essay-figure {
+            margin: 18px 0;
+            border: 1px solid #346;
+            background: rgba(16, 24, 58, 0.9);
+            border-radius: 4px;
+            padding: 12px;
+            overflow-x: auto;
+        }
+
+        .essay-figure svg,
+        .essay-figure img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .essay-caption {
+            font-size: 11px;
+            color: #89a;
+            font-style: italic;
+            margin-top: 8px;
+            text-align: center;
+            line-height: 1.3;
+        }
+
+        /* Carousel Support */
+        .media-carousel {
+            position: relative;
+            overflow: hidden;
+            border-radius: 4px;
+        }
+
+        .carousel-slides {
+            display: flex;
+            transition: transform 0.3s ease;
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .carousel-media {
+            max-width: 100%;
+            max-height: 320px;
+            object-fit: contain;
+            border-radius: 4px;
+        }
+
+        .carousel-prev, .carousel-next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(16, 24, 58, 0.85);
+            border: 1px solid #346;
+            color: #fff;
+            padding: 4px 10px;
+            cursor: pointer;
+            border-radius: 3px;
+            font-size: 13px;
+        }
+
+        .carousel-prev { left: 6px; }
+        .carousel-next { right: 6px; }
+
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            margin-top: 8px;
+        }
+
+        .carousel-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #346;
+            border: none;
+            cursor: pointer;
+        }
+
+        .carousel-dot.on {
+            background: #ff0;
+        }
+
+        /* Code */
+        code {
+            font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+            font-size: 12px;
+            background: rgba(51, 68, 102, 0.4);
+            padding: 1px 4px;
+            border-radius: 3px;
+            color: #ff0;
+        }
+
+        hr { 
+            border: none; 
+            border-top: 1px solid #346; 
+            margin-top: 36px; 
+            margin-bottom: 24px; 
+        }
+
+        /* Footer */
+        .page-foot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: #89a;
+        }
+
+        .page-foot a {
+            color: #89a;
+            font-weight: normal;
+        }
+
+        .page-foot a:hover {
+            color: #fff;
+        }
+
+        /* Background Sketch */
+        .bg-sketch {
+            position: absolute;
+            pointer-events: none;
+            opacity: 0.12;
+            z-index: -1;
+            top: -10px;
+            right: -240px;
+            width: 320px;
+        }
+
+        @media screen and (max-width: 600px) {
+            body { font-size: 14px; padding: 24px 16px 60px; }
+            .bg-sketch { display: none; }
+            h1 { font-size: 19px; }
+            .top-nav { position: static; margin-bottom: 16px; }
+            .essay-figure { padding: 8px; }
+        }
+    </style>
 </head>
 <body>
-    <canvas id="interactive-bg" aria-hidden="true"></canvas>
-    <div class="shell">
-        <header class="topbar">
-            <a href="../../" class="brand">Julian Reder</a>
-            <span class="muted small topbar-kicker">Solo Projects · 2026 - Present</span>
-            <span class="grow"></span>
-            <button id="theme-toggle" class="btn small ghost" type="button" aria-label="Toggle theme" aria-pressed="false">Theme</button>
-            <button id="particle-toggle" class="btn small ghost" type="button" aria-label="Background: On" aria-expanded="false" aria-controls="bg-sim-panel">Background</button>
-        </header>
-        <main class="page">
-            <article class="page-card">
-                <header class="page-head">
-                    <h1 class="look-name big">Portfolio Website (v3)</h1>
-                    <p class="look-desc">A personal portfolio site generated with custom Python build scripts from structured TOML data, featuring twelve interactive HTML5 canvas background simulations.</p>
-                    <div class="look-meta">2026 - Present</div>
-                    <div class="page-actions">
-                        <a href="https://github.com/quantumbagel/quantumbagel.github.io" target="_blank" rel="noopener noreferrer" class="btn small">View Project ↗</a>
-                        <button type="button" data-open-sim class="btn small">Open the simulations</button>
-                    </div>
-                    <div class="chips"><span class="chip-btn">Python</span><span class="chip-btn">JavaScript</span><span class="chip-btn">Canvas</span></div>
-                </header>
+    <div class="everything">
+        <!-- Top Navigation -->
+        <div class="top-nav">
+            <a href="../../#contact" class="good">Talk to me</a> ·
+            <a href="../../">Julian Reder</a> ·
+            <a href="../../resume">Resume</a> ·
+            <a href="https://github.com/quantumbagel">GitHub</a>
+        </div>
 
-                <figure class="essay-figure"><svg class="diagram" role="img" aria-label="Portfolio Website (v3) schematic" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 220" role="img" aria-label="Portfolio generator and simulation engine">
+        <!-- Background Sketch -->
+        <svg class="bg-sketch" viewBox="0 0 200 200" fill="none" stroke="#ace" stroke-width="1.2">
+            <circle cx="100" cy="100" r="16" />
+            <line x1="40" y1="40" x2="88" y2="88" />
+            <line x1="160" y1="40" x2="112" y2="88" />
+            <line x1="40" y1="160" x2="88" y2="112" />
+            <line x1="160" y1="160" x2="112" y2="112" />
+            <circle cx="40" cy="40" r="18" stroke-dasharray="3 3"/>
+            <circle cx="160" cy="40" r="18" stroke-dasharray="3 3"/>
+            <circle cx="40" cy="160" r="18" stroke-dasharray="3 3"/>
+            <circle cx="160" cy="160" r="18" stroke-dasharray="3 3"/>
+        </svg>
+
+        <header>
+            <h1>Portfolio Website (v3)</h1>
+            <h2>Solo Projects · 2026 - Present</h2>
+            <p class="dek">A personal portfolio site generated with custom Python build scripts from structured TOML data, featuring twelve interactive HTML5 canvas background simulations.</p>
+            <div class="meta-row">
+                <span>2026 - Present</span>
+                <a href="https://github.com/quantumbagel/quantumbagel.github.io" target="_blank" rel="noopener noreferrer" class="btn small">View Project ↗</a>
+                <button type="button" data-open-sim class="btn small">Open the simulations</button>
+            </div>
+            <div class="chips"><span class="chip-btn">Python</span><span class="chip-btn">JavaScript</span><span class="chip-btn">Canvas</span></div>
+        </header>
+
+        <figure class="essay-figure"><svg class="diagram" role="img" aria-label="Portfolio Website (v3) schematic" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 220" role="img" aria-label="Portfolio generator and simulation engine">
   <style>
     .fig25-box { fill: none; stroke: currentColor; stroke-width: 1.4; }
     .fig25-fill { fill: currentColor; fill-opacity: 0.08; }
@@ -73,14 +396,14 @@
   <path class="fig25-arr" d="M300 106 V136"/>
 </svg><figcaption class="essay-caption">Architecture diagram illustrating how Python build scripts compile site data into static HTML pages alongside the standalone canvas simulation engine.</figcaption></figure>
 
-                <figure class="essay-figure media-figure"><div class="media-carousel" data-carousel-id="gallery-portfolio-website-v3"><div class="carousel-slides" style="transform: translateX(0%);"><div class="carousel-slide"><img src="../../media/projects/portfolio/homepage-aurora.png" alt="This site running in dark mode with the aurora background simulation" loading="lazy" decoding="async" class="carousel-media"></div><div class="carousel-slide"><img src="../../media/projects/portfolio/sim-panel.png" alt="Background control panel open on the live site, aurora mode selected" loading="lazy" decoding="async" class="carousel-media"></div></div><button class="carousel-prev icon-btn" type="button" aria-label="Previous slide">‹</button><button class="carousel-next icon-btn" type="button" aria-label="Next slide">›</button><div class="carousel-dots"><button class="carousel-dot on" type="button" data-slide-to="0" aria-label="Go to slide 1"></button><button class="carousel-dot" type="button" data-slide-to="1" aria-label="Go to slide 2"></button></div></div></figure>
+        <figure class="essay-figure media-figure"><div class="media-carousel" data-carousel-id="gallery-portfolio-website-v3"><div class="carousel-slides" style="transform: translateX(0%);"><div class="carousel-slide"><img src="../../media/projects/portfolio/homepage-aurora.png" alt="This site running in dark mode with the aurora background simulation" loading="lazy" decoding="async" class="carousel-media"></div><div class="carousel-slide"><img src="../../media/projects/portfolio/sim-panel.png" alt="Background control panel open on the live site, aurora mode selected" loading="lazy" decoding="async" class="carousel-media"></div></div><button class="carousel-prev icon-btn" type="button" aria-label="Previous slide">‹</button><button class="carousel-next icon-btn" type="button" aria-label="Next slide">›</button><div class="carousel-dots"><button class="carousel-dot on" type="button" data-slide-to="0" aria-label="Go to slide 1"></button><button class="carousel-dot" type="button" data-slide-to="1" aria-label="Go to slide 2"></button></div></div></figure>
 
-                <section class="section"><div class="section-head"><h3>Built</h3></div><div class="section-body"><p class="fg-prose">I built this website using a lightweight custom static generator in Python that compiles structured content from a TOML configuration file into clean HTML pages. The visual background is powered by a custom JavaScript canvas engine that provides twelve interactive particle and physics simulations with adjustable settings.</p></div></section>
-                <section class="section"><div class="section-head"><h3>Hard parts</h3></div><div class="section-body"><ul class="fg-list"><li>Maintaining smooth canvas animation performance behind semi-transparent backdrop filters across both desktop and mobile web browsers.</li><li>Ensuring canvas event listeners handle user interaction smoothly without interfering with text selection, link clicks, or normal page scrolling.</li><li>Supporting accessibility preferences by respecting reduced motion settings and persisting user simulation choices in local storage.</li></ul></div></section>
-                <section class="section"><div class="section-head"><h3>Learned</h3></div><div class="section-body"><p class="fg-prose">Building a personal site with a simple file-driven static generator makes content maintenance easy while keeping page load speeds fast and avoiding runtime framework dependencies.</p></div></section>
-                <section class="section"><div class="section-head"><h3>Also</h3></div><div class="section-body"><ul class="fg-list"><li>Custom Python static site generator that compiles TOML data and HTML partials into static pages.</li><li>Responsive design with dark and light themes, smooth navigation anchors, and contact form integration.</li><li>Interactive canvas background system with twelve selectable simulation modes and real-time parameter controls.</li></ul></div></section>
+        <section class="section"><div class="section-head"><h3>Built</h3></div><div class="section-body"><p class="fg-prose">I built this website using a lightweight custom static generator in Python that compiles structured content from a TOML configuration file into clean HTML pages. The visual background is powered by a custom JavaScript canvas engine that provides twelve interactive particle and physics simulations with adjustable settings.</p></div></section>
+        <section class="section"><div class="section-head"><h3>Hard parts</h3></div><div class="section-body"><ul class="fg-list"><li>Maintaining smooth canvas animation performance behind semi-transparent backdrop filters across both desktop and mobile web browsers.</li><li>Ensuring canvas event listeners handle user interaction smoothly without interfering with text selection, link clicks, or normal page scrolling.</li><li>Supporting accessibility preferences by respecting reduced motion settings and persisting user simulation choices in local storage.</li></ul></div></section>
+        <section class="section"><div class="section-head"><h3>Learned</h3></div><div class="section-body"><p class="fg-prose">Building a personal site with a simple file-driven static generator makes content maintenance easy while keeping page load speeds fast and avoiding runtime framework dependencies.</p></div></section>
+        <section class="section"><div class="section-head"><h3>Also</h3></div><div class="section-body"><ul class="fg-list"><li>Custom Python static site generator that compiles TOML data and HTML partials into static pages.</li><li>Responsive design with dark and light themes, smooth navigation anchors, and contact form integration.</li><li>Interactive canvas background system with twelve selectable simulation modes and real-time parameter controls.</li></ul></div></section>
 
-                <section class="section essay-section"><div class="section-head"><h3>Design and static generation</h3></div><div class="section-body"><div class="fg-prose"><p>When designing this portfolio, I wanted a site that loaded quickly, was simple to host on GitHub Pages, and could be updated easily without the overhead of heavy web frameworks or database-driven content management systems. I wrote a small static site generator in Python that reads all portfolio content, project writeups, and experience details from a single TOML configuration file, rendering them into clean static HTML files through reusable page templates.</p><p>Featured projects receive both a concise overview card on the main page and a detailed project page with technical writeups and architecture diagrams, allowing readers to explore the background and implementation details of each build.</p></div></div></section><section class="section essay-section"><div class="section-head"><h3>Interactive canvas background engine</h3></div><div class="section-body"><div class="fg-prose"><p>Behind the text content runs a standalone HTML5 canvas engine that renders twelve different mathematical and physics simulations, including particle fields, orbital mechanics, cellular automata, and wave interference patterns. Visitors can interact directly with the simulations using their mouse or touchscreen, open a control panel in the header to adjust simulation parameters in real time, or switch between visual presets.</p><p>A key focus during implementation was ensuring that the canvas renders efficiently without consuming excessive processor cycles or blocking user interaction with the page. The animation loop adjusts its resolution for high-density screens, pauses when the browser tab is hidden, respects user preferences for reduced motion, and sits behind transparent content layers without capturing clicks or scrolling gestures meant for the text.</p></div><figure class="essay-figure"><svg class="diagram" role="img" aria-label="Interactive canvas background engine" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 220" role="img" aria-label="Portfolio generator and simulation engine">
+        <section class="section essay-section"><div class="section-head"><h3>Design and static generation</h3></div><div class="section-body"><div class="fg-prose"><p>When designing this portfolio, I wanted a site that loaded quickly, was simple to host on GitHub Pages, and could be updated easily without the overhead of heavy web frameworks or database-driven content management systems. I wrote a small static site generator in Python that reads all portfolio content, project writeups, and experience details from a single TOML configuration file, rendering them into clean static HTML files through reusable page templates.</p><p>Featured projects receive both a concise overview card on the main page and a detailed project page with technical writeups and architecture diagrams, allowing readers to explore the background and implementation details of each build.</p></div></div></section><section class="section essay-section"><div class="section-head"><h3>Interactive canvas background engine</h3></div><div class="section-body"><div class="fg-prose"><p>Behind the text content runs a standalone HTML5 canvas engine that renders twelve different mathematical and physics simulations, including particle fields, orbital mechanics, cellular automata, and wave interference patterns. Visitors can interact directly with the simulations using their mouse or touchscreen, open a control panel in the header to adjust simulation parameters in real time, or switch between visual presets.</p><p>A key focus during implementation was ensuring that the canvas renders efficiently without consuming excessive processor cycles or blocking user interaction with the page. The animation loop adjusts its resolution for high-density screens, pauses when the browser tab is hidden, respects user preferences for reduced motion, and sits behind transparent content layers without capturing clicks or scrolling gestures meant for the text.</p></div><figure class="essay-figure"><svg class="diagram" role="img" aria-label="Interactive canvas background engine" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 220" role="img" aria-label="Portfolio generator and simulation engine">
   <style>
     .fig26-box { fill: none; stroke: currentColor; stroke-width: 1.4; }
     .fig26-fill { fill: currentColor; fill-opacity: 0.08; }
@@ -110,44 +433,16 @@
   <path class="fig26-arr" d="M300 106 V136"/>
 </svg><figcaption class="essay-caption">Build and runtime diagram showing how static HTML generation is separated from the client-side JavaScript canvas engine.</figcaption></figure></div></section>
 
-                <footer class="page-foot">
-                    <a href="../../#projects" class="btn small">All projects</a>
-                    <a href="https://github.com/quantumbagel/quantumbagel.github.io" target="_blank" rel="noopener noreferrer" class="btn small">View Project ↗</a>
-                </footer>
-            </article>
-        </main>
+        <hr>
+
+        <footer class="page-foot">
+            <a href="../../">← Back to Julian Reder</a>
+            <div><a href="https://github.com/quantumbagel/quantumbagel.github.io" target="_blank" rel="noopener noreferrer" class="btn small">View Project ↗</a></div>
+        </footer>
     </div>
-    <script type="module" src="../../particles/main.js"></script>
+
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            const themeToggle = document.getElementById("theme-toggle");
-            const setTheme = (theme) => {
-                document.documentElement.classList.toggle("dark", theme === "dark");
-                localStorage.setItem("theme", theme);
-                if (themeToggle) {
-                    themeToggle.setAttribute("aria-pressed", theme === "dark" ? "true" : "false");
-                }
-            };
-            setTheme(document.documentElement.classList.contains("dark") ? "dark" : "light");
-            if (themeToggle) {
-                themeToggle.addEventListener("click", () => {
-                    document.documentElement.classList.add("theme-transitioning");
-                    setTheme(document.documentElement.classList.contains("dark") ? "light" : "dark");
-                    setTimeout(() => document.documentElement.classList.remove("theme-transitioning"), 180);
-                });
-            }
-            const bindParticleUi = (api) => {
-                if (!api) return;
-                document.querySelectorAll("[data-open-sim]").forEach((btn) => {
-                    btn.addEventListener("click", () => {
-                        api.setEnabled(true);
-                        api.openPanel();
-                    });
-                });
-            };
-            if (window.particleApi) bindParticleUi(window.particleApi);
-            else window.addEventListener("particles-ready", (event) => bindParticleUi(event.detail));
-
             document.querySelectorAll(".media-carousel").forEach((carousel) => {
                 const slidesContainer = carousel.querySelector(".carousel-slides");
                 const prevBtn = carousel.querySelector(".carousel-prev");
