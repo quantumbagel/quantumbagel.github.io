@@ -20,6 +20,7 @@ email = "mailto:jjreder@ncsu.edu"
 
 [sections]
 about_title = "About"
+writing_title = "Writing & technical notes."
 experience_title = "Experience"
 projects_title = "What I've built"
 more_title = "More builds"

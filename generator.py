@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import datetime
+import html
 import json
 import re
 from pathlib import Path
@@ -11,6 +12,7 @@ import tomllib
 ROOT_DIR = Path(__file__).resolve().parent
 CONFIG_PATH = ROOT_DIR / "site.toml"
 TEMPLATES_DIR = ROOT_DIR / "templates"
+POSTS_DIR = ROOT_DIR / "posts"
 
 PLACEHOLDER_PATTERN = re.compile(
     r"(?<!\$)\{([A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z_][A-Za-z0-9_]*)+)\}"
@@ -641,6 +643,296 @@ def render_worrydream_bio(experiences: list[dict[str, Any]]) -> str:
     return f'<div class="bio"><ul>{"".join(items)}</ul></div>'
 
 
+def parse_frontmatter(content: str) -> tuple[dict[str, Any], str]:
+    meta: dict[str, Any] = {}
+    if not content.startswith("---"):
+        return meta, content
+
+    parts = content.split("---", 2)
+    if len(parts) < 3:
+        return meta, content
+
+    fm_text = parts[1]
+    body = parts[2].lstrip("\n")
+
+    current_list_key = None
+    for raw_line in fm_text.splitlines():
+        line = raw_line.strip()
+        if not line or line.startswith("#"):
+            continue
+
+        if current_list_key and (raw_line.startswith("  - ") or raw_line.startswith("    - ") or raw_line.startswith("- ")):
+            val = line.lstrip("- ").strip().strip("\"'")
+            meta[current_list_key].append(val)
+            continue
+        else:
+            current_list_key = None
+
+        if ":" in line:
+            key, val = line.split(":", 1)
+            key = key.strip()
+            val = val.strip()
+            if not val:
+                meta[key] = []
+                current_list_key = key
+                continue
+
+            if val.startswith("[") and val.endswith("]"):
+                inner = val[1:-1].strip()
+                items = [item.strip().strip("\"'") for item in inner.split(",") if item.strip()]
+                meta[key] = items
+            elif val.lower() == "true":
+                meta[key] = True
+            elif val.lower() == "false":
+                meta[key] = False
+            else:
+                meta[key] = val.strip("\"'")
+
+    return meta, body
+
+
+def render_inline_markdown(text: str, root: str = "") -> str:
+    def repl_img(match: re.Match[str]) -> str:
+        alt = match.group(1)
+        src = match.group(2).strip()
+        caption = alt
+        if ' "' in src:
+            src, cap = src.split(' "', 1)
+            caption = cap.rstrip('"')
+        cap_html = f'<figcaption class="essay-caption">{html.escape(caption)}</figcaption>' if caption else ""
+        return (
+            f'<figure class="essay-figure">'
+            f'<img src="{asset_url(src, root)}" alt="{html.escape(alt)}" loading="lazy">'
+            f'{cap_html}'
+            f'</figure>'
+        )
+
+    text = re.sub(r"!\[(.*?)\]\((.*?)\)", repl_img, text)
+
+    text = re.sub(
+        r"\[(.*?)\]\((.*?)\)",
+        lambda m: f'<a href="{m.group(2)}">{m.group(1)}</a>',
+        text,
+    )
+
+    text = re.sub(
+        r"`([^`]+)`",
+        lambda m: f"<code>{html.escape(m.group(1))}</code>",
+        text,
+    )
+
+    text = re.sub(r"\*\*([^*]+)\*\*", r"<strong>\1</strong>", text)
+    text = re.sub(r"__([^_]+)__", r"<strong>\1</strong>", text)
+    text = re.sub(r"\*([^*]+)\*", r"<em>\1</em>", text)
+    text = re.sub(r"(?<!\w)_([^_]+)_(?!\w)", r"<em>\1</em>", text)
+
+    return text
+
+
+def render_markdown(text: str, root: str = "") -> str:
+    if not text:
+        return ""
+
+    code_blocks: list[str] = []
+
+    def save_code_block(match: re.Match[str]) -> str:
+        lang = match.group(1) or ""
+        code = match.group(2)
+        idx = len(code_blocks)
+        escaped = html.escape(code.strip("\n"))
+        cls = f' class="language-{lang}"' if lang else ""
+        code_blocks.append(f'<pre><code{cls}>{escaped}</code></pre>')
+        return f"\n\n@@CODEBLOCK_{idx}@@\n\n"
+
+    text = re.sub(r"```([a-zA-Z0-9_-]*)\n?(.*?)```", save_code_block, text, flags=re.DOTALL)
+
+    lines = text.splitlines()
+    out: list[str] = []
+    i = 0
+    in_list: str | None = None
+    in_quote = False
+    quote_lines: list[str] = []
+
+    def flush_quote() -> None:
+        nonlocal in_quote, quote_lines
+        if in_quote and quote_lines:
+            q_html = render_markdown("\n".join(quote_lines), root)
+            out.append(f"<blockquote>{q_html}</blockquote>")
+            quote_lines = []
+            in_quote = False
+
+    def flush_list() -> None:
+        nonlocal in_list
+        if in_list:
+            out.append(f"</{in_list}>")
+            in_list = None
+
+    while i < len(lines):
+        line = lines[i]
+
+        if line.startswith("> ") or line == ">":
+            flush_list()
+            in_quote = True
+            quote_lines.append(line[2:] if line.startswith("> ") else "")
+            i += 1
+            continue
+        elif in_quote:
+            flush_quote()
+
+        m_head = re.match(r"^(#{1,4})\s+(.+)$", line)
+        if m_head:
+            flush_list()
+            lvl = len(m_head.group(1))
+            h_text = render_inline_markdown(m_head.group(2).strip(), root)
+            out.append(f"<h{lvl}>{h_text}</h{lvl}>")
+            i += 1
+            continue
+
+        if re.match(r"^(\*{3,}|-{3,}|_{3,})$", line.strip()):
+            flush_list()
+            out.append("<hr>")
+            i += 1
+            continue
+
+        m_ul = re.match(r"^\s*[-*+]\s+(.+)$", line)
+        if m_ul:
+            if in_list != "ul":
+                flush_list()
+                out.append("<ul>")
+                in_list = "ul"
+            li_text = render_inline_markdown(m_ul.group(1).strip(), root)
+            out.append(f"<li>{li_text}</li>")
+            i += 1
+            continue
+
+        m_ol = re.match(r"^\s*\d+\.\s+(.+)$", line)
+        if m_ol:
+            if in_list != "ol":
+                flush_list()
+                out.append("<ol>")
+                in_list = "ol"
+            li_text = render_inline_markdown(m_ol.group(1).strip(), root)
+            out.append(f"<li>{li_text}</li>")
+            i += 1
+            continue
+
+        flush_list()
+
+        line_clean = line.strip()
+        if line_clean.startswith("@@CODEBLOCK_") and line_clean.endswith("@@"):
+            out.append(line_clean)
+            i += 1
+            continue
+
+        if not line_clean:
+            i += 1
+            continue
+
+        p_lines = [line]
+        i += 1
+        while i < len(lines):
+            nxt = lines[i]
+            nxt_clean = nxt.strip()
+            if (
+                not nxt_clean
+                or nxt.startswith("#")
+                or nxt.startswith("> ")
+                or re.match(r"^\s*[-*+]\s+", nxt)
+                or re.match(r"^\s*\d+\.\s+", nxt)
+                or re.match(r"^(\*{3,}|-{3,}|_{3,})$", nxt_clean)
+                or nxt_clean.startswith("@@CODEBLOCK_")
+            ):
+                break
+            p_lines.append(nxt)
+            i += 1
+
+        p_body = " ".join(p.strip() for p in p_lines)
+        if p_body:
+            out.append(f"<p>{render_inline_markdown(p_body, root)}</p>")
+
+    flush_quote()
+    flush_list()
+
+    rendered = "\n".join(out)
+    for idx, cb in enumerate(code_blocks):
+        rendered = rendered.replace(f"@@CODEBLOCK_{idx}@@", cb)
+        rendered = rendered.replace(f"<p>@@CODEBLOCK_{idx}@@</p>", cb)
+
+    return rendered
+
+
+def calculate_reading_time(text: str) -> str:
+    cleaned = re.sub(r"```.*?```", "", text, flags=re.DOTALL)
+    words = len(re.findall(r"\b\w+\b", cleaned))
+    minutes = max(1, round(words / 200))
+    return f"{minutes} min read"
+
+
+def load_blog_posts(posts_dir: Path = POSTS_DIR) -> list[dict[str, Any]]:
+    if not posts_dir.exists():
+        return []
+
+    posts: list[dict[str, Any]] = []
+    for file in sorted(posts_dir.glob("*.md")):
+        content = file.read_text(encoding="utf-8")
+        meta, body = parse_frontmatter(content)
+
+        raw_title = str(meta.get("title") or file.stem.replace("-", " ").title())
+        slug = slugify(str(meta.get("slug") or re.sub(r"^\d{4}-\d{2}(-\d{2})?-", "", file.stem) or raw_title))
+        date_str = str(meta.get("date") or "")
+        match_year = re.search(r"\b(20\d\d)\b", date_str)
+        year = match_year.group(1) if match_year else "Recent"
+        desc = str(meta.get("description") or "")
+        tags = meta.get("tags") or []
+        if isinstance(tags, str):
+            tags = [t.strip() for t in tags.split(",") if t.strip()]
+
+        reading_time = calculate_reading_time(body)
+
+        posts.append({
+            "title": raw_title,
+            "slug": slug,
+            "date": date_str,
+            "year": year,
+            "description": desc,
+            "tags": tags,
+            "body": body,
+            "reading_time": reading_time,
+            "file": file.name,
+            "featured": bool(meta.get("featured", False)),
+        })
+
+    posts.sort(key=lambda p: (p["year"], p["date"], p["file"]), reverse=True)
+    return posts
+
+
+def render_worrydream_writing_group(posts: list[dict[str, Any]]) -> str:
+    if not posts:
+        return ""
+
+    by_year: dict[str, list[dict[str, Any]]] = {}
+    for p in posts:
+        by_year.setdefault(p["year"], []).append(p)
+
+    chunks = []
+    for year in sorted(by_year.keys(), reverse=True):
+        items = []
+        for p in by_year[year]:
+            items.append(
+                f'<li>'
+                f'<a href="/blog/{p["slug"]}/">{p["title"]}</a>: {p["description"]}'
+                f'</li>'
+            )
+        chunks.append(f'<h3>{year}</h3>\n<ul>\n{"".join(items)}\n</ul>')
+
+    chunks.append(
+        '<div class="subpages" style="margin-left: 72px; margin-top: 6px; margin-bottom: 22px;">'
+        '<a href="/blog/">all writing →</a>'
+        '</div>'
+    )
+    return "\n".join(chunks)
+
+
 def build_index_context(config: dict[str, Any]) -> dict[str, Any]:
     site = {"lang": "en", **config.get("site", {})}
 
@@ -773,8 +1065,10 @@ def build_index_context(config: dict[str, Any]) -> dict[str, Any]:
     ]
     systems_projects = [p for p in projects if p not in flight_projects]
 
+    posts = load_blog_posts()
     worrydream_flight_html = render_worrydream_project_group(flight_projects)
     worrydream_systems_html = render_worrydream_project_group(systems_projects)
+    worrydream_writing_html = render_worrydream_writing_group(posts)
     worrydream_bio_html = render_worrydream_bio(experiences)
 
     content = {
@@ -791,7 +1085,9 @@ def build_index_context(config: dict[str, Any]) -> dict[str, Any]:
         "project_archive_html": "".join(render_project_archive(project, category_map) for project in archive_projects),
         "worrydream_flight_html": worrydream_flight_html,
         "worrydream_systems_html": worrydream_systems_html,
+        "worrydream_writing_html": worrydream_writing_html,
         "worrydream_bio_html": worrydream_bio_html,
+        "posts": posts,
         "elsewhere_html": "".join(render_elsewhere_link(item) for item in elsewhere),
         "has_archive": "true" if archive_projects else "",
         "has_elsewhere": "true" if elsewhere else "",
@@ -928,6 +1224,81 @@ def write_redirects(config: dict[str, Any], user_name: str) -> None:
         output_path.write_text(redirect_html, encoding="utf-8")
 
 
+def render_blog_index_page(posts: list[dict[str, Any]], context: dict[str, Any]) -> str:
+    root = page_asset_root(1)
+    by_year: dict[str, list[dict[str, Any]]] = {}
+    for p in posts:
+        by_year.setdefault(p["year"], []).append(p)
+
+    chunks = []
+    for year in sorted(by_year.keys(), reverse=True):
+        items = []
+        for p in by_year[year]:
+            tags_html = ""
+            if p.get("tags"):
+                tag_spans = " · ".join(p["tags"])
+                tags_html = f'<div class="post-meta">{tag_spans}</div>'
+            items.append(
+                f'<li>'
+                f'<a href="{root}blog/{p["slug"]}/" class="good">{p["title"]}</a>'
+                f'<span class="post-date">{p["date"]} · {p["reading_time"]}</span>'
+                f'<div class="post-desc">{p["description"]}</div>'
+                f'{tags_html}'
+                f'</li>'
+            )
+        chunks.append(f'<h3>{year}</h3>\n<ul>\n{"".join(items)}\n</ul>')
+
+    page_context = {
+        **context,
+        "paths": {"root": root},
+        "content": {
+            **context["content"],
+            "blog_posts_html": "\n".join(chunks),
+        },
+    }
+    return render_template("blog_index.html", page_context)
+
+
+def render_blog_post_page(post: dict[str, Any], context: dict[str, Any]) -> str:
+    root = page_asset_root(2)
+    content_html = render_markdown(post["body"], root)
+    tags_html = ""
+    if post.get("tags"):
+        tags_spans = " · ".join(f'<span style="color:#ace;">{t}</span>' for t in post["tags"])
+        tags_html = f'<span>·</span><span>{tags_spans}</span>'
+
+    dek_html = f'<div class="dek">{post["description"]}</div>' if post.get("description") else ""
+
+    page_context = {
+        **context,
+        "paths": {"root": root},
+        "post": {
+            "title": post["title"],
+            "date": post["date"],
+            "reading_time": post["reading_time"],
+            "description": post["description"],
+            "tags_html": tags_html,
+            "dek_html": dek_html,
+            "content_html": content_html,
+        },
+    }
+    return render_template("blog_post.html", page_context)
+
+
+def write_blog_pages(posts: list[dict[str, Any]], context: dict[str, Any]) -> None:
+    blog_dir = ROOT_DIR / "blog"
+    blog_dir.mkdir(parents=True, exist_ok=True)
+    index_html = minify_if_available(render_blog_index_page(posts, context))
+    (blog_dir / "index.html").write_text(index_html, encoding="utf-8")
+
+    for post in posts:
+        slug = post["slug"]
+        post_dir = blog_dir / slug
+        post_dir.mkdir(parents=True, exist_ok=True)
+        post_html = minify_if_available(render_blog_post_page(post, context))
+        (post_dir / "index.html").write_text(post_html, encoding="utf-8")
+
+
 def main() -> None:
     global _FIGURE_SEQ
     _FIGURE_SEQ = 0
@@ -940,6 +1311,7 @@ def main() -> None:
 
     write_redirects(config, context["user"]["name"])
     write_project_pages(config, context)
+    write_blog_pages(context["content"]["posts"], context)
     print("Successfully generated clean portfolio website!")
 
 

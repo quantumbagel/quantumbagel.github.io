@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="{site.lang}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{post.title} | {user.name}</title>
+    <meta name="description" content="{post.description}">
+    <link rel="icon" type="image/png" href="{paths.root}{meta.favicon}">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { overflow-x: hidden; scroll-behavior: smooth; }
+        body { 
+            background: #10183a; 
+            color: #ace; 
+            font: normal 13px/1.45 "Avenir", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; 
+            padding: 40px 24px 60px;
+            overflow-x: hidden;
+        }
+
+        .everything { 
+            position: relative; 
+            margin-left: auto; 
+            margin-right: auto; 
+            max-width: 564px; 
+        }
+
+        /* Top Navigation */
+        .top-nav {
+            position: absolute;
+            top: 0;
+            right: 0;
+            font-size: 11px;
+            color: #777;
+        }
+
+        .top-nav a {
+            color: #89a;
+            font-weight: normal;
+            margin-left: 10px;
+            text-decoration: none;
+            transition: color 0.1s;
+        }
+
+        .top-nav a:hover {
+            color: #fff;
+            text-decoration: underline;
+        }
+
+        /* Header */
+        h1 { 
+            text-transform: uppercase; 
+            color: #999; 
+            margin-bottom: 4px; 
+            font-weight: normal; 
+            font-size: 19px; 
+            letter-spacing: 0.5px;
+            line-height: 1.25;
+        }
+
+        .meta-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            font-size: 11.5px;
+            color: #89a;
+            margin-top: 6px;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #346;
+        }
+
+        .dek {
+            color: #ff0;
+            font-size: 13.5px;
+            line-height: 1.4;
+            margin-bottom: 20px;
+        }
+
+        /* Headings */
+        h2 { 
+            color: #999; 
+            font-size: 14px; 
+            font-weight: bold; 
+            text-transform: uppercase; 
+            letter-spacing: 0.5px; 
+            margin-top: 28px; 
+            margin-bottom: 8px; 
+        }
+
+        h3 { 
+            color: #89a; 
+            font-size: 13px; 
+            font-weight: bold; 
+            margin-top: 22px; 
+            margin-bottom: 6px; 
+        }
+
+        h4 {
+            color: #789;
+            font-size: 12px;
+            font-weight: bold;
+            margin-top: 18px;
+            margin-bottom: 4px;
+        }
+
+        p { margin-top: 10px; margin-bottom: 10px; }
+
+        a { 
+            color: #fff; 
+            font-weight: bold; 
+            text-decoration: none; 
+            transition: color 0.1s;
+        }
+
+        a:hover { 
+            text-decoration: underline; 
+        }
+
+        .good { 
+            color: #ff0; 
+        }
+
+        ul, ol { 
+            margin-left: 24px; 
+            margin-top: 8px; 
+            margin-bottom: 12px; 
+            color: #ace;
+        }
+
+        li { 
+            margin-bottom: 4px; 
+            line-height: 1.4; 
+        }
+
+        /* Code Blocks & Inline Code */
+        pre {
+            background: #0b1026;
+            border: 1px solid #234;
+            border-radius: 4px;
+            padding: 12px 14px;
+            overflow-x: auto;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            font-size: 12px;
+            line-height: 1.45;
+            color: #cde;
+            margin: 16px 0;
+        }
+
+        code {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            font-size: 11.5px;
+            background: #17224d;
+            padding: 2px 5px;
+            border-radius: 3px;
+            color: #ffd768;
+        }
+
+        pre code {
+            background: transparent;
+            padding: 0;
+            color: inherit;
+        }
+
+        blockquote {
+            border-left: 2px solid #346;
+            padding-left: 14px;
+            margin: 16px 0;
+            color: #89a;
+            font-style: italic;
+        }
+
+        /* Figures & Media */
+        .essay-figure {
+            margin: 20px 0;
+            background: #0b1026;
+            border: 1px solid #234;
+            border-radius: 4px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .essay-figure img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 3px;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .essay-caption {
+            color: #789;
+            font-size: 11.5px;
+            margin-top: 10px;
+            line-height: 1.35;
+        }
+
+        hr { 
+            border: none; 
+            border-top: 1px solid #346; 
+            margin-top: 36px; 
+            margin-bottom: 24px; 
+        }
+
+        .post-footer {
+            color: #89a;
+            font-size: 12px;
+            line-height: 1.45;
+        }
+
+        @media (max-width: 600px) {
+            body { font-size: 14px; padding: 24px 16px; }
+            h1 { font-size: 20px; }
+            .top-nav { position: static; margin-bottom: 16px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="everything">
+
+    <!-- Top Navigation -->
+    <div class="top-nav">
+        <a href="{paths.root}blog/" class="good">← All Posts</a> ·
+        <a href="{paths.root}">Julian Reder</a>
+    </div>
+
+    <h1>{post.title}</h1>
+    <div class="meta-row">
+        <span>{post.date}</span>
+        <span>·</span>
+        <span>{post.reading_time}</span>
+        {post.tags_html}
+    </div>
+
+    {post.dek_html}
+
+    <div class="post-content">
+        {post.content_html}
+    </div>
+
+    <hr>
+
+    <div class="post-footer">
+        <p>Thanks for reading. If you have questions, feedback, or want to discuss this, feel free to reach out via <a href="{paths.root}#contact" class="good">the contact form</a> or by email at <a href="mailto:{user.email}">{user.email}</a>.</p>
+        <p style="margin-top: 8px;"><a href="{paths.root}blog/">← Back to all posts</a></p>
+    </div>
+
+</div>
+
+</body>
+</html>
