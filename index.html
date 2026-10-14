@@ -12,7 +12,7 @@
     html { overflow-x: hidden; scroll-behavior: smooth; }
     body { 
         background: #10183a; 
-        color: #ace; 
+        color: #b6d6f6; 
         font: normal 13px/1.3 "Avenir", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; 
         padding: 40px 24px 60px;
         overflow-x: hidden;
@@ -27,7 +27,7 @@
 
     h1 { 
         text-transform: uppercase; 
-        color: #999; 
+        color: #aab; 
         margin-bottom: 0px; 
         font-weight: normal; 
         font-size: 19px; 
@@ -35,7 +35,7 @@
     }
 
     h2 { 
-        color: #999; 
+        color: #aab; 
         margin-bottom: 18px; 
         font-weight: normal; 
         font-size: 11px; 
@@ -49,13 +49,13 @@
 
     .section { 
         margin-top: 28px; 
-        color: #ace;
+        color: #b6d6f6;
         font-size: 13px;
     }
 
     /* Worrydream Left-Hanging Year Layout */
     h3 { 
-        color: #999; 
+        color: #aab; 
         font-size: 13px; 
         font-weight: normal; 
         position: absolute; 
@@ -70,7 +70,7 @@
     }
 
     li { 
-        color: #999; 
+        color: #aab; 
         margin-bottom: 3px; 
         line-height: 1.35;
     }
@@ -78,12 +78,15 @@
     a { 
         color: #fff; 
         font-weight: bold; 
-        text-decoration: none; 
-        transition: color 0.1s;
+        text-decoration: underline;
+        text-decoration-color: color-mix(in srgb, currentColor 40%, transparent);
+        text-decoration-thickness: 1px;
+        text-underline-offset: 2px;
+        transition: color 0.1s, text-decoration-color 0.1s;
     }
 
     a:hover { 
-        text-decoration: underline; 
+        text-decoration-color: currentColor; 
     }
 
     /* Standout highlight */
@@ -92,17 +95,17 @@
     }
 
     .subpages {
-        color: #777;
+        color: #889;
         font-size: 11.5px;
     }
 
     .subpages a {
         font-weight: normal;
-        color: #aaa;
+        color: #bbc;
     }
 
     .bio { 
-        color: #999; 
+        color: #aab; 
         font-size: 12px; 
         margin-left: 24px; 
         margin-top: 8px;
@@ -116,19 +119,19 @@
     }
 
     .bio li { 
-        color: #999; 
+        color: #aab; 
         margin-bottom: 5px; 
     }
 
     .bio a { 
-        color: #bbb; 
+        color: #ccd; 
         font-weight: normal;
     }
 
     .contact-table {
         margin-left: 72px;
         margin-top: 8px;
-        color: #999;
+        color: #aab;
         font-size: 12.5px;
         line-height: 1.5;
     }
@@ -165,7 +168,7 @@
         font-size: 11px;
         text-transform: uppercase;
         letter-spacing: 0.5px;
-        color: #999;
+        color: #aab;
         margin-bottom: 4px;
     }
 
@@ -190,7 +193,7 @@
 
     .form-group input::placeholder,
     .form-group textarea::placeholder {
-        color: #567;
+        color: #678;
     }
 
     .form-actions {
@@ -286,7 +289,7 @@
     }
 
     .preview-dock .preview-caption {
-        color: #89a;
+        color: #9ab;
         font-size: 11px;
         margin-top: 2px;
         line-height: 1.3;
@@ -317,13 +320,14 @@
         top: 0;
         right: 0;
         font-size: 11px;
-        color: #777;
+        color: #889;
     }
 
     .top-nav a {
-        color: #89a;
+        color: #9ab;
         font-weight: normal;
         margin-left: 10px;
+        text-decoration: none;
     }
 
     @media screen and (max-width: 600px) {
@@ -355,7 +359,7 @@
     </div>
 
     <!-- Decorative Wireframe Sketched Figures -->
-    <svg class="bg-sketch drone-sketch" viewBox="0 0 200 200" fill="none" stroke="#ace" stroke-width="1.2">
+    <svg class="bg-sketch drone-sketch" viewBox="0 0 200 200" fill="none" stroke="#b6d6f6" stroke-width="1.2">
         <circle cx="100" cy="100" r="16" />
         <line x1="40" y1="40" x2="88" y2="88" />
         <line x1="160" y1="40" x2="112" y2="88" />
@@ -367,7 +371,7 @@
         <circle cx="160" cy="160" r="18" stroke-dasharray="3 3"/>
     </svg>
 
-    <svg class="bg-sketch radar-sketch" viewBox="0 0 200 200" fill="none" stroke="#ace" stroke-width="1.2">
+    <svg class="bg-sketch radar-sketch" viewBox="0 0 200 200" fill="none" stroke="#b6d6f6" stroke-width="1.2">
         <circle cx="100" cy="100" r="80" stroke-dasharray="4 4"/>
         <circle cx="100" cy="100" r="50" />
         <circle cx="100" cy="100" r="20" />
@@ -387,13 +391,13 @@
     <h2>Computer Engineering & Statistics Student @ NCSU</h2>
 
     <div class="intro">
-        <p>I build research software connecting hardware with distributed systems.</p>
+        <p>I build cool stuff.</p>
         <p>Developer for <a href="https://aerpaw.org" class="good">AERPAW</a>, an NSF testbed for advanced wireless and autonomous flight.</p>
-        <p class="section">Student at <a href="https://ncsu.edu">NC State University</a> (B.S. Computer Engineering &amp; Statistics, 4.0 GPA).</p>
+        <p class="section">Student at <a href="https://ncsu.edu">NC State University</a> (B.S. Computer Engineering, B.S. Statistics, 4.0 GPA).</p>
         <p>I also interned at <a href="https://advisor.ml.com/sites/nc/raleigh-nc/bellbellcronlund">Merrill Lynch Wealth Management</a>, play Factorio, and have three cats.</p>
     </div>
 
-    <p class="section">Autonomous vehicles, radar &amp; flight systems.</p>
+    <p class="section">AERPAW public work.</p>
     <h3>2025</h3>
 <ul>
 <li><a href="projects/aerpawlib/" class="good has-preview" data-preview="media/projects/aerpawlib/stack.svg" data-title="aerpawlib" data-caption="Architecture diagram showing how researcher scripts interact with aerpawlib, MAVSDK, and the testbed safety filter before reaching the vehicle autopilot.">aerpawlib</a>: The official vehicle control library for AERPAW, NC State's research testbed for advanced wireless communications and autonomous aircraft.<div class="subpages"><a href="https://github.com/AERPAW/aerpawlib">code</a> · <a href="projects/aerpawlib/">writeup</a> · <a href="https://sites.google.com/ncsu.edu/aerpaw-user-manual/">user manual</a></div></li>
@@ -403,9 +407,9 @@
 <li><a href="projects/pyaerial/" class="good has-preview" data-preview="media/projects/pyaerial/pipeline.svg" data-title="PyAerial" data-caption="Pipeline overview showing how radio signals pass from dump1090 through pyModeS decoding, geofence checks, and Redis caching before reaching the web map.">PyAerial</a>: An airspace awareness and aircraft tracking system that ingests Mode S and ADS-B signals, evaluates geofence boundaries, and displays live flights on a radar map.<div class="subpages"><a href="https://github.com/quantumbagel/PyAerial">code</a> · <a href="projects/pyaerial/">writeup</a></div></li>
 <li><a href="projects/dronetracker/" class="good has-preview" data-preview="media/projects/dronetracker/aim.svg" data-title="DroneTracker" data-caption="Tracking diagram showing how drone GPS coordinates are transformed into physical camera pan, tilt, and zoom angles.">DroneTracker</a>: An automated tracking service that points AXIS pan-tilt-zoom cameras at flying drones using live GPS coordinates from Kafka and records flight video over VAPIX.<div class="subpages"><a href="https://github.com/quantumbagel/DroneTracker">code</a> · <a href="projects/dronetracker/">writeup</a></div></li>
 </ul>
-<p>Beyond these, I have made many other contributions across the <a href='https://aerpaw.org'>AERPAW</a> platform, from fixes and features in the testbed's software to tools that support day-to-day experiment operations.</p>
+<p>Beyond these, I have made many other contributions across the <a href='https://aerpaw.org'>AERPAW</a> platform. I am also the primary developer responsible for bugfixes and features in the testbed's software.</p>
 
-    <p class="section">Data platforms, compilers &amp; software systems.</p>
+    <p class="section">Other projects.</p>
     <h3>2026</h3>
 <ul>
 <li><a href="projects/ml-ticker/" class="good has-preview" data-preview="media/projects/ml-ticker/pipeline.svg" data-title="ML-Ticker" data-caption="Architectural overview showing configuration validation, batched data querying, dependency graph evaluation, and report export.">ML-Ticker</a>: A command line financial data tool built during my internship at Merrill Lynch, featuring FactSet FQL querying, a safe formula evaluation engine, and Excel reporting.<div class="subpages"><a href="projects/ml-ticker/">writeup</a></div></li>
@@ -449,7 +453,7 @@
         <div><strong>GitHub:</strong> <a href="https://github.com/quantumbagel">https://github.com/quantumbagel</a></div>
         <div><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/julian-reder-nc/">https://www.linkedin.com/in/julian-reder-nc/</a></div>
         <div><strong>Discord:</strong> <a href="https://discordapp.com/users/897146430664355850">@quantumbagel</a></div>
-        <div><strong>Resume:</strong> <a href="/resume">preview pdf</a></div>
+        <div><strong>Resume:</strong> <a href="/resume">preview [pdf]</a></div>
         <div><strong>Email:</strong> <a href="mailto:jjreder@ncsu.edu">jjreder@ncsu.edu</a></div>
     </div>
 
@@ -457,8 +461,8 @@
 
     <!-- Contact Form Section -->
     <p class="section" id="contact">Talk to me.</p>
-    <p style="color: #999; font-size: 12px; line-height: 1.45; margin-bottom: 14px;">
-        I am always interested in new opportunities and am happy to talk about them.
+    <p style="color: #aab; font-size: 12px; line-height: 1.45; margin-bottom: 14px;">
+        I am always interested in new opportunities and ALWAYS have free time for something cool :)
     </p>
 
     <form id="contact-form" action="https://formspree.io/f/moqgwdop" method="POST" class="contact-form">

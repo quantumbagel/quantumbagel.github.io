@@ -11,7 +11,7 @@
         html { overflow-x: hidden; scroll-behavior: smooth; }
         body { 
             background: #10183a; 
-            color: #ace; 
+            color: #b6d6f6; 
             font: normal 13px/1.45 "Avenir", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; 
             padding: 40px 24px 60px;
             overflow-x: hidden;
@@ -30,11 +30,11 @@
             top: 0;
             right: 0;
             font-size: 11px;
-            color: #777;
+            color: #889;
         }
 
         .top-nav a {
-            color: #89a;
+            color: #9ab;
             font-weight: normal;
             margin-left: 10px;
             text-decoration: none;
@@ -49,7 +49,7 @@
         /* Header */
         h1 { 
             text-transform: uppercase; 
-            color: #999; 
+            color: #aab; 
             margin-bottom: 4px; 
             font-weight: normal; 
             font-size: 19px; 
@@ -63,7 +63,7 @@
             gap: 10px;
             flex-wrap: wrap;
             font-size: 11.5px;
-            color: #89a;
+            color: #9ab;
             margin-top: 6px;
             margin-bottom: 20px;
             padding-bottom: 12px;
@@ -79,7 +79,7 @@
 
         /* Headings */
         h2 { 
-            color: #999; 
+            color: #aab; 
             font-size: 14px; 
             font-weight: bold; 
             text-transform: uppercase; 
@@ -89,7 +89,7 @@
         }
 
         h3 { 
-            color: #89a; 
+            color: #9ab; 
             font-size: 13px; 
             font-weight: bold; 
             margin-top: 22px; 
@@ -97,7 +97,7 @@
         }
 
         h4 {
-            color: #789;
+            color: #8ab;
             font-size: 12px;
             font-weight: bold;
             margin-top: 18px;
@@ -109,12 +109,16 @@
         a { 
             color: #fff; 
             font-weight: bold; 
-            text-decoration: none; 
-            transition: color 0.1s;
+            text-decoration: underline;
+            text-decoration-color: color-mix(in srgb, currentColor 40%, transparent);
+            text-decoration-thickness: 1px;
+
+            text-underline-offset: 2px;
+            transition: color 0.1s, text-decoration-color 0.1s;
         }
 
         a:hover { 
-            text-decoration: underline; 
+            text-decoration-color: currentColor; 
         }
 
         .good { 
@@ -125,7 +129,7 @@
             margin-left: 24px; 
             margin-top: 8px; 
             margin-bottom: 12px; 
-            color: #ace;
+            color: #b6d6f6;
         }
 
         li { 
@@ -166,7 +170,7 @@
             border-left: 2px solid #346;
             padding-left: 14px;
             margin: 16px 0;
-            color: #89a;
+            color: #9ab;
             font-style: italic;
         }
 
@@ -189,7 +193,7 @@
         }
 
         .essay-caption {
-            color: #789;
+            color: #8ab;
             font-size: 11.5px;
             margin-top: 10px;
             line-height: 1.35;
@@ -203,7 +207,7 @@
         }
 
         .post-footer {
-            color: #89a;
+            color: #9ab;
             font-size: 12px;
             line-height: 1.45;
         }

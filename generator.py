@@ -1267,7 +1267,7 @@ def render_blog_post_page(post: dict[str, Any], context: dict[str, Any]) -> str:
     content_html = render_markdown(post["body"], root)
     tags_html = ""
     if post.get("tags"):
-        tags_spans = " · ".join(f'<span style="color:#ace;">{t}</span>' for t in post["tags"])
+        tags_spans = " · ".join(f'<span style="color:#b6d6f6;">{t}</span>' for t in post["tags"])
         tags_html = f'<span>·</span><span>{tags_spans}</span>'
 
     dek_html = f'<div class="dek">{post["description"]}</div>' if post.get("description") else ""

@@ -12,7 +12,7 @@
     html { overflow-x: hidden; scroll-behavior: smooth; }
     body { 
         background: #10183a; 
-        color: #ace; 
+        color: #b6d6f6; 
         font: normal 13px/1.3 "Avenir", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; 
         padding: 40px 24px 60px;
         overflow-x: hidden;
@@ -31,11 +31,11 @@
         top: 0;
         right: 0;
         font-size: 11px;
-        color: #777;
+        color: #889;
     }
 
     .top-nav a {
-        color: #89a;
+        color: #9ab;
         font-weight: normal;
         margin-left: 10px;
         text-decoration: none;
@@ -50,7 +50,7 @@
     /* Header */
     h1 { 
         text-transform: uppercase; 
-        color: #999; 
+        color: #aab; 
         margin-bottom: 0px; 
         font-weight: normal; 
         font-size: 19px; 
@@ -58,7 +58,7 @@
     }
 
     h2 { 
-        color: #999; 
+        color: #aab; 
         margin-bottom: 24px; 
         font-weight: normal; 
         font-size: 11px; 
@@ -69,13 +69,13 @@
 
     .section { 
         margin-top: 24px; 
-        color: #ace;
+        color: #b6d6f6;
         font-size: 13px;
     }
 
     /* Worrydream Hanging Year Layout */
     h3 { 
-        color: #999; 
+        color: #aab; 
         font-size: 13px; 
         font-weight: normal; 
         position: absolute; 
@@ -90,7 +90,7 @@
     }
 
     li { 
-        color: #999; 
+        color: #aab; 
         margin-bottom: 14px; 
         line-height: 1.4;
     }
@@ -98,12 +98,16 @@
     a { 
         color: #fff; 
         font-weight: bold; 
-        text-decoration: none; 
-        transition: color 0.1s;
+        text-decoration: underline;
+        text-decoration-color: color-mix(in srgb, currentColor 40%, transparent);
+        text-decoration-thickness: 1px;
+
+        text-underline-offset: 2px;
+        transition: color 0.1s, text-decoration-color 0.1s;
     }
 
     a:hover { 
-        text-decoration: underline; 
+        text-decoration-color: currentColor; 
     }
 
     .good { 
@@ -111,21 +115,21 @@
     }
 
     .post-date {
-        color: #789;
+        color: #8ab;
         font-size: 11px;
         margin-left: 6px;
         font-weight: normal;
     }
 
     .post-desc {
-        color: #89a;
+        color: #9ab;
         font-size: 12px;
         margin-top: 2px;
         line-height: 1.35;
     }
 
     .post-meta {
-        color: #678;
+        color: #89a;
         font-size: 11px;
         margin-top: 3px;
     }
@@ -165,7 +169,7 @@
 
     <hr>
 
-    <p style="color: #89a; font-size: 12px; line-height: 1.45;">
+    <p style="color: #9ab; font-size: 12px; line-height: 1.45;">
         Have thoughts or want to discuss any of these posts? Feel free to <a href="{paths.root}#contact" class="good">send a note</a> or email me directly at <a href="mailto:{user.email}">{user.email}</a>.
     </p>
 

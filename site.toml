@@ -36,7 +36,7 @@ technologies = "Technologies"
 [contact]
 form_action = "https://formspree.io/f/moqgwdop"
 submit_label = "Send Message"
-intro = "I am always interested in new opportunities and am happy to talk about them."
+intro = "I am always interested in new opportunities and ALWAYS have free time for something cool :)"
 
 [footer]
 text = "Made with <3 by @quantumbagel, not AI."
@@ -47,7 +47,7 @@ about = [
   "I enjoy connecting different layers of hardware and software together, including pairing radio receivers with flight stacks, streaming camera telemetry into tracking services, and designing reliable backend APIs. You can reach out through the contact options below, or click <strong>Background</strong> in the header if you want to explore the interactive canvas simulations."
 ]
 
-flight_note = "Beyond these, I have made many other contributions across the <a href='https://aerpaw.org'>AERPAW</a> platform, from fixes and features in the testbed's software to tools that support day-to-day experiment operations."
+flight_note = "Beyond these, I have made many other contributions across the <a href='https://aerpaw.org'>AERPAW</a> platform. I am also the primary developer responsible for bugfixes and features in the testbed's software."
 
 taglines = [
   "is a Computer Engineering and Statistics student @ NCSU",
@@ -622,12 +622,12 @@ figure = "media/projects/portfolio/modes.svg"
 caption = "Build and runtime diagram showing how static HTML generation is separated from the client-side JavaScript canvas engine."
 
 [[projects.gallery]]
-src = "media/projects/portfolio/homepage-aurora.png"
-alt = "This site running in dark mode with the aurora background simulation"
+src = "media/projects/portfolio/homepage.png"
+alt = "The homepage, with featured projects grouped by area and listed by year"
 
 [[projects.gallery]]
-src = "media/projects/portfolio/sim-panel.png"
-alt = "Background control panel open on the live site, aurora mode selected"
+src = "media/projects/portfolio/project-page.png"
+alt = "A generated project writeup page, showing the aerpawlib architecture diagram"
 
 [[projects]]
 category = "solo"
