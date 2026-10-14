@@ -604,7 +604,8 @@ def render_worrydream_project_item(p: dict[str, Any]) -> str:
     if page:
         sublinks.append(f'<a href="{page_href}">writeup</a>')
     if title == "aerpawlib":
-        sublinks.append('<a href="https://sites.google.com/ncsu.edu/aerpaw-user-manual/">user manual</a>')
+        sublinks.append('<a href="https://aerpaw.github.io/aerpawlib/">docs</a>')
+        sublinks.append('<a href="https://sites.google.com/ncsu.edu/aerpaw-user-manual/6-sample-experiments-repository/6-2-vehicle-control-software">user manual</a>')
 
     sublinks_html = f'<div class="subpages">{" · ".join(sublinks)}</div>' if sublinks else ""
     return (
