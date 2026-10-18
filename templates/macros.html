@@ -1,0 +1,34 @@
+{% macro prose(value) -%}
+{% set model = prose_model(value) %}
+{% if model %}
+{% if model.kind == "list" %}<div class="space-y-0">{% for part in model.parts %}{{ prose(part) }}{% endfor %}</div>
+{% elif model.kind == "plain" %}<p class="fg-prose">{{ model.text | safe }}</p>
+{% elif model.kind == "mixed" %}<div class="fg-prose"><p>{{ model.lead | safe }}</p>{{ model.html | safe }}</div>
+{% elif model.kind == "html" %}<div class="fg-prose">{{ model.html | safe }}</div>
+{% endif %}
+{% endif %}
+{%- endmacro %}
+
+{% macro bullets(items) -%}
+{% if items %}<ul class="fg-list">{% for item in items %}<li>{{ item | safe }}</li>{% endfor %}</ul>{% endif %}
+{%- endmacro %}
+
+{% macro pills(skills) -%}
+{% if skills %}<div class="chips">{% for skill in skills %}<span class="chip-btn">{{ skill }}</span>{% endfor %}</div>{% endif %}
+{%- endmacro %}
+
+{% macro project_link(url, label="View Project") -%}
+{% if url %}<a href="{{ url }}" target="_blank" rel="noopener noreferrer" class="btn small">{{ label }} ↗</a>{% endif %}
+{%- endmacro %}
+
+{% macro figure(fig) -%}
+{% include "partials/figure.html" %}
+{%- endmacro %}
+
+{% macro gallery(gallery) -%}
+{% include "partials/gallery.html" %}
+{%- endmacro %}
+
+{% macro labeled(title, value) -%}
+{% include "partials/labeled_section.html" %}
+{%- endmacro %}

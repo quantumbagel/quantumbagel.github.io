@@ -1,0 +1,8 @@
+{% for bucket in blog_years %}
+<h3>{{ bucket.year }}</h3>
+<ul>
+{% for post in bucket.posts %}
+<li><a href="{{ post.href }}" class="good">{{ post.title }}</a><span class="post-date">{{ post.date }} · {{ post.reading_time }}</span><div class="post-desc">{{ post.description | safe }}</div>{% if post.tags %}<div class="post-meta">{{ post.tags | join(" · ") }}</div>{% endif %}</li>
+{% endfor %}
+</ul>
+{% endfor %}

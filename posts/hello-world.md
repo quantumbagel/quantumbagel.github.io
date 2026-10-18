@@ -1,9 +1,9 @@
----
-title: "Hello World"
-date: "October 2026"
-description: "Welcome to my blog :D"
-tags: ["General"]
----
++++
+title = "Hello World"
+date = "October 2026"
+description = "Welcome to my blog :D"
+tags = ["General"]
++++
 
 Welcome to my corner of the web for longer-form thoughts.
 

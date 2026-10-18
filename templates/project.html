@@ -1,349 +1,14 @@
-<!DOCTYPE html>
-<html lang="{site.lang}">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{item.title} | {user.name}</title>
-    <meta name="description" content="{item.description}">
-    <link rel="icon" type="image/png" href="{paths.root}{meta.favicon}">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { overflow-x: hidden; scroll-behavior: smooth; }
-        body { 
-            background: #10183a; 
-            color: #b6d6f6; 
-            font: normal 13px/1.3 "Avenir", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; 
-            padding: 40px 24px 60px;
-            overflow-x: hidden;
-        }
-
-        .everything { 
-            position: relative; 
-            margin-left: auto; 
-            margin-right: auto; 
-            max-width: 564px; 
-        }
-
-        /* Top Navigation */
-        .top-nav {
-            position: absolute;
-            top: 0;
-            right: 0;
-            font-size: 11px;
-            color: #889;
-        }
-
-        .top-nav a {
-            color: #9ab;
-            font-weight: normal;
-            margin-left: 10px;
-            text-decoration: none;
-            transition: color 0.1s;
-        }
-
-        .top-nav a:hover {
-            color: #fff;
-            text-decoration: underline;
-        }
-
-        /* Header */
-        h1 { 
-            text-transform: uppercase; 
-            color: #aab; 
-            margin-bottom: 0px; 
-            font-weight: normal; 
-            font-size: 19px; 
-            letter-spacing: 0.5px;
-        }
-
-        h2 { 
-            color: #aab; 
-            margin-bottom: 16px; 
-            font-weight: normal; 
-            font-size: 11px; 
-            letter-spacing: 0.3px;
-        }
-
-        p { margin-top: 10px; margin-bottom: 10px; }
-
-        .dek {
-            color: #b6d6f6;
-            font-size: 13px;
-            line-height: 1.35;
-            margin-top: 8px;
-            margin-bottom: 16px;
-        }
-
-        .meta-row {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            flex-wrap: wrap;
-            font-size: 11.5px;
-            color: #9ab;
-            margin-bottom: 18px;
-            padding-bottom: 14px;
-            border-bottom: 1px solid #346;
-        }
-
-        .meta-row a {
-            color: #ff0;
-            font-weight: bold;
-        }
-
-        .meta-row a:hover {
-            text-decoration-color: currentColor;
-        }
-
-        /* Skills Chips */
-        .chips {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            margin: 6px 0 14px;
-        }
-
-        .chip-btn, .chip {
-            color: #9ab;
-            font-size: 11px;
-            font-family: ui-monospace, Menlo, monospace;
-            background: rgba(51, 68, 102, 0.3);
-            border: 1px solid #346;
-            border-radius: 3px;
-            padding: 1px 6px;
-        }
-
-        /* Links & Highlights */
-        a { 
-            color: #fff; 
-            font-weight: bold; 
-            text-decoration: underline;
-            text-decoration-color: color-mix(in srgb, currentColor 40%, transparent);
-            text-decoration-thickness: 1px;
-            text-underline-offset: 2px;
-            transition: color 0.1s, text-decoration-color 0.1s;
-        }
-
-        a:hover { 
-            text-decoration-color: currentColor; 
-        }
-
-        .good { 
-            color: #ff0; 
-        }
-
-        /* Section Headings */
-        .section { 
-            margin-top: 26px; 
-        }
-
-        .section-head h3 {
-            color: #b6d6f6;
-            font-size: 13px;
-            font-weight: bold;
-            margin-bottom: 6px;
-            border: none;
-            padding: 0;
-        }
-
-        .section-body {
-            color: #b6d6f6;
-            font-size: 13px;
-            line-height: 1.35;
-        }
-
-        .section-body p {
-            margin-top: 8px;
-            margin-bottom: 8px;
-        }
-
-        .section-body strong {
-            color: #fff;
-        }
-
-        /* Lists (Challenges, Learned) */
-        .fg-list {
-            list-style-type: none;
-            margin-left: 0;
-            margin-top: 6px;
-            margin-bottom: 10px;
-        }
-
-        .fg-list li {
-            position: relative;
-            padding-left: 18px;
-            margin-bottom: 5px;
-            line-height: 1.35;
-            color: #aab;
-        }
-
-        .fg-list li::before {
-            content: "•";
-            position: absolute;
-            left: 4px;
-            color: #ff0;
-            font-size: 13px;
-        }
-
-        .fg-list li strong {
-            color: #fff;
-        }
-
-        /* Diagrams & Figures */
-        .essay-figure {
-            margin: 18px 0;
-            border: 1px solid #346;
-            background: rgba(16, 24, 58, 0.9);
-            border-radius: 4px;
-            padding: 12px;
-            overflow-x: auto;
-        }
-
-        .essay-figure svg,
-        .essay-figure img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-            margin: 0 auto;
-        }
-
-        .essay-caption {
-            font-size: 11px;
-            color: #9ab;
-            font-style: italic;
-            margin-top: 8px;
-            text-align: center;
-            line-height: 1.3;
-        }
-
-        /* Carousel Support */
-        .media-carousel {
-            position: relative;
-            overflow: hidden;
-            border-radius: 4px;
-        }
-
-        .carousel-slides {
-            display: flex;
-            transition: transform 0.3s ease;
-        }
-
-        .carousel-slide {
-            min-width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .carousel-media {
-            max-width: 100%;
-            max-height: 320px;
-            object-fit: contain;
-            border-radius: 4px;
-        }
-
-        .carousel-prev, .carousel-next {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(16, 24, 58, 0.85);
-            border: 1px solid #346;
-            color: #fff;
-            padding: 4px 10px;
-            cursor: pointer;
-            border-radius: 3px;
-            font-size: 13px;
-        }
-
-        .carousel-prev { left: 6px; }
-        .carousel-next { right: 6px; }
-
-        .carousel-dots {
-            display: flex;
-            justify-content: center;
-            gap: 6px;
-            margin-top: 8px;
-        }
-
-        .carousel-dot {
-            width: 7px;
-            height: 7px;
-            border-radius: 50%;
-            background: #346;
-            border: none;
-            cursor: pointer;
-        }
-
-        .carousel-dot.on {
-            background: #ff0;
-        }
-
-        /* Code */
-        code {
-            font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-            font-size: 12px;
-            background: rgba(51, 68, 102, 0.4);
-            padding: 1px 4px;
-            border-radius: 3px;
-            color: #ff0;
-        }
-
-        hr { 
-            border: none; 
-            border-top: 1px solid #346; 
-            margin-top: 36px; 
-            margin-bottom: 24px; 
-        }
-
-        /* Footer */
-        .page-foot {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 12px;
-            color: #9ab;
-        }
-
-        .page-foot a {
-            color: #9ab;
-            font-weight: normal;
-        }
-
-        .page-foot a:hover {
-            color: #fff;
-        }
-
-        /* Background Sketch */
-        .bg-sketch {
-            position: absolute;
-            pointer-events: none;
-            opacity: 0.12;
-            z-index: -1;
-            top: -10px;
-            right: -240px;
-            width: 320px;
-        }
-
-        @media screen and (max-width: 600px) {
-            body { font-size: 14px; padding: 24px 16px 60px; }
-            .bg-sketch { display: none; }
-            h1 { font-size: 19px; }
-            .top-nav { position: static; margin-bottom: 16px; }
-            .essay-figure { padding: 8px; }
-        }
-    </style>
-</head>
-<body>
+{% extends "base.html" %}
+{% from "macros.html" import pills, project_link, figure, gallery, labeled, prose %}
+{% block head %}
+<style>
+{% include "styles/project.css" %}
+</style>
+{% endblock %}
+{% block body %}
     <div class="everything">
-        <!-- Top Navigation -->
-        <div class="top-nav">
-            <a href="{paths.root}#contact" class="good">Talk to me</a> ·
-            <a href="{paths.root}">Julian Reder</a> ·
-            <a href="{paths.root}resume">Resume</a> ·
-            <a href="https://github.com/quantumbagel">GitHub</a>
-        </div>
+        {% with variant="project" %}{% include "partials/nav.html" %}{% endwith %}
 
-        <!-- Background Sketch -->
         <svg class="bg-sketch" viewBox="0 0 200 200" fill="none" stroke="#b6d6f6" stroke-width="1.2">
             <circle cx="100" cy="100" r="16" />
             <line x1="40" y1="40" x2="88" y2="88" />
@@ -357,36 +22,39 @@
         </svg>
 
         <header>
-            <h1>{item.title}</h1>
-            <h2>{item.kicker}</h2>
-            <p class="dek">{item.description}</p>
+            <h1>{{ item.title }}</h1>
+            <h2>{{ item.kicker }}</h2>
+            <p class="dek">{{ item.description | safe }}</p>
             <div class="meta-row">
-                <span>{item.date}</span>
-                {item.link_html}
-                {item.demo_html}
+                <span>{{ item.date }}</span>
+                {% if item.link %}{{ project_link(item.link) }}{% else %}<span class="chip">Private (Architecture Only)</span>{% endif %}
+                {% if item.demo_label %}<button type="button" data-open-sim class="btn small">{{ item.demo_label }}</button>{% endif %}
             </div>
-            {item.skills_html}
+            {{ pills(item.skills) }}
         </header>
 
-        {item.hero_html}
+        {{ figure(item.hero) }}
 
-        {item.gallery_html}
+        {{ gallery(item.gallery) }}
 
-        {item.built_html}
-        {item.challenges_html}
-        {item.learned_html}
-        {item.features_html}
+        {{ labeled("Built", item.built) }}
+        {{ labeled("Hard parts", item.challenges) }}
+        {{ labeled("Learned", item.learned) }}
+        {{ labeled("Also", item.features) }}
 
-        {item.essay_html}
+        {% for section in item.essay %}
+        <section class="section essay-section">{% if section.heading %}<div class="section-head"><h3>{{ section.heading }}</h3></div>{% endif %}<div class="section-body">{{ prose(section.body) }}{{ figure(section.figure) }}</div></section>
+        {% endfor %}
 
         <hr>
 
         <footer class="page-foot">
-            <a href="{paths.root}">← Back to Julian Reder</a>
-            <div>{item.link_html}</div>
+            <a href="{{ root }}">← Back to {{ user.name }}</a>
+            <div>{% if item.link %}{{ project_link(item.link) }}{% else %}<span class="chip">Private (Architecture Only)</span>{% endif %}</div>
         </footer>
     </div>
 
+    {% raw %}
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             document.querySelectorAll(".media-carousel").forEach((carousel) => {
@@ -417,5 +85,5 @@
             });
         });
     </script>
-</body>
-</html>
+    {% endraw %}
+{% endblock %}

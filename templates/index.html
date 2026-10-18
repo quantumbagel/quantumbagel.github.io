@@ -1,364 +1,14 @@
-<!DOCTYPE html>
-<html lang="{site.lang}">
-<head>
-<meta charset="UTF-8">
-<title>{meta.page_title}</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="author" content="{user.name}">
-<meta name="description" content="{meta.description}">
-<link rel="icon" type="image/png" href="{meta.favicon}">
+{% extends "base.html" %}
+{% block head %}
 <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { overflow-x: hidden; scroll-behavior: smooth; }
-    body { 
-        background: #10183a; 
-        color: #b6d6f6; 
-        font: normal 13px/1.3 "Avenir", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; 
-        padding: 40px 24px 60px;
-        overflow-x: hidden;
-    }
-
-    .everything { 
-        position: relative; 
-        margin-left: auto; 
-        margin-right: auto; 
-        max-width: 564px; 
-    }
-
-    h1 { 
-        text-transform: uppercase; 
-        color: #aab; 
-        margin-bottom: 0px; 
-        font-weight: normal; 
-        font-size: 19px; 
-        letter-spacing: 0.5px;
-    }
-
-    h2 { 
-        color: #aab; 
-        margin-bottom: 18px; 
-        font-weight: normal; 
-        font-size: 11px; 
-        letter-spacing: 0.3px;
-    }
-
-    p { margin-top: 10px; margin-bottom: 10px; }
-    
-    .intro p { margin-top: 3px; margin-bottom: 3px; }
-    .intro p.section { margin-top: 14px; }
-
-    .section { 
-        margin-top: 28px; 
-        color: #b6d6f6;
-        font-size: 13px;
-    }
-
-    /* Worrydream Left-Hanging Year Layout */
-    h3 { 
-        color: #aab; 
-        font-size: 13px; 
-        font-weight: normal; 
-        position: absolute; 
-        margin-left: 18px; 
-    }
-
-    ul { 
-        list-style-type: none; 
-        margin-left: 72px; 
-        margin-top: 10px; 
-        margin-bottom: 12px; 
-    }
-
-    li { 
-        color: #aab; 
-        margin-bottom: 3px; 
-        line-height: 1.35;
-    }
-
-    a { 
-        color: #fff; 
-        font-weight: bold; 
-        text-decoration: underline;
-        text-decoration-color: color-mix(in srgb, currentColor 40%, transparent);
-        text-decoration-thickness: 1px;
-        text-underline-offset: 2px;
-        transition: color 0.1s, text-decoration-color 0.1s;
-    }
-
-    a:hover { 
-        text-decoration-color: currentColor; 
-    }
-
-    /* Standout highlight */
-    .good { 
-        color: #ff0; 
-    }
-
-    .subpages {
-        color: #889;
-        font-size: 11.5px;
-    }
-
-    .subpages a {
-        font-weight: normal;
-        color: #bbc;
-    }
-
-    .bio { 
-        color: #aab; 
-        font-size: 12px; 
-        margin-left: 24px; 
-        margin-top: 8px;
-        margin-bottom: 22px; 
-    }
-
-    .bio ul { 
-        list-style-type: disc; 
-        margin-left: 20px; 
-        margin-top: 6px;
-    }
-
-    .bio li { 
-        color: #aab; 
-        margin-bottom: 5px; 
-    }
-
-    .bio a { 
-        color: #ccd; 
-        font-weight: normal;
-    }
-
-    .contact-table {
-        margin-left: 72px;
-        margin-top: 8px;
-        color: #aab;
-        font-size: 12.5px;
-        line-height: 1.5;
-    }
-
-    .contact-table a {
-        color: #eee;
-    }
-
-    hr { 
-        border: none; 
-        border-top: 1px solid #346; 
-        margin-top: 36px; 
-        margin-bottom: 36px; 
-    }
-
-    /* Contact Form Styles */
-    .contact-form {
-        margin-top: 12px;
-        margin-bottom: 24px;
-    }
-
-    .form-row {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 12px;
-    }
-
-    .form-group {
-        margin-bottom: 12px;
-    }
-
-    .form-group label {
-        display: block;
-        font-size: 11px;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        color: #aab;
-        margin-bottom: 4px;
-    }
-
-    .form-group input,
-    .form-group textarea {
-        width: 100%;
-        background: rgba(13, 20, 48, 0.75);
-        border: 1px solid #346;
-        border-radius: 4px;
-        color: #fff;
-        padding: 8px 10px;
-        font-family: inherit;
-        font-size: 13px;
-        outline: none;
-        transition: border-color 0.15s;
-    }
-
-    .form-group input:focus,
-    .form-group textarea:focus {
-        border-color: #ff0;
-    }
-
-    .form-group input::placeholder,
-    .form-group textarea::placeholder {
-        color: #678;
-    }
-
-    .form-actions {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        margin-top: 8px;
-    }
-
-    .contact-btn {
-        background: transparent;
-        color: #fff;
-        font: inherit;
-        font-size: 12px;
-        font-weight: bold;
-        border: 1px solid #346;
-        border-radius: 3px;
-        padding: 5px 12px;
-        cursor: pointer;
-        transition: all 0.15s ease;
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-    }
-
-    .contact-btn:hover {
-        background: rgba(51, 68, 102, 0.25);
-        border-color: #568;
-        color: #ff0;
-    }
-
-    .contact-btn:active {
-        background: rgba(51, 68, 102, 0.4);
-    }
-
-    .contact-btn:disabled {
-        opacity: 0.4;
-        cursor: not-allowed;
-    }
-
-    .contact-status {
-        font-size: 12px;
-    }
-
-    .contact-status.success {
-        color: #ff0;
-    }
-
-    .contact-status.error {
-        color: #f77;
-    }
-
-    .hidden {
-        display: none !important;
-    }
-
-    /* Worrydream Floating Hover Preview */
-    .preview-dock {
-        display: none;
-        position: fixed;
-        top: 20%;
-        left: calc(50% + 310px);
-        width: 340px;
-        max-width: 90vw;
-        pointer-events: none;
-        z-index: 100;
-        background: rgba(16, 24, 58, 0.95);
-        border: 1px solid #346;
-        border-radius: 6px;
-        padding: 10px;
-        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
-        transition: opacity 0.15s ease;
-    }
-
-    .preview-dock.visible {
-        display: block;
-    }
-
-    .preview-dock img {
-        width: 100%;
-        max-height: 260px;
-        object-fit: contain;
-        display: block;
-        background: #0d1430;
-        border-radius: 4px;
-    }
-
-    .preview-dock .preview-title {
-        color: #fff;
-        font-weight: bold;
-        font-size: 12px;
-        margin-top: 6px;
-    }
-
-    .preview-dock .preview-caption {
-        color: #9ab;
-        font-size: 11px;
-        margin-top: 2px;
-        line-height: 1.3;
-    }
-
-    /* Subtle Decorative Line Art in Background */
-    .bg-sketch {
-        position: absolute;
-        pointer-events: none;
-        opacity: 0.12;
-        z-index: -1;
-    }
-
-    .drone-sketch {
-        top: -10px;
-        right: -240px;
-        width: 320px;
-    }
-
-    .radar-sketch {
-        top: 480px;
-        left: -260px;
-        width: 280px;
-    }
-
-    .top-nav {
-        position: absolute;
-        top: 0;
-        right: 0;
-        font-size: 11px;
-        color: #889;
-    }
-
-    .top-nav a {
-        color: #9ab;
-        font-weight: normal;
-        margin-left: 10px;
-        text-decoration: none;
-    }
-
-    @media screen and (max-width: 600px) {
-        body { font-size: 14px; padding: 24px 16px; }
-        .bg-sketch { display: none; }
-        h1 { font-size: 20px; }
-        h3 { font-size: 13px; margin-left: 0px; position: static; display: block; margin-top: 14px; }
-        ul { margin-left: 16px; margin-top: 4px; }
-        li { margin-bottom: 6px; }
-        .bio { font-size: 13px; margin-left: 12px; }
-        .contact-table { margin-left: 16px; }
-        .preview-dock { display: none !important; }
-        .top-nav { position: static; margin-bottom: 16px; }
-        .form-row { grid-template-columns: 1fr; }
-    }
+{% include "styles/index.css" %}
 </style>
-</head>
-<body>
-
+{% endblock %}
+{% block body %}
 <div class="everything">
 
-    <!-- Top Navigation -->
-    <div class="top-nav">
-        <a href="/blog">Blog</a> ·
-        <a href="#contact" class="good">Talk to me</a> ·
-        <a href="{user.social.resume}">Resume</a> ·
-        <a href="{user.social.github}">GitHub</a> ·
-        <a href="{user.social.linkedin}">LinkedIn</a>
-    </div>
+    {% with variant="home" %}{% include "partials/nav.html" %}{% endwith %}
 
-    <!-- Decorative Wireframe Sketched Figures -->
     <svg class="bg-sketch drone-sketch" viewBox="0 0 200 200" fill="none" stroke="#b6d6f6" stroke-width="1.2">
         <circle cx="100" cy="100" r="16" />
         <line x1="40" y1="40" x2="88" y2="88" />
@@ -380,56 +30,49 @@
         <line x1="100" y1="100" x2="160" y2="40" stroke="#ff0" stroke-width="1.5" />
     </svg>
 
-    <!-- Floating Hover Preview (Worrydream Style) -->
     <div class="preview-dock" id="preview-dock">
         <img id="preview-img" src="" alt="Preview">
         <div class="preview-title" id="preview-title"></div>
         <div class="preview-caption" id="preview-caption"></div>
     </div>
 
-    <h1>{user.name}</h1>
-    <h2>{user.headline}</h2>
+    <h1>{{ user.name }}</h1>
+    <h2>{{ user.headline }}</h2>
 
     <div class="intro">
-        <p>I build cool stuff.</p>
-        <p>Developer for <a href="https://aerpaw.org" class="good">AERPAW</a>, an NSF testbed for advanced wireless and autonomous flight.</p>
-        <p class="section">Student at <a href="https://ncsu.edu">NC State University</a> (B.S. Computer Engineering, B.S. Statistics, 4.0 GPA).</p>
-        <p>I also interned at <a href="https://advisor.ml.com/sites/nc/raleigh-nc/bellbellcronlund">Merrill Lynch Wealth Management</a>, play Factorio, and have three cats.</p>
+        {% for paragraph in intro %}
+        <p{% if paragraph.class %} class="{{ paragraph.class }}"{% endif %}>{{ paragraph.text | safe }}</p>
+        {% endfor %}
     </div>
 
-    <p class="section">AERPAW public work.</p>
-    {content.worrydream_flight_html}
+    {% include "partials/project_list.html" %}
 
-    <p class="section">Other projects.</p>
-    {content.worrydream_systems_html}
-
-    <p class="section">Writing &amp; technical notes.</p>
-    {content.worrydream_writing_html}
+    <p class="section">{{ home.headings.writing }}</p>
+    {% include "partials/writing_list.html" %}
 
     <hr>
 
-    <p class="section">Experience &amp; Education.</p>
-    {content.worrydream_bio_html}
+    <p class="section">{{ home.headings.experience }}</p>
+    {% include "partials/bio_list.html" %}
 
-    <p class="section">Elsewhere.</p>
+    <p class="section">{{ home.headings.elsewhere }}</p>
 
     <div class="contact-table">
-        <div><strong>GitHub:</strong> <a href="{user.social.github}">{user.social.github}</a></div>
-        <div><strong>LinkedIn:</strong> <a href="{user.social.linkedin}">{user.social.linkedin}</a></div>
-        <div><strong>Discord:</strong> <a href="{user.social.discord}">@quantumbagel</a></div>
-        <div><strong>Resume:</strong> <a href="{user.social.resume}">preview [pdf]</a></div>
-        <div><strong>Email:</strong> <a href="mailto:jjreder@ncsu.edu">jjreder@ncsu.edu</a></div>
+        <div><strong>GitHub:</strong> <a href="{{ user.social.github }}">{{ user.social.github }}</a></div>
+        <div><strong>LinkedIn:</strong> <a href="{{ user.social.linkedin }}">{{ user.social.linkedin }}</a></div>
+        <div><strong>Discord:</strong> <a href="{{ user.social.discord }}">@{{ user.social.discord_handle }}</a></div>
+        <div><strong>Resume:</strong> <a href="{{ user.social.resume }}">preview [pdf]</a></div>
+        <div><strong>Email:</strong> <a href="mailto:{{ user.email }}">{{ user.email }}</a></div>
     </div>
 
     <hr>
 
-    <!-- Contact Form Section -->
-    <p class="section" id="contact">Talk to me.</p>
+    <p class="section" id="contact">{{ home.headings.contact }}</p>
     <p style="color: #aab; font-size: 12px; line-height: 1.45; margin-bottom: 14px;">
-        {contact.intro}
+        {{ contact.intro | safe }}
     </p>
 
-    <form id="contact-form" action="{contact.form_action}" method="POST" class="contact-form">
+    <form id="contact-form" action="{{ contact.form_action }}" method="POST" class="contact-form">
         <div class="form-row">
             <div class="form-group">
                 <label for="name">Name</label>
@@ -446,7 +89,7 @@
         </div>
         <div class="form-actions">
             <button id="contact-submit-btn" type="submit" class="contact-btn">
-                <span id="contact-submit-text">{contact.submit_label}</span> →
+                <span id="contact-submit-text">{{ contact.submit_label }}</span> →
             </button>
             <span id="contact-status" class="hidden"></span>
         </div>
@@ -454,10 +97,8 @@
 
 </div>
 
-<!-- Hover Preview & Form Handling Scripts -->
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-    // Floating hover previews
     const dock = document.getElementById("preview-dock");
     const previewImg = document.getElementById("preview-img");
     const previewTitle = document.getElementById("preview-title");
@@ -484,7 +125,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Contact Form AJAX Handler
     const contactForm = document.getElementById("contact-form");
     if (contactForm) {
         const submitBtn = document.getElementById("contact-submit-btn");
@@ -526,12 +166,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 submitBtn.disabled = false;
                 submitText.textContent = originalText;
                 statusEl.className = "contact-status error";
-                statusEl.textContent = "Something went wrong. Please reach out directly at jjreder@ncsu.edu.";
+                statusEl.textContent = "Something went wrong. Please reach out directly at {{ user.email }}.";
             }
         });
     }
 });
 </script>
-
-</body>
-</html>
+{% endblock %}

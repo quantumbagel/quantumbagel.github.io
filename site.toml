@@ -15,52 +15,49 @@ email = "jjreder@ncsu.edu"
 github = "https://github.com/quantumbagel"
 linkedin = "https://www.linkedin.com/in/julian-reder-nc/"
 discord = "https://discordapp.com/users/897146430664355850"
+discord_handle = "quantumbagel"
 resume = "/resume"
 email = "mailto:jjreder@ncsu.edu"
 
-[sections]
-about_title = "About"
-writing_title = "Writing & technical notes."
-experience_title = "Experience"
-projects_title = "What I've built"
-more_title = "More builds"
-elsewhere_title = "Elsewhere"
-skills_title = "Skills"
-contact_title = "Contact"
-no_projects = "No projects found matching your criteria."
+[home.headings]
+writing = "Writing & technical notes."
+experience = "Experience & Education."
+elsewhere = "Elsewhere."
+contact = "Talk to me."
 
-[skills_categories]
-languages = "Languages"
-technologies = "Technologies"
+[[home.intro]]
+text = "I build cool stuff."
+
+[[home.intro]]
+text = 'Developer for <a href="https://aerpaw.org" class="good">AERPAW</a>, an NSF testbed for advanced wireless and autonomous flight.'
+
+[[home.intro]]
+class = "section"
+text = 'Student at <a href="https://ncsu.edu">NC State University</a> (B.S. Computer Engineering, B.S. Statistics, 4.0 GPA).'
+
+[[home.intro]]
+text = 'I also interned at <a href="https://advisor.ml.com/sites/nc/raleigh-nc/bellbellcronlund">Merrill Lynch Wealth Management</a>, play Factorio, and have three cats.'
+
+[[home.groups]]
+title = "AERPAW public work."
+category = "aerpaw"
+note = "Beyond these, I have made many other contributions across the <a href='https://aerpaw.org'>AERPAW</a> platform. I am also the primary developer responsible for bugfixes and features in the testbed's software."
+
+[[home.groups]]
+title = "Other projects."
+category = "*"
+
+[categories]
+aerpaw = "AERPAW"
+ml = "Merrill Lynch"
+"discord-bots" = "Discord Bots"
+solo = "Solo Projects"
+collabs = "Collaborations"
 
 [contact]
 form_action = "https://formspree.io/f/moqgwdop"
 submit_label = "Send Message"
 intro = "I am always interested in new opportunities and ALWAYS have free time for something cool :)"
-
-[footer]
-text = "Made with <3 by @quantumbagel, not AI."
-
-[content]
-about = [
-  "I am <strong class='text-gray-800 dark:text-white'>Julian Reder</strong>, a Computer Engineering and Statistics student at NC State. Most of my recent work focuses on developing research software for <a href='https://aerpaw.org' class='text-link hover:underline'>AERPAW</a>, an NSF testbed for advanced wireless communications and autonomous aircraft, alongside an internship at Merrill Lynch where I built calculation tools for wealth management portfolios holding over <strong>$500M</strong> in assets under management.",
-  "I enjoy connecting different layers of hardware and software together, including pairing radio receivers with flight stacks, streaming camera telemetry into tracking services, and designing reliable backend APIs. You can reach out through the contact options below, or click <strong>Background</strong> in the header if you want to explore the interactive canvas simulations."
-]
-
-flight_note = "Beyond these, I have made many other contributions across the <a href='https://aerpaw.org'>AERPAW</a> platform. I am also the primary developer responsible for bugfixes and features in the testbed's software."
-
-taglines = [
-  "is a Computer Engineering and Statistics student @ NCSU",
-  "builds drone and aircraft tracking systems",
-  "likes drones :D",
-  "is an open source enthusiast",
-  "has three cats :3",
-  "is always learning",
-  "plays Factorio",
-  "is a little bit weird",
-  "no actually a lot weird"
-]
-
 
 [[experiences]]
 title = "Technical Intern, Bell, Bell & Cronlund Group @ Merrill Lynch Wealth Management"
@@ -96,135 +93,6 @@ link = "https://waketech.edu"
 date = "Fall 2023 - Spring 2025"
 description = "Earned an Associate in Science degree while making the Dean's List for multiple semesters and joining the Beta Alpha chapter of Phi Theta Kappa with a 3.8 GPA."
 
-[[skills.languages]]
-name = "Python"
-icon = "devicon-python-plain"
-level = "Expert"
-start_date = "2021-01-01"
-details = "Python has been my primary programming language for several years, and I use it regularly for building web APIs, processing data, managing background services, and controlling drone hardware."
-projects = ["aerpawlib", "PyAerial", "DroneTracker", "ML-Ticker", "Strife", "NCSU Parking", "finiteCraft", "Triggered", "discord.py-template", "Portfolio Website (v3)"]
-
-[[skills.languages]]
-name = "C/C++"
-icon = "devicon-cplusplus-plain"
-level = "Advanced"
-start_date = "2023-01-01"
-details = "I use C and C++ for microcontroller programming and low-level hardware projects, such as writing firmware sketches for Arduino sensors and building small native modules when Python needs extra speed."
-projects = []
-
-[[skills.languages]]
-name = "JavaScript"
-icon = "devicon-javascript-plain"
-level = "Advanced"
-start_date = "2023-01-01"
-details = "I use JavaScript for front-end development, including the canvas background simulations and settings panel on this site, as well as a browser extension that reads media playback data."
-projects = ["Portfolio Website (v3)", "Amazon Music Discord RPC"]
-
-[[skills.languages]]
-name = "Java"
-icon = "devicon-java-plain"
-level = "Competent"
-start_date = "2022-01-01"
-details = "I have used Java primarily in coursework and for building Statify, a Minecraft server plugin that calculates and displays player statistics."
-projects = ["Statify"]
-
-[[skills.languages]]
-name = "C#"
-icon = "devicon-csharp-plain"
-level = "Competent"
-start_date = "2024-01-01"
-details = "I used C# to participate in Sebastian Lague's chess coding challenge, writing a custom search engine that implemented alpha-beta pruning within a strict token limit."
-projects = ["Chess-Challenge"]
-
-[[skills.languages]]
-name = "Bash"
-icon = "devicon-bash-plain"
-level = "Competent"
-start_date = "2022-01-01"
-details = "I write Bash scripts to automate local development environments, manage Docker containers, and handle initialization steps like waiting for database readiness before services launch."
-projects = ["All projects", "Docker setup scripts"]
-
-[[skills.technologies]]
-name = "Linux/Unix"
-icon = "devicon-linux-plain"
-level = "Expert"
-start_date = "2021-01-01"
-details = "Linux has been my primary operating system for both development and server hosting, and I regularly configure systemd services, manage file permissions, set up networks, and troubleshoot connectivity with tools like netstat and tcpdump."
-projects = ["Server Management", "All Projects"]
-
-[[skills.technologies]]
-name = "Docker"
-icon = "devicon-docker-plain"
-level = "Expert"
-start_date = "2023-01-01"
-details = "I use Docker and Docker Compose to package and deploy multi-service applications, writing multi-stage container builds and configuring private container networks for projects like PyAerial and Strife."
-projects = ["PyAerial", "DroneTracker", "Piranha", "Strife", "discord.py-template"]
-
-[[skills.technologies]]
-name = "Git"
-icon = "devicon-git-plain"
-level = "Advanced"
-start_date = "2022-01-01"
-details = "I use Git for daily version control across all of my repositories, managing feature branches, rebasing changes, and collaborating on open source pull requests."
-projects = ["All Projects"]
-
-[[skills.technologies]]
-name = "Selenium / Web Scraping"
-icon = "globe"
-level = "Advanced"
-start_date = "2024-01-01"
-details = "I have used Selenium and Playwright to automate browser interactions and gather data from web pages, including running headless Chromium instances behind rotating proxy pools to discover recipe combinations."
-projects = ["finiteCraft"]
-
-[[skills.technologies]]
-name = "OpenAPI"
-icon = "braces"
-level = "Advanced"
-start_date = "2024-01-01"
-details = "I design REST APIs and WebSocket endpoints using FastAPI, generating OpenAPI specifications to keep front-end applications and backend schemas synchronized."
-projects = ["PyAerial", "Triggered"]
-
-[[skills.technologies]]
-name = "SQL"
-icon = "database"
-level = "Advanced"
-start_date = "2022-01-01"
-details = "I use PostgreSQL for applications that need strict relational data models and foreign key constraints, such as game state tracking and parking occupancy history, and I use SQLite for local caching and flight logs."
-projects = ["Strife", "NCSU Parking", "PyAerial"]
-
-[[skills.technologies]]
-name = "MongoDB"
-icon = "devicon-mongodb-plain"
-level = "Advanced"
-start_date = "2024-01-01"
-details = "I use MongoDB when storing flexible document structures, such as user-configured Discord automation rules and graph-like recipe trees that benefit from schema flexibility."
-projects = ["Triggered", "finiteCraft"]
-
-[[skills.technologies]]
-name = "Kafka"
-icon = "devicon-apachekafka-original"
-level = "Advanced"
-start_date = "2023-06-01"
-details = "I use Apache Kafka to stream high-throughput telemetry in field environments, allowing camera tracking services to consume drone coordinates and publish operational status updates reliably."
-projects = ["DroneTracker"]
-
-[[skills.technologies]]
-name = "discord.py"
-icon = "discord"
-level = "Expert"
-start_date = "2022-01-01"
-details = "I have built multiple Discord bots and reusable application scaffolds using discord.py, organizing commands with cogs, handling slash command interactions, and managing asynchronous event loops."
-projects = ["Piranha", "Triggered", "Strife", "discord.py-template"]
-
-[[skills.technologies]]
-name = "ADS-B / Mode-S"
-icon = "broadcast"
-level = "Advanced"
-start_date = "2023-06-01"
-details = "I work with ADS-B and Mode S transponder protocols to decode aircraft positions from radio signals, using software-defined radio receivers tuned to 1090 MHz to feed live telemetry into tracking applications."
-projects = ["PyAerial"]
-
-
 [[projects]]
 featured = true
 category = "aerpaw"
@@ -257,6 +125,10 @@ page = true
 tone = "199"
 hero = "media/projects/aerpawlib/stack.svg"
 hero_caption = "Architecture diagram showing how researcher scripts interact with aerpawlib, MAVSDK, and the testbed safety filter before reaching the vehicle autopilot."
+links = [
+  { label = "docs", url = "https://aerpaw.github.io/aerpawlib/" },
+  { label = "user manual", url = "https://sites.google.com/ncsu.edu/aerpaw-user-manual/6-sample-experiments-repository/6-2-vehicle-control-software" },
+]
 
 [[projects.essay]]
 heading = "The AERPAW platform"
@@ -658,60 +530,6 @@ skills = ["Python", "PyAutoGUI"]
 [[projects.gallery]]
 src = "media/projects/molotov/win.png"
 alt = "Molotov Discord embed: Molotov won the last round"
-
-[[project_filters]]
-key = "all"
-label = "All"
-
-[[project_filters]]
-key = "aerpaw"
-label = "AERPAW"
-
-[[project_filters]]
-key = "ml"
-label = "Merrill Lynch"
-
-
-[[project_filters]]
-key = "discord-bots"
-label = "Discord Bots"
-
-[[project_filters]]
-key = "solo"
-label = "Solo Projects"
-
-[[project_filters]]
-key = "collabs"
-label = "Collaborations"
-
-
-[[elsewhere]]
-label = "GitHub"
-url = "https://github.com/quantumbagel"
-
-[[elsewhere]]
-label = "LinkedIn"
-url = "https://www.linkedin.com/in/julian-reder-nc/"
-
-[[elsewhere]]
-label = "Discord"
-url = "https://discordapp.com/users/897146430664355850"
-
-[[elsewhere]]
-label = "Resume"
-url = "/resume"
-
-[[elsewhere]]
-label = "AERPAW"
-url = "https://aerpaw.org"
-
-[[elsewhere]]
-label = "AERPAW User Manual"
-url = "https://sites.google.com/ncsu.edu/aerpaw-user-manual/"
-
-[[elsewhere]]
-label = "aerpawlib"
-url = "https://github.com/AERPAW/aerpawlib"
 
 [redirects]
 resume = "https://docs.google.com/document/d/1gq5sdEZpf0Aa72OVL7mjcgrHgKJGtB1S-MCWjtZQWz8/preview"

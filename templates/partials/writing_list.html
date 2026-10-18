@@ -1,0 +1,11 @@
+{% if writing_years %}
+{% for bucket in writing_years %}
+<h3>{{ bucket.year }}</h3>
+<ul>
+{% for post in bucket.posts %}
+<li><a href="{{ post.href }}">{{ post.title }}</a>: {{ post.description | safe }}</li>
+{% endfor %}
+</ul>
+{% endfor %}
+<div class="subpages" style="margin-left: 72px; margin-top: 6px; margin-bottom: 22px;"><a href="/blog/">all writing →</a></div>
+{% endif %}

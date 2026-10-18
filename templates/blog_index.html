@@ -1,179 +1,24 @@
-<!DOCTYPE html>
-<html lang="{site.lang}">
-<head>
-<meta charset="UTF-8">
-<title>Writing | {user.name}</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="author" content="{user.name}">
-<meta name="description" content="Essays, notes, and technical articles by {user.name}">
-<link rel="icon" type="image/png" href="{paths.root}{meta.favicon}">
+{% extends "base.html" %}
+{% block head %}
 <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { overflow-x: hidden; scroll-behavior: smooth; }
-    body { 
-        background: #10183a; 
-        color: #b6d6f6; 
-        font: normal 13px/1.3 "Avenir", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; 
-        padding: 40px 24px 60px;
-        overflow-x: hidden;
-    }
-
-    .everything { 
-        position: relative; 
-        margin-left: auto; 
-        margin-right: auto; 
-        max-width: 564px; 
-    }
-
-    /* Top Navigation */
-    .top-nav {
-        position: absolute;
-        top: 0;
-        right: 0;
-        font-size: 11px;
-        color: #889;
-    }
-
-    .top-nav a {
-        color: #9ab;
-        font-weight: normal;
-        margin-left: 10px;
-        text-decoration: none;
-        transition: color 0.1s;
-    }
-
-    .top-nav a:hover {
-        color: #fff;
-        text-decoration: underline;
-    }
-
-    /* Header */
-    h1 { 
-        text-transform: uppercase; 
-        color: #aab; 
-        margin-bottom: 0px; 
-        font-weight: normal; 
-        font-size: 19px; 
-        letter-spacing: 0.5px;
-    }
-
-    h2 { 
-        color: #aab; 
-        margin-bottom: 24px; 
-        font-weight: normal; 
-        font-size: 11px; 
-        letter-spacing: 0.3px;
-    }
-
-    p { margin-top: 10px; margin-bottom: 10px; }
-
-    .section { 
-        margin-top: 24px; 
-        color: #b6d6f6;
-        font-size: 13px;
-    }
-
-    /* Worrydream Hanging Year Layout */
-    h3 { 
-        color: #aab; 
-        font-size: 13px; 
-        font-weight: normal; 
-        position: absolute; 
-        margin-left: 18px; 
-    }
-
-    ul { 
-        list-style-type: none; 
-        margin-left: 72px; 
-        margin-top: 10px; 
-        margin-bottom: 22px; 
-    }
-
-    li { 
-        color: #aab; 
-        margin-bottom: 14px; 
-        line-height: 1.4;
-    }
-
-    a { 
-        color: #fff; 
-        font-weight: bold; 
-        text-decoration: underline;
-        text-decoration-color: color-mix(in srgb, currentColor 40%, transparent);
-        text-decoration-thickness: 1px;
-
-        text-underline-offset: 2px;
-        transition: color 0.1s, text-decoration-color 0.1s;
-    }
-
-    a:hover { 
-        text-decoration-color: currentColor; 
-    }
-
-    .good { 
-        color: #ff0; 
-    }
-
-    .post-date {
-        color: #8ab;
-        font-size: 11px;
-        margin-left: 6px;
-        font-weight: normal;
-    }
-
-    .post-desc {
-        color: #9ab;
-        font-size: 12px;
-        margin-top: 2px;
-        line-height: 1.35;
-    }
-
-    .post-meta {
-        color: #89a;
-        font-size: 11px;
-        margin-top: 3px;
-    }
-
-    hr { 
-        border: none; 
-        border-top: 1px solid #346; 
-        margin-top: 32px; 
-        margin-bottom: 24px; 
-    }
-
-    @media (max-width: 600px) {
-        body { font-size: 14px; padding: 24px 16px; }
-        h1 { font-size: 20px; }
-        h3 { font-size: 13px; margin-left: 0px; position: static; display: block; margin-top: 16px; }
-        ul { margin-left: 16px; margin-top: 6px; }
-        li { margin-bottom: 14px; }
-        .top-nav { position: static; margin-bottom: 16px; }
-    }
+{% include "styles/blog_index.css" %}
 </style>
-</head>
-<body>
-
+{% endblock %}
+{% block body %}
 <div class="everything">
 
-    <!-- Top Navigation -->
-    <div class="top-nav">
-        <a href="{paths.root}" class="good">← Julian Reder</a> ·
-        <a href="{paths.root}#contact">Talk to me</a> ·
-        <a href="{user.social.resume}">Resume</a>
-    </div>
+    {% with variant="blog_index" %}{% include "partials/nav.html" %}{% endwith %}
 
     <h1>Writing</h1>
     <h2>Essays, technical notes, and experiments.</h2>
 
-    {content.blog_posts_html}
+    {% include "partials/blog_list.html" %}
 
     <hr>
 
     <p style="color: #9ab; font-size: 12px; line-height: 1.45;">
-        Have thoughts or want to discuss any of these posts? Feel free to <a href="{paths.root}#contact" class="good">send a note</a> or email me directly at <a href="mailto:{user.email}">{user.email}</a>.
+        Have thoughts or want to discuss any of these posts? Feel free to <a href="{{ root }}#contact" class="good">send a note</a> or email me directly at <a href="mailto:{{ user.email }}">{{ user.email }}</a>.
     </p>
 
 </div>
-
-</body>
-</html>
+{% endblock %}

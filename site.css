@@ -1,0 +1,64 @@
+/* Rules whose selector and declarations match on every content page. */
+
+:root {
+    --color-bg: #10183a;
+    --color-text: #b6d6f6;
+    --color-heading: #aab;
+    --color-white: #fff;
+    --color-meta: #9ab;
+    --color-nav: #889;
+    --color-code-bg: #0b1026;
+    --color-code-inline: #17224d;
+    --color-border: #346;
+    --color-accent: #ff0;
+    --color-dim: #8ab;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+
+.everything {
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 564px;
+}
+
+.top-nav {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 11px;
+    color: var(--color-nav);
+}
+
+p {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+a {
+    color: var(--color-white);
+    font-weight: bold;
+    text-decoration: underline;
+    text-decoration-color: color-mix(in srgb, currentColor 40%, transparent);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+    transition: color 0.1s, text-decoration-color 0.1s;
+}
+
+a:hover {
+    text-decoration-color: currentColor;
+}
+
+.good {
+    color: var(--color-accent);
+}

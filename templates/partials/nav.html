@@ -1,0 +1,21 @@
+<div class="top-nav">
+{% if variant == "home" %}
+    <a href="/blog">Blog</a> ·
+    <a href="#contact" class="good">Talk to me</a> ·
+    <a href="{{ user.social.resume }}">Resume</a> ·
+    <a href="{{ user.social.github }}">GitHub</a> ·
+    <a href="{{ user.social.linkedin }}">LinkedIn</a>
+{% elif variant == "project" %}
+    <a href="{{ root }}#contact" class="good">Talk to me</a> ·
+    <a href="{{ root }}">{{ user.name }}</a> ·
+    <a href="{{ root }}resume">Resume</a> ·
+    <a href="{{ user.social.github }}">GitHub</a>
+{% elif variant == "blog_index" %}
+    <a href="{{ root }}" class="good">← {{ user.name }}</a> ·
+    <a href="{{ root }}#contact">Talk to me</a> ·
+    <a href="{{ user.social.resume }}">Resume</a>
+{% elif variant == "blog_post" %}
+    <a href="{{ root }}blog/" class="good">← All Posts</a> ·
+    <a href="{{ root }}">{{ user.name }}</a>
+{% endif %}
+</div>

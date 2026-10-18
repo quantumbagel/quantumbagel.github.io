@@ -1,0 +1,2 @@
+{% from "macros.html" import prose, bullets %}
+{% if value %}<section class="section"><div class="section-head"><h3>{{ title }}</h3></div><div class="section-body">{% if value is string %}{{ prose(value) }}{% else %}{{ bullets(value) }}{% endif %}</div></section>{% endif %}

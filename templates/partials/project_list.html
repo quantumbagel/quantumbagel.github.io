@@ -1,0 +1,12 @@
+{% for group in project_groups %}
+    <p class="section">{{ group.title }}</p>
+{% for bucket in group.years %}
+<h3>{{ bucket.year }}</h3>
+<ul>
+{% for project in bucket.projects %}
+<li><a href="{{ project.href }}"{% if project.css_class %} class="{{ project.css_class }}"{% endif %}{% if project.preview %} data-preview="{{ project.preview.src }}" data-title="{{ project.preview.title }}" data-caption="{{ project.preview.caption }}"{% endif %}>{{ project.title }}</a>: {{ project.description | safe }}{% if project.links %}<div class="subpages">{% for link in project.links %}{% if not loop.first %} · {% endif %}<a href="{{ link.href }}">{{ link.label }}</a>{% endfor %}</div>{% endif %}</li>
+{% endfor %}
+</ul>
+{% endfor %}
+{% if group.note %}<p>{{ group.note | safe }}</p>{% endif %}
+{% endfor %}

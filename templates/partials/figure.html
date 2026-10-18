@@ -1,0 +1,1 @@
+{% if fig %}<figure class="essay-figure">{% if fig.svg %}{{ fig.svg | safe }}{% else %}<img src="{{ fig.src }}" alt="{{ fig.alt }}" loading="lazy">{% endif %}{% if fig.caption %}<figcaption class="essay-caption">{{ fig.caption | safe }}</figcaption>{% endif %}</figure>{% endif %}

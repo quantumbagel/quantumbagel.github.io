@@ -1,0 +1,1 @@
+<div class="bio"><ul>{% for exp in experiences %}<li>{% if exp.link %}<a href="{{ exp.link }}" class="good">{{ exp.title }}</a>{% else %}<strong>{{ exp.title }}</strong>{% endif %} ({{ exp.date }})</li>{% endfor %}</ul></div>
