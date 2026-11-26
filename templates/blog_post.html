@@ -1,12 +1,9 @@
-{% extends "base.html" %}
-{% block head %}
+{% extends "base.html" %} {% block head %}
 <style>
-{% include "styles/blog_post.css" %}
+    {% include "styles/blog_post.css" %}
 </style>
-{% endblock %}
-{% block body %}
+{% endblock %} {% block body %}
 <div class="everything">
-
     {% with variant="blog_post" %}{% include "partials/nav.html" %}{% endwith %}
 
     <h1>{{ post.title }}</h1>
@@ -14,21 +11,31 @@
         <span>{{ post.date }}</span>
         <span>·</span>
         <span>{{ post.reading_time }}</span>
-        {% if post.tags %}<span>·</span><span>{% for tag in post.tags %}{% if not loop.first %} · {% endif %}<span style="color:#b6d6f6;">{{ tag }}</span>{% endfor %}</span>{% endif %}
+        {% if post.tags %}<span>·</span
+        ><span
+            >{% for tag in post.tags %}{% if not loop.first %} · {% endif
+            %}<span style="color: #b6d6f6">{{ tag }}</span>{% endfor %}</span
+        >{% endif %}
     </div>
 
-    {% if post.description %}<div class="dek">{{ post.description | safe }}</div>{% endif %}
+    {% if post.description %}
+    <div class="dek">{{ post.description | safe }}</div>
+    {% endif %}
 
-    <div class="post-content">
-        {{ post.content_html | safe }}
-    </div>
+    <div class="post-content">{{ post.content_html | safe }}</div>
 
-    <hr>
+    <hr />
 
     <div class="post-footer">
-        <p>Thanks for reading. If you have questions, feedback, or want to discuss this, feel free to reach out via <a href="{{ root }}#contact" class="good">the contact form</a> or by email at <a href="mailto:{{ user.email }}">{{ user.email }}</a>.</p>
-        <p style="margin-top: 8px;"><a href="{{ root }}blog/">← Back to all posts</a></p>
+        <p>
+            Thanks for reading. If you've got thoughts or want to argue about
+            any of this, drop a message on
+            <a href="{{ root }}#contact" class="good">the contact form</a> or
+            email me at <a href="mailto:{{ user.email }}">{{ user.email }}</a>.
+        </p>
+        <p style="margin-top: 8px">
+            <a href="{{ root }}blog/">← Back to all posts</a>
+        </p>
     </div>
-
 </div>
 {% endblock %}

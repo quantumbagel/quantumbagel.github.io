@@ -1,24 +1,23 @@
-{% extends "base.html" %}
-{% block head %}
+{% extends "base.html" %} {% block head %}
 <style>
-{% include "styles/blog_index.css" %}
+    {% include "styles/blog_index.css" %}
 </style>
-{% endblock %}
-{% block body %}
+{% endblock %} {% block body %}
 <div class="everything">
-
-    {% with variant="blog_index" %}{% include "partials/nav.html" %}{% endwith %}
+    {% with variant="blog_index" %}{% include "partials/nav.html" %}{% endwith
+    %}
 
     <h1>Writing</h1>
-    <h2>Essays, technical notes, and experiments.</h2>
+    <h2>Essays, technical notes, and rabbit holes.</h2>
 
     {% include "partials/blog_list.html" %}
 
-    <hr>
+    <hr />
 
-    <p style="color: #9ab; font-size: 12px; line-height: 1.45;">
-        Have thoughts or want to discuss any of these posts? Feel free to <a href="{{ root }}#contact" class="good">send a note</a> or email me directly at <a href="mailto:{{ user.email }}">{{ user.email }}</a>.
+    <p style="color: #9ab; font-size: 12px; line-height: 1.45">
+        Want to talk about any of these?
+        <a href="{{ root }}#contact" class="good">Send a note</a> or email me at
+        <a href="mailto:{{ user.email }}">{{ user.email }}</a>.
     </p>
-
 </div>
 {% endblock %}
