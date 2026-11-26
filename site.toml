@@ -342,6 +342,130 @@ body = """Running interactive games on Discord introduces numerous edge cases ar
 <p>To keep slow game logic or unexpected loops from freezing Discord's asynchronous event loop, player moves are executed in a managed thread pool with strict timeout bounds. If a game plugin hangs or takes too long to respond, the host can safely terminate the turn and notify the players without impacting any other matches running on the server.</p>"""
 
 [[projects]]
+featured = true
+category = "solo"
+title = "fractalgen"
+date = "2026"
+description = "A fractal and dynamical-systems wallpaper generator with 129 built-in looks, an interactive browser editor, and TOML recipes that render at any resolution up to 16K."
+built = "I rewrote my old hard-coded wallpaper scripts into an extensible Python engine. Every image is described by a TOML recipe that names a generator, its parameters, a palette, a view, tone settings, layers, and post-processing effects. Generators are registered plugins, the heavy inner loops are parallel Numba kernels, and a local web editor lets me pan, zoom, and tune a look before exporting it at full resolution."
+challenges = [
+  "Keeping a small preview and a 16K export identical required defining framing and exposure against a fixed 4K reference canvas rather than the output's pixel dimensions.",
+  "Many generators auto-expose from the frame's own histogram, so panning used to change the brightness of everything on screen. Tone statistics are now measured once on the recipe's authored view and replayed for every other view.",
+  "Points inside a fractal never escape, so they used to run all the way to the iteration limit. The Numba kernels use Brent cycle detection to stop as soon as an orbit repeats.",
+  "Renders can take seconds, so the editor caches expensive fields and reuses them whenever only the palette, tone, or effects change."
+]
+learned = "Separating what a picture is (a recipe) from how it is computed (a generator) made nearly everything else straightforward. Forking, variations, plugins, and reproducible exports all came from that one data model."
+features = [
+  "129 looks spanning escape-time fractals, Buddhabrots, Newton basins, Lyapunov space, domain coloring, fractal flames, strange attractors, IFS, reaction-diffusion, slime mold, sandpiles, hyperbolic tilings, harmonographs, and caustics.",
+  "Browser editor written with Preact and htm as plain ES modules with no build step, featuring undo history, variations, before-and-after comparison, and supersampled export.",
+  "Composited text, shape, and image layers with blend modes, glows, bevels, and shadows, followed by an ordered post-processing chain.",
+  "Every exported PNG or JPEG embeds its full recipe, so any image can be forked back into an editable look.",
+  "Plugin hooks for generators, palettes, formulas, maps, flows, and effects in Python or TOML, with discovery through package entry points.",
+  "Batch presets for desktops, phones, ultrawides, and multi-monitor setups, backed by unit tests, image parity checks, and a Playwright GUI test."
+]
+link = "https://github.com/quantumbagel/fractalgen"
+skills = ["Python", "NumPy", "Numba", "SciPy", "Pillow", "Preact", "TOML"]
+page = true
+tone = "25"
+hero = "media/projects/fractalgen/gui.jpg"
+hero_caption = "The fractalgen editor with the Julia Dragon look open. Palette, framing, layer, and effect changes update the preview live."
+preview = "media/projects/fractalgen/julia_dragon.jpg"
+preview_caption = "julia_dragon, one of the 129 built-in looks."
+
+[[projects.essay]]
+heading = "From wallpaper scripts to an engine"
+body = """fractalgen started as a pair of scripts I used to make desktop backgrounds, with every fractal, color, and crop written directly into the code. Adding a new image meant copying a function and editing constants. I rebuilt it around two ideas: generators, which are registered functions that turn a view of the plane into pixels, and recipes, which are TOML tables that pick a generator and describe everything else about the picture.
+<p>Recipes can extend each other, carry portrait-specific framing, and stack layers and effects, so most new looks are a few lines of TOML rather than new code. The same recipe drives the command line renderer, batch presets for common screen sizes, and the browser editor. Version 0.1.0 shipped publicly on GitHub in November 2026 under the MIT license.</p>"""
+
+[[projects.essay]]
+heading = "Making the math fast enough to explore"
+body = """An 8K wallpaper is more than 33 million pixels, and some looks iterate each one more than a thousand times. The core loops are compiled with Numba and run in parallel across cores. Escape-time kernels use Brent cycle detection, because points inside the set settle into repeating orbits that would otherwise run to the iteration limit. Simulations such as reaction-diffusion and slime mold run on multi-threaded solvers, and batch renders are isolated in worker processes with timeouts so one runaway look cannot stall a whole preset.
+<p>The editor adds a second constraint: it has to feel responsive. Expensive intermediate fields like iteration counts and density buffers go into a bounded cache, and the palette, tone curve, and post-processing are applied afterward, so recoloring or adding bloom reuses the existing computation instead of starting over.</p>"""
+
+[[projects.essay]]
+heading = "Resolution independence and stable exposure"
+body = """A look tuned in a 960 pixel preview should produce the same composition at 16K. Views are defined against a 4K reference canvas with explicit fill, cover, and contain rules for other aspect ratios, and size-dependent effects like blur radii and glows scale with it, so the export matches what I saw while editing.
+<p>Exposure needed the same treatment. Generators that stretch their output to the frame's histogram would re-expose the image every time the view moved, so a bright region would dim as soon as something brighter scrolled into frame. fractalgen records those statistics once on the recipe's authored view and replays them while panning and zooming, which keeps colors anchored to the math rather than to whatever happens to be on screen.</p>"""
+
+[[projects.essay]]
+heading = "The editor"
+body = """Running <code>fractalgen gui</code> starts a local server and opens an editor written with Preact and htm as plain ES modules, so there is no bundler or build step. It supports browsing looks, generating variations, dragging and scrolling to pan, zoom, and rotate, and adjusting parameters, palettes, layers, and effects with full undo history. Holding the backslash key compares against the original preset.
+<p>Exports can be supersampled at 2x or 3x, and every saved PNG or JPEG embeds its complete recipe in the image metadata. Any wallpaper can be forked straight back into an editable TOML file, so the image itself is a complete record of how it was made.</p>"""
+
+[[projects.gallery]]
+src = "media/projects/fractalgen/julia_dragon.jpg"
+alt = "julia_dragon: a Julia set rendered in the ember palette"
+
+[[projects.gallery]]
+src = "media/projects/fractalgen/newton_sextic.jpg"
+alt = "newton_sextic: Newton's method basins for a sixth-degree polynomial"
+
+[[projects.gallery]]
+src = "media/projects/fractalgen/magnetic_pendulum_tri.jpg"
+alt = "magnetic_pendulum_tri: basins of a pendulum swinging over three magnets"
+
+[[projects.gallery]]
+src = "media/projects/fractalgen/header.jpg"
+alt = "The fractalgen wordmark, rendered by fractalgen as a text layer cut out of julia_dragon"
+
+[[projects]]
+featured = true
+category = "solo"
+title = "ColecoVision Emulator"
+date = "2026"
+description = "A ColecoVision emulator that runs inside Scratch, with a generated Z80 core that passes 39,715 SingleStepTests CPU vectors and plays cartridges at full speed in TurboWarp."
+built = "I wrote the emulator in goboscript, a text language that compiles to Scratch 3 projects, and generated the Z80 CPU core with a Python script before hand-optimizing the result for Scratch. It emulates the Z80 processor, the TMS9918A video chip, and the SN76489 sound chip, draws the picture with Scratch's pen, and includes a menu with game search, save states, speed control, and ROM import and export."
+challenges = [
+  "Scratch has no bitwise operators. The core builds a 64K AND table at startup, derives OR and XOR arithmetically, and reads CPU flags from precomputed ADD, SUB, and CP tables.",
+  "Opcode dispatch is a generated binary tree of if blocks eight levels deep. Sharing one handler between opcodes that differ only by register shrank the core from 17,000 blocks to 2,900 while passing the same CPU tests.",
+  "Scratch projects are capped near 5 MB, so games, the BIOS, and save states are LZ77-compressed and stored in a 64-character text alphabet chosen to survive Scratch's case-insensitive list lookups.",
+  "The machine runs inside a sprite clone because Scratch never saves clones, which keeps roughly 2 MB of memory, VRAM, and lookup tables out of the saved project file.",
+  "WebGL anti-aliases pen lines, so overlapping strokes left faint streaks. The renderer redraws only changed 8-pixel cells, draws each run of same-colored pixels as one line, and never paints a pixel twice."
+]
+learned = "Treating Scratch as a compile target instead of an editor made a project this size possible. Generated code, real CPU test vectors, and a headless TurboWarp harness caught problems that would have been invisible while dragging blocks by hand."
+features = [
+  "Every documented and undocumented Z80 opcode with cycle counts, verified on both the Scratch interpreter and TurboWarp's compiler.",
+  "TMS9918A graphics in all four modes with magnified sprites, the four-sprites-per-line limit, collision detection, and an optional flicker fix.",
+  "Sound through one Scratch clone per channel, each looping a sample with pitch and volume effects.",
+  "A menu drawn in the console's own 6x8 font, with ranked game search, named save states, file import and export, and a pixel-perfect 1:1 picture mode.",
+  "Rendering tests that compare the pen output pixel for pixel against an independent TMS9918A reference renderer, plus a library check that boots every cartridge.",
+  "A companion web page that converts cartridge ROMs into the hex text the emulator imports."
+]
+skills = ["goboscript", "Scratch / TurboWarp", "Python", "JavaScript", "Z80"]
+page = true
+tone = "300"
+hero = "media/projects/coleco/donkey-kong.png"
+hero_caption = "Donkey Kong as drawn by the emulator's pen renderer, captured by the headless test harness."
+links = [
+  { label = "play in TurboWarp", url = "https://turbowarp.org/1440984964?fps=60&hqpen" },
+  { label = "ROM converter", url = "https://quantumbagel.net/scratch-utils/coleco/" },
+]
+
+[[projects.essay]]
+heading = "An emulator in a block language"
+body = """Scratch is a visual programming language designed for beginners. It has variables, lists, and custom blocks, but no bitwise operators, no return values, and a default frame rate of 30 fps. I wanted to see whether a real 8-bit console could run inside it anyway, and the ColecoVision was a good target: a Z80 processor, a well-documented TMS9918A video chip, and a simple SN76489 sound chip.
+<p>Instead of dragging blocks, I wrote the emulator in goboscript, which compiles text source into a Scratch 3 project, and used Python generators for the parts that are too repetitive to write by hand. Version 1.0 was shared on Scratch in November 2026, followed by version 1.1 with a pixel-perfect 1:1 picture mode that runs noticeably better in the standard Scratch player. It runs at a full 60 fps in TurboWarp, a faster Scratch runtime that compiles projects to JavaScript.</p>"""
+
+[[projects.essay]]
+heading = "Generating and testing the Z80 core"
+body = """The CPU core is produced by a Python script that emits goboscript. Registers are sprite variables, memory is a 64K list, and each instruction is dispatched through a generated binary tree of comparisons. Because Scratch cannot AND two numbers, the core builds a 64K lookup table at startup and computes OR and XOR from it, while flag results come from precomputed tables for addition, subtraction, and comparison.
+<p>The first complete core was about 17,000 blocks. Opcodes that differ only by register or condition now share a handler that selects the operand through a small tree, IX and IY share one copy of their instruction set, and common operations became custom blocks, bringing the core down to 2,900 blocks. It passes 39,715 SingleStepTests vectors covering all 1,604 documented and undocumented opcodes, checking registers, flags, memory, and cycle counts on both the Scratch interpreter and TurboWarp.</p>"""
+
+[[projects.essay]]
+heading = "Video, sound, and fitting under 5 MB"
+body = """Scratch has no framebuffer, so the picture is drawn with pen lines. The renderer tracks which 8-pixel cells of each scanline changed, merges runs of the same color into single lines, and avoids drawing over existing lines because WebGL's anti-aliased edges let the color underneath bleed through. Sound uses one clone per channel, each looping a short sample and steering Scratch's pitch and volume effects to approximate the original tone generators.
+<p>Size was a constraint from the start, since scratch.mit.edu limits project files to roughly 5 MB. Running the machine in a clone keeps its working memory out of the saved file, and games and save states are compressed with an LZ4-style scheme implemented in both Python and Scratch, then encoded with an alphabet that avoids lowercase letters because Scratch list lookups ignore case.</p>"""
+figure = "media/projects/coleco/test-suite.png"
+caption = "Artemio Urbina's 240p Test Suite, ported to the ColecoVision by Oscar Toledo G., which the emulator boots by default as a quick video and input check."
+
+[[projects.essay]]
+heading = "Testing a Scratch project like real software"
+body = """The test suite runs headlessly in TurboWarp's virtual machine. A mock renderer rasterizes the pen output and compares it pixel for pixel against an independent TMS9918A renderer, including a check that partial redraws match a full redraw. Separate tests drive the menu with simulated keys and mouse clicks, play music through a model of Scratch's audio engine to confirm every channel is audible, and save and reload the project the way Scratch does to make sure nothing large leaks into the file.
+<p>A library check boots every cartridge, gets past the title screen, and saves a contact sheet of what each one draws. It does not prove that every game plays perfectly to the end, but it quickly shows when a change breaks a video mode or a boot path.</p>"""
+figure = "media/projects/coleco/library.png"
+caption = "Contact sheet from the library check, which boots each cartridge in the emulator and captures the first screen it draws."
+
+[[projects]]
 category = "solo"
 title = "NCSU Parking"
 date = "2026"
@@ -381,6 +505,8 @@ page = true
 tone = "40"
 hero = "media/projects/amazon/rpc.svg"
 hero_caption = "Architecture diagram illustrating how media playback data flows from the browser extension through the Rust helper process into Discord IPC."
+preview = "media/projects/amazon/popup.png"
+preview_caption = "The extension popup during playback, showing what Discord displays, snooze and hide options, and the helper app's connection status."
 
 [[projects.essay]]
 heading = "Displaying playback status without fragile web scraping"

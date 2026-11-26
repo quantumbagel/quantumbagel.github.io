@@ -49,11 +49,11 @@ Groups render in the order they appear. An earlier group keeps a project, so a l
 
 `[categories]` maps a project `category` key to the label used in the project-page kicker. If `[categories]` is omitted, labels fall back to a title-cased category name.
 
-Each `[[projects]]` entry can include `title`, `date`, `category`, `description`, `link`, `skills`, `featured`, `page`, `hero`, `hero_caption`, `built` or `details`, `challenges`, `learned`, `features`, `essay`, `gallery`, `demo`, and `links`.
+Each `[[projects]]` entry can include `title`, `date`, `category`, `description`, `link`, `skills`, `featured`, `page`, `hero`, `hero_caption`, `preview`, `preview_caption`, `built` or `details`, `challenges`, `learned`, `features`, `essay`, `gallery`, `demo`, and `links`.
 
 To add a project, append a `[[projects]]` table. Set `page = true` (or add an `essay` or `hero`) to generate `dist/projects/<slug>/index.html`. The slug comes from the title.
 
-Homepage rows show a code link when `link` is set and a writeup link when the project has a page. Extra links go in `links` and render after those two:
+Homepage rows show a code link when `link` is set and a writeup link when the project has a page. Extra links go in `links` and render after those two; project pages show them as buttons next to the code link. A project with neither `link` nor `links` gets a "Private" chip instead:
 
 ```toml
 [[projects]]
@@ -71,6 +71,8 @@ links = [
 heading = "What it does"
 body = "A paragraph of HTML or plain text."
 ```
+
+Hovering a homepage row shows a preview image: `preview` (with `preview_caption`) when set, otherwise `hero` (with `hero_caption`). Use `preview` for a screenshot or render when the hero is a diagram. Diagram SVGs loaded this way are isolated from the page's CSS, so give their root element a `color` attribute if they draw with `currentColor`; inline on project pages they still follow the page color.
 
 Add the category key to `[categories]` when the project page should show a custom label.
 

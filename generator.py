@@ -310,30 +310,43 @@ def project_year(project: dict[str, Any]) -> str:
     return match.group(1) if match else "Other"
 
 
+def extra_links(project: dict[str, Any]) -> list[dict[str, str]]:
+    return [
+        {"href": str(extra["url"]), "label": str(extra["label"])}
+        for extra in project.get("links") or []
+        if isinstance(extra, dict) and extra.get("label") and extra.get("url")
+    ]
+
+
+def project_preview(project: dict[str, Any], title: str) -> dict[str, str] | None:
+    """Homepage hover image: `preview` if set, else the hero figure."""
+    if project.get("preview"):
+        src = str(project["preview"])
+        caption = str(project.get("preview_caption") or "")
+    elif project.get("hero"):
+        src = str(project["hero"])
+        caption = str(project.get("hero_caption") or "")
+    else:
+        return None
+    return {"src": src, "title": title, "caption": caption}
+
+
 def project_list_entry(project: dict[str, Any]) -> dict[str, Any]:
     title = str(project.get("title", ""))
     page = project_has_page(project)
     href = f"projects/{project_slug(project)}/" if page else (project.get("link") or "#")
+    preview = project_preview(project, title)
     classes: list[str] = []
     if project.get("featured"):
         classes.append("good")
-    if project.get("hero"):
+    if preview:
         classes.append("has-preview")
     links: list[dict[str, str]] = []
     if project.get("link"):
         links.append({"href": str(project["link"]), "label": "code"})
     if page:
         links.append({"href": href, "label": "writeup"})
-    for extra in project.get("links") or []:
-        if isinstance(extra, dict) and extra.get("label") and extra.get("url"):
-            links.append({"href": str(extra["url"]), "label": str(extra["label"])})
-    preview = None
-    if project.get("hero"):
-        preview = {
-            "src": str(project["hero"]),
-            "title": title,
-            "caption": str(project.get("hero_caption") or ""),
-        }
+    links.extend(extra_links(project))
     return {
         "title": title,
         "description": str(project.get("description") or ""),
@@ -567,6 +580,7 @@ def prepare_project_item(
         "essay": essay,
         "gallery": prepare_gallery(project, root),
         "link": str(project.get("link") or ""),
+        "links": extra_links(project),
         "demo_label": demo_label,
     }
 

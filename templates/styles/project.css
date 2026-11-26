@@ -160,6 +160,11 @@
             margin: 0 auto;
         }
 
+        /* Diagram files set color="..." so they stay legible as <img>; inline, follow the page. */
+        .essay-figure svg {
+            color: inherit;
+        }
+
         .essay-caption {
             font-size: 11px;
             color: var(--color-meta);

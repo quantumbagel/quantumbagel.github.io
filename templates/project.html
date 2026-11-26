@@ -27,7 +27,8 @@
             <p class="dek">{{ item.description | safe }}</p>
             <div class="meta-row">
                 <span>{{ item.date }}</span>
-                {% if item.link %}{{ project_link(item.link) }}{% else %}<span class="chip">Private (Architecture Only)</span>{% endif %}
+                {% if item.link %}{{ project_link(item.link) }}{% elif not item.links %}<span class="chip">Private (Architecture Only)</span>{% endif %}
+                {% for extra in item.links %}{{ project_link(extra.href, extra.label) }}{% endfor %}
                 {% if item.demo_label %}<button type="button" data-open-sim class="btn small">{{ item.demo_label }}</button>{% endif %}
             </div>
             {{ pills(item.skills) }}
@@ -50,7 +51,7 @@
 
         <footer class="page-foot">
             <a href="{{ root }}">← Back to {{ user.name }}</a>
-            <div>{% if item.link %}{{ project_link(item.link) }}{% else %}<span class="chip">Private (Architecture Only)</span>{% endif %}</div>
+            <div>{% if item.link %}{{ project_link(item.link) }}{% elif item.links %}{{ project_link(item.links[0].href, item.links[0].label) }}{% else %}<span class="chip">Private (Architecture Only)</span>{% endif %}</div>
         </footer>
     </div>
 

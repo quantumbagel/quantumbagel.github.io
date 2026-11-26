@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 280" role="img" aria-label="Strife host architecture">
+<svg xmlns="http://www.w3.org/2000/svg" color="#b6d6f6" viewBox="0 0 760 280" role="img" aria-label="Strife host architecture">
   <style>
     .box { fill: none; stroke: currentColor; stroke-width: 1.4; }
     .fill { fill: currentColor; fill-opacity: 0.08; }
