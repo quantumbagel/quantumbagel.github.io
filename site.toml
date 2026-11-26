@@ -2,7 +2,7 @@
 lang = "en"
 
 [meta]
-description = "Julian Reder — Computer Engineering and Statistics student at NC State. Research software for AERPAW (autonomous flight, ADS-B tracking, PTZ camera control) plus side projects ranging from fractal engines to a ColecoVision emulator in Scratch."
+description = "Julian Reder, Computer Engineering and Statistics student at NC State. Research software for AERPAW (autonomous flight, ADS-B tracking, PTZ camera control) and side projects."
 favicon = "pfp.webp"
 
 [user]
@@ -41,7 +41,7 @@ text = 'I also interned at <a href="https://advisor.ml.com/sites/nc/raleigh-nc/b
 [[home.groups]]
 title = "AERPAW public work."
 category = "aerpaw"
-note = "Outside of these public repos, I work across the rest of the <a href='https://aerpaw.org'>AERPAW</a> testbed stack—mostly hunting down field bugs, keeping the flight software moving forward, and wiring up whatever hardware shows up next."
+note = "Beyond these public repos, I work across the rest of the <a href='https://aerpaw.org'>AERPAW</a> platform, mostly fixing field bugs, adding features to the testbed software, and integrating new hardware."
 
 [[home.groups]]
 title = "Other projects."
@@ -57,17 +57,17 @@ collabs = "Collaborations"
 [contact]
 form_action = "https://formspree.io/f/moqgwdop"
 submit_label = "Send Message"
-intro = "I'm always down to hear about interesting opportunities, and I ALWAYS have free time for something cool :)"
+intro = "I'm always open to interesting opportunities, and I ALWAYS have free time for something cool :)"
 
 [[experiences]]
 title = "Technical Intern, Bell, Bell & Cronlund Group @ Merrill Lynch Wealth Management"
 link = "https://advisor.ml.com/sites/nc/raleigh-nc/bellbellcronlund"
 date = "May 2026 - August 2026"
-description = """Built internal equity-research tooling supporting wealth management portfolios with over <strong>$500M</strong> in assets under management.
+description = """Worked on internal equity-research software used for wealth management portfolios with over <strong>$500M</strong> in assets under management.
 <ul class='list-disc pl-5 mt-2 space-y-1'>
-<li>Wrote <strong>ML-Ticker</strong>, a Python CLI that batches FactSet FQL snapshot and historical queries from validated YAML configs</li>
-<li>Built a restricted AST formula evaluator with a topological dependency graph that catches cycles and typos before hitting FactSet</li>
-<li>Exported results to colorized Rich terminal tables and multi-sheet Excel workbooks with hidden helper tabs</li>
+<li>Built <strong>ML-Ticker</strong>, a Python CLI that queries FactSet FQL for snapshot and historical market data from validated YAML configs</li>
+<li>Wrote a restricted AST formula evaluator with a topological dependency graph that catches cycles and typos before any FactSet request goes out</li>
+<li>Added output formatting for Rich terminal tables and multi-sheet Excel workbooks with hidden helper tabs</li>
 </ul>"""
 
 [[experiences]]
@@ -80,11 +80,11 @@ description = "Dual B.S. in Computer Engineering and Statistics, 4.0 GPA."
 title = "Developer @ AERPAW"
 link = "https://aerpaw.org"
 date = "Summer 2023 - Present"
-description = """Software developer for <a href='https://aerpaw.org' class='text-link hover:underline'>AERPAW</a> (Aerial Experimentation and Research Platform for Advanced Wireless), NC State's NSF testbed for programmable radios and autonomous vehicles, working with Dr. Mihail Sichitiu on vehicle control, airspace monitoring, and camera tracking.
+description = """Developer for <a href='https://aerpaw.org' class='text-link hover:underline'>AERPAW</a> (Aerial Experimentation and Research Platform for Advanced Wireless), NC State's NSF testbed for programmable radios and autonomous vehicles, working with Dr. Mihail Sichitiu on vehicle control, airspace monitoring, and camera tracking.
 <ul class='list-disc pl-5 mt-2 space-y-1'>
-<li>Primary maintainer of <strong>aerpawlib</strong>, the official Python vehicle control library—migrated the backend from DroneKit to MAVSDK and added an async v2 API while keeping existing experimenter scripts running</li>
-<li>Built <strong>PyAerial</strong>, an ADS-B receiver network with 16-check spoofing detection, polygon geofences, a SQLite research archive, and a read-only React radar portal</li>
-<li>Built <strong>DroneTracker</strong>, a multi-drone PTZ camera tracker that runs per-drone Kalman filters on Kafka telemetry and drives AXIS cameras smoothly over VAPIX</li>
+<li>Primary maintainer of <strong>aerpawlib</strong>, the official Python vehicle control library. Migrated the backend from DroneKit to MAVSDK and added an async v2 API while keeping older researcher scripts working</li>
+<li>Built <strong>PyAerial</strong>, an ADS-B receiver network with 16 spoofing checks, polygon geofences, a SQLite flight archive, and a read-only React radar portal</li>
+<li>Built <strong>DroneTracker</strong>, a multi-drone PTZ camera tracker that runs per-drone Kalman filters on Kafka telemetry and steers AXIS cameras over VAPIX</li>
 </ul>"""
 
 [[experiences]]
@@ -98,26 +98,26 @@ featured = true
 category = "aerpaw"
 title = "aerpawlib"
 date = "2025 - Present"
-description = "The official Python vehicle control library for AERPAW—migrated from DroneKit to MAVSDK so researchers can fly autonomous multicopters and rovers through the testbed's safety filter."
-built = "I'm a co-author and the primary maintainer of <a href='https://github.com/AERPAW/aerpawlib' class='text-link hover:underline'>AERPAW/aerpawlib</a> (currently v1.4.11), the Python library visiting researchers use to fly AERPAW's LAM6 and SAM4 drones and drive the ground rovers. I moved the codebase off the unmaintained DroneKit stack onto MAVSDK, kept the original v1 Runner and StateMachine interface working through a compatibility layer, and built a cleaner async v2 API alongside it."
+description = "The official Python vehicle control library for AERPAW. Migrated from DroneKit to MAVSDK so researchers can fly autonomous multicopters and rovers through the testbed's safety filter."
+built = "I am a co-author and the primary maintainer of <a href='https://github.com/AERPAW/aerpawlib' class='text-link hover:underline'>AERPAW/aerpawlib</a> (currently v1.4.11), the Python library researchers use to fly AERPAW's LAM6 and SAM4 drones and drive the ground rovers. I moved the library off DroneKit onto MAVSDK, kept the original v1 Runner and StateMachine interface working through a compatibility layer, and added an async v2 API."
 challenges = [
-    "The testbed's MAVLink safety filter only lets takeoff, land, goto, and yaw through—takeoffs have to stay between 20 and 100 m, and landings have to finish within 5 m of the takeoff point.",
-    "Standard <code>SET_MODE</code> packets are blocked by the filter, and entering LOITER drops the Experiment VM link, so the library holds GUIDED mode directly with <code>MAV_CMD_DO_SET_MODE</code>.",
-    "The safety checker has to talk to the vehicle's own Companion VM rather than localhost or the OEO console—a bug that actually shipped in 1.4.7 before getting caught and reverted.",
-    "Timed <code>set_velocity</code> timers were cancelling newer movement commands, and geodesic bearings ignored latitude scaling (giving ~51° instead of 45° at Lake Wheeler's 35.7°N).",
-    "Multi-vehicle ZeroMQ coordination used to be fire-and-forget PUB/SUB, which dropped state transitions under load until I replaced it with a JSON control plane using ACK, HELLO, and <code>wait_for_peers</code>.",
+    "The testbed's MAVLink safety filter only allows takeoff, land, goto, and yaw. Takeoffs have to stay between 20 and 100 m, and landings have to finish within 5 m of the takeoff point.",
+    "Standard <code>SET_MODE</code> messages are blocked by the filter, and entering LOITER drops the Experiment VM link, so the library holds GUIDED mode directly using <code>MAV_CMD_DO_SET_MODE</code>.",
+    "The safety checker has to talk to the vehicle's own Companion VM rather than localhost or the OEO console. That bug actually made it into 1.4.7 before we caught and reverted it.",
+    "Expiring <code>set_velocity</code> timers were cancelling newer movement commands, and geodesic bearings ignored latitude scaling (giving about 51 degrees instead of 45 degrees at Lake Wheeler's 35.7°N).",
+    "Multi-vehicle ZeroMQ coordination used to be fire-and-forget PUB/SUB, which dropped state transitions under load. I replaced it with a JSON control plane using ACK, HELLO, and <code>wait_for_peers</code>.",
 ]
 learned = [
-    "On a real hardware testbed, the safety filter shapes your API just as much as the autopilot SDK does.",
-    "ArduPilot SITL catches logic bugs fast, but it never fully replaces putting code on a real vehicle at the field—the testbed filter will always find edge cases the simulator didn't care about.",
-    "Shipping a backward-compatible v1 wrapper next to a new v2 API is way less painful than asking visiting researchers to rewrite working experiment scripts.",
+    "On a real hardware testbed, the safety filter shapes your API just as much as the autopilot SDK.",
+    "ArduPilot SITL catches logic bugs quickly, though you still have to fly real hardware at the field to catch everything the testbed filter enforces.",
+    "Keeping a backward-compatible v1 wrapper next to a new v2 API saved visiting researchers from having to rewrite working experiment scripts.",
 ]
 features = [
-    "Dual API surface on MAVSDK 3.17: v1 compatibility layer for legacy scripts plus an async v2 API (<code>VehicleTask</code>, <code>can_takeoff</code>, <code>can_goto</code>, <code>can_land</code>).",
+    "Two API surfaces on MAVSDK 3.17: a v1 compatibility layer for older scripts and an async v2 API (<code>VehicleTask</code>, <code>can_takeoff</code>, <code>can_goto</code>, <code>can_land</code>).",
     "Fail-closed safety checker with KML field geofences, rover creek no-go zones, and success-only auto-RTL.",
-    "ZeroMQ XSUB/XPUB proxy on ports 5570/5571 for coordinated multi-vehicle experiments.",
-    "Unit tests across Python 3.10–3.14 plus ArduCopter and Rover SITL integration tests.",
-    "Generated API reference and examples published at aerpaw.github.io/aerpawlib.",
+    "ZeroMQ XSUB/XPUB proxy on ports 5570 and 5571 for multi-vehicle experiments.",
+    "Unit tests across Python 3.10 to 3.14 plus ArduCopter and Rover SITL integration tests.",
+    "API reference and examples published at aerpaw.github.io/aerpawlib.",
 ]
 link = "https://github.com/AERPAW/aerpawlib"
 skills = [
@@ -140,49 +140,49 @@ links = [
 
 [[projects.essay]]
 heading = "The testbed"
-body = """AERPAW (Aerial Experimentation and Research Platform for Advanced Wireless) is NC State's NSF testbed for running 5G/6G wireless experiments on real autonomous vehicles. Visiting researchers write Python scripts to fly custom multicopters like the LAM6 and SAM4, or drive ground rovers, all built around Cube Orange flight controllers running ArduPilot and speaking MAVLink v2. The vehicles carry software-defined radios and other custom RF payloads out at Lake Wheeler, so there's zero room for a buggy script to wander off.
-<p>Between every experimenter script and the autopilot sits a MAVLink safety filter. Telemetry streams back unrestricted, so scripts can read whatever state they want, but outbound commands go through a strict allow-list: takeoff (between 20 and 100 meters), landing (within 5 meters of the takeoff point), yaw, and waypoints inside the field geofence—plus extra creek no-go polygons for the rover. Anything outside those bounds gets dropped silently or rejected, which means the filter ends up defining what the library can actually do.</p>"""
+body = """AERPAW (Aerial Experimentation and Research Platform for Advanced Wireless) is NC State's NSF testbed for running 5G and 6G wireless experiments on autonomous vehicles. Visiting researchers write Python scripts to fly custom multicopters like the LAM6 and SAM4, or drive ground rovers, all using Cube Orange flight controllers running ArduPilot with MAVLink v2. The vehicles carry software-defined radios and custom RF payloads out at Lake Wheeler, so bad commands cannot be allowed to reach the autopilot.
+<p>A MAVLink safety filter sits between every experimenter script and the flight controller. Telemetry comes back unrestricted, so scripts can read whatever vehicle state they need, while outbound commands have to pass a strict allow-list: takeoff between 20 and 100 meters, landing within 5 meters of the takeoff point, yaw, and waypoints inside the field geofence (plus creek no-go polygons for the rover). Anything else gets dropped or rejected, so the filter ends up defining what the library can do.</p>"""
 
 [[projects.essay]]
-heading = "Moving off DroneKit without breaking everyone's scripts"
-body = """John Kesler wrote the original aerpawlib on top of DroneKit and pymavlink, giving experimenters simple <code>Runner</code> and <code>StateMachine</code> base classes along with QGroundControl <code>.plan</code> file support. That worked well for years, until DroneKit went unmaintained and newer Python and ArduPilot versions started breaking underneath it. I took over as primary maintainer of <a href="https://github.com/AERPAW/aerpawlib">AERPAW/aerpawlib</a> to migrate the backend onto MAVSDK so the testbed could move forward without monkey-patching Python.
-<p>The catch was that dozens of existing sample experiments and researcher scripts already depended on the v1 API. Instead of forcing a flag-day rewrite, I kept v1 intact—DroneKit-shaped telemetry wrappers and a dual asyncio/gRPC bridge so older synchronous-looking scripts still run untouched—and built a v2 API alongside it. v2 uses native Python <code>async</code>/<code>await</code> on a single event loop with explicit preflight checks (<code>can_takeoff</code>, <code>can_goto</code>, <code>can_land</code>) and cancellable <code>VehicleTask</code> handles.</p>"""
+heading = "Moving off DroneKit"
+body = """John Kesler wrote the original aerpawlib on top of DroneKit and pymavlink, giving experimenters <code>Runner</code> and <code>StateMachine</code> base classes along with QGroundControl <code>.plan</code> file support. Once DroneKit stopped being maintained, newer Python and ArduPilot versions began breaking under it. I took over as primary maintainer of <a href="https://github.com/AERPAW/aerpawlib">AERPAW/aerpawlib</a> to move the backend onto MAVSDK so the testbed could upgrade firmware without monkey-patching Python.
+<p>Dozens of sample experiments and researcher scripts already depended on the v1 interface, so breaking compatibility was out of the question. I kept v1 intact with DroneKit-shaped telemetry wrappers and a dual asyncio/gRPC bridge so existing scripts keep running untouched, and built a v2 API beside it. v2 runs on a single Python <code>asyncio</code> event loop with explicit preflight checks (<code>can_takeoff</code>, <code>can_goto</code>, <code>can_land</code>) and cancellable <code>VehicleTask</code> handles.</p>"""
 
 [[projects.essay]]
 heading = "Living with the safety filter"
-body = """Most of the interesting bugs in the 1.4.x releases came straight from how MAVSDK interacts with AERPAW's filter. Standard <code>SET_MODE</code> commands aren't on the allow-list, and calling <code>action.hold()</code> puts the vehicle into LOITER, which severs the Experiment VM's control link. To keep the drone in GUIDED without getting kicked off, the library sends raw <code>MAV_CMD_DO_SET_MODE</code> commands instead. Even auto-RTL had a trap: aborting a mission used to try flying home at <code>home.alt ≈ 0</code>, which tripped the 20-meter altitude floor and got blocked immediately.
-<p>Supporting active field flights surfaced plenty of smaller, subtler bugs too. Expiring <code>set_velocity</code> timers were cancelling newer velocity commands, <code>Coordinate.bearing</code> ignored cosine latitude scaling (off by about 6 degrees at Lake Wheeler), and <code>ExternalProcess</code> quietly dropped redirected stdin/stdout files. Multi-vehicle coordination had its own growing pains: ZeroMQ PUB/SUB was dropping state transitions whenever nodes started out of sync, so the control plane on ports 5570/5571 now speaks JSON with explicit ACKs, HELLO handshakes, and a <code>wait_for_peers</code> barrier.</p>"""
+body = """Most of the bugs I fixed in the 1.4.x releases came from how MAVSDK interacts with AERPAW's filter. Standard <code>SET_MODE</code> packets are blocked, and calling <code>action.hold()</code> puts the vehicle into LOITER, which severs the Experiment VM's control link. To stay in GUIDED mode without losing the link, the library sends raw <code>MAV_CMD_DO_SET_MODE</code> commands directly. Auto-RTL had a similar trap: aborting a mission used to try flying home at <code>home.alt ≈ 0</code>, which hit the 20-meter altitude floor and got rejected immediately.
+<p>Supporting active flights turned up smaller bugs too. Expiring <code>set_velocity</code> timers were cancelling newer velocity commands, <code>Coordinate.bearing</code> ignored cosine latitude scaling (about 6 degrees off at Lake Wheeler), and <code>ExternalProcess</code> dropped redirected stdin and stdout files. Multi-vehicle coordination had its own issues: ZeroMQ PUB/SUB dropped state transitions whenever nodes came up out of sync, so the control plane on ports 5570 and 5571 now speaks JSON with ACKs, HELLO handshakes, and a <code>wait_for_peers</code> barrier.</p>"""
 figure = "media/projects/aerpawlib/filter.svg"
-caption = "Telemetry comes back unrestricted, while outbound commands have to clear the allow-list and the Companion VM's KML geofence."
+caption = "Telemetry flows back unrestricted, while outbound commands have to clear the allow-list and the Companion VM's KML geofence."
 
 [[projects.essay]]
 heading = "Testing before flight day"
-body = """Unit tests run in CI across Python 3.10 through 3.14, and the integration suite spins up real ArduCopter and ArduRover SITL instances alongside <code>mavsdk_server</code>, resetting the vehicles between test cases. (One fun quirk: MAVProxy blocks if its stdout is piped, so the suite has to run with output capture disabled.) SITL catches regressions before anyone drives out to the field, though real hardware flights still get the final vote whenever the filter or radio link behaves differently than a local sim."""
+body = """Unit tests run in CI on Python 3.10 through 3.14, and the integration suite spins up ArduCopter and ArduRover SITL instances alongside <code>mavsdk_server</code>, resetting the vehicles between cases. One annoying quirk is that MAVProxy blocks if stdout is piped, so the suite has to run with output capture turned off. SITL catches regressions before anyone drives out to the field, though live flights still catch edge cases that a local simulator never triggers."""
 
 [[projects]]
 featured = true
 category = "aerpaw"
 title = "PyAerial"
 date = "2024 - Present"
-description = "An ADS-B receiver network for AERPAW that merges multi-station feeds, scores every aircraft for spoofing across 16 physical and protocol checks, evaluates polygon geofences, and feeds a read-only React radar."
-built = "PyAerial started as a ground-up replacement for my earlier tracker, <a href='https://github.com/quantumbagel/airstrik.py' class='text-link hover:underline'>airstrik.py</a>, and has since grown into v1.0.0. It pulls Mode S and ADS-B frames from dump1090, readsb, angle-of-arrival arrays, or recorded captures, runs a 16-check spoofing monitor before deduplicating copies, checks Shapely polygon geofences, and splits the tracking engine (<code>pyaerial run</code>) completely from the read-only FastAPI/React portal (<code>pyaerial web</code>)."
+description = "An ADS-B receiver network for AERPAW that merges multi-station feeds, scores aircraft for spoofing across 16 physical and protocol checks, evaluates polygon geofences, and serves a read-only React radar."
+built = "PyAerial replaced my earlier aircraft tracker, <a href='https://github.com/quantumbagel/airstrik.py' class='text-link hover:underline'>airstrik.py</a>, and is now at v1.0.0. It reads Mode S and ADS-B frames from dump1090, readsb, angle-of-arrival arrays, or recorded captures, runs 16 spoofing checks before deduplicating copies, checks Shapely polygon geofences, and separates the tracking daemon (<code>pyaerial run</code>) from the read-only FastAPI and React portal (<code>pyaerial web</code>)."
 challenges = [
-    "Compact Position Reporting needs a fixed ground reference separate from any geofence polygon, plus 0.5° jump rejection, otherwise a receiver on the wrong side of the field decodes convincing ghost positions.",
-    "Spoofing checks (AoA, TDOA/multilateration, RSSI-vs-range, timing jitter) need every raw copy from every station, so the engine buffers frames in a 100 ms merge window and hands all copies to the integrity monitor before deduplicating.",
-    "Curved ETA math breaks down when an aircraft's turn radius is huge, so zone entry gates take <code>min(curved, straight)</code> and wrap heading sectors cleanly across 360°/0°.",
-    "One noisy sample grazing a boundary shouldn't spam Discord or Slack, so alerts use dwell hysteresis and persist open episodes in a Redis outbox so restarts close them cleanly instead of leaving phantom alerts.",
-    "To guarantee the web portal can never corrupt live state or stall decoding, <code>import-linter</code> enforces architectural contracts in CI that forbid <code>pyaerial.webapp</code> and <code>pyaerial.api</code> from importing any Redis or SQLite writer.",
+    "Compact Position Reporting needs a fixed ground reference separate from any geofence polygon, plus 0.5 degree jump rejection, otherwise a receiver on the wrong side of the field decodes convincing ghost positions.",
+    "Spoofing checks (AoA, TDOA multilateration, RSSI vs. range, timing jitter) need every raw copy from every station, so the engine buffers frames in a 100 ms merge window and hands all copies to the integrity monitor before deduplicating.",
+    "Curved ETA math blows up when an aircraft's turn circle is huge, so zone entry gates take <code>min(curved, straight)</code> and wrap heading ranges cleanly across 360/0 degrees.",
+    "A single noisy sample brushing a boundary should not spam Discord or Slack, so alerts use dwell hysteresis and store open episodes in a Redis outbox so restarts close them cleanly.",
+    "To make sure the web portal can never corrupt live state or stall decoding, <code>import-linter</code> checks in CI fail the build if <code>pyaerial.webapp</code> or <code>pyaerial.api</code> ever imports a Redis or SQLite writer.",
 ]
 learned = [
-    "ADS-B is a messy RF and wire-format problem long before it's a map problem.",
-    "Splitting ephemeral live state (Redis) from a permanent research archive (SQLite WAL) is dramatically simpler and faster than asking one database to do both.",
-    "Don't silently drop suspicious data in a research tool—score it, tag every point with the receivers that heard it, and let people filter later.",
+    "ADS-B is a messy RF and wire-format problem long before you ever draw a dot on a map.",
+    "Keeping live state in Redis and permanent flight history in SQLite WAL is much simpler and faster than trying to force one database to do both.",
+    "In a research archive, you should tag suspicious flights with their integrity score and receiver list rather than quietly dropping them.",
 ]
 features = [
-    "Multi-receiver ingest (dump1090/readsb Beast & AVR, AoA arrays, replay captures) with RSSI/Hamming-distance merging and pyModeS decoding.",
+    "Multi-receiver ingest (dump1090/readsb Beast and AVR, AoA arrays, replay captures) with RSSI and Hamming-distance merging and pyModeS decoding.",
     "0-to-1 per-aircraft spoofing score built from up to 16 physical and protocol checks, including TDOA multilateration, radio horizon, Mode S reply cross-checks, replay detection, and ICAO validation.",
-    "Shapely polygon geofences from inline rings, KML/KMZ, or GeoJSON with explicit altitude, speed, ETA, and integrity rules.",
-    "Standalone React + FastAPI portal with live WebSocket radar, raw frame viewer, integrity breakdowns, HexDB/Planespotters enrichment, and aggregated Beast re-broadcasting.",
+    "Shapely polygon geofences from inline rings, KML, KMZ, or GeoJSON with explicit altitude, speed, ETA, and integrity rules.",
+    "Standalone React and FastAPI portal with live WebSocket radar, raw frame viewer, integrity breakdowns, HexDB and Planespotters enrichment, and aggregated Beast re-broadcasting.",
     "Per-stage <code>StageGuard</code> error isolation, Docker Compose with an optional RTL-SDR profile, and CI covering pytest, mypy, ruff, import-linter, and the frontend build.",
 ]
 link = "https://github.com/quantumbagel/PyAerial"
@@ -201,51 +201,51 @@ skills = [
 page = true
 tone = "250"
 hero = "media/projects/pyaerial/pipeline.svg"
-hero_caption = "Receivers feed pyaerial run (decode, spoofing checks, geofences), which writes live state to Redis and flights to SQLite. pyaerial web stays strictly read-only."
+hero_caption = "Receivers feed pyaerial run (decode, spoofing checks, geofences), which writes live state to Redis and flights to SQLite. pyaerial web is strictly read-only."
 
 [[projects.essay]]
 heading = "Watching the rest of the sky"
-body = """AERPAW's own drones talk MAVLink through the testbed filter, so we always know where they are. Everything else in the sky—commercial airliners, private Cessnas, medical helicopters—shows up on 1090 MHz as Mode S and ADS-B broadcasts. I built PyAerial so operators at the test site can see approaching manned traffic on a live radar and get alerted before anything enters the area, while also building a labelled research archive of real RF data.
-<p>It replaced an older prototype I wrote called <a href="https://github.com/quantumbagel/airstrik.py">airstrik.py</a>, which used circular distance filters, MongoDB, and Kafka. Carrying all of that machinery for a field tracker turned out to be way more headache than it was worth. PyAerial starts over with a much cleaner split: Redis for live aircraft state, SQLite in WAL mode for long-term flight history, and webhooks for Discord, Slack, or custom endpoints.</p>"""
+body = """AERPAW's own drones speak MAVLink through the testbed filter, so we always know where they are. All other traffic near the field (commercial jets, general aviation, medical helicopters) broadcasts on 1090 MHz over Mode S and ADS-B. I wrote PyAerial so operators can watch nearby manned aircraft on a live radar and get alerted if anything heads toward the site, while saving the raw RF data into a labelled research archive.
+<p>It replaced an older prototype I wrote called <a href="https://github.com/quantumbagel/airstrik.py">airstrik.py</a> that used circular distance checks, MongoDB, and Kafka. Running all of that for a field tracker was way heavier than it needed to be. PyAerial uses a simpler split: Redis for live aircraft state, SQLite in WAL mode for completed flight history, and webhooks for Discord, Slack, or custom endpoints.</p>"""
 
 [[projects.essay]]
 heading = "Two processes, enforced by CI"
-body = """The tracking daemon (<code>pyaerial run</code>) is the only process allowed to write to Redis or SQLite. On startup it grabs a heartbeat lease so two engines can't accidentally clobber the same live keys. Each receiver runs on its own background thread and pushes frames into an intake queue; the main tick loop holds frames for a 100 ms merge window, hands every raw copy to the integrity monitor, deduplicates clean frames, updates aircraft tracks, and checkpoints active flights into SQLite every few seconds. Each stage sits inside a <code>StageGuard</code> wrapper so a weird packet in one stage logs an error and bumps a metric instead of killing the whole loop.
-<p>The dashboard (<code>pyaerial web</code>) is a separate FastAPI + React process that reads snapshots from Redis and opens SQLite read-only. Heavy browser traffic or a stuck WebSocket client can never slow down radio decoding—and that boundary isn't just a convention. CI runs <code>import-linter</code> contracts that literally fail the build if the web app or API ever imports a writer module.</p>"""
+body = """The tracking daemon (<code>pyaerial run</code>) is the only process allowed to write to Redis or SQLite. On startup it claims a heartbeat lease so a second engine will refuse to start on top of an active one. Each receiver runs in its own background thread and pushes frames into an intake queue. On each tick, the main loop holds frames for a 100 ms merge window, hands every raw copy to the integrity monitor, deduplicates clean frames, updates tracks, and checkpoints active flights into SQLite every few seconds. Each stage runs inside a <code>StageGuard</code> wrapper so an unexpected exception logs once and bumps a counter without stopping the tick loop.
+<p>The dashboard (<code>pyaerial web</code>) runs as a separate FastAPI and React process that reads snapshots from Redis and opens SQLite read-only. Heavy browser traffic or dropped WebSocket clients never stall radio decoding. CI enforces that boundary automatically with <code>import-linter</code> contracts that reject any import path from the web app or API to a store writer.</p>"""
 figure = "media/projects/pyaerial/pipeline.svg"
-caption = "The split between the write-only tracking engine and the read-only web portal."
+caption = "Separation between the tracking engine that owns writes and the read-only web portal."
 
 [[projects.essay]]
 heading = "Spoofing checks, CPR math, and geofences"
-body = """ADS-B isn't authenticated, so anyone with an SDR can broadcast a fake plane. Rather than trusting decoded positions blindly, PyAerial compares what an aircraft claims against what the receivers actually measured—running up to 16 physical and protocol checks depending on the hardware attached, from angle-of-arrival and TDOA multilateration to RSSI-versus-range curves, line-of-sight radio horizons, timing jitter, and frame replay detection. Every aircraft gets a rolling 0-to-1 spoofing score, and suspicious flights stay tagged in the archive instead of being silently tossed out.
-<p>Even honest packets have plenty of ways to go wrong. Compact Position Reporting splits latitude and longitude across alternating even and odd frames and needs a local reference point to resolve them unambiguously; if you lazily use a geofence polygon as that reference, a distant receiver can decode a completely plausible ghost position. PyAerial anchors decoding to a fixed station coordinate, rejects 0.5° jumps, wraps compass sectors properly across north (350° to 10° is a 20° wedge, not 340°), and evaluates Shapely polygons loaded from KML, KMZ, or GeoJSON using explicit altitude, speed, and ETA rules. Because a curved-path ETA can blow up when a turn circle gets huge, the gate takes <code>min(curved, straight)</code> and applies dwell hysteresis so a brief graze doesn't page everyone.</p>"""
+body = """ADS-B has no cryptographic authentication, so anyone with an SDR can transmit fake aircraft. PyAerial cross-checks what a plane claims against what the receivers physically measured, combining up to 16 checks depending on the connected hardware: angle of arrival, TDOA multilateration, RSSI versus range curves, line-of-sight radio horizons, Mode S reply cross-checks, timing jitter, kinematics, and frame replay detection. Every aircraft gets a rolling 0-to-1 spoofing score, and suspicious flights stay tagged in the archive so researchers can filter them later.
+<p>Normal packets have plenty of quirks too. Compact Position Reporting splits latitude and longitude across alternating even and odd frames and needs a local reference point to decode unambiguously. Using a geofence polygon as that reference causes distant receivers to produce plausible ghost locations. PyAerial anchors decoding to a fixed station coordinate, rejects 0.5 degree jumps, wraps compass sectors across north (350 to 10 degrees is a 20 degree wedge, not 340), and checks Shapely polygons from KML, KMZ, or GeoJSON using explicit altitude, speed, and ETA rules. Because curved-path ETA can blow up when a turn radius gets huge, the gate takes <code>min(curved, straight)</code> and applies dwell hysteresis so brief boundary grazes do not trigger alert spam.</p>"""
 figure = "media/projects/pyaerial/geofence.svg"
 caption = "Decode with a fixed reference, compute kinematics and ETA, then apply dwell hysteresis before alerting."
 
 [[projects.essay]]
 heading = "Crash recovery and deployment"
-body = """Field servers lose power and get restarted at bad times. If <code>pyaerial run</code> dies mid-alert, the next startup replays uncommitted episodes from a Redis outbox and cleanly closes any alerts left hanging with an <code>ended_by: restart</code> event, guaranteeing every activation gets a matching deactivation. If SQLite is momentarily locked or unreachable, completed flights wait in a bounded in-memory retry buffer until the disk comes back.
-<p>The whole stack runs under Docker Compose, either pointing at an existing dump1090 host, spinning up an RTL-SDR container directly with <code>--profile sdr</code>, or replaying a bundled sample capture on a laptop with no radio hardware at all.</p>"""
+body = """Field machines lose power and get restarted at bad times. If <code>pyaerial run</code> dies while an alert is open, the next startup replays uncommitted episodes from a Redis outbox and closes any hanging alerts with an <code>ended_by: restart</code> event so every activation gets a matching deactivation. If SQLite is temporarily locked or unreachable, completed flights wait in a bounded in-memory retry buffer until the database is writable again.
+<p>Everything ships with Docker Compose, so it can talk to an existing dump1090 server on the host, launch a bundled RTL-SDR container with <code>--profile sdr</code>, or replay a sample capture on a laptop with no radio hardware plugged in.</p>"""
 
 [[projects]]
 featured = true
 category = "aerpaw"
 title = "DroneTracker"
 date = "2024 - Present"
-description = "A multi-drone PTZ camera tracker for AERPAW that runs per-drone Kalman filters on Kafka telemetry, drives AXIS Q-8615E cameras smoothly with velocity feedforward over VAPIX, and records flights with sidecar logs."
-built = "DroneTracker is a Dockerized field service deployed out at AERPAW's camera towers. Version 2 ingests GPS and velocity telemetry for multiple drones over Kafka, smooths each track through its own constant-velocity Kalman filter, picks targets automatically (or frames a group), drives an AXIS Q-8615E pan-tilt-zoom camera with continuous velocity feedforward over VAPIX, and exports Matroska recordings alongside 2 Hz JSONL session logs. Since stock <code>sensecam-control</code> only moved the camera and couldn't manage recordings, I forked it as <a href='https://github.com/quantumbagel/sensecam-control-record' class='text-link hover:underline'>sensecam-control-record</a>."
+description = "A multi-drone PTZ camera tracker for AERPAW that runs per-drone Kalman filters on Kafka telemetry, steers AXIS Q-8615E cameras with velocity feedforward over VAPIX, and records flights with sidecar logs."
+built = "DroneTracker is a Dockerized field service deployed at AERPAW's camera towers. Version 2 reads GPS and velocity telemetry for multiple drones from Kafka, runs each drone through its own constant-velocity Kalman filter, picks targets automatically (or frames a group), drives an AXIS Q-8615E pan-tilt-zoom camera using continuous velocity feedforward over VAPIX, and exports Matroska recordings paired with 2 Hz JSONL session logs. Stock <code>sensecam-control</code> could pan and zoom but could not manage recordings, so I forked it as <a href='https://github.com/quantumbagel/sensecam-control-record' class='text-link hover:underline'>sensecam-control-record</a>."
 challenges = [
-    "v1 sent absolute pan/tilt positions, which made the camera visibly step a few degrees at a time; v2 switches to continuous velocity feedforward (the drone's angular rate) plus proportional pointing feedback so the head glides smoothly.",
+    "Version 1 sent absolute pan and tilt positions, which made the camera step visibly a few degrees at a time. Version 2 switches to continuous velocity feedforward (the drone's angular rate) plus proportional pointing feedback so the head glides smoothly.",
     "GPS packets arrive irregularly, out of order, or with network delay, so each drone runs through a constant-velocity Kalman filter in a local East-North-Up frame centered on the lens, using measurement timestamps to compensate for transit lag.",
-    "Camera mounting north-offset has to wrap cleanly into AXIS's ±180° pan range, and if a drone climbs past the mechanical tilt limit, the zoom controller widens the field of view by the shortfall to keep it in frame.",
-    "Brief telemetry dropouts shouldn't chop a flight into tiny clips, so auto-activation, deactivation, and recording stop all use configurable hysteresis timers, while slow VAPIX recording exports run on separate threads so they never stall tracking.",
+    "Camera mounting north-offset has to wrap cleanly into AXIS's ±180 degree pan range. When a drone climbs past the camera's mechanical tilt limit, the zoom controller widens the field of view by the shortfall to keep it in frame.",
+    "Brief dropouts should not chop a flight into tiny clips, so auto-activation, deactivation, and recording stop all use hysteresis timers, and slow VAPIX recording exports run on separate threads so they never stall tracking.",
 ]
-learned = "Closing a telemetry loop onto a physical PTZ camera is half geodesy and control theory, and half gritty field ops: Digest-auth CGI, host networking in Docker, clock-skew guards, and a forked library that can actually start and download a recording."
+learned = "Connecting a telemetry bus to a physical PTZ camera involves just as much field ops as math: Digest-auth CGI, host networking in Docker, clock-skew guards, and a forked camera library that can actually start and export recordings."
 features = [
     "Multi-drone tracking with per-drone ENU Kalman filters, auto-activation rules (airborne, in-range, visible sector), priority selection, and group framing within <code>max_group_hfov</code>.",
-    "Continuous pan/tilt/zoom control mapped to the AXIS Q-8615E field-of-view curve, with automatic widening when a drone exceeds the camera's tilt limits.",
-    "Kafka data, command, and output topics supporting live mode switching (<code>auto</code> / <code>on</code> / <code>off</code>), manual target selection, status queries, and TCP recording downloads.",
-    "Automated VAPIX recording to <code>session-*.mkv</code> paired with 2 Hz <code>session-*.jsonl</code> logs capturing every target, position, and camera pointing angle.",
+    "Continuous pan, tilt, and zoom control mapped to the AXIS Q-8615E field-of-view curve, with automatic zoom widening when a drone exceeds mechanical tilt limits.",
+    "Kafka data, command, and output topics supporting live mode switching (<code>auto</code>, <code>on</code>, <code>off</code>), manual target selection, status queries, and TCP recording downloads.",
+    "Automated VAPIX recording to <code>session-*.mkv</code> paired with 2 Hz <code>session-*.jsonl</code> logs recording every drone in shot and where the camera pointed.",
     "YAML site calibration, dry-run mode without physical hardware, and Docker Compose deployment.",
 ]
 link = "https://github.com/quantumbagel/DroneTracker"
@@ -261,24 +261,24 @@ skills = [
 page = true
 tone = "29"
 hero = "media/projects/dronetracker/aim.svg"
-hero_caption = "Camera at a surveyed site pose, drone telemetry arriving on Kafka, and continuous pan/tilt/zoom control over VAPIX."
+hero_caption = "Camera at a surveyed site pose, drone telemetry arriving over Kafka, and continuous pan, tilt, and zoom control over VAPIX."
 
 [[projects.essay]]
-heading = "Filming autonomous flights without a camera operator"
-body = """When researchers run autonomous drone missions out at AERPAW, having clean video of the flight is huge for demos, debugging, and post-flight review. Trying to track a fast multicopter across an open field with a joystick gets old fast—especially when multiple drones are in the air at once. DroneTracker (<a href="https://github.com/quantumbagel/DroneTracker">quantumbagel/DroneTracker</a>) was my first real project at AERPAW, built to point an AXIS Q-8615E pan-tilt-zoom camera at flying vehicles automatically using the testbed's Kafka telemetry bus and record the pass over VAPIX.
-<p>Version 1 tracked a single drone by converting each GPS packet into an absolute pan/tilt/zoom position and firing off a command. That worked, but the footage was jerky and single-target only. Version 2 was a ground-up rewrite that tracks multiple drones simultaneously, filters noisy packets, frames groups when they're close together, and decides on its own when to start and stop rolling.</p>"""
+heading = "Filming autonomous flights automatically"
+body = """Clean video of autonomous drone flights at AERPAW helps with demos, debugging, and post-flight review, and following a fast multicopter across an open field with a joystick gets frustrating quickly, especially when multiple vehicles are up at once. DroneTracker (<a href="https://github.com/quantumbagel/DroneTracker">quantumbagel/DroneTracker</a>) was my first real project at AERPAW. It points an AXIS Q-8615E pan-tilt-zoom camera at flying vehicles using the testbed's Kafka telemetry bus and records the flight over VAPIX.
+<p>Version 1 tracked a single drone by turning each GPS packet into an absolute pan/tilt/zoom command. That worked, though the video looked stepped and it could only follow one target. Version 2 was a full rewrite that tracks several drones at once, filters noisy packets, frames groups when drones fly close together, and decides on its own when to start and stop recording.</p>"""
 
 [[projects.essay]]
-heading = "Kalman filters and smooth camera motion"
-body = """Every incoming position report feeds into that drone's constant-velocity Kalman filter, working in a local East-North-Up coordinate frame (in meters) centered on the camera lens. That smooths out GPS jitter, handles irregular or out-of-order Kafka packets, and—when the sender includes a measurement timestamp—predicts forward across network transit delay so the camera aims where the drone actually is by the time the HTTP request lands. (Version 2 explicitly rejects v1's ambiguous <code>{x, y, z}</code> velocity packets and expects named North/East/Down components.)
-<p>Instead of stepping the head from angle to angle, the control loop reads the camera's real position every tick and commands continuous pan and tilt speeds equal to the target's angular rate (feedforward) plus a proportional pointing-error correction (feedback). Zoom uses a calibrated field-of-view model for the Q-8615E, and if a drone climbs above or drops below the head's mechanical tilt range, the controller widens the zoom by the angular shortfall so the aircraft stays in frame as long as the lens physically allows.</p>"""
+heading = "Kalman filters and continuous motion"
+body = """Each incoming position report goes into that drone's constant-velocity Kalman filter, working in a local East-North-Up frame (in meters) centered on the lens. The filter smooths out GPS jitter, handles irregular or out-of-order packets, and uses the sender's measurement timestamp to account for network transit delay so the camera aims where the drone will be when the command takes effect. Version 2 also rejects v1's ambiguous <code>{x, y, z}</code> velocity messages and expects explicit North/East/Down fields.
+<p>On every control tick, the tracker reads the camera's real position and sets continuous pan and tilt speeds equal to the target's angular rate (feedforward) plus a proportional pointing-error term (feedback). Zoom follows a calibrated field-of-view model for the Q-8615E. If a drone climbs above or drops below the camera's mechanical tilt limits, the controller widens the zoom by the shortfall so the aircraft stays in frame as long as the lens allows.</p>"""
 figure = "media/projects/dronetracker/aim.svg"
-caption = "From surveyed camera pose and live ENU state to spherical bearing, elevation, and optical zoom."
+caption = "Surveyed camera pose and live ENU state mapped to spherical bearing, elevation, and optical zoom."
 
 [[projects.essay]]
-heading = "Multi-drone framing and field ops"
-body = """In <code>auto</code> mode, a drone only becomes active once it has been fresh, airborne, within range, above the minimum elevation, and inside the camera's visible sector for a configurable window—and it doesn't deactivate until it fails those checks for several seconds, so a brief dropout won't slice a flight into fragments. Target selection respects manual Kafka picks first, then a configured priority list, then first-active, pulling extra drones into a group shot whenever everyone still fits inside <code>max_group_hfov</code>.
-<p>Recording turned out to be its own side quest. The existing Python VAPIX library (<code>sensecam-control</code>) could pan and zoom, but couldn't start, stop, or export recordings from the camera's SD card, so I forked it as <a href="https://github.com/quantumbagel/sensecam-control-record">sensecam-control-record</a>. Recording runs on dedicated background threads so a slow camera export never blocks the tracking loop, saving each flight as <code>session-&lt;UTC&gt;.mkv</code> alongside a 2 Hz <code>.jsonl</code> sidecar log of every drone in frame and where the lens was pointed. Operators can even list and stream recordings straight over TCP using Kafka commands, and a dry-run mode lets me test changes on a laptop without a camera attached.</p>"""
+heading = "Multi-drone framing and recording"
+body = """In <code>auto</code> mode, a drone becomes active once it has been fresh, airborne, in range, above minimum elevation, and inside the visible sector for a configured hold time. It only deactivates after failing those checks for several seconds, so brief telemetry dropouts do not cut the video into pieces. Target selection follows manual Kafka picks first, then a configured priority list, then whichever drone activated first, pulling additional drones into a group shot while everything still fits inside <code>max_group_hfov</code>.
+<p>Recording needed its own library work. The existing Python VAPIX library (<code>sensecam-control</code>) supported movement commands but had no way to start, stop, or export recordings from the camera's SD card, so I forked it as <a href="https://github.com/quantumbagel/sensecam-control-record">sensecam-control-record</a>. Recording runs on separate background threads so a slow camera export never blocks tracking, saving each flight as <code>session-&lt;UTC&gt;.mkv</code> next to a 2 Hz <code>.jsonl</code> log of which drones were in frame, where each one was, and where the camera pointed. Operators can list and stream recordings directly over TCP using Kafka commands, and a dry-run mode lets me test changes on a laptop without a camera attached.</p>"""
 figure = "media/projects/dronetracker/geometry.svg"
 caption = "The v2 pipeline: Kafka ingestion, per-drone Kalman filtering, target selection, continuous PTZ control, and threaded VAPIX recording."
 
@@ -288,20 +288,20 @@ category = "ml"
 title = "ML-Ticker"
 date = "2026"
 description = "An internal FactSet FQL CLI built during my Merrill Lynch internship, with a sandboxed AST formula language, DAG metric resolution, and styled Excel reporting. Private repo."
-built = "During my summer 2026 internship with the Bell, Bell & Cronlund Group at Merrill Lynch Wealth Management, I built ML-Ticker (v0.3.0), a packaged Python CLI running inside FactSet's Programmatic Environment. Analysts write YAML configs describing tickers, FactSet FQL fields, and custom valuation formulas; the tool validates everything up front, batches remote FQL queries, evaluates interdependent metrics in topological order, and exports colorized Rich terminal tables or multi-sheet Excel workbooks."
+built = "During my summer 2026 internship with the Bell, Bell & Cronlund Group at Merrill Lynch Wealth Management, I built ML-Ticker (v0.3.0), a packaged Python CLI running inside FactSet's Programmatic Environment. Analysts write YAML configs listing tickers, FactSet FQL fields, and custom valuation formulas. The tool validates everything up front, batches remote FQL queries, evaluates dependent metrics in topological order, and exports Rich terminal tables or multi-sheet Excel workbooks."
 challenges = [
-    "Analysts needed real math formulas in config files without turning YAML into an arbitrary code execution hole, so I built an AST evaluator with a strict syntax denylist and an allowlist of safe builtins.",
-    "Derived metrics frequently reference other derived metrics, so the engine builds a DAG before making a single FactSet call—flagging exact cycle paths and suggesting close matches when a metric name is misspelled.",
-    "Missing or unavailable FQL fields silently coercing to zero will quietly ruin valuation multiples, so missing data propagates through the entire pipeline as explicit typed N/A values.",
-    "Point-in-time holdings snapshots and historical time series needed separate Pydantic config models (with extra fields forbidden), and some formulas required a second-pass FactSet fetch.",
-    "Everything had to work strictly inside FactSet's locked-down Programmatic Environment.",
+    "Analysts needed custom math formulas in config files without turning YAML into arbitrary code execution, so I wrote an AST evaluator with a strict syntax denylist and an allowlist of safe builtins.",
+    "Derived metrics often reference other derived metrics, so the engine builds a DAG before making any FactSet calls, printing exact cycle paths and typo suggestions when a metric name is wrong.",
+    "Missing FQL fields silently turning into zero will distort valuation multiples, so missing data propagates through every calculation as explicit typed N/A values.",
+    "Holdings snapshots and historical time series needed separate Pydantic config models (with extra fields forbidden), and some formulas required a second-pass FactSet fetch.",
+    "Everything had to run inside FactSet's locked-down Programmatic Environment.",
 ]
-learned = "Treat internal research scripts like real developer tools: validate the config language and dependency graph up front so bad inputs fail in milliseconds with a helpful message instead of half an hour into a batch of API calls."
+learned = "Validating the config language and dependency graph up front makes internal research tools much nicer to use, since mistakes fail in milliseconds with a clear message instead of halfway through a batch of API calls."
 features = [
     "Typer CLI with commands for holdings snapshots, time series, config validation, metric listing, and FDT peer-valuation scoring (Bull / Base / Bear multiples).",
-    "AST-gated formula parser plus a hand-rolled topological sort—no heavy graph libraries needed.",
+    "AST-gated formula parser and a hand-rolled topological sort with no external graph libraries.",
     "Pydantic validation that catches typos, unknown fields, and circular metric dependencies before touching the network.",
-    "Formatted Rich terminal output, JSON export, and styled multi-sheet Excel workbooks with hidden helper calculation tabs.",
+    "Rich terminal tables, JSON export, and styled multi-sheet Excel workbooks with hidden helper calculation sheets.",
 ]
 skills = [
     "Python",
@@ -318,41 +318,41 @@ hero = "media/projects/ml-ticker/pipeline.svg"
 hero_caption = "YAML config validation, AST and DAG checks, batched FactSet FQL fetching, sandboxed derivation, and report export."
 
 [[projects.essay]]
-heading = "Context (and what stays private)"
-body = """Over the summer of 2026, I interned with Merrill Lynch Wealth Management working on an internal calculations platform used for portfolios managing over <strong>$500M</strong> in assets. The equity research team was constantly pulling fundamentals and price history from FactSet, applying custom valuation formulas, and formatting clean spreadsheets for review. Because ML-Ticker is proprietary internal software, there's no public repo and I'm not sharing internal tickers, formulas, or entitlements—just the architecture, because the interesting engineering is in how the pipeline is put together.
-<p>The tool runs as a packaged Python CLI inside FactSet's Programmatic Environment. Instead of maintaining fragile one-off spreadsheets or notebooks, analysts describe what they want in YAML, run a single command, and get either a quick terminal table or a presentation-ready Excel workbook.</p>"""
+heading = "Context"
+body = """In summer 2026 I interned with Merrill Lynch Wealth Management, working on an internal calculations platform used for portfolios holding over <strong>$500M</strong> in assets. Analysts regularly pulled fundamentals and price history from FactSet, applied team-specific valuation formulas, and formatted spreadsheets for review. Because ML-Ticker is proprietary internal software, the repo is private and I am not sharing internal tickers, formulas, or entitlements, just the architecture of the pipeline.
+<p>The tool runs as a packaged Python CLI inside FactSet's Programmatic Environment. Analysts define the tickers, fields, and derived metrics they want in a YAML file, run one command, and get either a formatted terminal table or a styled Excel workbook.</p>"""
 
 [[projects.essay]]
-heading = "Validating the config language before touching FactSet"
-body = """FactSet FQL queries are powerful, easy to mistype, and slow enough that discovering a typo halfway through a run is miserable. ML-Ticker validates the entire YAML config with strict Pydantic schemas (extra keys forbidden) before any network request goes out. Holdings snapshots and historical time series each get their own config models, and an FDT mode scores a target company against a peer group to produce Bull, Base, and Bear valuation multiples.
-<p>Custom formulas go through a restricted Python AST checker that walks the syntax tree against an allowlist of operators and safe builtins, blocking attribute access, imports, and anything outside pure math. From there, the engine builds a dependency graph of every metric, runs a hand-rolled topological sort, prints the exact cycle path if two formulas reference each other, and offers typo suggestions if a name doesn't exist. Only once the entire graph checks out does the query planner batch the FQL calls (including a second pass when a derived metric needs extra lookups).</p>"""
+heading = "Validating configs before touching FactSet"
+body = """FactSet FQL queries are easy to mistype and slow enough that finding a typo halfway through a batch run wastes a lot of time. ML-Ticker validates the full YAML config with strict Pydantic models (extra fields forbidden) before sending any network requests. Holdings snapshots and historical time series have separate config models, and an FDT mode scores a company against peers to compute Bull, Base, and Bear valuation multiples.
+<p>Custom formulas go through a restricted Python AST checker that walks the syntax tree against an allowlist of math operators and safe builtins, rejecting attribute lookups, imports, and anything outside arithmetic. Next, the engine builds a dependency graph of all metrics, computes a topological sort by hand, prints the exact cycle path if formulas reference each other in a loop, and suggests close matches for misspelled metric names. Once the graph passes, the query planner batches the FQL calls (including a second pass when a formula needs additional lookups).</p>"""
 figure = "media/projects/ml-ticker/pipeline.svg"
 caption = "Validate first, plan the FactSet batches, derive in topological order, then export."
 
 [[projects.essay]]
-heading = "Keeping missing data honest"
-body = """The sneakiest bugs in financial tooling are type errors disguised as data. Real market feeds have gaps—a company doesn't report a field, a historical series starts late, or a denominator comes back empty. If your pipeline quietly coerces missing values to zero, you end up with believable-looking multiples that are completely wrong. ML-Ticker carries missing values as explicit typed N/A objects through every formula evaluation so gaps and divide-by-zero cases surface visibly instead of corrupting a sheet.
-<p>Finished results go wherever the analyst needs them: colorized Rich tables right in the terminal for quick checks, JSON for downstream scripts, or styled multi-sheet Excel workbooks via <code>openpyxl</code> that tuck raw inputs and intermediate calculations into hidden helper tabs behind the summary view.</p>"""
+heading = "Handling missing data"
+body = """Real market feeds have plenty of gaps: a company does not report a field, a historical series starts late, or a denominator comes back empty. Quietly coercing missing fields to zero produces plausible-looking multiples that are completely wrong. ML-Ticker keeps missing values as explicit typed N/A objects through every formula step so absent inputs and divide-by-zero cases show up visibly in the output.
+<p>Once everything is computed, quick lookups print as colorized Rich tables in the terminal, scripts can consume JSON, and review deliverables export via <code>openpyxl</code> to multi-sheet Excel workbooks that put raw inputs and intermediate calculations onto hidden helper sheets behind the main summary tab.</p>"""
 
 [[projects]]
 featured = true
 category = "discord-bots"
 title = "Strife"
 date = "2026 - Present"
-description = "A multiplayer board-game platform for Discord—threaded matches, seven built-in games plus git-installable plugins, PostgreSQL move logs, and crash-safe live resume."
-built = "Strife (v1.4.0, Python 3.14) is the rescoped rewrite of my earlier Discord bot PlayCord. Players spin up public or private lobbies with slash commands, matches run inside dedicated Discord threads, and every game talks to the host through a Discord-free <code>GameContext</code> so the exact same <code>play()</code> function runs live on Discord, in 6-character-code match replays, and in a local CLI. Built-ins cover Tic-Tac-Toe, Connect Four, Chess (including Chess960), Coup, Mafia, Spyfall, and Liar's Dice, with bot opponents and git-installable third-party plugins."
+description = "A multiplayer board-game platform for Discord with threaded matches, seven built-in games plus git-installable plugins, PostgreSQL move logs, and crash-safe live resume."
+built = "Strife (v1.4.0, Python 3.14) is a full rewrite of my earlier Discord bot PlayCord. Players open public or private lobbies with slash commands, matches play out inside dedicated Discord threads, and every game talks to the host through a Discord-free <code>GameContext</code> so the same <code>play()</code> function runs live on Discord, in 6-character-code match replays, and in a local CLI. Seven games are built in (Tic-Tac-Toe, Connect Four, Chess including Chess960, Coup, Mafia, Spyfall, and Liar's Dice), alongside bot opponents and git-installable plugins."
 challenges = [
-    "Surviving bot restarts mid-match meant recording every move to an append-only PostgreSQL 16 log with a stored RNG seed; on boot, the host replays the log to rebuild exact board state, or cleanly abandons the match if the plugin version changed.",
-    "Discord component clicks arrive without local memory context, so interaction state is packed into signed <code>msgpack</code> <code>custom_id</code> payloads alongside lobby timeouts, privacy controls, and join-request flows.",
-    "A buggy or infinite-looping game plugin shouldn't freeze the whole bot, so <code>play()</code> runs off the event loop with a <code>play_hang_seconds</code> watchdog (default 45 s) that kills stalled turns cleanly.",
-    "Keeping plugins honest about boundaries: games are in-process Python plugins with fault isolation per match, not a security sandbox—so plugin installs stay owner-only.",
+    "To survive bot restarts mid-match, every move is written to an append-only PostgreSQL 16 log alongside the match's RNG seed. On startup, the host replays the log to rebuild the exact board state, or abandons the match cleanly if the plugin version changed.",
+    "Discord button clicks carry no local memory context, so interaction metadata is packed into signed <code>msgpack</code> <code>custom_id</code> payloads alongside lobby timeouts, privacy toggles, and join-request flows.",
+    "A hung or buggy plugin should not freeze the whole bot, so <code>play()</code> runs off the event loop under a <code>play_hang_seconds</code> watchdog (default 45 s) that cancels stalled turns cleanly.",
+    "Games run as in-process Python plugins for per-match fault isolation rather than as a security sandbox, so installing third-party plugins stays restricted to the bot owner.",
 ]
-learned = "A multiplayer game bot is really a durability problem in disguise: deterministic simulation, a seeded RNG, an append-only move log, and treating 'live' as a first-class database state matter way more than the slash commands."
+learned = "Running a multiplayer Discord game bot reliably comes down to durability: deterministic game logic, a seeded RNG, an append-only move log, and treating 'live' as a real database state."
 features = [
-    "Seven built-in games (Tic-Tac-Toe, Connect Four, Chess/Chess960, Coup, Mafia, Spyfall, Liar's Dice) plus plugin manifests (<code>plugin.toml</code>) and bot opponents.",
-    "One <code>play()</code> implementation shared across <code>LiveContext</code> (Discord), <code>ReplayContext</code> (replays by 6-character code), and <code>MockContext</code> (CLI & tests).",
+    "Seven built-in games (Tic-Tac-Toe, Connect Four, Chess/Chess960, Coup, Mafia, Spyfall, Liar's Dice) plus <code>plugin.toml</code> manifests and bot opponents.",
+    "One <code>play()</code> implementation shared across <code>LiveContext</code> (Discord), <code>ReplayContext</code> (replays by 6-character code), and <code>MockContext</code> (CLI and tests).",
     "PostgreSQL 16 schema with migrations enforcing live-match integrity across guilds, players, profiles, and move histories.",
-    "End-to-end test suite that boots a real <code>StrifeBot</code> against a fake Discord layer and Postgres, plus Docker Compose for self-hosting (not hosted publicly yet).",
+    "End-to-end test suite that boots a real <code>StrifeBot</code> against a fake Discord layer and Postgres, plus Docker Compose for self-hosting (not publicly hosted yet).",
 ]
 link = "https://github.com/quantumbagel/Strife"
 skills = [
@@ -367,23 +367,23 @@ skills = [
 page = true
 tone = "300"
 hero = "media/projects/strife/architecture.svg"
-hero_caption = "Discord threads are just the UI. Every game talks through GameContext, with PostgreSQL storing the append-only move log underneath."
+hero_caption = "Discord threads handle the UI. Every game talks through GameContext, with PostgreSQL storing the append-only move log underneath."
 
 [[projects.essay]]
-heading = "Building a host instead of another game bot"
-body = """My earlier Discord game bots—Piranha and the original PlayCord—kept running into the same wall: game rules, Discord embeds, and in-memory state dicts were all tangled together. If the bot restarted, every active game evaporated. If I wanted to add a new game, I ended up re-implementing lobbies, turn timers, and forfeits all over again. Strife is a ground-up rewrite built as a proper game host rather than a pile of cogs.
-<p>Players create lobbies with <code>/play</code> (public or private, with pre-approvals, blacklists, and optional bot opponents), and once everyone readies up, the match opens in its own thread so it doesn't trash the main channel. Seven games ship in the box—Tic-Tac-Toe, Connect Four, Chess (including Chess960), Coup, Mafia, Spyfall, and Liar's Dice—and extra games load from a <code>plugin.toml</code> manifest that declares version constraints, dependencies, and custom application emoji. I'm careful not to call the plugin loader a security sandbox: games run in-process, so the goal is fault isolation (a broken game ruins its own match, not the whole server), and installing external plugins stays owner-only.</p>"""
+heading = "Building a host for multiple games"
+body = """My earlier Discord game bots (Piranha and the original PlayCord) kept hitting the same problem: game logic, Discord embeds, and temporary in-memory dicts were all tangled together. Whenever the bot restarted, every active game vanished, and adding another game meant rewriting lobbies, turn timers, and forfeits all over again. I wrote Strife from scratch as a shared host that separates match management from the games themselves.
+<p>Players start lobbies with <code>/play</code> (public or private, with pre-approvals, blacklists, and optional bots), and once everyone readies up, the match runs inside its own thread so it does not clutter the main channel. Seven games ship out of the box (Tic-Tac-Toe, Connect Four, Chess including Chess960, Coup, Mafia, Spyfall, and Liar's Dice), and extra games load from a <code>plugin.toml</code> manifest declaring versions, dependencies, and custom application emoji. Games run in-process for per-match fault isolation (so a broken game only crashes its own match), not as a security sandbox, which is why plugin installation is owner-only.</p>"""
 
 [[projects.essay]]
-heading = "Crash-safe resume and one play() loop"
-body = """The whole architecture hinges on keeping games completely ignorant of Discord. A game subclass only sees <code>GameContext</code>—a tiny surface for rendering a layout, waiting for moves, sending private DMs, and pulling from a seeded <code>self.rng</code>. Because the game never touches <code>discord.py</code>, the exact same <code>play()</code> method runs live in a thread (<code>LiveContext</code>), steps through finished games via <code>/strife replay</code> using a 6-character match code (<code>ReplayContext</code>), and plays locally in a terminal or test harness (<code>MockContext</code>).
-<p>PostgreSQL 16 stores guilds, player stats, and an append-only move log for every match. If the bot crashes or restarts while games are running, it scans for live matches on boot, re-initializes each game with its original RNG seed, and replays the move log back to the current turn before re-enabling buttons. If a plugin was upgraded and its build version changed underneath a live game, the host cleanly abandons the match instead of corrupting the board.</p>"""
+heading = "Crash-safe resume and a shared play() loop"
+body = """Every game subclass stays completely separate from <code>discord.py</code> and talks only to <code>GameContext</code>, a small interface for updating the board view, requesting input, sending private DMs, and drawing from a seeded <code>self.rng</code>. Because the game never touches Discord directly, the exact same <code>play()</code> method runs live in a thread (<code>LiveContext</code>), steps through completed games via <code>/strife replay</code> using a 6-character code (<code>ReplayContext</code>), and runs locally in a terminal or test suite (<code>MockContext</code>).
+<p>PostgreSQL 16 holds guilds, win/loss records, and an append-only move log for every match. If the bot restarts while games are active, it checks the database on boot, recreates each game with its original RNG seed, and replays the recorded moves back to the current turn before re-enabling controls. If a plugin build changed underneath an open match, the host abandons it cleanly rather than corrupting the state.</p>"""
 figure = "media/projects/strife/architecture.svg"
-caption = "Discord handles I/O, Postgres owns the move log, and plugins never see anything past GameContext."
+caption = "Discord handles I/O, Postgres owns the move log, and plugins never see past GameContext."
 
 [[projects.essay]]
-heading = "The unglamorous 90%"
-body = """Writing Coup or Connect Four was the fun part; the bulk of the codebase is all the host machinery that keeps Discord from falling over. Button clicks carry signed <code>msgpack</code> payloads in their <code>custom_id</code> so the router knows which match and prompt a click belongs to without hoarding huge view trees in RAM. Turn deadlines, lobby timeouts, and a <code>play_hang_seconds</code> watchdog keep a stalled game or a loop of invalid bot moves from blocking the event loop. Even the tests boot the real <code>StrifeBot</code> against Postgres and a fake Discord transport. The bot isn't publicly hosted yet while I keep polishing it, so Docker Compose is the way to run it for now."""
+heading = "The host machinery"
+body = """Writing Coup or Connect Four was the easy part; most of the codebase is host plumbing. Button interactions pack signed <code>msgpack</code> payloads into their <code>custom_id</code> so the bot can route clicks back to the right match and prompt without keeping large view trees in memory. Turn deadlines, lobby timeouts, and a <code>play_hang_seconds</code> watchdog keep a stalled plugin or loop of bad bot moves from locking up the event loop. The end-to-end tests boot a real <code>StrifeBot</code> against Postgres and a fake Discord transport. I am still polishing it before hosting a public instance, so Docker Compose is the way to run it for now."""
 
 [[projects]]
 featured = true
@@ -391,17 +391,17 @@ category = "solo"
 title = "fractalgen"
 date = "2026"
 description = "A fractal and dynamical-systems wallpaper engine with 129 built-in looks, an interactive browser editor, and TOML recipes that render cleanly up to 16K."
-built = "fractalgen grew out of a couple of messy wallpaper scripts I got tired of copy-pasting every time I wanted a new background. I rebuilt it into a proper Python engine driven by TOML recipes: each recipe picks a registered generator, parameters, a palette, framing, tone curve, composited layers, and post-processing effects. Heavy inner loops compile down to parallel Numba kernels, and a zero-build local web editor lets me pan, zoom, and tweak a look live before rendering it at full resolution."
+built = "fractalgen started as two messy wallpaper scripts I got tired of copying every time I wanted a new desktop background. I rebuilt it into a Python engine driven by TOML recipes: each recipe picks a registered generator, parameters, a palette, framing, tone curve, composited layers, and post-processing effects. Heavy inner loops compile with Numba across CPU cores, and a local browser editor lets me pan, zoom, and tune a look before exporting it at full resolution."
 challenges = [
-    "A 960 px preview and a 16K export have to look like the exact same picture, so framing, aspect-ratio rules, and size-dependent effects (blurs, glows) are defined against a fixed 4K reference canvas instead of raw output pixels.",
-    "Auto-exposing from the current frame's histogram meant panning would constantly shift the brightness as brighter regions scrolled in and out. Exposure statistics are now measured once on the recipe's authored view and replayed everywhere else.",
-    "Points inside a fractal never escape and used to burn through the full iteration cap; adding Brent cycle detection to the Numba kernels bails out as soon as an orbit starts repeating.",
+    "A 960 px preview and a 16K export have to produce the same composition, so framing, aspect-ratio rules, and size-dependent effects (blurs, glows) are defined relative to a fixed 4K reference canvas.",
+    "Auto-exposing from the current frame's histogram made panning shift the brightness whenever brighter regions scrolled in or out. Tone statistics are now measured once on the recipe's authored view and replayed for every other view.",
+    "Points inside a fractal never escape and used to run all the way to the iteration limit. Adding Brent cycle detection to the Numba kernels stops as soon as an orbit repeats.",
     "Full renders can take seconds, so the editor caches intermediate iteration and density buffers and reuses them whenever only the palette, tone curve, or post-processing changes.",
 ]
-learned = "Splitting what an image is (a plain TOML recipe) from how pixels get computed (a generator plugin) made everything else fall into place—variations, inheritance, plugins, and embedding the recipe directly inside every exported image."
+learned = "Separating what an image is (a TOML recipe) from how pixels are computed (a generator plugin) made variations, recipe inheritance, plugins, and embedded-recipe exports all fall out of the same data model."
 features = [
     "129 built-in looks across escape-time fractals, Buddhabrots, Newton basins, Lyapunov space, domain coloring, fractal flames, strange attractors, IFS, reaction-diffusion, slime mold, sandpiles, hyperbolic tilings, harmonographs, and caustics.",
-    "Zero-build Preact + htm browser editor (<code>fractalgen gui</code>) with drag/scroll pan, zoom, rotate, undo history, random variations, hold-backslash before/after compare, and 2x/3x supersampled export.",
+    "Zero-build Preact and htm browser editor (<code>fractalgen gui</code>) with drag/scroll pan, zoom, rotate, undo history, random variations, hold-backslash before/after compare, and 2x/3x supersampled export.",
     "Composited text, shape, and image layers (blend modes, glows, bevels, shadows) feeding an ordered post-processing chain.",
     "Every exported PNG or JPEG embeds its full TOML recipe in image metadata, so any wallpaper can be forked straight back into an editable look.",
     "Plugin hooks for generators, palettes, formulas, maps, flows, and effects in Python or TOML via package entry points.",
@@ -418,23 +418,23 @@ preview_caption = "julia_dragon, one of the 129 built-in looks."
 
 [[projects.essay]]
 heading = "From hardcoded scripts to recipes"
-body = """fractalgen started as two quick scripts I wrote to generate desktop wallpapers for myself. Every fractal formula, color ramp, and crop lived straight in Python, so trying a new idea meant duplicating a function and tweaking magic numbers. I rebuilt the whole thing around a clean split: generators are registered functions that turn a slice of the plane into field data, and recipes are TOML tables that choose a generator and describe everything else about the final image.
-<p>Because recipes can inherit from other recipes, define separate portrait crops for phones, and stack composited layers and effects, most new looks take a handful of TOML lines instead of new code. The same recipe drives the CLI (<code>fractalgen render</code>, including <code>--random</code> for surprises), multi-device batch presets, and the interactive GUI. Version 0.1.0 went up on GitHub in November 2026 under the MIT license.</p>"""
+body = """fractalgen started as two scripts I wrote to generate desktop wallpapers for myself. Every fractal formula, color ramp, and crop lived directly in Python, so adding a new image meant duplicating a function and editing constants. I rebuilt it around two pieces: generators (registered functions that turn a region of the plane into field data) and recipes (TOML tables that pick a generator and describe everything else about the picture).
+<p>Recipes can extend other recipes, carry separate portrait framing for phones, and stack composited layers and effects, so most new looks take a few lines of TOML. The same recipe drives the CLI (<code>fractalgen render</code>, including <code>--random</code>), multi-device batch presets, and the browser GUI. Version 0.1.0 went up on GitHub in November 2026 under the MIT license.</p>"""
 
 [[projects.essay]]
-heading = "Making the math fast enough to play with"
-body = """An 8K wallpaper is over 33 million pixels, and plenty of looks iterate each pixel more than a thousand times. The inner loops are compiled with Numba and parallelized across CPU cores. Escape-time kernels run Brent cycle detection so interior points that settle into repeating orbits exit early instead of grinding all the way to the iteration limit. Heavier simulations like Gray-Scott reaction-diffusion and physarum slime mold use multi-threaded solvers, and batch jobs run in isolated worker processes with timeouts so one expensive look can't hang an entire preset.
-<p>Interactive editing adds a different problem: nobody wants to wait five seconds just to audition a new palette. The server caches expensive intermediate buffers (iteration counts, density grids) in a bounded LRU cache and applies palettes, tone curves, and post-processing downstream, so recoloring or dialing in bloom feels instant.</p>"""
+heading = "Making the math fast enough to explore"
+body = """An 8K wallpaper has over 33 million pixels, and several looks iterate each pixel more than a thousand times. The inner loops are compiled with Numba and run in parallel across cores. Escape-time kernels use Brent cycle detection so interior points that settle into repeating orbits stop early instead of hitting the iteration cap. Simulations like Gray-Scott reaction-diffusion and physarum slime mold run on multi-threaded solvers, and batch renders run in isolated worker processes with timeouts so one slow look cannot stall a preset.
+<p>Interactive editing has its own speed constraint, since nobody wants to wait five seconds just to preview another palette. The server stores expensive intermediate buffers (iteration counts, density grids) in a bounded LRU cache and applies palettes, tone curves, and post-processing afterward, so recoloring or adjusting bloom updates quickly.</p>"""
 
 [[projects.essay]]
 heading = "Same picture at 960 px and 16K"
-body = """If you spend ten minutes framing a look in a small preview window, the 16K export shouldn't shift the crop or shrink the glow to nothing. Views are anchored to a 4K reference canvas with explicit fill, cover, and contain rules for mismatched aspect ratios, and pixel-radius effects like blur and bloom scale proportionally with the output size.
-<p>Exposure had a trickier version of the same bug. Generators that stretch their dynamic range to fit the current frame's histogram would re-expose every time I panned—a bright filament would suddenly dim the second something brighter entered the corner of the screen. Now fractalgen measures those tone statistics once on the recipe's authored view and replays them while you pan and zoom, keeping colors locked to the math rather than the viewport.</p>"""
+body = """A look framed in a 960 pixel preview window should match the 16K export. Views are defined against a 4K reference canvas with explicit fill, cover, and contain rules for other aspect ratios, and pixel-radius effects like blur and bloom scale proportionally with the output dimensions.
+<p>Exposure needed the same fix. Generators that stretch dynamic range to fit the current frame's histogram re-exposed the image every time I panned, dimming bright filaments whenever something brighter scrolled into the corner. fractalgen now measures those tone statistics once on the recipe's authored view and replays them while panning and zooming, keeping colors anchored to the math rather than the current viewport.</p>"""
 
 [[projects.essay]]
 heading = "The browser editor"
-body = """Running <code>fractalgen gui</code> spins up a local server and opens an editor built with Preact and <code>htm</code> as plain ES modules—no Node build step, no bundler. You can browse all 129 looks, spin up parameter variations, drag and scroll to pan, zoom, and rotate, tweak palettes, layers, and effects with full undo history, and hold backslash to flash back to the original preset.
-<p>Exports support 2x and 3x supersampling, and every PNG or JPEG carries its full recipe right in the file metadata. Any finished wallpaper is its own source file—you can hand someone a JPEG and they can fork it straight back into an editable TOML look.</p>"""
+body = """Running <code>fractalgen gui</code> starts a local server and opens an editor written with Preact and <code>htm</code> as plain ES modules, with no Node build step or bundler. You can browse all 129 looks, generate parameter variations, drag and scroll to pan, zoom, and rotate, tweak palettes, layers, and effects with full undo history, and hold backslash to compare against the original preset.
+<p>Exports support 2x and 3x supersampling, and every PNG or JPEG stores its full recipe in the file metadata. You can take any finished wallpaper and fork it straight back into an editable TOML file.</p>"""
 
 [[projects.gallery]]
 src = "media/projects/fractalgen/julia_dragon.jpg"
@@ -457,23 +457,23 @@ featured = true
 category = "solo"
 title = "ColecoVision Emulator"
 date = "2026"
-description = "A full ColecoVision emulator running inside Scratch, with a Python-generated Z80 core that passes 39,715 SingleStepTests vectors and plays cartridges at 60 fps in TurboWarp."
-built = "I wrote the emulator in goboscript (a text language that compiles to Scratch 3 <code>.sb3</code> projects) and wrote a Python code generator for the Z80 CPU core before hand-optimizing the output for Scratch's quirks. It emulates the Z80 processor, TMS9918A video chip, and SN76489 sound chip, paints the screen with Scratch's pen, and includes a built-in menu with fuzzy game search, named save states, fast-forward, and ROM import/export."
+description = "A ColecoVision emulator running inside Scratch, with a Python-generated Z80 core that passes 39,715 SingleStepTests vectors and plays cartridges at 60 fps in TurboWarp."
+built = "I wrote the emulator in goboscript (a text language that compiles to Scratch 3 <code>.sb3</code> projects) and wrote a Python code generator for the Z80 CPU core before hand-optimizing the output for Scratch. It emulates the Z80 processor, TMS9918A video chip, and SN76489 sound chip, draws the screen with Scratch's pen, and includes a built-in menu with fuzzy game search, named save states, fast-forward, and ROM import and export."
 challenges = [
-    "Scratch has no bitwise operators at all. The CPU builds a 64K AND lookup table at startup, derives OR and XOR arithmetically from it, and looks up ADD, SUB, and CP flags from precomputed tables.",
-    "Instruction dispatch is an 8-level binary tree of if-blocks. Folding opcodes that only differ by register or condition into shared handlers—and having IX and IY share one instruction set—cut the core from 17,000 Scratch blocks down to 2,900 without failing a single CPU test.",
-    "Scratch projects cap out around 5 MB, so cartridges, the BIOS, and save states are LZ4-style compressed and packed into a 64-character alphabet without lowercase letters (because Scratch list lookups are case-insensitive).",
-    "Scratch never saves sprite clones into the <code>.sb3</code> file, so running the emulated machine inside a clone keeps ~2 MB of RAM, VRAM, and lookup tables completely out of the saved project.",
-    "WebGL anti-aliases pen strokes, so painting over an old pixel lets the color underneath bleed through as faint streaks. The renderer diffs 8-pixel cells per scanline, merges same-color runs into single strokes, and never draws over a pixel twice.",
+    "Scratch has no bitwise operators. The CPU builds a 64K AND lookup table at startup, derives OR and XOR arithmetically from it, and reads ADD, SUB, and CP flags from precomputed tables.",
+    "Instruction dispatch is an 8-level binary tree of if-blocks. Folding opcodes that only differ by register or condition into shared handlers, plus sharing one instruction set between IX and IY, cut the core from 17,000 Scratch blocks down to 2,900 while passing the same tests.",
+    "Scratch projects cap out around 5 MB, so cartridges, the BIOS, and save states use LZ4-style compression packed into a 64-character alphabet without lowercase letters (since Scratch list lookups are case-insensitive).",
+    "Scratch never saves sprite clones into the <code>.sb3</code> file, so running the emulated machine inside a clone keeps about 2 MB of RAM, VRAM, and lookup tables out of the saved project.",
+    "WebGL anti-aliases pen strokes, so drawing over an old pixel left faint color bleed. The renderer diffs 8-pixel cells per scanline, merges same-color runs into single strokes, and never paints over a pixel twice.",
 ]
-learned = "Treating Scratch as a compilation target instead of a drag-and-drop IDE makes surprisingly big systems completely manageable. Code generation, real hardware CPU test vectors, and a headless TurboWarp test harness caught bugs you'd never spot by eye."
+learned = "Treating Scratch as a compilation target makes surprisingly big projects manageable. Code generation, hardware CPU test vectors, and a headless TurboWarp test harness caught bugs you would never spot by eye."
 features = [
     "All 1,604 documented and undocumented Z80 opcodes with cycle counts, verified against 39,715 SingleStepTests vectors on both Scratch's interpreter and TurboWarp's compiler.",
     "All four TMS9918A video modes, magnified sprites, the 4-sprites-per-line limit, hardware collision detection, and an optional flicker fix.",
     "SN76489 audio via one Scratch clone per channel looping a tone sample with pitch and volume effects.",
     "An in-console 6x8-font menu with ranked fuzzy game search (<code>dk</code> finds Donkey Kong, <code>qbert</code> finds Q-bert), named save states, 4x fast-forward, frame stepping, and a pixel-perfect 1:1 mode.",
-    "Builds with a 153-game ROM library (or 6 free CVBasic demos + Artemio Urbina's 240p Test Suite out of the box), plus a companion web tool to convert cartridge ROMs to hex for import.",
-    "Headless TurboWarp test suite checking pen output pixel-for-pixel against an independent TMS9918A renderer, driving the menu with fake input, checking audio channels, and booting every cartridge in the library.",
+    "Builds with a 153-game ROM library (or 6 free CVBasic demos plus Artemio Urbina's 240p Test Suite out of the box), along with a companion web page that converts cartridge ROMs to hex for import.",
+    "Headless TurboWarp test suite comparing pen output pixel-for-pixel against an independent TMS9918A renderer, driving the menu with simulated input, checking audio channels, and booting every cartridge in the library.",
 ]
 skills = ["goboscript", "Scratch / TurboWarp", "Python", "JavaScript", "Z80"]
 page = true
@@ -486,35 +486,35 @@ links = [
 ]
 
 [[projects.essay]]
-heading = "Why build an emulator in Scratch?"
-body = """Scratch is meant for teaching kids to code: you get variables, lists, and custom blocks, no bitwise math, no return values from functions, and a 30 fps cap. I wanted to see if a real 8-bit game console could run inside it anyway. The ColecoVision is a sweet spot for that kind of stunt—a real Z80 CPU, the well-documented TMS9918A video chip, and a straightforward SN76489 sound generator.
-<p>Dragging thousands of blocks by hand would have driven me insane, so I wrote the project in goboscript (which compiles text source into a standard <code>.sb3</code> file) and generated the repetitive CPU logic with Python. Version 1.0 went up on Scratch in November 2026, followed by v1.1 with a pixel-perfect 1:1 mode that runs a lot smoother in stock Scratch. In TurboWarp—which compiles Scratch projects to JavaScript—it runs cartridges at a full 60 fps.</p>"""
+heading = "An emulator inside Scratch"
+body = """Scratch is meant for teaching beginners: you get variables, lists, and custom blocks, no bitwise math, no return values from functions, and a 30 fps frame rate cap. I wanted to see if a real 8-bit console could run inside it anyway. The ColecoVision was a good target because its hardware is clean and well documented: a Z80 CPU, a TMS9918A video chip, and an SN76489 sound chip.
+<p>Dragging thousands of blocks by hand would have been miserable, so I wrote the emulator in goboscript (which compiles text source into a standard <code>.sb3</code> file) and generated the repetitive CPU logic with Python. Version 1.0 went up on Scratch in November 2026, followed by v1.1 with a pixel-perfect 1:1 picture mode that runs noticeably smoother in stock Scratch. In TurboWarp, which compiles Scratch projects to JavaScript, cartridges run at a full 60 fps.</p>"""
 
 [[projects.essay]]
 heading = "Compiling a Z80 down to 2,900 blocks"
-body = """A Python script emits the Z80 core directly into goboscript. Registers live in sprite variables, the 64K address space is a Scratch list, and opcode dispatch walks an 8-level binary tree of comparisons. Since Scratch doesn't have bitwise AND, OR, or XOR, the core populates a 64K AND table on startup, derives OR and XOR arithmetically, and reads flag bits out of precomputed ADD, SUB, and CP tables.
-<p>The first working core weighed in around 17,000 blocks. Merging opcodes that only differ by register or condition code into shared handlers, reusing one instruction set for both IX and IY, and pulling common helpers into custom blocks shrank it down to 2,900 blocks. Every single one of the 1,604 documented and undocumented opcodes is checked against 39,715 SingleStepTests CPU vectors—verifying registers, flags, memory writes, and cycle counts on both stock Scratch and TurboWarp.</p>"""
+body = """A Python script emits the Z80 core directly into goboscript. Registers live in sprite variables, the 64K address space is a Scratch list, and opcode dispatch walks an 8-level binary tree of comparisons. Since Scratch has no bitwise AND, OR, or XOR, the core builds a 64K AND table on startup, computes OR and XOR arithmetically, and reads flag bits out of precomputed ADD, SUB, and CP tables.
+<p>The first working core was about 17,000 blocks. Merging opcodes that only differ by register or condition into shared handlers, reusing one instruction set for both IX and IY, and pulling common operations into custom blocks shrank it down to 2,900 blocks. All 1,604 documented and undocumented opcodes pass 39,715 SingleStepTests CPU vectors (checking registers, flags, memory writes, and cycle counts) on both stock Scratch and TurboWarp.</p>"""
 
 [[projects.essay]]
-heading = "Pen graphics, clone sound, and the 5 MB ceiling"
-body = """Scratch doesn't give you a pixel buffer, so the entire screen is painted with pen strokes. The renderer tracks which 8-pixel cells changed on each scanline, collapses adjacent pixels of the same color into a single line, and refuses to paint over an already-drawn pixel because WebGL's anti-aliased pen edges let the old color bleed through. Sound spawns one clone per SN76489 channel, looping a short waveform and modulating Scratch's pitch and volume effects.
-<p>Scratch also caps project files near 5 MB, which gets tight fast once you have a BIOS, lookup tables, and a library of cartridges (my full build packs 153 games; a fresh open-source checkout bundles six free CVBasic demos plus the 240p Test Suite). Running the emulated hardware inside a sprite clone keeps roughly 2 MB of live RAM, VRAM, and tables out of the saved <code>.sb3</code> because Scratch never serializes clones. Cartridges and save states use an LZ4-style compressor written in both Python and Scratch, encoded in a 64-character alphabet that avoids lowercase letters because Scratch's list lookups ignore case.</p>"""
+heading = "Pen graphics, clone sound, and the 5 MB limit"
+body = """Scratch has no framebuffer, so the screen is drawn with pen strokes. The renderer tracks which 8-pixel cells changed on each scanline, merges adjacent pixels of the same color into a single line, and avoids painting over an already-drawn pixel because WebGL's anti-aliased pen edges let the color underneath bleed through. Sound uses one clone per SN76489 channel, looping a short waveform and adjusting Scratch's pitch and volume effects.
+<p>Scratch also caps project files near 5 MB, which gets tight once you include a BIOS, lookup tables, and a cartridge library (my full build packs 153 games; a fresh checkout bundles six free CVBasic demos and the 240p Test Suite). Running the emulated machine inside a sprite clone keeps about 2 MB of live RAM, VRAM, and tables out of the saved <code>.sb3</code> since Scratch never serializes clones. Cartridges and save states use an LZ4-style compressor written in both Python and Scratch, encoded in a 64-character alphabet without lowercase letters because Scratch list lookups ignore case.</p>"""
 figure = "media/projects/coleco/test-suite.png"
-caption = "Artemio Urbina's 240p Test Suite (ported to the ColecoVision by Oscar Toledo G.), which boots by default as a quick check of video, sound, and controls."
+caption = "Artemio Urbina's 240p Test Suite (ported to the ColecoVision by Oscar Toledo G.), which boots by default as a quick video, sound, and input check."
 
 [[projects.essay]]
-heading = "Testing a Scratch project like real software"
-body = """Instead of clicking around in a browser hoping nothing broke, the test suite drives the compiled project headlessly inside TurboWarp's VM. A mock renderer rasterizes the pen commands and compares the result pixel-for-pixel against an independent TMS9918A reference implementation—including verifying that incremental redraws match a full-frame draw. Other tests navigate the in-emulator menu with simulated keys and clicks (including the ranked fuzzy search where <code>dk</code> matches Donkey Kong and <code>mdc</code> matches Mr. Do's Castle), check every sound channel through a model of Scratch's audio engine, and round-trip save/reload the project to verify no bloated working lists leak into the file.
-<p>A final library test boots every cartridge past its title screen and stitches the captures into a contact sheet. It won't prove a game is beatable to the credits, but if a video-mode tweak breaks half the library, you see it immediately.</p>"""
+heading = "Testing a Scratch project like normal software"
+body = """The test suite drives the compiled project headlessly inside TurboWarp's VM. A mock renderer rasterizes the pen commands and compares the output pixel-for-pixel against an independent TMS9918A reference renderer, including verifying that incremental redraws match a full-frame draw. Separate tests navigate the in-emulator menu with simulated keys and clicks (including the ranked fuzzy search where <code>dk</code> finds Donkey Kong and <code>mdc</code> finds Mr. Do's Castle), check every sound channel against a model of Scratch's audio engine, and save and reload the project to make sure no big working lists leak into the file.
+<p>A library check boots every cartridge past its title screen and saves a contact sheet of the first frame each one draws. It cannot prove every game is beatable to the end, though it immediately catches when a change breaks a video mode or boot path.</p>"""
 figure = "media/projects/coleco/library.png"
-caption = "Contact sheet from the library check—booting every cartridge in the emulator and capturing its opening screen."
+caption = "Contact sheet from the library check, booting each cartridge in the emulator and capturing its opening screen."
 
 [[projects]]
 category = "solo"
 title = "NCSU Parking"
 date = "2026"
-description = "A campus parking forecaster for NC State decks that pairs live occupancy polling and Localist event schedules with a strict gate: XGBoost only ships for a lot if it beats an hour-of-week median."
-details = "A personal forecasting stack built to answer one question: if I drive to this NC State deck at this time, how full is it going to be? A background collector polls NC State's public parking API (storing delta-only snapshots in UTC and clamping negative visitor free_spaces to 100% full) plus campus Localist events into PostgreSQL. Features build out a 5-minute Eastern-time grid with lags, rolling stats, haversine distances to nearby events, and hardcoded NCSU academic calendar dates. An hour-of-week median baseline is always fit first; per-lot XGBoost models across eight horizons (15 minutes to 24 hours) are only kept when they beat that baseline on validation MAE. Training runs as a separate file-queued job inside the collector container (memory-capped at 4 GB) so the Streamlit dashboard never even imports XGBoost. Private repo."
+description = "A campus parking forecaster for NC State decks that pairs live occupancy polling and Localist event schedules with a baseline gate so XGBoost only ships for a lot when it beats an hour-of-week median."
+details = "A personal forecasting stack built to answer one question: if I head to this NC State deck at this time, how full will it be? A background collector polls NC State's public parking API (storing delta-only snapshots in UTC and clamping negative visitor free_spaces to 100% full) plus campus Localist events into PostgreSQL. Features build a 5-minute Eastern-time grid with lags, rolling stats, haversine distances to nearby events, and hardcoded NCSU academic calendar dates. An hour-of-week median baseline is always fit first, and per-lot XGBoost models across eight horizons (15 minutes to 24 hours) are only kept when they beat that baseline on validation MAE. Training runs as a separate file-queued job inside the collector container (capped at 4 GB RAM) so the Streamlit dashboard never loads XGBoost. Private repo."
 skills = ["Python", "PostgreSQL", "XGBoost", "pandas", "Streamlit", "Docker"]
 page = true
 tone = "80"
@@ -522,44 +522,44 @@ hero = "media/projects/ncsuparking/pipeline.svg"
 hero_caption = "Occupancy API and campus events into Postgres, benchmarked against an hour-of-week median before Streamlit ever sees a forecast."
 
 [[projects.essay]]
-heading = "Trying to predict whether a deck will be full"
-body = """NC State publishes live spot counts for its campus parking decks, which tells you whether a deck is full right now—about twenty minutes too late if you're already driving there. I wanted something that answers a simpler question: if I head to this deck at 10:30 AM tomorrow, am I going to get a spot?
-<p>I built this as a private Dockerized stack backed by PostgreSQL and a Streamlit dashboard with views for finding the emptiest lot at a target time, plotting 24-hour curves against a typical day, and browsing historical patterns. The collector records delta-only snapshots from the public API (fixing quirky visitor-deck feeds that occasionally report negative <code>free_spaces</code> by clamping them to 100% full) and generates forecasts across eight horizons from 15 minutes out to 24 hours.</p>"""
+heading = "Predicting campus deck occupancy"
+body = """NC State publishes live spot counts for its campus parking decks, which tells you whether a deck is full right now, about twenty minutes too late if you are already driving there. I wanted something that answers a simpler question: if I head to this deck at 10:30 AM tomorrow, will there be spots open?
+<p>I built this as a private Dockerized stack backed by PostgreSQL and a Streamlit dashboard with views for finding the emptiest lot at a target time, plotting 24-hour curves against a typical day, and browsing historical patterns. The collector saves delta-only snapshots from the public API (clamping quirky visitor-deck feeds that occasionally report negative <code>free_spaces</code> to 100% full) and generates forecasts across eight horizons from 15 minutes out to 24 hours.</p>"""
 
 [[projects.essay]]
-heading = "Making the ML model earn its spot"
-body = """Campus parking is brutally cyclical. A Tuesday at 10:00 AM looks almost identical to last Tuesday at 10:00 AM, which means a plain hour-of-week median is already a surprisingly tough baseline to beat—and it works starting from the very first day of polling while you're still collecting data. A lot of toy ML projects skip that comparison and celebrate a gradient-boosted tree for rediscovering class schedules.
-<p>My training job always fits the seasonal median first and only keeps a per-lot XGBoost model if it achieves lower validation MAE across the forecasting horizons. If a quiet deck follows clockwork schedules and XGBoost overfits it, the model gets thrown out and that lot stays on the median. Training runs on an hourly check (or on demand via a file queue from the dashboard) inside the collector process with a 4 GB memory cap, writing pickled artifacts to a shared Docker volume so the Streamlit frontend stays fast and never loads XGBoost at runtime.</p>"""
+heading = "Benchmarking against a seasonal baseline"
+body = """Campus parking is heavily cyclical. A Tuesday at 10:00 AM looks almost identical to last Tuesday at 10:00 AM, so a plain hour-of-week median is already surprisingly accurate and works starting from day one while data is still accumulating. Plenty of ML demos skip that check and celebrate a gradient-boosted tree for rediscovering class schedules.
+<p>My training job always fits the seasonal median first and only keeps a per-lot XGBoost model if it gets lower validation MAE across the forecasting horizons. If a deck follows strict routines and XGBoost overfits it, the model gets discarded and that lot stays on the median. Training runs on an hourly check (or on demand via a file queue from the dashboard) inside the collector process with a 4 GB memory limit, writing pickled artifacts to a shared Docker volume so the Streamlit app stays fast and never imports XGBoost at runtime.</p>"""
 figure = "media/projects/ncsuparking/pipeline.svg"
-caption = "The whole point of the pipeline is the gate in the middle: if XGBoost can't beat the median, it doesn't ship."
+caption = "The gate in the middle discards any per-lot XGBoost model that fails to beat the hour-of-week median."
 
 [[projects.essay]]
-heading = "Why class schedules aren't enough"
-body = """Where a plain seasonal median falls flat is game days, concerts, and big campus events. A second collector scrapes NC State's Localist event feed, geocodes each venue, and computes haversine distances from every event to every parking deck alongside academic-calendar flags (breaks, exams, reading days). Those distance features give the per-lot models advance warning when a Saturday afternoon isn't going to behave like a normal Saturday."""
+heading = "Adding campus events"
+body = """Where a seasonal median misses badly is game days, concerts, and big campus events. A second collector scrapes NC State's Localist event feed, geocodes each venue, and computes haversine distances from each event to each parking deck alongside academic-calendar flags (breaks, exams, reading days). Those features give the per-lot models advance notice when a weekend afternoon is going to behave differently than a typical weekend."""
 
 [[projects]]
 category = "solo"
 title = "Amazon Music Discord RPC"
 date = "2026"
-description = "A Chromium/Firefox browser extension and self-installing Rust native-messaging helper that puts Amazon Music playback on your Discord profile without scraping the DOM."
-details = "A browser extension paired with a small Rust native-messaging host (v1.8.1) supporting Chrome, Edge, Brave, Vivaldi, and Firefox across macOS, Windows, and Linux. Instead of scraping fragile HTML from Amazon's web player, the extension hooks the browser's standard Media Session API and enriches it with Amazon's own first-party player API for album/playlist/station context, artist photos, release years, and HD/Ultra HD stream badges. The Rust helper self-installs for every browser it finds, talks local Discord IPC, coalesces progress updates under Discord's 5-updates-per-20s limit, and reconnects automatically when Discord restarts. Includes customizable status templates with live preview, separate podcast formatting, snooze, and 'Never show' blocklists. Private repo."
+description = "A Chromium and Firefox browser extension plus a self-installing Rust native-messaging helper that shows Amazon Music playback on Discord without DOM scraping."
+details = "A browser extension paired with a small Rust native-messaging host (v1.8.1) supporting Chrome, Edge, Brave, Vivaldi, and Firefox on macOS, Windows, and Linux. The extension hooks the browser's standard Media Session API and enriches it with Amazon's own first-party player API for album, playlist, and station context, artist photos, release years, and HD/Ultra HD stream badges. The Rust helper self-installs for every browser it finds, talks local Discord IPC, coalesces progress updates under Discord's 5-updates-per-20s limit, and reconnects automatically when Discord restarts. Includes custom status templates with live preview, separate podcast formatting, snooze, and 'Never show' blocklists. Private repo."
 skills = ["JavaScript", "Rust", "Discord IPC"]
 page = true
 tone = "40"
 hero = "media/projects/amazon/rpc.svg"
 hero_caption = "Media Session and first-party metadata in the tab, native messaging into the Rust helper, and rate-limited IPC out to Discord."
 preview = "media/projects/amazon/popup.png"
-preview_caption = "The extension popup during playback—live Discord preview, snooze and hide toggles, and helper connection status."
+preview_caption = "The extension popup during playback, showing the live Discord preview, snooze and hide toggles, and helper connection status."
 
 [[projects.essay]]
-heading = "Reading playback without touching the DOM"
-body = """Discord has native Spotify integration, while Amazon Music users are stuck with third-party extensions that scrape CSS classes out of the web player and break every time Amazon ships a frontend tweak. I built this extension (currently v1.8.1) to avoid scraping the DOM altogether.
-<p>The primary source is the browser's built-in Media Session API—the same interface that powers keyboard media keys and lock-screen controls—which gives me the title, artist, artwork, position, and play/pause state through a browser standard that survives site redesigns. For everything Media Session leaves out (links, whether you're listening to an album, playlist, or station, artist art, release year, and HD/Ultra HD stream quality), a single page hook queries Amazon's own player API from your signed-in browser session. Everything stays isolated in one file, so even if Amazon ever changes an endpoint, there's only one place to patch.</p>"""
+heading = "Reading playback without scraping HTML"
+body = """Discord has built-in Spotify integration, while Amazon Music users usually end up with extensions that scrape CSS classes out of the web player and break whenever Amazon updates their site. I built this extension (currently v1.8.1) to avoid scraping the DOM altogether.
+<p>The primary source is the browser's built-in Media Session API (the same interface that powers keyboard media keys and lock-screen controls), which gives title, artist, artwork, position, and play/pause state through a browser standard that survives redesigns. For details Media Session leaves out (links, whether you are playing an album, playlist, or station, artist photos, release year, and HD/Ultra HD stream quality), one page hook queries Amazon's own player API from your signed-in session. Keeping all of that in a single file means there is only one place to update if Amazon ever changes an endpoint.</p>"""
 
 [[projects.essay]]
-heading = "A small Rust helper instead of an Electron app"
-body = """Browser extensions aren't allowed to open local Unix sockets or Windows named pipes directly, so they can't talk to Discord's local IPC on their own. Rather than shipping a bloated desktop app that has to sit in the system tray, I wrote a tiny native-messaging host in Rust. You download the binary and open it once; it copies itself into your user directory and registers its manifest for every Chromium and Firefox browser it finds on macOS, Windows, or Linux. After that, the browser launches and stops it automatically in the background.
-<p>Discord caps Rich Presence at five updates every twenty seconds, so the Rust helper coalesces incoming state changes, holds extra ticks back until the window opens, and quietly reconnects whenever Discord closes and reopens. On top of that, the extension popup gives you custom status text templates with a live preview, separate settings for podcasts, quick snooze timers, and a 'Never show' list for specific tracks, artists, or playlists.</p>"""
+heading = "The Rust helper"
+body = """Browser extensions cannot open local Unix sockets or Windows named pipes directly, so they cannot speak Discord's local IPC on their own. To avoid shipping a heavy desktop tray app, I wrote a small native-messaging host in Rust. You download the binary and open it once; it copies itself into your user folder and registers its manifest for every Chromium and Firefox browser it finds on macOS, Windows, or Linux. After that, the browser starts and stops it automatically in the background.
+<p>Discord caps Rich Presence at five updates every twenty seconds, so the helper coalesces incoming updates, holds extra ticks back until the window opens, and reconnects on its own whenever Discord closes and reopens. The extension popup adds custom status templates with a live preview, separate formatting for podcasts, quick snooze timers, and a 'Never show' list for specific tracks, artists, or playlists.</p>"""
 figure = "media/projects/amazon/rpc.svg"
 caption = "Tab hook to extension to Rust native-messaging host to Discord IPC, with coalescing at the host boundary."
 
@@ -575,8 +575,8 @@ alt = "Discord current activity showing Listening to Amazon Music with the song 
 category = "discord-bots"
 title = "discord.py-template"
 date = "2025 - Present"
-description = "My starting scaffold for discord.py 2.7+ bots—Components V2 UI helpers, error-ID crash reports, hash-gated command sync, declarative per-server settings, and SQLite migrations."
-details = "Distilled from everything I kept rebuilding across Strife, Triggered, and PlayCord. It ships Components V2 UI primitives (panels, jump-to-page paginators, confirm prompts, owner-locked views, and auto-uploaded application emoji), a unified error handler that turns expected BotErrors into tidy ephemeral panels while tagging real bugs with an error ID and secret-redacted local-variable crash reports, drop-in auto-loaded cogs, hash-gated slash command syncing (plus instant sync to a dev guild), declarative per-server /settings screens, plain-SQL SQLite migrations, Docker healthchecks, and an init script that renames and scaffolds a fresh repo in one shot."
+description = "My starting scaffold for discord.py 2.7+ bots with Components V2 UI helpers, error-ID crash reports, hash-gated command sync, declarative per-server settings, and SQLite migrations."
+details = "Distilled from everything I kept rebuilding across Strife, Triggered, and PlayCord. It ships Components V2 UI primitives (panels, jump-to-page paginators, confirm prompts, owner-locked views, and auto-uploaded application emoji), a unified error handler that turns expected BotErrors into ephemeral panels while tagging real bugs with an error ID and secret-redacted local-variable crash reports, auto-loaded cogs, hash-gated slash command syncing (plus instant sync to a dev guild), declarative per-server /settings screens, plain-SQL SQLite migrations, Docker healthchecks, and an init script that renames and scaffolds a fresh repo in one command."
 link = "https://github.com/quantumbagel/discord.py-template"
 skills = ["Python", "discord.py", "SQLite", "YAML", "Docker"]
 
@@ -584,8 +584,8 @@ skills = ["Python", "discord.py", "SQLite", "YAML", "Docker"]
 category = "collabs"
 title = "Chess-Challenge"
 date = "2023"
-description = "A C# chess engine for Sebastian Lague's Chess Coding Challenge, packing iterative-deepening alpha-beta search into a hard 1,024-token limit."
-details = "My entry for Sebastian Lague's C# chess bot competition, where the entire engine has to fit under 1,024 code tokens. Across the feature branches I built out iterative deepening, alpha-beta pruning, and quiescence search, then squeezed a transposition table, null-move pruning, killer move ordering, and packed piece-square tables into the strongest branch."
+description = "A C# chess engine for Sebastian Lague's Chess Coding Challenge, packing iterative-deepening alpha-beta search into a 1,024-token budget."
+details = "My entry for Sebastian Lague's C# chess bot competition, where the entire engine had to fit under 1,024 code tokens. Across the feature branches I implemented iterative deepening, alpha-beta pruning, and quiescence search, then fit a transposition table, null-move pruning, killer move ordering, and packed piece-square tables into the strongest branch."
 link = "https://github.com/quantumbagel/Chess-Challenge"
 skills = ["C#", ".NET", "Search algorithms"]
 
@@ -600,26 +600,26 @@ skills = ["Python", "discord.py", "MongoDB", "Docker"]
 page = true
 tone = "350"
 hero = "media/projects/triggered/rules.svg"
-hero_caption = "Discord events pass through the JSON trigger/action registry and fire matching rules stored per server in MongoDB."
+hero_caption = "Discord events pass through the JSON trigger and action registry and fire matching rules stored per server in MongoDB."
 
 [[projects.essay]]
 heading = "IFTTT inside a Discord server"
-body = """Every Discord community eventually accumulates a pile of small, weirdly specific automation requests: give someone a role when they react to a post, ping a channel when a friend hops into voice, or drop a reminder on a timer. Writing custom bot code for each one gets tedious fast. Triggered lets people wire those rules together themselves using <code>/triggered new</code> and <code>/triggered add</code>, pairing a trigger ("when X happens") with one or more actions ("then do Y").
-<p>Rules, per-server admin permissions, and per-user allow/blocklists all live in MongoDB (preferably local Mongo—the bot hits the database hard enough that a free cloud tier would cry). Only the rule's author or the server owner can edit or attach actions to it, and rules can't run privileged actions unless the server actually granted them.</p>"""
+body = """Active Discord servers always end up with a bunch of small automation requests: grant a role when someone reacts to a post, ping a channel when a friend joins voice, or drop a recurring reminder. Writing custom bot code for each one gets repetitive fast. Triggered lets moderators assemble those rules themselves with <code>/triggered new</code> and <code>/triggered add</code>, pairing a trigger ("when X happens") with one or more actions ("then do Y").
+<p>Rules, per-server admin permissions, and per-user allow/blocklists all live in MongoDB (preferably local Mongo, since the bot hits the database often enough to burn through a free cloud tier). Only the rule's author or the server owner can edit or attach actions to it, and rules cannot run privileged actions unless the server has explicitly allowed them.</p>"""
 
 [[projects.essay]]
-heading = "A JSON registry instead of giant switch statements"
-body = """Early on, adding a new trigger meant editing half a dozen files to wire up slash options, autocomplete, and validation. Moving the catalog into a single JSON registry (<code>requirements.json</code>) fixed that: the registry declares every trigger and action type along with the module and arguments it expects, and the slash command layer reads it dynamically to populate autocomplete and reject bad arguments before anything gets written to MongoDB.
-<p>If a stored rule ever references a trigger or action that no longer exists, it fails closed rather than executing half-baked logic. I wouldn't pitch Triggered as a commercial SaaS product—my hosted instance is just for personal servers—but it was the project that finally got me out of the habit of writing disposable one-off cogs.</p>"""
+heading = "A JSON registry for triggers and actions"
+body = """Early on, adding a new trigger meant editing half a dozen files to update slash options, autocomplete, and validation. Moving the catalog into a single JSON registry (<code>requirements.json</code>) cleaned that up: the registry lists every trigger and action type along with its module and expected arguments, and the slash command layer reads it dynamically to populate autocomplete and reject invalid inputs before anything hits MongoDB.
+<p>If a saved rule ever references a trigger or action that was removed, it fails closed instead of running half-built logic. My hosted instance is just for personal servers, and the project mainly served as the point where I stopped writing disposable single-purpose cogs.</p>"""
 figure = "media/projects/triggered/rules.svg"
-caption = "Incoming events match against the registry, validate permissions, and run stored per-server rules."
+caption = "Incoming events match against the registry, check permissions, and run stored per-server rules."
 
 [[projects]]
 category = "collabs"
 title = "finiteCraft"
 date = "2024"
 description = "A collaborative distributed scraper and recipe-tree finder for Neal.fun's Infinite Craft (archived)."
-details = "Grew out of an earlier scraper called InfiniteScrape. I built the scraping half—multithreaded headless Chromium workers, health-ranked rotating proxies, batched craft requests, and MongoDB recipe storage—while a collaborator built Arborist, a tree search for finding short crafting paths between elements. Archived now, mostly interesting as a concurrency and rate-limit puzzle."
+details = "Grew out of an earlier scraper called InfiniteScrape. I built the scraping half (multithreaded headless Chromium workers, health-ranked rotating proxies, batched craft requests, and MongoDB recipe storage), while a collaborator built Arborist, a tree search for finding short crafting paths between elements. Archived now, mostly interesting as a concurrency and rate-limiting project."
 link = "https://github.com/finiteCraft/finiteCraft"
 skills = ["Python", "MongoDB", "Docker"]
 
@@ -628,19 +628,19 @@ featured = true
 category = "solo"
 title = "Portfolio Website (v3)"
 date = "2026 - Present"
-description = "This site: a tiny Python and Jinja2 static generator driven by a single TOML file and Markdown posts, designed to load fast and stay out of the way."
-built = "Everything you're reading is compiled from <code>site.toml</code> and TOML-frontmatter Markdown files in <code>posts/</code> by a single Python script (<code>generator.py</code>) using Jinja2 templates. It outputs a self-contained <code>dist/</code> folder for GitHub Pages, inlines and scopes project SVG diagrams so CSS classes never collide, validates that no local asset link is broken at build time, and adds lightweight hover previews on the homepage."
+description = "This site: a small Python and Jinja2 static generator driven by one TOML file and Markdown posts, built to load fast and stay simple."
+built = "Everything on this site is generated from <code>site.toml</code> and TOML-frontmatter Markdown files in <code>posts/</code> by a single Python script (<code>generator.py</code>) using Jinja2 templates. It writes a self-contained <code>dist/</code> folder for GitHub Pages, inlines and scopes project SVG diagrams so CSS classes never collide, verifies at build time that every local asset link exists, and adds lightweight hover previews on the homepage."
 challenges = [
-    "Version 3 actually started out with a 12-mode HTML5 canvas particle engine behind frosted cards; stripping all of that back out for a clean, typographic static site made the whole thing faster, easier to read, and way less annoying to maintain.",
-    "Inlining multiple SVG architecture diagrams on the same page caused CSS class names and <code>&lt;marker&gt;</code> IDs to collide across figures until the generator started prefixing every SVG's IDs and classes automatically.",
-    "Hover previews load those same diagrams inside an <code>&lt;img&gt;</code> tag where page CSS doesn't apply, so each SVG needed an explicit root <code>color</code> attribute to stay legible in both inline and preview contexts.",
+    "Version 3 originally shipped with a 12-mode HTML5 canvas particle engine behind frosted cards. Ripping all of that out for a clean typographic layout made the site faster, easier to read, and much simpler to update.",
+    "Inlining multiple SVG architecture diagrams on the same page caused CSS class names and <code>&lt;marker&gt;</code> IDs to collide across figures until the generator began prefixing every SVG's IDs and classes automatically.",
+    "Hover previews load those same diagrams inside an <code>&lt;img&gt;</code> tag where page CSS does not apply, so each SVG needed an explicit root <code>color</code> attribute to stay legible in both inline and preview contexts.",
 ]
-learned = "A plain TOML file, Jinja2, and a single build script beat a JavaScript framework every single time for a personal site—especially when you actually want to update it."
+learned = "A plain TOML file, Jinja2, and one build script beat a JavaScript framework for a personal site, especially when you actually want to keep it updated."
 features = [
     "Single-file Python static generator compiling <code>site.toml</code> and <code>posts/*.md</code> into minified static HTML in <code>dist/</code>.",
-    "Shared <code>site.css</code> plus scoped per-page stylesheets, zero frontend build pipeline, and no external JS dependencies.",
-    "Draft-aware Markdown blog with automatic reading-time estimates, standalone figure support, and GitHub Actions deployment.",
-    "Build-time asset verification that fails loudly if any page references a missing image or diagram.",
+    "Shared <code>site.css</code> plus per-page stylesheets, zero frontend build pipeline, and no external JS dependencies.",
+    "Draft-aware Markdown blog with reading-time estimates, standalone figure support, and GitHub Actions deployment.",
+    "Build-time asset check that fails loudly if any page references a missing image or diagram.",
 ]
 link = "https://github.com/quantumbagel/quantumbagel.github.io"
 skills = ["Python", "Jinja2", "TOML", "HTML / CSS"]
@@ -652,16 +652,16 @@ preview = "media/projects/portfolio/homepage.png"
 preview_caption = "The homepage, with projects grouped by area and year and hover previews tucked in the corner."
 
 [[projects.essay]]
-heading = "Deleting the clever parts"
-body = """Earlier versions of this site tried way too hard. The first draft of v3 had a full custom HTML5 canvas engine running twelve interactive physics and particle simulations—flocking, orbits, Game of Life, aurora waves—behind frosted glass panels with a live tuning drawer. It was a fun JavaScript exercise, and it also made the site heavier, harder to read, and a pain to tweak whenever I just wanted to add a new project or fix a typo.
-<p>Eventually I ripped the canvas engine, Tailwind, and the card layout completely out and rebuilt the site around a quiet, typographic layout inspired by Bret Victor's worrydream. Content lives in <code>site.toml</code>, blog posts live as plain Markdown files with TOML frontmatter in <code>posts/</code>, and <code>generator.py</code> renders everything through Jinja2 templates into <code>dist/</code> for GitHub Pages. No npm, no bundler, no CMS.</p>"""
+heading = "Stripping it back down"
+body = """Earlier versions of this site did way too much. The first draft of v3 had a custom HTML5 canvas engine running twelve interactive physics and particle simulations (flocking, orbits, Game of Life, aurora waves) behind frosted glass cards with a live settings drawer. It was a fun JavaScript project, though it made the site heavier, busier to read, and annoying to edit whenever I just wanted to add a project or fix wording.
+<p>Eventually I deleted the canvas engine, Tailwind, and the card layout and rebuilt everything around a simple typographic design inspired by Bret Victor's worrydream. Content lives in <code>site.toml</code>, blog posts are plain Markdown files with TOML frontmatter in <code>posts/</code>, and <code>generator.py</code> renders everything with Jinja2 into <code>dist/</code> for GitHub Pages. No npm, no bundler, and no CMS.</p>"""
 
 [[projects.essay]]
-heading = "Small build-time details"
-body = """Keeping the runtime tiny meant putting a few thoughtful touches into the build script instead. Architecture SVGs are inlined directly on project pages so they inherit page colors cleanly, with <code>generator.py</code> rewriting every SVG's internal IDs and class names on the fly so two diagrams on the same page never step on each other's arrow markers. On the homepage, hovering a project row pops up a corner preview using either a dedicated screenshot or the project's hero diagram.
-<p>Before finishing, the generator scans every generated HTML file and checks that every local image, stylesheet, and link actually exists inside <code>dist/</code>. Adding a new project or blog post is just editing text and pushing to GitHub—the Actions workflow builds and deploys it in a few seconds.</p>"""
+heading = "Build-time details"
+body = """Keeping the browser side minimal meant putting a few helpful checks into the build script. Architecture SVGs are inlined directly on project pages so they inherit page colors, and <code>generator.py</code> rewrites every SVG's internal IDs and class names on the fly so two diagrams on the same page never clash over arrow markers. On the homepage, hovering a project row pops up a corner preview using either a dedicated screenshot or the project's hero diagram.
+<p>Before exiting, the generator scans every output HTML file and verifies that every local image, stylesheet, and link actually exists inside <code>dist/</code>. Publishing a new project or blog post is just editing text and pushing to GitHub, where the Actions workflow builds and deploys it in a few seconds.</p>"""
 figure = "media/projects/portfolio/modes.svg"
-caption = "Everything compiles ahead of time—nothing runs on the client except the hover preview dock and the contact form."
+caption = "Everything compiles ahead of time, leaving only the hover preview dock and the contact form running in the browser."
 
 [[projects.gallery]]
 src = "media/projects/portfolio/homepage.png"
@@ -676,7 +676,7 @@ category = "solo"
 title = "Statify"
 date = "2023 - 2026"
 description = "A Java 21 Spigot and Paper plugin for server-wide Minecraft stat leaderboards, powered by a hand-written expression language with saved custom queries."
-details = "Started as my first Java plugin back in 2023 and later rewritten cleanly for Spigot/Paper 1.21 on Java 21. It reads the stats/<uuid>.json files Minecraft already writes—so it works on existing worlds with zero setup—and evaluates arithmetic queries like mined:diamond_ore / (custom:play_time / 72000) through a hand-written lexer, recursive-descent parser using sealed-interface records, and pattern-matching evaluator. Players can save reusable queries (owner:name) with inline expansion and cycle detection, parse errors underline the exact failing character, ties use standard competition ranking (1, 2, =2, 4), and the entire core is JUnit-tested with no Bukkit dependency."
+details = "Started as my first Java plugin back in 2023 and later rewritten for Spigot and Paper 1.21 on Java 21. It reads the stats/<uuid>.json files Minecraft already writes, so it works on existing worlds with no setup, and evaluates arithmetic queries like mined:diamond_ore / (custom:play_time / 72000) through a hand-written lexer, recursive-descent parser using sealed-interface records, and pattern-matching evaluator. Players can save reusable queries (owner:name) with inline expansion and cycle detection, parse errors underline the exact failing character, ties use standard competition ranking (1, 2, =2, 4), and the core is JUnit-tested with no Bukkit dependency."
 link = "https://github.com/quantumbagel/Statify"
 skills = ["Java 21", "Spigot / Paper API", "JUnit"]
 
@@ -684,8 +684,8 @@ skills = ["Java 21", "Spigot / Paper API", "JUnit"]
 category = "discord-bots"
 title = "Piranha"
 date = "2023"
-description = "An early single-file Discord chess bot hooking Stockfish up to a local CairoSVG board renderer. Private; later superseded by Strife."
-details = "One of my first Discord bots: Stockfish running in a subprocess for play, a tiny aiohttp + CairoSVG service rendering board PNGs on the fly, and JSON files holding match records. Fine as a weekend experiment, and hitting its state-management limits is what eventually pushed me to design Strife properly."
+description = "An early single-file Discord chess bot connecting Stockfish to a local CairoSVG board renderer. Private; later superseded by Strife."
+details = "One of my first Discord bots: Stockfish running in a subprocess for play, a small aiohttp and CairoSVG service rendering board PNGs on the fly, and JSON files holding match records. Fine as a weekend project, and running into its state-management limits is what eventually pushed me to build Strife properly."
 skills = ["Python", "discord.py", "Stockfish"]
 
 [[projects]]
@@ -693,7 +693,7 @@ category = "solo"
 title = "Molotov"
 date = "2023"
 description = "A screen-automation bot for the browser word game Bomb Party that watched pixels to spot my turn and typed back rarity-scored dictionary words."
-details = "A goofy experiment in desktop automation: grab screen pixels with mss to detect when it was my turn, pull the required syllable, score matching English words by rarity, and type them back through PyAutoGUI with configurable delays. Completely fragile to UI tweaks and purely for fun."
+details = "A goofy experiment in desktop automation: capture screen pixels with mss to detect when it was my turn, grab the required syllable, score matching English words by rarity, and type them back through PyAutoGUI with configurable delays. Completely fragile to UI changes and purely for fun."
 link = "https://github.com/quantumbagel/Molotov"
 skills = ["Python", "PyAutoGUI"]
 
